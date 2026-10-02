@@ -198,3 +198,52 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Which free or local image, audio, and music models to use.
 
 **Traceability:** commits `600cdcb` and `04511fd`; images in `design/character/`; drawing script `tools/make_character_svgs.py`. No asset-log rows exist yet.
+
+
+---
+
+## 2026-10-01 to 2026-10-02 — Character reference (CHAR-REF): first generations
+
+**Status (confirmed):** first image generations done, locally in Draw Things 26.0924.0 with SDXL Base (v1.0). All design documents were committed before this, the last in `7262857`; the guide image was committed in `904b22a` before it was used. Full details and checksums for every row: ASSET-LOG.md.
+
+**Setup decisions:**
+- **Where to generate:** on my Mac, not a free online tool, so I can control and record the seed and settings and reproduce outputs.
+- **Model:** SDXL Base (v1.0), to prioritize reference-guided control for the 12 poses.
+- **Background:** flat magenta `#FF00FF`, because it is distinct from the jelly's palette, which should help with background removal.
+- **Comparison plan:** try both text-only and image-to-image from my approved front-view drawing, using the same prompt and seed, to see how much the drawing improves consistency. Judge on shape, face placement, palette, and readability at 64 px.
+- **Caught before generating:** the new Draw Things project came with an example prompt naming a living artist and brands. I cleared it before writing my own prompt.
+
+**Wanted:** a reference that matches the character sheet (cube shape, face placement, outline, top-center highlight, bottom band) and reads at 64 px.
+
+**Asked (shared by all tries):** SDXL Base (v1.0), the prompt and negative prompt in ASSET-LOG.md, 1024 × 1024, seed 7270, 30 steps, text guidance 7.0, sampler DPM++ 2M AYS, shift 1.00.
+
+| Try | What changed | Prediction (written before generating; reviewed and confirmed by me) | What came back |
+|-----|--------------|------------------------------------------------|----------------|
+| A | Text only (strength 100%) | "I expect it to capture the aqua jelly and cartoon mood, but possibly drift toward a blob shape or change the face placement and highlight." | It stayed a cube, but in a 3D three-quarter view with legs; a large glossy face with magenta irises and an open mouth; no outline or band; edge highlights; a gradient background with a shadow. |
+| B | Image to image from my guide, strength 60% | "I expect the guide to preserve the cube proportions, face, and colors more closely, though 60% strength may still change the outline or add unwanted detail." | The design was preserved closely. The unwanted detail I expected appeared as two stray dots above the right eye. |
+| C | Same as B, strength 75% | "I expect more shading and a stronger jelly texture than Try B, but also a greater risk of changes to the cube shape, face, outline, or highlight. I'll check whether those additions help at 64 px." | More jelly shading (mainly the band), and the cube and outline held, but the face changed: an open mouth with a tongue, brows, taller eyes, and a stretched highlight. |
+
+**My judgment:**
+- **On B:** Claude raised a concern that B might look like the guide passed through with little model contribution. I decided that following the guide closely does not make it invalid; instead, we should document exactly what the model contributed. Measuring the file later showed the model did restyle it: a pinker background, slightly greener body and band, grain, taller oval eyes, a fuller smile, and the two dots.
+- **Why I ran C:** I asked for one higher-strength comparison with everything else unchanged, to judge whether it adds useful shading while preserving the design.
+- **64 px check:** I asked for each candidate to be cropped to its own character bounds and scaled to 64 px tall, because a fixed scale could make the candidates appear at different sizes and affect the comparison.
+- **Choice:** B, with the stray dots removed. At 64 px it stays readable and matches the character sheet most closely. I'd rather keep the simple face and consistent silhouette than change the design for extra detail.
+
+**Inspect and revise (the cleanup):**
+- **Saw:** the two stray dots in B are visible even at 64 px.
+- **Revised the method:** Claude's first cleanup proposal used one broad box. I judged it too broad, since it could flatten legitimate shading, and asked for two small boxes around the actual dots, the raw image preserved, and a before-and-after comparison before accepting.
+- **Done:** two boxes; 1,954 pixels changed, all inside them. Before-and-after approved. The same edit on my Mac gave the matching pixel fingerprint `5fbc3cce005d71c8`, and the raw file's checksum was unchanged.
+- **Accepted as CHAR-REF** (`art/reference/CHAR-REF.png`): at 64 px, the face and silhouette read clearly, the stray dots are gone, and the cube shape, outline, highlight, and bottom band remain consistent with the character sheet.
+
+**Human / Claude / model:**
+- **Kiran:** chose local generation, SDXL, magenta, the A-versus-B comparison and the extra C run; reviewed and confirmed the predictions before each try; asked for the bounds-based 64 px check and the two-box cleanup; made the final choice; cleared the unsafe example prompt; ran every generation, edit, and check on my Mac.
+- **Claude:** compared the tools and models; checked the SDXL license; drafted the prompt and settings, which I approved; helped with the wording of the predictions and suggested what they should cover (shape, face, outline, highlight, unwanted extras) and which checks to run; built the guide image from the sheet's drawing code; wrote `check_64px.py` and `remove_specks.py`; described each output against the sheet; measured the dot positions and the model's changes from my uploaded file; drafted ASSET-LOG.md, SOURCES.md, and this entry.
+- **Model (SDXL Base 1.0):** produced the three raw images. In B it restyled colors, grain, eyes, and smile, and added the two dots.
+
+**Still unresolved:**
+- Whether image to image keeps enough consistency across the 12 poses (pose generation not started).
+- Background removal for magenta that came back as `#F424E1` with grain, and checking for magenta fringes.
+- The face in CHAR-REF: the eyes are slightly taller ovals and the smile is fuller than the sheet's drawing. To judge as poses are derived.
+- Audio and music models; starting point for the Godot project.
+
+**Traceability:** ASSET-LOG.md rows CHAR-REF-A, CHAR-REF-B, CHAR-REF-B edit, and CHAR-REF-C; guide commit `904b22a`; evidence in `evidence/`; thumbnails in `art/source/` and `art/rejected/`.
