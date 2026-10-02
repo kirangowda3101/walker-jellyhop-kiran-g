@@ -295,3 +295,44 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - 10 more gameplay poses, the environment art, audio, and the Godot slice.
 
 **Traceability:** commit `85e7786` (guide and tool); ASSET-LOG.md rows CHAR-SCOOT-B try 1, try 2, and try 2 edit; evidence `evidence/char-scoot-b-72px-compare.png` and `evidence/char-scoot-b-cleanup-72px.png`; thumbnails in `art/source/` and `art/rejected/`.
+
+---
+
+## 2026-10-02 — Batch 1: remaining poses
+
+**Status (confirmed):** ten poses generated from guides committed in `d0199e8`; nine accepted (four as-is, five after logged edits); Scoot A try 1 rejected, retried with seed 7271, and accepted after a logged edit. CHAR-IDLE is CHAR-REF itself. Details, boxes, and fingerprints: ASSET-LOG.md, Batch 1.
+
+**Workflow change (my instruction):** from this batch on, work proceeds in complete batches: Claude makes routine choices from the approved design and settings, asks me only about significant design changes, and we review assets once per batch; logs record decisions, observations, edits, and results only.
+
+**Design decisions:**
+- **Expression poses:** I approved the hybrid: warp CHAR-REF's body, reuse its eye pixels where the sheet keeps dot eyes, and draw the sheet's brows, mouths, lids, and closed or X eyes in CHAR-REF's face color.
+- **Splat and re-form:** reshape or mask the actual CHAR-REF body and texture, using the sheet as the shape guide. Sampling its colors alone wouldn't clearly demonstrate that those poses were derived from the accepted reference.
+- **Backgrounds:** magenta only for isolated sprites; ENV-ROOM and the repeating ENV-TABLE strip get their intended backgrounds and surfaces, with the table strip checked for seamless repetition (Batch 2).
+- **Scoot A:** retry once with seed 7271, everything else unchanged.
+
+**Routine choices made by Claude (from the approved design):** CHAR-IDLE = CHAR-REF; every pose at 50% with the CHAR-SCOOT-B settings; face strokes at CHAR-REF's smile width (23 px), so the sheet's small "o" mouths render nearly filled; re-form drip marks left out of the guide; tight-box edits with the smooth fill; marks barely visible at game size left in place and documented.
+
+**Prediction (written before generating; mine):** "I expect most poses to preserve CHAR-REF's colors and texture while following the guides' shapes. Splat, re-form, and the expression poses seem most likely to drift, so I'll check their silhouettes and facial readability at their intended game sizes."
+
+**What came back:** colors, texture, and shapes held across all ten; every outer box is within 1 game px of its guide, splat and re-form included. The drift appeared as added marks and face changes: bubbles on falling, a teardrop nose and drips on rising, bubbles on worried, a pink tongue on crouch, a mouth-like mark on re-form, and on Scoot A a wavy mouth and two large soft patches. Landing and splat came back clean.
+
+**Inspect and revise:**
+- Two of Claude's cleanup tests failed and were redone or dropped before review: on worried, a first box clipped the right brow (redone with two boxes clear of it); on bored, the fill left a visible rectangle in a low-contrast area (dropped; the smudge is documented instead).
+- Crouch's tongue sits against the dark mouth, so a new pink-only selection removes it without touching the mouth line; a soft dark shadow remains under the mouth.
+- The edit tool now stops if a box leaves no untouched pixels around a mark; this caught boxes on falling and re-form that were too tight, which were widened.
+- The earlier CHAR-REF and CHAR-SCOOT-B edits still reproduce their fingerprints with the updated tool.
+- Scoot A retry: the first try 2 export was pixel-identical to try 1 (the seed change had not taken effect, or an older entry was exported). It was set aside, the run redone with the seed confirmed, and a check confirmed the new output differs. Try 2 kept the guide's mouth and lost the side patches, but added a curved stroke at each eye's outer edge; two boxes removed them, leaving small stubs not visible at game size.
+- I approved the handling for the nine poses, with the remaining minor marks documented, after one batch review (`evidence/batch1-review.png`), and accepted Scoot A try 2 after its edit.
+
+**Human / Claude / model:**
+- **Kiran:** set the batch workflow; approved the hybrid; directed that splat and re-form reshape CHAR-REF's actual body and that magenta is for isolated sprites only; wrote the batch prediction; ran all ten generations, the Scoot A retry, and the batch scripts on my Mac; approved the nine-pose handling; chose the Scoot A retry and accepted its edited result.
+- **Claude:** wrote `make_pose_guides.py`, the `SELECT=pink` option and safety stop in `remove_specks.py`, and the batch script; measured every result against its guide; located the marks; tested, revised, or dropped cleanups; drafted the asset log rows and this entry.
+- **Model (SDXL Base 1.0):** produced the ten raw outputs, including the added marks listed above.
+
+**Still unresolved:**
+- Small stubs where Scoot A's eye strokes were removed.
+- Documented minor marks: bored smudge, relief and worried band dots, rising drip tops, crouch's shadow under the mouth.
+- The SCOOT-A guide differs from Claude's preview build only in 2,008 outline-edge pixels (at most 2 of 255 levels); the face position is identical. Claude's first guess, a face-rounding difference, was wrong.
+- Background removal and fringe checks for all sprites; environment art, audio, the Godot slice, testing, and the film.
+
+**Traceability:** commit `d0199e8` (guides); ASSET-LOG.md Batch 1; `evidence/batch1-review.png`, `evidence/char-<pose>-cleanup.png`, `evidence/batch1-checksums.txt`; raw thumbnails in `art/source/` and `art/rejected/`.

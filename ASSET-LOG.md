@@ -83,3 +83,39 @@ One row per generation kept or seriously considered, plus every edit. Raw full-s
 - **Output:** `art/poses/CHAR-SCOOT-B.png` (checksum `4c0b08c6923f76e2c1363b415b34c4a86a08ae141aaa678a0decec160c261234`)
 - **Outcome:** **accepted as CHAR-SCOOT-B.** It preserves the sheet's stretch and lean, keeps the face close to CHAR-REF, and has a clean band at 72 px, with the faint face marks recorded as a minor remaining limitation.
 - **Where used:** the scoot loop's key pose B, drawn facing right and flipped at runtime.
+
+## Batch 1 — remaining poses (BORED, SCOOT-A, ANTIC, RISE, FALL, LAND, WORRY, CELEBRATE, SPLAT, RESPAWN)
+
+- **Guides:** `tools/make_pose_guides.py` (commit `d0199e8`, committed before any batch generation). Shapes and faces follow CHARACTER-SHEET.md; every body pixel comes from CHAR-REF. Neutral faces reuse CHAR-REF's face; expression poses reuse CHAR-REF's eye pixels where the sheet keeps dot eyes and draw the sheet's brows, mouths, lids, closed eyes, or X eyes in CHAR-REF's face color `#0F3236` at its smile's stroke width (23 px). Splat and re-form reshape CHAR-REF column by column ("9-slice") to the sheet's outline; splat droplets are the whole CHAR-REF body scaled down; re-form drip marks are left out.
+- **Guide pixel fingerprints (as built on my Mac):** BORED `e71b217d8e64d2ae`, SCOOT-A `a1d43047a1576b80`, ANTIC `81e27d52c8d9f4f8`, RISE `3817ab9dac3b451e`, FALL `59130cf7272c3808`, LAND `8be9f7560d5b5741`, WORRY `4c1b50993c5d6cae`, CELEBRATE `e2db31c27e3b736a`, SPLAT `246f33971f69869f`, RESPAWN `d095f24919a5030c`. Nine match Claude's preview build; SCOOT-A differs from the preview (`c89367734f6e8970`) only in 2,008 outline-edge pixels, each by at most 2 of 255 levels, with the face in the identical position (likely slightly different edge blending in the two machines' image libraries).
+- **Settings for every try 1:** the CHAR-REF prompt and negative prompt, SDXL Base (v1.0) in Draw Things 26.0924.0, 1024 × 1024, seed 7270, 30 steps, text guidance 7.0, DPM++ 2M AYS, shift 1.00, image to image at 50% from the pose's guide.
+- **CHAR-IDLE:** CHAR-REF itself (the sheet's idle pose is the resting cube); `art/poses/CHAR-IDLE.png` is a copy of `art/reference/CHAR-REF.png`. No new generation.
+- **Shapes:** every try 1 result's outer box is within 1 game px of its guide's.
+- **Edit tool:** `tools/remove_specks.py`, now also with `SELECT=pink` (only pinkish pixels) and a stop if a box leaves no untouched pixels around a mark. Re-running the CHAR-REF and CHAR-SCOOT-B edits with it gave their original fingerprints (`5fbc3cce005d71c8`, `023e9bea89d15c77`).
+- **Raw output checksums (SHA-256):** see the table. File checksums of every accepted pose: `evidence/batch1-checksums.txt`. Before-and-after at each pose's height: `evidence/char-<pose>-cleanup.png`. Batch review sheet: `evidence/batch1-review.png`.
+
+| Pose | Raw output (checksum) | Observed in raw output | Edit (tool settings and boxes) | Edit fingerprint | Outcome |
+|------|-----------------------|------------------------|--------------------------------|------------------|---------|
+| CHAR-BORED | `CHAR-BORED-try1-seed7270-s50.png` (`7dd8bb87…039a`) | Matches the guide; a faint smudge left of the left eye | None (a test cleanup left a visible rectangle in the low-contrast area and was dropped) | — | Accepted as-is; smudge documented |
+| CHAR-SCOOT-A | `CHAR-SCOOT-A-try1-seed7270-s50.png` (`0b41486d…3f2b`) | Shape matches; the mouth became a wavy "w"; two large soft patches beside the eyes | None | — | Rejected; retried with seed 7271 (next section) |
+| CHAR-ANTIC | `CHAR-ANTIC-try1-seed7270-s50.png` (`f9a3786b…d143`) | Brows and eyes match; a pink tongue under the mouth (off-palette, close to magenta) | `SELECT=pink GROW=2 FILL=smooth`, box 515 643 571 669 | `83396e0809c00898` | Accepted after edit; a soft dark shadow remains under the mouth |
+| CHAR-RISE | `CHAR-RISE-try1-seed7270-s50.png` (`bf1f0c49…52db5`) | Shape and face match; a teardrop "nose" between the eyes and two drips under the highlight | `THRESH=15 GROW=6 FILL=smooth`, boxes 559 334 607 390 · 514 166 549 223 · 582 166 613 234 | `187179dc273b9474` | Accepted after edit; faint drip tops remain at the highlight's edge |
+| CHAR-FALL | `CHAR-FALL-try1-seed7270-s50.png` (`3ca186a8…83d6`) | Shape and face match; seven raised bubbles on the face | `THRESH=15 GROW=6 FILL=smooth`, boxes 336 410 410 483 · 653 395 719 465 · 550 337 610 398 · 287 487 348 542 · 266 381 322 436 · 711 410 765 462 · 659 555 710 601 | `54b4e53be8c9de4f` | Accepted after edit |
+| CHAR-LAND | `CHAR-LAND-try1-seed7270-s50.png` (`279b34ca…ec88`) | Matches the guide | None | — | Accepted as-is |
+| CHAR-WORRY | `CHAR-WORRY-try1-seed7270-s50.png` (`7fc03689…b19b`) | Shape and face match; two light bubbles near the top right; faint dots at the band's corners | `THRESH=30 GROW=5 FILL=smooth`, boxes 598 248 674 309 · 578 282 634 319 (a first, larger box clipped the right brow and was redone) | `309ac423825dd995` | Accepted after edit; band corner dots documented |
+| CHAR-CELEBRATE | `CHAR-CELEBRATE-try1-seed7270-s50.png` (`5cacef9b…4534`) | Matches the guide; faint dots in the band, barely visible at game size | None | — | Accepted as-is; band dots documented |
+| CHAR-SPLAT | `CHAR-SPLAT-try1-seed7270-s50.png` (`2e37f99e…b52d`) | Matches the guide's outline and X eyes; droplets rendered as tiny rounded cubes | None | — | Accepted as-is |
+| CHAR-RESPAWN | `CHAR-RESPAWN-try1-seed7270-s50.png` (`26805d1c…6db5`) | Shape and eyes match; a small mouth-like mark (the sheet shows eyes only); the thin puddle reads mostly as outline | `THRESH=15 GROW=6 FILL=smooth`, box 498 598 565 667 | `71af26165dcead5f` | Accepted after edit |
+
+- **Where used:** `art/poses/<POSE>.png`, each pose's in-game frame, drawn facing right and flipped at runtime.
+
+### CHAR-SCOOT-A try 2 — seed 7271
+
+- **Settings:** the same as try 1 except seed 7271; guide `gen-inputs/pose-guide-CHAR-SCOOT-A.png` (commit `d0199e8`).
+- **First export, set aside:** pixel-identical to try 1 (the seed change had not taken effect, or an older history entry was exported). Kept outside the repo as `CHAR-SCOOT-A-try2-INVALID-identical-to-try1.png`; not used.
+- **Raw output:** `CHAR-SCOOT-A-try2-seed7271-s50.png` (checksum `c4d6026d1d60f3db549cf1f3e27575304ab0c83a766f7b9be5c6ab55c1585d82`), confirmed different from try 1 · thumbnail `art/source/CHAR-SCOOT-A-try2-raw-seed7271-s50-thumb.png`
+- **Observed:** shape matches (character box 721 × 524 px; guide 723 × 525). The mouth matches the guide's (CHAR-REF's small smile); no side patches. New: a curved stroke extending from the outer bottom edge of each eye (x 440–470, y 501–520 and x 702–736, y 499–513).
+- **Edit:** `GROW=3 FILL=smooth python3 tools/remove_specks.py … 430 491 468 530 704 489 746 523`; 1,165 pixels in the two boxes; output pixel fingerprint `cb0e787580f8e49e`; raw checksum unchanged. Small stubs remain where the strokes met the eyes, visible at 2× zoom but not at game size.
+- **Output:** `art/poses/CHAR-SCOOT-A.png` (file checksum in `evidence/batch1-checksums.txt`); comparison of guide, try 1, try 2, and the edit at 56 px: `evidence/char-scoot-a-56px-compare.png`.
+- **Outcome:** accepted after the edit in my review: at game size it matches the guide's shape, eyes, and mouth.
+- **Where used:** the scoot loop's key pose A, drawn facing right and flipped at runtime.
