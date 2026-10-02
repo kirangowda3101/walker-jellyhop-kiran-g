@@ -134,3 +134,67 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Which free or local generation tools to use.
 
 **Traceability:** commits `8d7b67a`, `79ed580`, `97e8555`, `8419e5e`; panels in `design/storyboard/`; drawing script `tools/make_storyboard_svgs.py`. No asset-log rows exist yet.
+
+
+---
+
+## 2026-10-01 — Character sheet and change brief decisions, before image or audio asset generation
+
+**Status (confirmed):** Committed today: FRICTIONAL.md (`8d7b67a`, `66f5994`), CONCEPT.md (`79ed580`), STORYBOARD.md (`97e8555`), `.gitignore` (`8419e5e`), CHARACTER-SHEET.md with 5 SVG reference images and their drawing script (`600cdcb`), and CHANGE-BRIEF.md (`04511fd`). All four required design documents are committed. No image or audio generative model has been used. There is no Godot project yet.
+
+**Character sheet decisions:**
+
+| # | Decision | My choice | My reason |
+|---|----------|-----------|-----------|
+| 1 | Base viewport | 1280 × 720 | Enough detail for the jelly's expressions and smooth cartoon shapes to read clearly, while keeping the scene easy to compose. It matches the storyboard's 16:9 framing. |
+| 2 | On-screen size | 64 px tall | Small beside the plates and forks, while keeping its eyes, mouth, and squash-and-stretch poses readable during play. |
+| 3 | Facing | Face toward the camera; eyes and a slight lean show direction; drawn facing right, flipped for left | Expressions stay visible while the jelly clearly faces the way it moves, and the cues stay readable even when idle. |
+| 4 | Resting shape | A true cube, 64 × 64 | A clear resting shape makes the squash and stretch noticeable and gives the jelly a consistent identity. |
+| 5 | Highlight | Top-center | Left and right poses stay visually consistent when flipped; the lighting stays stable while the eyes and lean show direction. |
+| 6 | Collision (first choice) | One fixed 52 × 58 box, bottom-aligned | Predictable collision while the jelly squashes and stretches, with a little forgiveness around its soft edges. |
+| 7 | Jelly color | Turquoise / aqua | A bright, playful identity against the dim table; warm red-brown sauce contrasts clearly with it. |
+| 8 | Palette | Accepted `#3CCFC4`, `#1F8E92`, `#E8FFFA`, `#0F3440` | The aqua stands out against the dark table, the warm sauce looks distinct from the character, and the dark outline keeps the face and shape readable on pale plates. |
+| 9 | Movement on a plate | Scoots left and right with a wobble; hops between plates | Players can adjust position before committing to a hop, and the wobble connects movement to its soft body. |
+| 10 | Pose set | 13 poses, including bored | Waiting is part of the gameplay, so it should have personality, with a droop and expression distinct from idle and worried. |
+| 11 | Bored vs worried | Worried always overrides bored | The expression should draw attention to danger as soon as the shadow starts. |
+| 12 | How the images were made | Claude-drawn SVG from a script; I review before committing | Poses at a consistent scale, with collision overlays and an actual-size silhouette check, as planning references for the later image-model assets. |
+
+**Inspect and revise (character sheet):**
+- **Saw:** in the first collision overlay, the fixed box stuck out above the low poses (crouch 8 px, squash 12 px, splat 36 px, re-forming 18 px), so a fork could visibly miss and still hit.
+- **Decided:** two bottom-aligned boxes: standing 52 × 58, and low 52 × 44 for crouch and landing. My reason: collision should follow the low poses more fairly, while bottom alignment keeps contact with the plate consistent.
+- **Decided:** no hits during splat and re-form. Once the jelly has failed, another hit shouldn't interrupt its recovery or trigger another splat sound; hazards detect it again when control returns.
+- **Saw:** in the first silhouette test, idle and relief looked almost the same, and so did bored and falling.
+- **Changed:** relief became a taller stretch, wider at the top, and bored became a lower, wider slump. My reason: the mood should read through the body shape as well as the face.
+- **Checked:** I asked for the revised overlays to be checked so the new bored shape didn't recreate the invisible-hit problem. It would have (the standing box sat 10 px above it), so I chose the low box for bored as well.
+- **Accepted with a note:** Scoot A's standing box sits 2 px above the art. Kept for playtesting.
+- I approved all five revised images before committing them in `600cdcb`.
+
+**Change brief decisions:**
+
+| # | Decision | My choice | My reason |
+|---|----------|-----------|-----------|
+| 13 | Splat sounds | Two: SFX-SPLAT-FORK (heavier squish, brief metallic impact) and SFX-SPLAT-SAUCE (softer, wet) | Each failure should sound like its cause, play once per failure, and stay playful rather than harsh. |
+| 14 | Scoot sound | None | The wobble animation gives scooting its personality, and quiet scooting lets the scrape, hop, and landing stand out during timing decisions. |
+| 15 | Which forks scrape | Only forks whose shadow is on screen; a shadow that scrolls into view later gets no late scrape | The scrape should point to a threat the player can see, without distant forks cluttering the audio. |
+| 16 | Which shadows dip the music | Only on-screen shadows (refines the earlier "any shadow" rule) | The music change should match visible danger, and off-screen forks shouldn't keep it muffled when the view is clear. |
+| 17 | Background | A generated room layer (ENV-ROOM, new) plus a repeating generated table strip | The dim room sets the scale and mood, the table gives the route a consistent surface, and separate layers let me adjust brightness for readability. |
+| 18 | Fork shadow | Code-drawn in Godot | The shadow is a timing cue, so I want direct control over its size, visibility, and growth, keeping the countdown consistent and readable muted. |
+| 19 | Poses to generate | All 12 gameplay poses | The jelly's visual style should stay consistent through movement, danger, failure, recovery, and success. |
+| 20 | Double-trigger plan | Approved after I asked to see the full rules written out | Each sound plays only on its state change; guards cover held keys, skip and restart presses, respawn, off-screen shadows, and repeat wins. |
+| 21 | Predicted failures | Approved all 15 | They cover art drift and readability, double triggers, off-screen audio, the music seam, camera look-ahead, respawn timing, shake, Scoot A, and muted play. |
+
+**Human / Claude / model:**
+- **Kiran:** every choice and reason above; asking for revised overlays to be checked; choosing two boxes, hits off, the redrawn silhouettes, and the low box for bored; reviewing and approving the images, the trigger rules, and the failure list; typing, running, and committing everything.
+- **Claude:** asked the questions one at a time with trade-offs; drafted the palette hex values and the contrast check; wrote and revised `tools/make_character_svgs.py`; pointed out the collision and silhouette findings; drafted the trigger plan, the failure list, CHARACTER-SHEET.md, CHANGE-BRIEF.md, and this entry from our conversation.
+- **Generative models:** none used yet.
+
+**Still unresolved:**
+- Starting point: an empty Godot 4 project or the walker-jumpman structure.
+- Whether cups are also platforms.
+- Fork rhythm timings, bored delay, splat and re-form duration, and pan length (to tune in playtesting).
+- Final environment colors and sizes (current ones are placeholders).
+- How the room layer moves as the camera scrolls.
+- Controls, including the pause and mute keys.
+- Which free or local image, audio, and music models to use.
+
+**Traceability:** commits `600cdcb` and `04511fd`; images in `design/character/`; drawing script `tools/make_character_svgs.py`. No asset-log rows exist yet.
