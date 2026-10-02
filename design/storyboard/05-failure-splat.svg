@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" font-family="Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+<marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
+<pattern id="h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c8c8c8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#333" stroke-width="2"/></pattern>
+</defs>
+<rect x="0" y="0" width="640" height="360" fill="#fafafa"/>
+<rect x="0" y="0" width="640" height="26" fill="#111"/><text x="10" y="18" font-size="13" font-weight="bold" fill="#fff">5 · MEDIUM · EYE LEVEL · GAMEPLAY VIEW (failure: splat)</text>
+<rect x="0" y="270" width="640" height="90" fill="#555"/>
+<path d="M200,258 L440,258 L426,270 L214,270 Z" fill="#ececec" stroke="#111" stroke-width="2"/><line x1="220" y1="262" x2="420" y2="262" stroke="#999" stroke-width="1.5"/>
+<rect x="316" y="26" width="8" height="200" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><path d="M301.0,226 L339.0,226 L339.0,232 L301.0,232 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><path d="M300.5,232 L305.5,232 L303.0,262 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M311.8333333333333,232 L316.8333333333333,232 L314.3333333333333,262 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M323.1666666666667,232 L328.1666666666667,232 L325.6666666666667,262 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M334.5,232 L339.5,232 L337.0,262 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/>
+<path d="M370,60 L370,190" stroke="#111" stroke-width="2.5" marker-end="url(#ar)"/>
+<path d="M248,258 q20,-16 40,-10 q10,-14 32,-4 q22,-12 34,2 q22,-6 34,12 Z" fill="#fff" stroke="#111" stroke-width="2.5"/>
+<circle cx="250" cy="226" r="5" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="398" cy="222" r="6" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="230" cy="244" r="3.5" fill="#fff" stroke="#111" stroke-width="2"/><circle cx="414" cy="244" r="4" fill="#fff" stroke="#111" stroke-width="2"/>
+<path d="M282,252 l6,-6 M282,246 l6,6 M352,252 l6,-6 M352,246 l6,6" stroke="#111" stroke-width="2"/>
+<text x="320" y="300" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">splat · the fork stays in view (cause is visible)</text>
+<path d="M14,40 l10,8 l-10,8 l10,8 M626,40 l-10,8 l10,8 l-10,8 M14,300 l10,8 l-10,8 l10,8 M626,300 l-10,8 l10,8 l-10,8" fill="none" stroke="#111" stroke-width="2"/>
+<text x="40" y="52" font-size="11" fill="#111" text-anchor="start" font-weight="normal">CAMERA: short shake (fork splat only) · input locked</text>
+<text x="440" y="330" font-size="10" fill="#fff" text-anchor="start" font-weight="normal">(sauce splat: same pose, no shake)</text>
+<rect x="1.5" y="1.5" width="637" height="357" fill="none" stroke="#111" stroke-width="3"/>
+</svg>

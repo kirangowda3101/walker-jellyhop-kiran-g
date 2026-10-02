@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" font-family="Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+<marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
+<pattern id="h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c8c8c8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#333" stroke-width="2"/></pattern>
+</defs>
+<rect x="0" y="0" width="640" height="360" fill="#fafafa"/>
+<rect x="0" y="0" width="640" height="26" fill="#111"/><text x="10" y="18" font-size="13" font-weight="bold" fill="#fff">3 · CLOSE-UP · LOW ANGLE · DESIGN VIEW (the warning: worried pose)</text>
+<polygon points="0,360 640,360 640,300 0,300" fill="#555"/>
+<ellipse cx="320" cy="312" rx="300" ry="34" fill="#ececec" stroke="#111" stroke-width="2.5"/>
+<ellipse cx="320" cy="314" rx="190" ry="20" fill="#222" opacity="0.6"/>
+<ellipse cx="320" cy="314" rx="110" ry="12" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M435,314 L500,314" stroke="#111" stroke-width="2" marker-end="url(#ar)"/><path d="M205,314 L140,314" stroke="#111" stroke-width="2" marker-end="url(#ar)"/>
+<text x="450" y="232" font-size="12" fill="#111" text-anchor="start" font-weight="bold">shadow grows =</text>
+<text x="450" y="248" font-size="12" fill="#111" text-anchor="start" font-weight="bold">visual countdown</text>
+<rect x="255" y="168" width="130" height="140" rx="29" fill="#fff" stroke="#111" stroke-width="2.5"/><circle cx="296.6" cy="216.64999999999998" r="9.100000000000001" fill="#111"/><circle cx="343.4" cy="216.64999999999998" r="9.100000000000001" fill="#111"/><path d="M282.04,201.17999999999998 L309.34000000000003,192.07999999999998 M357.96,201.17999999999998 L330.65999999999997,192.07999999999998" stroke="#111" stroke-width="2"/><ellipse cx="320.0" cy="263.2" rx="7.8" ry="8.4" fill="none" stroke="#111" stroke-width="2"/>
+<polygon points="270,26 370,26 360,58 280,58" fill="#9a9a9a" stroke="#111" stroke-width="2"/>
+<polygon points="278,58 294,58 286,128" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><polygon points="298,58 314,58 306,128" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><polygon points="326,58 342,58 334,128" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><polygon points="346,58 362,58 354,128" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/>
+<text x="390" y="70" font-size="11" fill="#111" text-anchor="start" font-weight="normal">fork looms huge (small in a giant world)</text>
+<path d="M392,86 q40,20 10,50" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="20" y="232" font-size="11" fill="#111" text-anchor="start" font-weight="normal">worried face,</text>
+<text x="20" y="247" font-size="11" fill="#111" text-anchor="start" font-weight="normal">eyes look up at the fork</text>
+<text x="20" y="160" font-size="11" fill="#111" text-anchor="start" font-weight="bold">SFX-WARN: scrape plays once</text>
+<text x="20" y="175" font-size="11" fill="#111" text-anchor="start" font-weight="normal">as the shadow starts</text>
+<rect x="1.5" y="1.5" width="637" height="357" fill="none" stroke="#111" stroke-width="3"/>
+</svg>

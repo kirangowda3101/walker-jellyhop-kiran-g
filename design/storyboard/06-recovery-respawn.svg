@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" font-family="Helvetica, Arial, sans-serif">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+<marker id="aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
+<pattern id="h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c8c8c8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#333" stroke-width="2"/></pattern>
+</defs>
+<rect x="0" y="0" width="640" height="360" fill="#fafafa"/>
+<rect x="0" y="0" width="640" height="26" fill="#111"/><text x="10" y="18" font-size="13" font-weight="bold" fill="#fff">6 · MEDIUM · EYE LEVEL · GAMEPLAY VIEW (recovery: respawn and retry)</text>
+<rect x="0" y="270" width="640" height="90" fill="#555"/>
+<path d="M50,258 L230,258 L216,270 L64,270 Z" fill="#ececec" stroke="#111" stroke-width="2"/><line x1="70" y1="262" x2="210" y2="262" stroke="#999" stroke-width="1.5"/>
+<path d="M400,258 L580,258 L566,270 L414,270 Z" fill="#ececec" stroke="#111" stroke-width="2"/><line x1="420" y1="262" x2="560" y2="262" stroke="#999" stroke-width="1.5"/>
+<path d="M250,268 q40,-7 90,-2 q35,4 40,4 l0,4 l-130,0 Z" fill="url(#h)" stroke="#111"/>
+<path d="M106,258 q14,-10 34,-6 q20,-8 34,6 Z" fill="#fff" stroke="#111" stroke-width="2"/>
+<rect x="115" y="204" width="50" height="50" rx="11" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 3"/>
+<path d="M128,246 l0,-24 M152,246 l0,-24" stroke="#111" stroke-width="2" marker-end="url(#ar)"/>
+<text x="140" y="196" font-size="10" fill="#111" text-anchor="middle" font-weight="normal">re-forms (input locked until whole)</text>
+<rect x="136" y="26" width="8" height="58" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><path d="M125.0,84 L155.0,84 L155.0,90 L125.0,90 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><path d="M124.5,90 L129.5,90 L127.0,120 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M133.16666666666666,90 L138.16666666666666,90 L135.66666666666666,120 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M141.83333333333334,90 L146.83333333333334,90 L144.33333333333334,120 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M150.5,90 L155.5,90 L153.0,120 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/>
+<text x="162" y="80" font-size="10" fill="#111" text-anchor="start" font-weight="normal">this fork restarts at its safe window</text>
+<ellipse cx="490" cy="258" rx="50" ry="5" fill="#222" opacity="0.7"/>
+<rect x="486" y="26" width="8" height="88" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><path d="M474.0,114 L506.0,114 L506.0,120 L474.0,120 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.5"/><path d="M473.5,120 L478.5,120 L476.0,150 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M482.8333333333333,120 L487.8333333333333,120 L485.3333333333333,150 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M492.1666666666667,120 L497.1666666666667,120 L494.6666666666667,150 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/><path d="M501.5,120 L506.5,120 L504.0,150 Z" fill="#9a9a9a" stroke="#111" stroke-width="1.2"/>
+<text x="490" y="300" font-size="11" fill="#fff" text-anchor="middle" font-weight="normal">next fork still on its rhythm</text>
+<text x="140" y="300" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">last safe plate</text>
+<path d="M430,54 L200,54" stroke="#111" stroke-width="2.5" marker-end="url(#ar)"/>
+<text x="430" y="44" font-size="10" fill="#111" text-anchor="end" font-weight="normal">CAMERA: glides back to the jelly (no snap)</text>
+<text x="250" y="120" font-size="12" fill="#111" text-anchor="start" font-weight="bold">watch one cycle, then hop</text>
+<rect x="1.5" y="1.5" width="637" height="357" fill="none" stroke="#111" stroke-width="3"/>
+</svg>
