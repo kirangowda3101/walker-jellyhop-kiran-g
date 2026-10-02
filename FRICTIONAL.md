@@ -73,3 +73,64 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Which free or local generation tools to use (on my Mac or through Northeastern resources).
 
 **Traceability:** No asset-log rows, commits, prompts, screenshots, or tests exist yet.
+
+
+---
+
+## 2026-10-01 — Storyboard decisions and my review, before image or audio asset generation
+
+**Status (confirmed):** Committed so far: FRICTIONAL.md (`8d7b67a`), CONCEPT.md (`79ed580`), STORYBOARD.md with 7 SVG panel sketches and their drawing script (`97e8555`), and `.gitignore` (`8419e5e`). No image or audio generative model has been used. There is no Godot project yet.
+
+**How the storyboard sketches were made:** I chose simple boxes-and-labels SVG thumbnails drawn by Claude. I specified that they must show actual scene layouts with the jelly, plates, forks, and shadows; three shot sizes; three camera angles; motion arrows in at least two panels; and clear gameplay and design-view labels. My reason: simple drawings are enough when the visual planning is clear. Claude wrote `tools/make_storyboard_svgs.py`; I typed it in with nano and ran it to create the panels.
+
+**My review of Claude's first storyboard draft (before I created any files):** I stopped and asked for changes because:
+- Panel 6 let the music return to normal on respawn even if a warning shadow was still growing. It must stay quieter while any shadow grows.
+- ENV-TABLE was missing from asset lists where the table appears.
+- It did not explain how respawning stays safe if the checkpoint plate's fork keeps cycling.
+- It added an intro transition, camera shake, input locks, and a replay prompt that I had not decided on.
+- "Before any generation" was not precise. I now use "before image or audio asset generation."
+
+**Decided:**
+
+| # | Decision | My choice | My reason |
+|---|----------|-----------|-----------|
+| 1 | Respawn safety | The checkpoint plate's fork cycle resets on respawn and restarts at its safe window; other forks keep their rhythms | I want a quick retry with a fair chance to regain control. Resetting that plate's fork gives a calm safe window followed by the full warning, while keeping the plate dangerous on the next attempt. The other forks keep their rhythms, so I can still use what I learned. |
+| 2 | Intro pan | The slice opens with an eye-level side-view pan from the dome back to the jelly; Panel 1's high-angle shot is a design view only | I want players to see the dome as their goal and get a sense of how big the table feels from the jelly's perspective. Panning back to the jelly connects that destination to the starting point. |
+| 3 | Skipping the intro | Always skippable with any key, even the first time; movement is locked during the pan; the skip key never triggers a hop | The pan sets up the world and goal, but I want players to choose whether to watch it or start playing immediately. |
+| 4 | Camera shake | A short camera-only shake on a fork splat; no shake for sauce | I want the shake to show the weight of a giant fork hitting the plate. Falling into sauce feels softer, so the splat pose and sound suit it better. That gives each failure its own feel while keeping the shake subtle enough to preserve readability. |
+| 5 | Input lock after a splat | Locked through the splat and re-form; control returns when the jelly is whole, and the checkpoint's safe window starts then | I want the failure and recovery animations to read clearly, but stay brief so retries feel quick. |
+| 6 | Jump pressed or held during the lock | Ignored; the next hop needs a fresh press | I want the next hop to be a deliberate timing decision. Holding jump through a splat shouldn't launch the jelly straight back into danger. |
+| 7 | End of the slice | A prompt waits; any key restarts on the first plate with no intro pan; every fork cycle and checkpoint resets; the music starts again | I want players to enjoy the win moment and choose when to try again. Replay should go straight into gameplay. |
+| 8 | Restart key | Never triggers a hop | Restarting and jumping should be separate decisions. I want to regain control on the first plate and choose when to move. |
+| 9 | Music during the intro | Starts quieter during the pan, rises to normal when play begins; stays quieter and muffled if a warning shadow is active | I want the music to establish the playful, slightly tense mood from the start, while staying quiet enough for players to take in the table and the dome. Raising it when control begins helps the transition into gameplay feel connected. |
+
+**Inspect and revise (storyboard):**
+- **Saw:** previewing all seven panels on my Mac, the first fork in Panel 1 crossed the title text.
+- **Decided:** fix it now rather than leave it.
+- **Changed:** Claude proposed splitting the title onto two lines. I made the edit in nano, re-ran the script, and checked Panel 1 again. The title no longer overlaps the fork. This fix is included in `97e8555`.
+
+**Wording note:** CONCEPT.md v1 says "written before any generation." I now use the clearer wording "before image or audio asset generation." CONCEPT.md is not rewritten.
+
+**Checks raised in discussion** (to carry into CHANGE-BRIEF.md; none tested yet):
+- The skip key or the restart key also triggers a hop.
+- A jump held through the splat fires a hop when control returns.
+- The camera shakes on a sauce splat.
+- The checkpoint fork does not reset to its safe window on respawn.
+- The music stays quiet after a skipped intro, or returns to normal while a shadow is still growing.
+
+**Human / Claude / model:**
+- **Kiran:** every decision and reason above; the review that sent the first storyboard draft back; choosing to fix Panel 1; typing, running, and checking the script and files.
+- **Claude:** drafted STORYBOARD.md and the SVG drawing script, asked the questions above one at a time, proposed the Panel 1 fix, and organized this entry from our conversation.
+- **Generative models:** none used yet.
+
+**Still unresolved** (carried from the first entry unless noted):
+- Starting point: an empty Godot 4 project or the walker-jumpman structure.
+- Whether cups are also platforms.
+- Final sound event list, and whether fork and sauce splats share one sound.
+- Screen resolution and the jelly's size on screen.
+- Fork rhythm timings, splat and re-form duration, and pan length (to tune in playtesting).
+- Jelly, sauce, table, and fork colors.
+- A wide generated background, or a repeating tablecloth strip.
+- Which free or local generation tools to use.
+
+**Traceability:** commits `8d7b67a`, `79ed580`, `97e8555`, `8419e5e`; panels in `design/storyboard/`; drawing script `tools/make_storyboard_svgs.py`. No asset-log rows exist yet.
