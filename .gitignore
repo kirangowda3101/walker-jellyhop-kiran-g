@@ -1,0 +1,9 @@
+# macOS Finder files
+.DS_Store
+
+# Godot cache (rebuilt automatically)
+.godot/
+
+# The course keeps these out of GitHub
+*.mp3
+*.mp4
