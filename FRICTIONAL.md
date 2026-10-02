@@ -247,3 +247,51 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Audio and music models; starting point for the Godot project.
 
 **Traceability:** ASSET-LOG.md rows CHAR-REF-A, CHAR-REF-B, CHAR-REF-B edit, and CHAR-REF-C; guide commit `904b22a`; evidence in `evidence/`; thumbnails in `art/source/` and `art/rejected/`.
+
+
+---
+
+## 2026-10-02 — First derived pose: CHAR-SCOOT-B
+
+**Status (confirmed):** CHAR-SCOOT-B accepted, the first of the 12 gameplay poses derived from CHAR-REF. The pose-guide tool and the guide were committed in `85e7786` before generating. Full details and checksums: ASSET-LOG.md, CHAR-SCOOT-B rows.
+
+**Strategy decisions:**
+- **How poses are derived:** warp CHAR-REF into each pose's shape, then image to image. That keeps every pose derived from the accepted reference, with the character sheet defining the target shape. I chose to test one pose first and check the face, highlight, outline, and readability at game size before making the rest.
+- **Face during the warp:** warp the body and keep the face unwarped, so eye size, spacing, and mouth stay consistent while the body stretches and leans.
+- **First test pose:** Scoot B, because it challenges the shape without also changing the expression.
+
+**My review of the warp tool (before I saved it):** I found two mismatches and asked for fixes:
+- The scale assumed CHAR-REF was 576 × 576 px, but its measured bounds are 604 × 601. On checking, the width and height were already scaled relative to the measured bounds, but the 576 value was still used for the taper. The script now uses the measured bounds throughout and prints the size it actually produced (71.9 × 55.8 game px for a 72 × 56 target).
+- The eye line averaged the eyes and the mouth together. The eyes are now found on their own and placed explicitly 38% down from the pose's top, with the face unscaled.
+- I accepted the revised guide after comparing it with the sheet. Known issue: a small outline notch at the bottom right, to be checked in the generated result at 72 px.
+
+**Settings:** I kept everything identical to CHAR-REF-B (same prompt, seed 7270, 60%) as a first comparison, changing only the guide.
+
+| Try | Strength | Prediction (written before generating; reviewed and confirmed by me) | What came back |
+|-----|----------|-----------------------------------------------------------------------|----------------|
+| 1 | 60% | "I expect the guide to preserve most of the stretch and rightward lean, though the cube wording may pull it toward a squarer, more upright shape. I expect the face to stay close to CHAR-REF and the outline notch to soften, with some risk of new specks or changes to the eyes and highlight." | The stretch and lean were kept and the notch was smoothed, but the smile grew wider and deeper and lilac blush spots appeared under the eyes, visible at 72 px. There was more glossy shading. |
+| 2 | 50% | "I expect 50% strength to keep the stretch and lean while preserving the smaller smile more closely and reducing the chance of blush. It may add less glossy shading, and I'll check whether the outline stays smooth or the guide's notch returns." | All of that held: the small smile, no blush, less gloss, a smooth corner, and the shape within 1 px of the guide. New: four faint dots in the band, visible at 72 px, and faint pale marks on the face. |
+
+**My judgment:**
+- **After try 1:** I retried at 50% with everything else unchanged. The shape and lean already worked, so I wanted to test whether lower strength preserves CHAR-REF's small smile and avoids the blush. Face and palette consistency matter more to me than the extra glossy shading.
+- **After try 2:** I accepted it after a logged edit removing the four band dots. It preserves the intended shape and small smile, so I kept those strengths and cleaned up the unwanted detail, with tight boxes, the raw output preserved, and a 72 px check before final acceptance. I left the faint face marks, since they are barely noticeable at game size.
+
+**Inspect and revise (the cleanup):**
+- **Saw:** Claude's first cleanup test used the flat fill from CHAR-REF, and it left visible square patches in the band's shading, so that version was rejected.
+- **Changed:** a lower threshold for the fainter dots, a wider margin for their halos, and a smooth fill that blends each area in from the surrounding band. I approved this because preserving the band's shading makes sense. The updated script still reproduces the CHAR-REF edit exactly (fingerprint `5fbc3cce005d71c8`), which I re-ran and checked.
+- **Verified on my Mac:** fingerprint `023e9bea89d15c77`, matching the approved preview; the raw checksum unchanged; the character box unchanged; a clean band at 72 px.
+- **Accepted as CHAR-SCOOT-B** (`art/poses/CHAR-SCOOT-B.png`): it preserves the sheet's stretch and lean, keeps the face close to CHAR-REF, and has a clean band at 72 px, with the faint face marks recorded as a minor remaining limitation.
+
+**Human / Claude / model:**
+- **Kiran:** chose the warp strategy, the unwarped face, and Scoot B first; caught the two warp-tool mismatches; accepted the guide and noted the notch; chose identical settings for try 1 and 50% for try 2; reviewed and confirmed the predictions; chose to clean up try 2 with tight boxes and leave the face marks; approved the cleanup method; ran every generation, edit, and check on my Mac; accepted the final pose.
+- **Claude:** proposed the three pose strategies and the two face options; wrote and revised `make_pose_guide.py`, `check_64px.py` (`TARGET_H`), and `remove_specks.py` (`THRESH`, `GROW`, `FILL`); built and checked previews from my uploaded files; tested and rejected the flat fill; suggested what the predictions should consider; described each output against the sheet; drafted the asset log rows and this entry.
+- **Model (SDXL Base 1.0):** produced both raw tries. In try 1 it added blush, a bigger smile, and glossy shading; in try 2 it added the band dots and faint face marks.
+
+**Still unresolved:**
+- The faint face marks in CHAR-SCOOT-B (minor, barely visible at 72 px).
+- Outline thickness varies slightly with stretching (thicker top and bottom, thinner sides).
+- The size convention: poses are measured to the outline's outer edge, while the sheet's drawings measure to its center line (about 3 game px difference in height).
+- Expression poses (bored, crouch, landing, worried, splat, re-form, relief) need a face change, which this unwarped-face method does not yet handle.
+- 10 more gameplay poses, the environment art, audio, and the Godot slice.
+
+**Traceability:** commit `85e7786` (guide and tool); ASSET-LOG.md rows CHAR-SCOOT-B try 1, try 2, and try 2 edit; evidence `evidence/char-scoot-b-72px-compare.png` and `evidence/char-scoot-b-cleanup-72px.png`; thumbnails in `art/source/` and `art/rejected/`.

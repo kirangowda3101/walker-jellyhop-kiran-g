@@ -1,17 +1,19 @@
 """Shows candidate images at real game size for a readability check.
 Written by Claude at Kiran's request.
 Usage: python3 tools/check_64px.py OUTPUT.png IMAGE1.png IMAGE2.png ...
+       TARGET_H=72 python3 tools/check_64px.py ...   (check at a pose's own height)
 For each image, finds the character's own bounds (pixels where green clearly exceeds red,
 which catches the turquoise body and dark teal outline but not the magenta or purple
-background), crops to them, and scales the crop to 64 px tall, keeping its proportions.
+background), crops to them, and scales the crop to TARGET_H px tall (default 64, the
+resting cube), keeping its proportions.
 Top row: actual game size on the dim table color. Bottom row: the same pixels enlarged 4x
 (nearest neighbor), so lost detail is easy to see. Prints each crop box for the log.
 """
-import sys
+import os, sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-TARGET_H = 64             # resting jelly height in game px
+TARGET_H = int(os.environ.get("TARGET_H", "64"))   # game px tall
 ZOOM = 4
 TABLE = (42, 35, 32)      # placeholder table color #2A2320
 out_path, paths = sys.argv[1], sys.argv[2:]
