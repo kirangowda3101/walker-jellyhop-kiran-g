@@ -336,3 +336,46 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Background removal and fringe checks for all sprites; environment art, audio, the Godot slice, testing, and the film.
 
 **Traceability:** commit `d0199e8` (guides); ASSET-LOG.md Batch 1; `evidence/batch1-review.png`, `evidence/char-<pose>-cleanup.png`, `evidence/batch1-checksums.txt`; raw thumbnails in `art/source/` and `art/rejected/`.
+
+---
+
+## 2026-10-02 — Batch 2: environment art
+
+**Status (confirmed):** six environment assets accepted in my batch review after 16 generations: ENV-ROOM try 3, ENV-TABLE try 5, ENV-PLATE try 3, ENV-SAUCE try 2, ENV-FORK try 2, ENV-DOME try 1. The plate, sauce, fork, and dome came from drawn guides at 50% after text-only tries failed. All four sprites and the 12 poses now have transparent cut-outs in `art/game/`. Details, prompts, and fingerprints: ASSET-LOG.md, Batch 2; `gen-inputs/batch2-env-prompts.md`.
+
+**Prompts record (correction):** the plan was to commit the Batch 2 prompts file before generating. I ran the commit steps right after the Batch 1 push, but the first command failed (`mv ~/Downloads/batch2-env-prompts.md gen-inputs/`: "No such file or directory"), so nothing was added or committed ("nothing to commit, working tree clean"; the push reported "Everything up-to-date"). The failure went unnoticed, and in that chat I reported the step as done; Claude's handoff then recorded the file as committed and pushed, from my report rather than from a commit hash, which was wrong. The processing script found the file missing from the repository and from `~/Downloads`, and my Terminal history showed the failed commands. I asked for the file to be restored with the prompts and settings actually used, and for the guided retries to be recorded accurately before committing. The restored file says it was written after generation, and its planned prompts match the original copy in the earlier chat's file export word for word. This batch therefore has no committed-before-generation prompt record, and no prediction was written before it.
+
+**Design decisions:**
+- **Dome (before generating):** a transparent interior with the rim and highlights kept, "so the jelly remains visible underneath"; any masking or transparency edits logged explicitly, because "a frosted appearance alone won't solve the magenta showing through the glass."
+- **Guide for the plate (after two text-only tries):** "I want the plate to fit the side-view gameplay and make its landing surface clear. The two text-only attempts haven't achieved that, so let's guide the shape and log the method change."
+- **Closeness to the guides (batch review):** the guided plate, sauce, fork, and dome stay close to the drawn guides (4–19% of each object's pixels changed noticeably). I chose to accept them as they are and document this plainly, rather than rerun them at a higher strength.
+- **Dome edge (batch review):** no extra generations for the dome's minor ragged inner edge.
+
+**Routine choices made by Claude (from the approved design):**
+- Prompt changes between tries, each aimed at what the previous output showed: removing "dining room" and "dinner table" wording, which pulled in furniture and place settings; describing the table strip as full-frame cloth and then as a velvet curtain; adding the plate's failure words (angled view, 3d render, surface, purple) to the sauce, fork, and dome negatives.
+- Extending the plate's guide method to the sauce and the fork after their text-only tries failed the same way, and starting the dome guided, with no text-only try.
+- The sauce's pink highlight recolored to a warm highlight (as with the pink tongue in Batch 1, it was off-palette and close to the key color).
+- Table processing values: bottom band dropped, 75% saturation, 50% brightness, 160 px seam blend. The room used as generated, resized only. Poses cut out on their full canvas so the frames stay aligned.
+- Table try 4 (a wood plank) was set aside as a fallback; using it would have changed the approved tablecloth design.
+
+**What came back:** text-only prompts kept producing scenes rather than single assets: furniture in the room, place settings on the table, a row of utensils pointing up for the fork, and sauce on a plate. They also kept producing angled top views with gradient or floor backgrounds for the plate and sauce. Fixing the table took five tries. With guides, every shape held (object boxes within 11 px of the guides), and SDXL restyled the shading and outline. It also added a pink highlight on the sauce, a mint tint on the dome's knob and rim, and a ragged inner glass edge on the dome.
+
+**Inspect and revise:**
+- **Cut-out tool (Claude's tests before I ran it):** a plain distance threshold left a one-pixel magenta line outside every outline. Edge pixels mixing the dark outline with magenta were too far from the background color to be keyed. A 2 px edge ring fixed it. Un-mixing edge colors from the nearest solid pixel then left a faint green line on dark backgrounds and ragged white bits on the dome. Matching each edge pixel to the best-fitting nearby solid color fixed the green line. The dome's ragged bits come from the raw output itself. The first sauce recolor left a pink ring around the highlight; blending the transition pixels fixed it.
+- **Guides (Claude's previews):** the first sauce guide had spiky outline artifacts and a kinked top. The outline drawing and curve control points were corrected before I used it.
+- **Batch script:** in Claude's dry run, a failing step inside a helper function stopped the script without the stop message; the script now reports the failing command. The batch scripts check every step and stop on failure; the manual prompts-file commit above had no such check. On my Mac the script stopped because plate try 2 had not been exported. I exported it from the version history, and the rerun confirmed every retry differs from the try before it.
+- **Results:** zero magenta fringe on the plate, sauce, fork, and all 12 poses. The dome has 59 remaining magenta-like pixels, not visible at game size. The table seam is no more visible than the strip's normal fold-to-fold variation. Every fingerprint matched between Claude's dry run and my Mac.
+
+**Human / Claude / model:**
+- **Kiran:** set the dome transparency requirement; chose to guide the plate and gave the reason; ran all 16 generations and exports in Draw Things and both runs of the processing script; reviewed the batch; accepted the six assets; chose to document the guides' closeness rather than rerun; asked for the prompts file to be restored and the guided retries recorded accurately; decided no extra generation for the dome edge.
+- **Claude:** wrote the prompt changes for each retry and described each output; wrote `make_env_guides.py`, `process_env.py`, `batch2_review.py`, and the batch scripts; dry-ran them on my uploaded files; measured the guides' closeness; restored the prompts file from the earlier chat and this one; drafted the asset log rows and this entry.
+- **Model (SDXL Base 1.0):** produced all 16 raw outputs, including the failures and the added details listed above.
+
+**Still unresolved:**
+- The guided environment sprites are close to Claude-drawn shapes; this is documented, not changed.
+- The dome's ragged inner glass edge (59 magenta-like pixels) and the mint tint on its knob and rim.
+- The room has a bright diagonal glow (95th-percentile luminance 125 of 255). Whether it needs darkening, and how the room moves with the camera (parallax), will be decided in Godot.
+- The fork's handle must reach the top of the screen. In the mock it is stretched; how to extend it in Godot is not decided.
+- Final in-game sizes; audio (Batch 3); the Godot slice, testing, and the film.
+
+**Traceability:** ASSET-LOG.md Batch 2; `gen-inputs/batch2-env-prompts.md` (restored) and `gen-inputs/ENV-*-guide.png`; `evidence/batch2-review.png`, `batch2-mock-scene.png`, `batch2-table-seam.png`, `batch2-sprites.png`, `batch2-poses.png`, `batch2-process-log.txt`, `batch2-checksums.txt`; thumbnails in `art/rejected/` and `art/source/`; processed files in `art/game/`.

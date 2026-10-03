@@ -1,0 +1,190 @@
+== Batch 2 processing  2026-10-02 23:17
+repo HEAD: 136721b (Batch 1: accept 10 remaining poses (5 logged edits, Scoot A retry seed)
+python 3.12.7 numpy 2.2.6 Pillow 10.4.0
+all 16 raw outputs found in /Users/kiran/Documents/jellyhop-generations
+every retry differs from the try before it
+gen-inputs/batch2-env-prompts.md: NOT in the repo
+  (no batch2-env-prompts file in ~/Downloads either)
+
+== guides (rebuilt on this Mac)
+gen-inputs/ENV-PLATE-guide.png  1344x768  fingerprint 7846989018675fd5
+gen-inputs/ENV-SAUCE-guide.png  1344x768  fingerprint 2a1429c50e039a4e
+gen-inputs/ENV-FORK-guide.png  768x1344  fingerprint 154de43fcf77afec
+gen-inputs/ENV-DOME-guide.png  1024x1024  fingerprint 1aa8a963c3740455
+Claude's preview build: PLATE 7846989018675fd5, SAUCE 2a1429c50e039a4e, FORK 154de43fcf77afec, DOME 1aa8a963c3740455
+
+== how much SDXL changed each guide
+ENV-PLATE-try3-seed7270.png vs ENV-PLATE-guide.png (inside the guide's object, 106944 px): mean |diff| per channel [14.7, 14.0, 14.9]; pixels differing by >32 levels: 8.6%; object box guide 1018 x 134 px, raw 1007 x 135 px
+ENV-SAUCE-try2-seed7270.png vs ENV-SAUCE-guide.png (inside the guide's object, 108820 px): mean |diff| per channel [18.6, 9.8, 9.1]; pixels differing by >32 levels: 11.6%; object box guide 920 x 145 px, raw 922 x 145 px
+ENV-FORK-try2-seed7270.png vs ENV-FORK-guide.png (inside the guide's object, 221050 px): mean |diff| per channel [9.2, 7.6, 10.3]; pixels differing by >32 levels: 4.4%; object box guide 319 x 1260 px, raw 319 x 1259 px
+ENV-DOME-try1-seed7270.png vs ENV-DOME-guide.png (inside the guide's object, 60450 px): mean |diff| per channel [18.0, 24.0, 17.6]; pixels differing by >32 levels: 19.3%; object box guide 733 x 519 px, raw 733 x 519 px
+
+== environment
+ENV-ROOM-try3-seed7270.png -> art/game/ENV-ROOM.png
+  center crop 1344 x 756, resized to 1280 x 720; no color change
+  mean RGB [104.9, 69.2, 49.7]  fingerprint c674cced52b04d0f
+ENV-TABLE-try5-seed7270.png -> art/game/ENV-TABLE.png
+  dropped bottom 48 rows; saturation kept 0.75; gain 0.5; blend 160 px
+  output 1376 x 592  mean RGB [52.1, 24.3, 25.2]
+  seam: mean |last col - first col| before 16.7, after 5.1; typical neighbouring-column difference 3.7
+  fingerprint fa0928189d852264
+ENV-PLATE-try3-seed7270.png -> art/game/ENV-PLATE.png
+  background median #F11FEA  T_LO 40  T_HI 150
+  keyed clear 923933  edge 5660 (ring 4080, no solid ref 3)  solid 102599
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 172-1178, y 306-441 (1007 x 136 px)  output 1023 x 152  fingerprint bdf417a0b57a3afa
+ENV-SAUCE-try2-seed7270.png -> art/game/ENV-SAUCE.png
+  background median #EF1DEA  T_LO 40  T_HI 150
+  keyed clear 922145  edge 5482 (ring 3827, no solid ref 4)  solid 104565
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  recolored 1958 opaque magenta-like px to #F4B8A0 (luminance kept) and blended 328 pinkish transition px around them; box x 546-685, y 339-358 (before crop)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 209-1132, y 313-458 (924 x 146 px)  output 940 x 162  fingerprint 5e0806cbbf0a6519
+ENV-FORK-try2-seed7270.png -> art/game/ENV-FORK.png
+  background median #ED29E7  T_LO 40  T_HI 150
+  keyed clear 810504  edge 10845 (ring 8826, no solid ref 2)  solid 210843
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 1 visible islands under 20 px (1 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 224-542, y 0-1258 (319 x 1259 px)  output 335 x 1267  fingerprint e5b50c5e1a064c51
+ENV-DOME-try1-seed7270.png -> art/game/ENV-DOME.png
+  background median #EF28E8  T_LO 40  T_HI 150
+  keyed clear 986177  edge 16528 (ring 11268, no solid ref 1268)  solid 45871  interior keyed 183190
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 5 visible islands under 20 px (6 px)
+  fringe (magenta-like, alpha>0): 59  (alpha>=128): 59
+  object box x 145-878, y 270-789 (734 x 520 px)  output 750 x 536  fingerprint b8b20794d0b874ab
+
+== poses (canvas kept at 1024 x 1024 so every frame keeps its alignment)
+CHAR-ANTIC.png -> art/game/CHAR-ANTIC.png
+  background median #F222E8  T_LO 40  T_HI 150
+  keyed clear 724230  edge 5327 (ring 4186, no solid ref 3)  solid 319019
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 153-869, y 343-812 (717 x 470 px)  output 1024 x 1024  fingerprint baa296f2dda432c9
+CHAR-BORED.png -> art/game/CHAR-BORED.png
+  background median #F222E8  T_LO 40  T_HI 150
+  keyed clear 745262  edge 5562 (ring 4055, no solid ref 3)  solid 297752
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 135-887, y 362-812 (753 x 451 px)  output 1024 x 1024  fingerprint 8e079ea2174160e9
+CHAR-CELEBRATE.png -> art/game/CHAR-CELEBRATE.png
+  background median #F21EEA  T_LO 40  T_HI 150
+  keyed clear 628827  edge 5604 (ring 4665, no solid ref 4)  solid 414145
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 4 visible islands under 20 px (4 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 194-828, y 80-811 (635 x 732 px)  output 1024 x 1024  fingerprint 52a4a55499ef863a
+CHAR-FALL.png -> art/game/CHAR-FALL.png
+  background median #F221E7  T_LO 40  T_HI 150
+  keyed clear 689833  edge 5136 (ring 4299, no solid ref 3)  solid 353607
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 181-841, y 248-811 (661 x 564 px)  output 1024 x 1024  fingerprint 8acf874f9c32d317
+CHAR-IDLE.png -> art/game/CHAR-IDLE.png
+  background median #F224E5  T_LO 40  T_HI 150
+  keyed clear 697296  edge 4926 (ring 4236, no solid ref 2)  solid 346354
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 2 visible islands under 20 px (2 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 209-814, y 211-812 (606 x 602 px)  output 1024 x 1024  fingerprint 2b451f0fc38bd284
+CHAR-LAND.png -> art/game/CHAR-LAND.png
+  background median #F123E7  T_LO 40  T_HI 150
+  keyed clear 734333  edge 5578 (ring 4206, no solid ref 3)  solid 308665
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 134-888, y 380-812 (755 x 433 px)  output 1024 x 1024  fingerprint 38efcb2616a63fd0
+CHAR-RESPAWN.png -> art/game/CHAR-RESPAWN.png
+  background median #EF28E6  T_LO 40  T_HI 150
+  keyed clear 896438  edge 4733 (ring 3898, no solid ref 2)  solid 147405
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 2 visible islands under 20 px (2 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 163-868, y 436-812 (706 x 377 px)  output 1024 x 1024  fingerprint c6e76489c6d16d8f
+CHAR-RISE.png -> art/game/CHAR-RISE.png
+  background median #F31FE8  T_LO 40  T_HI 150
+  keyed clear 692947  edge 5825 (ring 4402, no solid ref 3)  solid 349804
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 279-798, y 60-811 (520 x 752 px)  output 1024 x 1024  fingerprint 30b16a3463034f6e
+CHAR-SCOOT-A.png -> art/game/CHAR-SCOOT-A.png
+  background median #F01EE4  T_LO 40  T_HI 150
+  keyed clear 704175  edge 5265 (ring 4246, no solid ref 3)  solid 339136
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 187-909, y 286-812 (723 x 527 px)  output 1024 x 1024  fingerprint 7debfac52fe909ae
+CHAR-SCOOT-B.png -> art/game/CHAR-SCOOT-B.png
+  background median #F320E8  T_LO 40  T_HI 150
+  keyed clear 704819  edge 5402 (ring 4247, no solid ref 3)  solid 338355
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 268-873, y 136-811 (606 x 676 px)  output 1024 x 1024  fingerprint 0931271333ff00a1
+CHAR-SPLAT.png -> art/game/CHAR-SPLAT.png
+  background median #EF25E6  T_LO 40  T_HI 150
+  keyed clear 900404  edge 5889 (ring 4675, no solid ref 2)  solid 142283
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 2 visible islands under 20 px (2 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 40-972, y 484-812 (933 x 329 px)  output 1024 x 1024  fingerprint 4b0de8682eb7972b
+CHAR-WORRY.png -> art/game/CHAR-WORRY.png
+  background median #F220E8  T_LO 40  T_HI 150
+  keyed clear 699299  edge 5446 (ring 4234, no solid ref 3)  solid 343831
+  enclosed magenta-like regions NOT keyed: 0 px
+  removed 3 visible islands under 20 px (3 px)
+  fringe (magenta-like, alpha>0): 0  (alpha>=128): 0
+  object box x 167-790, y 192-811 (624 x 620 px)  output 1024 x 1024  fingerprint 3bf41741d7baef7b
+NOTE: some cut-outs still have magenta-like pixels (see 'fringe' lines above)
+
+== review images
+scales (source px -> game px):
+  table x0.3378 -> strip 465 x 200 (repeat period 465 px)
+  plate x0.1986 -> 200 x 27; top surface 5 px below its top
+  sauce x0.1299 -> 120 x 19
+  fork  x0.2194 -> 70 x 276 (head 70 wide)
+  dome  x0.2452 -> 180 x 128
+  jelly x0.1060 -> idle 64 x 64
+luminance contrast ratios (1 = none, 21 = black/white):
+  jelly body vs room mean: 4.37   (#3CCFC4 vs #694532)
+  jelly body vs table mean: 8.46   (#3CCFC4 vs #341819)
+  jelly outline vs table mean: 1.23   (#0F3440 vs #341819)
+  jelly body vs plate mean: 1.20   (#3CCFC4 vs #AEAAA8)
+  plate mean vs table mean: 7.06   (#AEAAA8 vs #341819)
+  plate mean vs room mean: 3.65   (#AEAAA8 vs #694532)
+  sauce mean vs table mean: 2.03   (#843B1F vs #341819)
+  fork mean vs room mean: 2.75   (#8D9595 vs #694532)
+  room mean vs table mean: 1.94   (#694532 vs #341819)
+  room luminance: mean 78, 95th percentile 125 (0-255)
+wrote batch2-mock-scene.png, batch2-table-seam.png, batch2-sprites.png, batch2-poses.png, batch2-review.png
+
+== thumbnails (256 px)
+  art/rejected/ENV-ROOM-try1-seed7270-thumb.png
+  art/rejected/ENV-ROOM-try2-seed7270-thumb.png
+  art/source/ENV-ROOM-try3-raw-seed7270-thumb.png
+  art/rejected/ENV-TABLE-try1-seed7270-thumb.png
+  art/rejected/ENV-TABLE-try2-seed7270-thumb.png
+  art/rejected/ENV-TABLE-try3-seed7270-thumb.png
+  art/rejected/ENV-TABLE-try4-seed7270-thumb.png
+  art/source/ENV-TABLE-try5-raw-seed7270-thumb.png
+  art/rejected/ENV-PLATE-try1-seed7270-thumb.png
+  art/rejected/ENV-PLATE-try2-seed7270-thumb.png
+  art/source/ENV-PLATE-try3-raw-seed7270-thumb.png
+  art/rejected/ENV-SAUCE-try1-seed7270-thumb.png
+  art/source/ENV-SAUCE-try2-raw-seed7270-thumb.png
+  art/rejected/ENV-FORK-try1-seed7270-thumb.png
+  art/source/ENV-FORK-try2-raw-seed7270-thumb.png
+  art/source/ENV-DOME-try1-raw-seed7270-thumb.png
+
+== checksums -> evidence/batch2-checksums.txt
+38 checksums written
+
+DONE. Nothing was committed. Please upload evidence/batch2-review.png and evidence/batch2-process-log.txt.
