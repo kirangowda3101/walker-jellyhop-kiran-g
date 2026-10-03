@@ -49,6 +49,8 @@ func run() -> void:
 	await music_states()
 	await mute_changes_nothing()
 	await hud_text()
+	await audio_wiring()
+	await warn_scope()
 	var report := {"scope":"Jelly Hop slice checks (scripted input); not human playtesting", "engine":Engine.get_version_info().string,"created_at":Time.get_datetime_string_from_system(true),"results":results,"failures":failures}
 	var out := ProjectSettings.globalize_path("res://../evidence")
 	DirAccess.make_dir_recursive_absolute(out)
@@ -57,7 +59,8 @@ func run() -> void:
 	file.close()
 	print("SLICE TESTS: %d checks / %d failures" % [results.size(), failures])
 	game.queue_free()
-	await process_frame
+	for i in range(30):
+		await process_frame   # let the audio server release stopped playbacks before quitting
 	quit(1 if failures else 0)
 
 # ---------------------------------------------------------------- poses (CHARACTER-SHEET.md)
@@ -553,12 +556,27 @@ func offscreen_shadow_silent() -> void:
 	var on_now: bool = game.view_rect().intersects(fork5.shadow_rect())
 	var still_shadow: bool = fork5.phase() == fork5.Phase.SHADOW
 	var on_targets := targets_since(music_mark)
+	var down_frame := -1
 	while fork5.is_warning():
 		await steps(1)
+		if down_frame < 0 and fork5.phase() == fork5.Phase.DOWN:
+			down_frame = Engine.get_physics_frames()
 	await steps(5)
-	var c := counts_since(sound_mark)
 	var all_targets := targets_since(music_mark)
-	check("offscreen-shadow-no-warn-dip-once-on-screen", started_off and not "warning" in off_targets and on_now and still_shadow and on_targets == ["warning"] and all_targets == ["warning", "normal"] and c.get("SFX-WARN", 0) == 0, {"started_off_screen":started_off,"music_while_off_screen":off_targets,"scrolled_into_view_while_growing":on_now and still_shadow,"music_once_on_screen":on_targets,"music_through_strike":all_targets,"sfx_warn":c.get("SFX-WARN", 0)})
+	var warn_in_shadow := 0
+	var warn_at_down := 0
+	for call in game.sound.calls.slice(sound_mark):
+		if call.id == "SFX-WARN":
+			if call.frame == down_frame:
+				warn_at_down += 1
+			else:
+				warn_in_shadow += 1
+	# Was "offscreen-shadow-no-warn-dip-once-on-screen" (no SFX-WARN at all for a shadow that started off
+	# screen). Kiran's decision after the second audition (2026-10-03): SFX-WARN plays when the current-
+	# or next-plate fork starts descending, if it is on screen then; nothing plays as a shadow grows. Here
+	# the jelly is on plate 4, so plate 5's fork is the next plate and on screen when it descends: no
+	# scrape while its shadow grows (off or on screen), exactly one at the start of its descent. Music unchanged.
+	check("offscreen-shadow-dip-once-on-screen-warn-at-strike", started_off and not "warning" in off_targets and on_now and still_shadow and on_targets == ["warning"] and all_targets == ["warning", "normal"] and warn_in_shadow == 0 and warn_at_down == 1, {"started_off_screen":started_off,"music_while_off_screen":off_targets,"scrolled_into_view_while_growing":on_now and still_shadow,"music_once_on_screen":on_targets,"music_through_strike":all_targets,"sfx_warn_while_shadow_grows":warn_in_shadow,"sfx_warn_at_descent_start":warn_at_down})
 	# Control: the same fork's next shadow phase, starting on screen, does warn and dip.
 	sound_mark = game.sound.calls.size()
 	music_mark = game.music.changes.size()
@@ -567,8 +585,10 @@ func offscreen_shadow_silent() -> void:
 		await steps(1)
 		ticks += 1
 	await steps(3)
-	c = counts_since(sound_mark)
-	check("onscreen-shadow-warns-and-dips", c.get("SFX-WARN", 0) == 1 and "warning" in targets_since(music_mark), {"sfx_warn":c.get("SFX-WARN", 0),"music_targets":targets_since(music_mark)})
+	var c := counts_since(sound_mark)
+	# Was "onscreen-shadow-warns-and-dips" (one SFX-WARN as an on-screen shadow starts). Since the second
+	# audition the shadow alone does the warning: the music still dips, and no scrape plays at its start.
+	check("onscreen-shadow-dips-no-warn-at-start", c.get("SFX-WARN", 0) == 0 and fork5.phase() == fork5.Phase.SHADOW and "warning" in targets_since(music_mark), {"sfx_warn":c.get("SFX-WARN", 0),"music_targets":targets_since(music_mark)})
 
 func intro_shadows_and_quiet_start() -> void:
 	# Kiran, 2026-10-03: forks off screen at the start begin partway into their shadow phase,
@@ -636,8 +656,12 @@ func overlapping_shadows() -> void:
 	# (stops before either fork's next cycle).
 	var seen_f3 := false
 	var after := 0
+	var start_frame := {}   # fork plate number -> physics frame it started descending
 	while after < 20 and frames_warning.size() < 600:
 		await steps(1)
+		for f in [f2, f3]:
+			if f.phase() == f.Phase.DOWN and not start_frame.has(f.plate_index + 1):
+				start_frame[f.plate_index + 1] = Engine.get_physics_frames()
 		seen_f3 = seen_f3 or f3.is_warning()
 		if seen_f3 and not f2.is_warning() and not f3.is_warning():
 			after += 1
@@ -657,7 +681,19 @@ func overlapping_shadows() -> void:
 			overlap += 1
 	var ok: bool = targets == ["warning", "normal"] and overlap > 0 and entries[0].frame == first_start and entries[1].frame == last_end and game.music.target == "normal"
 	check("overlapping-shadows-one-dip", ok, {"music_entries":entries,"overlap_ticks":overlap,"first_warning_frame":first_start,"last_warning_end_frame":last_end,"sfx_warn":counts_since(sound_mark).get("SFX-WARN", 0)})
-	check("overlapping-shadows-two-warns", counts_since(sound_mark).get("SFX-WARN", 0) == 2, {"sfx_warn":counts_since(sound_mark).get("SFX-WARN", 0)})
+	# Was "overlapping-shadows-two-warns" (one SFX-WARN per on-screen fork), then "overlapping-shadows-warn-
+	# only-near-fork". Kiran's decisions after the auditions (2026-10-03): only the forks over the jelly's
+	# current and next plate scrape, at the moment they start descending. The jelly is on plate 1, so plate
+	# 2's fork (next) must scrape once and plate 3's fork (on screen, two plates away) must stay silent; each
+	# scrape is matched to its fork by the frame that fork started descending. Both forks descend in the window.
+	var warn_frames := []
+	for c in game.sound.calls.slice(sound_mark):
+		if c.id == "SFX-WARN":
+			warn_frames.append(c.frame)
+	var by_fork := {2: warn_frames.count(start_frame.get(2, -1)), 3: warn_frames.count(start_frame.get(3, -1))}
+	var both_on_screen: bool = game.view_rect().intersects(f2.shadow_rect()) and game.view_rect().intersects(f3.shadow_rect())
+	check("overlapping-strikes-warn-only-near-fork", both_on_screen and start_frame.has(2) and start_frame.has(3) and by_fork[2] == 1 and by_fork[3] == 0 and warn_frames.size() == 1,
+		{"sfx_warn_by_fork_plate":by_fork,"sfx_warn_total":warn_frames.size(),"descent_frames":start_frame,"both_on_screen":both_on_screen,"jelly_plate":game.jelly_plate + 1})
 
 func music_states() -> void:
 	# CHANGE-BRIEF.md music behaviour, from the change log.
@@ -756,3 +792,124 @@ func hud_text() -> void:
 	await steps(T.ticks(T.PROMPT_DELAY) + 2)
 	var prompt := shown()
 	check("hud-text-per-state", intro.has("JELLY HOP") and intro.has("any key skips the intro") and playing.is_empty() and paused.has("PAUSED") and paused.has("Esc to resume") and muted.has("MUTED (M)") and muted.has("MUSIC OFF (N)") and won == ["SAFE!"] and prompt == ["SAFE!", "press any key to play again"], {"intro":intro,"playing":playing,"paused":paused,"muted":muted,"won":won,"prompt":prompt})
+
+# ---------------------------------------------------------------- Batch 3: real audio wired in
+
+func audio_wiring() -> void:
+	await new_intro_game()
+	var snd: Node = game.sound
+	var missing := []
+	var not_ogg := []
+	var wrong_bus := []
+	for id in snd.IDS:
+		var st = snd.streams.get(id)
+		if st == null:
+			missing.append(id)
+		elif not (st is AudioStreamOggVorbis):
+			not_ogg.append(id)
+		var p: AudioStreamPlayer = snd.players.get(id)
+		if p == null or p.bus != "SFX" or p.stream != st:
+			wrong_bus.append(id)
+	check("audio-every-event-has-a-stream", missing.is_empty() and not_ogg.is_empty() and wrong_bus.is_empty() and not snd.placeholder and snd.streams.size() == 6,
+		{"missing":missing,"not_ogg":not_ogg,"player_problems":wrong_bus,"placeholder":snd.placeholder,"streams":snd.streams.size()})
+	var mus: Node = game.music
+	var loops: bool = mus.stream is AudioStreamOggVorbis and (mus.stream as AudioStreamOggVorbis).loop
+	await steps(3)
+	check("audio-music-loops-and-plays", loops and mus.player.stream == mus.stream and mus.player.playing and mus.player.bus == "Music",
+		{"stream":str(mus.stream),"loop":loops,"playing":mus.player.playing,"bus":mus.player.bus})
+	# A real hop starts the hop sound's own player; the call log still records it once.
+	await tap(KEY_ENTER)
+	game.player.test_control = true
+	game.player.test_jump_pressed = true
+	await steps(2)
+	var hop_player: AudioStreamPlayer = snd.players["SFX-HOP"]
+	check("audio-hop-plays-its-stream", snd.count("SFX-HOP") == 1 and hop_player.playing, {"sfx_hop_calls":snd.count("SFX-HOP"),"hop_player_playing":hop_player.playing})
+
+# ---------------------------------------------------------------- SFX-WARN (Kiran, 2026-10-03, after the auditions)
+# Replaces the first scope checks (which started shadow phases): the scrape now plays once when the fork over
+# the jelly's current or next plate starts descending, if that fork is on screen; nothing plays as a shadow grows.
+
+func reset_fork(f) -> void:
+	f.t = 0
+	f.held = true
+	f._apply()
+
+func warn_at_descent(fork_index: int) -> Dictionary:
+	## Fixture (all other forks held raised): put one fork one tick before its descent, count SFX-WARN in the
+	## frame it starts descending, then put it back to its safe window before the tines could reach the jelly.
+	var f = game.forks[fork_index]
+	f.held = false
+	f.t = f.safe_ticks + f.shadow_ticks - 1
+	var mark: int = game.sound.calls.size()
+	var start := -1
+	var on_screen := false
+	for i in range(3):
+		await steps(1)
+		if start < 0 and f.phase() == f.Phase.DOWN:
+			start = Engine.get_physics_frames()
+			on_screen = game.view_rect().intersects(f.shadow_rect())
+	var at_start := 0
+	var total := 0
+	for c in game.sound.calls.slice(mark):
+		if c.id == "SFX-WARN":
+			total += 1
+			if c.frame == start:
+				at_start += 1
+	reset_fork(f)
+	return {"warns_at_descent_start": at_start, "warns_total": total, "descended": start >= 0, "on_screen": on_screen,
+			"fork_plate": fork_index + 1, "jelly_plate": game.jelly_plate + 1, "splats": game.splats}
+
+func warn_through_shadow(fork_index: int) -> Dictionary:
+	## Fixture: start one fork's shadow phase and run until just before it descends; count SFX-WARN.
+	var f = game.forks[fork_index]
+	f.held = false
+	f.t = f.safe_ticks - 1
+	var mark: int = game.sound.calls.size()
+	var on_screen := false
+	for i in range(f.shadow_ticks - 1):
+		await steps(1)
+		on_screen = on_screen or game.view_rect().intersects(f.shadow_rect())
+	var still_shadow: bool = f.phase() == f.Phase.SHADOW
+	var n := 0
+	for c in game.sound.calls.slice(mark):
+		if c.id == "SFX-WARN":
+			n += 1
+	reset_fork(f)
+	return {"warns": n, "on_screen": on_screen, "still_in_shadow": still_shadow, "fork_plate": fork_index + 1, "jelly_plate": game.jelly_plate + 1}
+
+func warn_scope() -> void:
+	await fresh()
+	hold_all_forks_except([])
+	# Stand on plate 2 (placement fixture; the jelly lands there and plate 2 becomes its current plate).
+	game.player.position = Vector2(game.plates[1].center, T.plate_landing_y() - 20.0)
+	await steps(20)
+	var sh_cur := await warn_through_shadow(1)
+	var sh_nxt := await warn_through_shadow(2)
+	check("warn-none-while-shadow-grows", sh_cur.warns == 0 and sh_nxt.warns == 0 and sh_cur.on_screen and sh_nxt.on_screen and sh_cur.still_in_shadow and sh_nxt.still_in_shadow,
+		{"current_plate_fork":sh_cur,"next_plate_fork":sh_nxt})
+	var cur := await warn_at_descent(1)     # plate 2: the current plate
+	var nxt := await warn_at_descent(2)     # plate 3: the next plate
+	var far := await warn_at_descent(3)     # plate 4: on screen, two plates ahead
+	check("warn-current-plate-fork-descends-once", cur.descended and cur.on_screen and cur.warns_at_descent_start == 1 and cur.warns_total == 1 and cur.jelly_plate == 2 and cur.splats == 0, cur)
+	check("warn-next-plate-fork-descends-once", nxt.descended and nxt.on_screen and nxt.warns_at_descent_start == 1 and nxt.warns_total == 1 and nxt.jelly_plate == 2, nxt)
+	check("warn-far-on-screen-fork-silent", far.descended and far.on_screen and far.warns_total == 0 and far.jelly_plate == 2, far)
+	# Off screen: the camera is put at the far right end of the level (fixture; view x 1404-2684) and glides
+	# back slowly; plate 3's fork (the next plate, shadow x 814-1026) descends while it is still off screen,
+	# so no scrape.
+	game._set_camera(T.level_width() - T.VIEW.x / 2.0, true)
+	game.camera.position_smoothing_speed = 0.5
+	await steps(1)
+	var off := await warn_at_descent(2)
+	game.camera.position_smoothing_speed = T.CAMERA_SMOOTHING
+	check("warn-offscreen-next-fork-silent", off.descended and not off.on_screen and off.warns_total == 0 and off.jelly_plate == 2, off)
+	game._set_camera(game.camera_target_x(), true)
+	await steps(2)
+	# While airborne, the current plate is the last plate stood on: hop up from plate 2; plate 3's fork (next)
+	# descends and scrapes, plate 4's fork (far) descends silently.
+	game.player.test_jump_pressed = true
+	await steps(4)
+	var airborne: bool = not game.player.is_on_floor()
+	var nxt_air := await warn_at_descent(2)
+	var far_air := await warn_at_descent(3)
+	check("warn-airborne-uses-last-plate", airborne and nxt_air.warns_at_descent_start == 1 and nxt_air.warns_total == 1 and far_air.warns_total == 0 and nxt_air.jelly_plate == 2,
+		{"airborne_at_start":airborne,"next_plate_fork":nxt_air,"far_fork":far_air})

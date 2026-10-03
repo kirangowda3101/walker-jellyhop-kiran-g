@@ -172,3 +172,101 @@ Every edit reads the raw file without changing it. Pixel fingerprints are the fi
 - **Review sheet:** `evidence/batch2-review.png` (mock scene, table seam, sprites on two backgrounds and at 3×, all poses). Run log: `evidence/batch2-process-log.txt`.
 - **Outcome:** in my batch review I accepted the six assets with this processing, asked for the prompts file to be restored with the prompts and settings actually used, and decided no extra generation was needed for the dome's minor edge.
 - **Where used:** `art/game/` holds the game-ready files for the Godot slice: ENV-ROOM (background), ENV-TABLE (repeating table front), ENV-PLATE (platforms), ENV-SAUCE (hazard between plates), ENV-FORK (striking fork), ENV-DOME (goal), and the 12 pose sprites. Final in-game sizes are set in Godot.
+
+## Batch 3 — sound effects and music (HOP, LAND, WARN, SPLAT-FORK, SPLAT-SAUCE, WIN, MUS-LOOP)
+
+- **Prompts and settings:** `gen-inputs/batch3-audio-prompts.md`, committed before any generation (`5fc8efb`, together with AUDIO-BRIEF.md). Two dated notes were appended later; the committed text is unchanged:
+  - a torchsde workaround (no prompt or setting change);
+  - leveling by perceived loudness, which changes the planned edits.
+- **Prediction,** written before generating: `evidence/batch3-prediction.md`.
+- **Models:**
+  - Stable Audio Open 1.0 (`stabilityai/stable-audio-open-1.0`, revision `f21265c1e2710b3bd2386596943f0007f55f802e`) for the six sound effects. 100 steps, CFG 7.0, the library's default sampler (`CosineDPMSolverMultistepScheduler`), float32, 44.1 kHz stereo.
+  - MusicGen-small (`facebook/musicgen-small`, revision `4c8334b02c6ec4e8664a91979669a501ec497792`) for MUS-LOOP. 1,500 tokens (30 s), sampling, top-k 250, temperature 1.0, guidance 3.0, 32 kHz mono.
+  - Both ran locally on Kiran's MacBook Pro (Apple M4, 16 GB) on the GPU (MPS), in a separate Python environment (`~/Documents/jellyhop-audio-env`): Python 3.13.5, torch 2.14.1, diffusers 0.40.0, transformers 5.18.0, torchsde 0.2.6. Script: `tools/batch3_generate.py`.
+- **torchsde workaround:** the default sampler's final step recursed forever in torchsde (on MPS and CPU). Noise-time values within 1e-6 of the sampler bounds are snapped onto the bound. Prompts, seeds, steps, CFG and sampler are unchanged. Details: the prompts file's first note and `evidence/batch3-setup-log.txt`.
+- **Takes:** 3 per sound, seeds 7270, 7271, 7272; 21 takes in all.
+- **Raw WAVs:** 32-bit float, kept outside the repository in `~/Documents/jellyhop-generations/audio/`. The SHA-256 of every take is in `evidence/batch3-generation-log.txt` (and `.json`).
+- **Thumbnail for every take,** including the takes not selected: the waveform contact sheet `evidence/batch3-takes-waveforms.png`. Measurements: `evidence/batch3-listening.md`.
+
+### Prompts (the same for all three takes of a sound)
+
+| ID | Length | Prompt | Negative prompt |
+|----|--------|--------|-----------------|
+| SFX-HOP | 1 s | `short soft squishy jelly bounce, springy wet boing as a small gelatin cube jumps, cartoon jump sound effect, single sound, close microphone, clean` | `music, melody, vocals, speech, voice, singing, background noise, hum, hiss, long reverb, low quality, distorted, clipping` |
+| SFX-LAND | 1 s | `soft wet jelly squish landing on a ceramic plate with a tiny clink, cartoon landing sound effect, single short impact, close microphone, clean` | `music, melody, vocals, speech, voice, singing, background noise, hum, hiss, long reverb, low quality, distorted, clipping` |
+| SFX-WARN | 1.5 s | `slow tense metallic scrape of a steel fork dragging across a ceramic plate, short warning sound, single sound, close microphone, clean` | `music, melody, vocals, speech, voice, singing, background noise, hum, hiss, long reverb, low quality, distorted, clipping` |
+| SFX-SPLAT-FORK | 1.2 s | `heavy wet jelly squish splat with a brief sharp metallic clank of a steel fork hitting a plate, cartoon impact, single sound, close microphone, clean` | `music, melody, vocals, speech, voice, singing, background noise, hum, hiss, long reverb, low quality, distorted, clipping` |
+| SFX-SPLAT-SAUCE | 1 s | `soft sloppy wet splat into thick sauce, gooey squelch, cartoon, single short sound, no metal, close microphone, clean` | `music, melody, vocals, speech, voice, singing, background noise, hum, hiss, long reverb, low quality, distorted, clipping` |
+| SFX-WIN | 2 s | `short bright cheerful glass chime jingle, three rising bell notes, cartoon success sound, single sound, clean` | `vocals, speech, voice, singing, drums, background noise, hum, hiss, low quality, distorted, clipping` |
+| MUS-LOOP | 30 s | `playful slightly tense instrumental loop for a cartoon platformer game, pizzicato strings and soft marimba, light ticking percussion, steady 100 bpm, minor key, no vocals` | none (MusicGen) |
+
+### Takes
+
+| Take | Seed | Model | Raw length, peak | Run time (MPS) | Raw SHA-256 (first 16) | Outcome | Edits | Where used |
+|------|------|-------|------------------|----------------|------------------------|---------|-------|------------|
+| SFX-HOP-take1 | 7270 | Stable Audio Open 1.0 | 1.00 s, +2.0 dBFS | 190 s | `2408a5370eadc416` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-HOP-take2 | 7271 | Stable Audio Open 1.0 | 1.00 s, +3.2 dBFS | 237 s | `2f5414a52b06d358` | not selected | processed once by Claude Code to test the swap tool (same settings), then swapped back to take 3 (`evidence/batch3-swaps.txt`) | briefly in the game during that test only |
+| SFX-HOP-take3 | 7272 | Stable Audio Open 1.0 | 1.00 s, +0.9 dBFS | 240 s | `68f5fad91ab11009` | selected; design purpose: "intended to give each hop a clear takeoff cue."; listening judgment pending | lead trim 39.07 ms at −50 dBFS + 60.0 ms at the delivered level, no fade-in; tail trim 763.15 ms, 15.01 ms linear fade-out; kept 137.78 ms; gain -16.96 dB to -30.1 LUFS (max momentary); OGG Vorbis; decoded peak -15.97 dBFS, leading silence 0.0 ms; game file SHA-256 `5866c925b87436b4` | `audio/game/SFX-HOP.ogg` → `godot/assets/audio/SFX-HOP.ogg` |
+| SFX-LAND-take1 | 7270 | Stable Audio Open 1.0 | 1.00 s, +2.1 dBFS | 253 s | `a852bec7e85b5785` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-LAND-take2 | 7271 | Stable Audio Open 1.0 | 1.00 s, -3.1 dBFS | 254 s | `51e31b9b5c75b7de` | selected; design purpose: "intended to distinguish landing safely from jumping."; listening judgment pending | lead trim 76.51 ms at −50 dBFS + 0.18 ms at the delivered level, no fade-in; tail trim 777.12 ms, 15.01 ms linear fade-out; kept 146.19 ms; gain -7.55 dB to -30.1 LUFS (max momentary); OGG Vorbis; decoded peak -10.66 dBFS, leading silence 0.0 ms; game file SHA-256 `ec29f67ea388988a` | `audio/game/SFX-LAND.ogg` → `godot/assets/audio/SFX-LAND.ogg` |
+| SFX-LAND-take3 | 7272 | Stable Audio Open 1.0 | 1.00 s, -3.9 dBFS | 253 s | `ef3fb3fe8fb1f66a` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-WARN-take1 | 7270 | Stable Audio Open 1.0 | 1.50 s, -2.0 dBFS | 249 s | `54758a63ed4e886e` | selected; Kiran's confirmed listening judgment (fork timing): "the scrape now feels connected to the fork descending, which is what I wanted." | lead trim 98.3 ms at −50 dBFS + 244.31 ms at the delivered level, no fade-in; tail trim 790.07 ms, 15.01 ms linear fade-out; kept 367.32 ms; gain -15.15 dB to -30.1 LUFS (max momentary); OGG Vorbis; decoded peak -17.08 dBFS, leading silence 0.0 ms; game file SHA-256 `73f73611c94a1453` | `audio/game/SFX-WARN.ogg` → `godot/assets/audio/SFX-WARN.ogg` |
+| SFX-WARN-take2 | 7271 | Stable Audio Open 1.0 | 1.50 s, +4.3 dBFS | 249 s | `220588d67271c77c` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-WARN-take3 | 7272 | Stable Audio Open 1.0 | 1.50 s, -2.9 dBFS | 252 s | `d2918e3df19adfd0` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-SPLAT-FORK-take1 | 7270 | Stable Audio Open 1.0 | 1.20 s, +6.2 dBFS | 261 s | `d0fe8bc7c64eb75d` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-SPLAT-FORK-take2 | 7271 | Stable Audio Open 1.0 | 1.20 s, +4.7 dBFS | 254 s | `676d9dc6d81acdfb` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-SPLAT-FORK-take3 | 7272 | Stable Audio Open 1.0 | 1.20 s, +1.8 dBFS | 255 s | `1d67642777496240` | selected; design purpose: "intended to identify a fork failure."; listening judgment pending | lead trim 5.49 ms at −50 dBFS + 0.77 ms at the delivered level, no fade-in; tail trim 1040.43 ms, 15.01 ms linear fade-out; kept 153.31 ms; gain -10.69 dB to -30.1 LUFS (max momentary); OGG Vorbis; decoded peak -8.90 dBFS, leading silence 0.0 ms; game file SHA-256 `83452335c5ac2f29` | `audio/game/SFX-SPLAT-FORK.ogg` → `godot/assets/audio/SFX-SPLAT-FORK.ogg` |
+| SFX-SPLAT-SAUCE-take1 | 7270 | Stable Audio Open 1.0 | 1.00 s, +4.7 dBFS | 262 s | `f1b8abd9c90e9782` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-SPLAT-SAUCE-take2 | 7271 | Stable Audio Open 1.0 | 1.00 s, +1.6 dBFS | 262 s | `a2dc0af444c5b368` | selected; design purpose: "intended to distinguish a sauce failure from a fork hit."; listening judgment pending | lead trim 6.71 ms at −50 dBFS + 5.78 ms at the delivered level, no fade-in; tail trim 758.3 ms, 15.01 ms linear fade-out; kept 229.21 ms; gain -7.67 dB to -30.1 LUFS (max momentary); OGG Vorbis; decoded peak -6.07 dBFS, leading silence 0.0 ms; game file SHA-256 `3a763e0eb42a9392` | `audio/game/SFX-SPLAT-SAUCE.ogg` → `godot/assets/audio/SFX-SPLAT-SAUCE.ogg` |
+| SFX-SPLAT-SAUCE-take3 | 7272 | Stable Audio Open 1.0 | 1.00 s, +7.1 dBFS | 259 s | `227d5fa15e3fccfe` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-WIN-take1 | 7270 | Stable Audio Open 1.0 | 2.00 s, +0.3 dBFS | 253 s | `d1f8659628cfd39f` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-WIN-take2 | 7271 | Stable Audio Open 1.0 | 2.00 s, -12.6 dBFS | 262 s | `cc29c9f289e4f2bd` | not selected | none (comparison copy only, outside the repo) | not used |
+| SFX-WIN-take3 | 7272 | Stable Audio Open 1.0 | 2.00 s, -7.0 dBFS | 252 s | `8d80957a659f2e64` | selected; design purpose: "intended to mark reaching the dome."; listening judgment pending | lead trim 0.0 ms at −50 dBFS + 0.02 ms at the delivered level, no fade-in; tail trim 385.03 ms, 15.01 ms linear fade-out; kept 1614.94 ms; gain -7.57 dB to -30.1 LUFS (max momentary); OGG Vorbis; decoded peak -14.54 dBFS, leading silence 0.0 ms; game file SHA-256 `f8031458a1746f40` | `audio/game/SFX-WIN.ogg` → `godot/assets/audio/SFX-WIN.ogg` |
+| MUS-LOOP-take1 | 7270 | MusicGen-small | 29.94 s, -2.8 dBFS | 109 s | `72b1cc76b9d5426d` | selected: "keep the current music; I haven't separately confirmed whether the seam is audible."; listening judgment pending | loop 16.88–26.48 s (4 bars at 101.35 bpm, beat-tracked, 4/4 assumed), crossfade 2 ms; gain -20.66 dB to -40.1 LUFS integrated; OGG Vorbis; decoded peak -23.51 dBFS; game file SHA-256 `39f6a5fe7b24bad4` | `audio/game/MUS-LOOP.ogg` → `godot/assets/audio/MUS-LOOP.ogg`; imported with looping on |
+| MUS-LOOP-take2 | 7271 | MusicGen-small | 29.94 s, -5.5 dBFS | 100 s | `64f682ea780629b9` | not selected | none (comparison copy only, outside the repo) | not used |
+| MUS-LOOP-take3 | 7272 | MusicGen-small | 29.94 s, -3.6 dBFS | 96 s | `c358154060f78823` | not selected | processed as an alternative only: loop 5.712–14.72 s (5 bars at 133.93 bpm), crossfade 2 ms, -40.1 LUFS; kept outside the repo (`~/Documents/jellyhop-generations/audio-game-alt/`) | not used |
+
+### How the takes were selected
+
+1. **Listening sheet:** `evidence/batch3-listening.md`, with every take's length, peak, RMS and leading silence, plus the waveform contact sheet.
+2. **Kiran's provisional technical selections,** made from the measurements before listening and recorded word for word in the listening sheet.
+3. **Comparison copies of all 21 takes,** for Kiran's listening only, kept outside the repo in `~/Documents/jellyhop-generations/audio-compare/` (`tools/batch3_compare.py`, `evidence/batch3-compare-log.txt`):
+   - leading silence trimmed at −50 dBFS with no fade-in, and a 15 ms fade-out;
+   - perceived loudness matched with gain only: sound effects to −30.1 LUFS maximum momentary, music to −21.5 LUFS integrated;
+   - each music take's candidate loop played three times.
+4. **Kiran's provisional technical shortlist for an in-game audition** (same takes), recorded as not being a completed listening review.
+5. **Three in-game auditions** (`evidence/batch3-audition.md`).
+6. **Final selections, with Kiran's design purposes,** recorded word for word in `evidence/batch3-audition.md` and in the table above. The only confirmed listening judgment is about the fork timing; the other listening judgments are pending.
+
+### Edits for the game (step 4), and the change to the planned edits
+
+- **Leveling (Kiran's decision; the prompts file's second note):** match perceived loudness with gain only (no compression or limiting), every file at or below −1 dBFS peak. This replaces "level to a common peak (−1 dBFS)".
+  - **Sound effects:** a fixed −30.1 LUFS maximum momentary, the highest level at which all 18 takes stay at or below −1 dBFS. It is set by SFX-SPLAT-SAUCE take 3, and later swaps use the same target.
+  - **Music:** −40.1 LUFS integrated, 10 LU below the sound effects (Claude Code's proposal). Kiran: "Volume: leave it unchanged for now."
+- **Leading trim (Claude Code, found by the 10 ms start check):** the −50 dBFS leading trim is repeated at the delivered level (after the gain). On the raw level alone, SFX-WARN started after 244 ms and SFX-HOP after 60 ms in the game files. Every sound effect now starts at 0 ms. The first run is kept, marked superseded, in `evidence/batch3-process-log.txt`.
+- **Music loop:** whole bars by beat tracking (4/4 assumed), at least 8 s. The crossfade is the shortest that passes the seam measurement; that measurement passes any crossfade of 2 ms or more, so it rules out only a hard cut. **The seam has not been confirmed by listening.**
+- **Delivery:** OGG Vorbis (libsndfile 1.2.2, compression level 0.1) in `audio/game/`, copied byte-identical into `godot/assets/audio/` (`tools/copy_game_audio.sh`, `evidence/batch3-audio-copy.txt`). Scripts: `tools/batch3_process.py`, `tools/check_game_audio.py`, `tools/batch3_swap.sh`.
+- **Re-encoding the same take** gives a file differing only in the Ogg serial number and page CRCs; the decoded audio is identical (checked).
+
+### When the sounds play (game logic; Kiran's decisions after the auditions)
+
+1. **After audition 1,** SFX-WARN was limited to the fork over the jelly's current or next plate.
+2. **After audition 2,** SFX-WARN was moved from the start of the shadow phase to the moment that fork starts descending, if it is on screen then. Nothing plays as a shadow grows.
+
+- Both are differences from CHANGE-BRIEF.md, recorded in `evidence/batch3-review.md`. The music behavior is unchanged.
+- **Verification traces** (real game, scripted input; `godot/tests/trace_audio.gd`) on the route plates 1 → 2 → 3 → 2 → 1:
+  - before: 22 scrapes, 16 while no fork was down (`evidence/batch3-audio-trace-before.txt`);
+  - after the first decision: 9 (`-after.txt`);
+  - after the second: 8, all in the same tick as their fork's descent (`-after2.txt`).
+
+### Checks
+
+- `bash tools/run_slice_checks.sh`: art and audio copies byte-identical; game audio 8/0; mechanics 25/0; keyboard 12/0; slice 61/0; 7 screenshots; launch with no errors.
+- Results: `evidence/batch3-checks.txt`, `evidence/batch3-review.md`.
+- None of these checks replaces Kiran's listening.
+
+### Takes not selected
+
+- 14 takes are "not selected". Kiran gave no per-take reasons.
+- Their thumbnail is the waveform contact sheet `evidence/batch3-takes-waveforms.png`.
+- Their raw files stay outside the repository; their SHA-256 values are in `evidence/batch3-generation-log.txt`.

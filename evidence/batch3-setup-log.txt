@@ -1,0 +1,87 @@
+== Batch 3 setup (AUDIO-BRIEF §2 step 0)  2026-10-03 03:09
+venv: ~/Documents/jellyhop-audio-env, from /opt/homebrew/bin/python3 (Python 3.13.5); conda base not used
+installed: torch torchaudio diffusers transformers accelerate soundfile scipy numpy huggingface_hub sentencepiece protobuf librosa matplotlib, then torchsde (needed by the model's default sampler)
+Hugging Face access: checked with whoami only -> kirangowda3101 (token not read)
+disk before downloads: 209 GiB free; after: 189Gi free
+model files in ~/.cache/huggingface/hub (outside the repo): stable-audio-open-1.0 @ f21265c1 ~10.1 GB (transformer 4.23, vae 0.62, text encoder 0.44, plus the unused root model.safetensors 4.85 that diffusers also fetched); musicgen-small @ 4c8334b0 ~2.4 GB
+
+-- test 1: SAO on MPS -> RecursionError in torchsde; test 2: SAO on CPU -> same RecursionError (not a device problem)
+-- cause: final step queries the Brownian tree at sigma 0.30000001 (float32) vs bound 0.3; torchsde rounds both to 6 digits -> zero-width interval -> infinite split
+-- fix (Claude's choice, recorded per take): snap query times within 1e-6 of the bounds onto the bound (tools/batch3_generate.py, SNAP_NOTE)
+-- test 3 (both on MPS):
+{
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.14.1",
+    "diffusers": "0.40.0",
+    "transformers": "5.18.0",
+    "accelerate": "1.15.0",
+    "numpy": "2.5.3",
+    "soundfile": "0.14.0",
+    "huggingface_hub": "1.33.0",
+    "macos": "26.5.1",
+    "machine": "arm64"
+  },
+  "devices": {
+    "sao": "mps",
+    "musicgen": "mps"
+  },
+  "notes": [
+    "SAO load 6.3 s on mps",
+    "MusicGen load 51.5 s on mps"
+  ],
+  "takes": [
+    {
+      "take": "TEST-SFX-HOP",
+      "model": "stabilityai/stable-audio-open-1.0",
+      "revision": "f21265c1e2710b3bd2386596943f0007f55f802e",
+      "device": "mps",
+      "seed": 7270,
+      "prompt": "short soft squishy jelly bounce, springy wet boing as a small gelatin cube jumps, cartoon jump sound effect, single sound, close microphone, clean",
+      "negative_prompt": "music, melody, vocals, speech, voice, singing, background noise, hum, hiss, long reverb, low quality, distorted, clipping",
+      "requested_length_s": 1.0,
+      "output_length_s": 1.0,
+      "settings": {
+        "num_inference_steps": 100,
+        "guidance_scale": 7.0,
+        "sampler": "CosineDPMSolverMultistepScheduler (library default)",
+        "dtype": "float32",
+        "sample_rate": 44100,
+        "channels": 2,
+        "noise_sampler_patch": "workaround: diffusers BrownianTreeNoiseSampler query times within torchsde's tolerance (1e-6) of the sampler bounds (sigma_min 0.3, sigma_max 500) are snapped onto the bound. Without it, the final step's float32 sigma 0.30000001 vs bound 0.3 becomes a zero-width interval after torchsde's rounding and recurses forever (RecursionError on MPS and CPU). It only changes that degenerate final query, which then returns torchsde's zero increment; prompts, seeds, steps, CFG and the default sampler are unchanged."
+      },
+      "run_time_s": 192.92,
+      "file": "/private/tmp/claude-501/-Users-kiran-Documents-walker-jellyhop-kiran-g/734f9638-42fa-448c-9ece-12c99e6de0ab/scratchpad/b3test/TEST-SFX-HOP-seed7270.wav",
+      "sha256": "bd4c2f7645e5ae8c08177a0675260882b91e4eac544deeb496a6c941e5edfd05",
+      "created": "2026-10-03T03:07:40",
+      "note": "test take: full settings, timing only"
+    },
+    {
+      "take": "TEST-MUS-LOOP-5s",
+      "model": "facebook/musicgen-small",
+      "revision": "4c8334b02c6ec4e8664a91979669a501ec497792",
+      "device": "mps",
+      "seed": 7270,
+      "prompt": "playful slightly tense instrumental loop for a cartoon platformer game, pizzicato strings and soft marimba, light ticking percussion, steady 100 bpm, minor key, no vocals",
+      "negative_prompt": null,
+      "requested_length_s": 5.0,
+      "output_length_s": 4.94,
+      "settings": {
+        "max_new_tokens": 250,
+        "frame_rate_hz": 50,
+        "do_sample": true,
+        "top_k": 250,
+        "temperature": 1.0,
+        "guidance_scale": 3.0,
+        "sample_rate": 32000,
+        "channels": 1
+      },
+      "run_time_s": 11.53,
+      "file": "/private/tmp/claude-501/-Users-kiran-Documents-walker-jellyhop-kiran-g/734f9638-42fa-448c-9ece-12c99e6de0ab/scratchpad/b3test/TEST-MUS-LOOP-5s-seed7270.wav",
+      "sha256": "c51a15a0dd1ab7e391cdb02bf067857b92a54c804b3b2366e7aa999d2573d835",
+      "created": "2026-10-03T03:08:43",
+      "note": "test take: 250 tokens (5 s) instead of 1,500, timing only"
+    }
+  ]
+}
+exit 0

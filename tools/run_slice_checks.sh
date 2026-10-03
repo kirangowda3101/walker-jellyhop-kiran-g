@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Runs every check for the Jelly Hop slice and stops on the first problem. Does NOT commit.
 #   bash tools/run_slice_checks.sh
-# 1. Game art copies are byte-identical to art/game/ (tools/copy_game_art.sh --check).
+# 1. Game art copies are byte-identical to art/game/ (tools/copy_game_art.sh --check); game audio copies are
+#    byte-identical to audio/game/ (tools/copy_game_audio.sh --check); the decoded game audio passes
+#    tools/check_game_audio.py (start within 10 ms, peaks, loudness, music loop on) in ~/Documents/jellyhop-audio-env.
 # 2. Godot import, then the three headless suites: test_game (mechanics), test_keyboard,
 #    test_slice (SLICE-BRIEF.md §8). A suite passes only if Godot exits 0 AND prints its summary
 #    line with 0 failures: a script that fails to compile can still exit 0.
@@ -15,8 +17,10 @@ stop() { echo; echo "STOPPED: $*" >&2; exit 1; }
 
 REPO="$(cd -- "$(dirname -- "$0")/.." && pwd)"
 GODOT="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
+AUDIO_PY="${AUDIO_PY:-$HOME/Documents/jellyhop-audio-env/bin/python}"
 OUT="$REPO/evidence/slice-checks"
 [ -x "$GODOT" ] || stop "Godot not found at $GODOT"
+[ -x "$AUDIO_PY" ] || stop "audio environment not found at $AUDIO_PY"
 mkdir -p "$OUT"
 cd "$REPO"
 
@@ -54,6 +58,12 @@ echo "-- 1. art copies"
 bash tools/copy_game_art.sh --check > "$OUT/final-art.txt" || stop "art copy check failed (see $OUT/final-art.txt)"
 cat "$OUT/final-art.txt"
 echo "art copies: $(tail -1 "$OUT/final-art.txt")" >> "$SUMMARY"
+bash tools/copy_game_audio.sh --check > "$OUT/final-audio-copy.txt" || stop "audio copy check failed (see $OUT/final-audio-copy.txt)"
+cat "$OUT/final-audio-copy.txt"
+echo "audio copies: $(tail -1 "$OUT/final-audio-copy.txt")" >> "$SUMMARY"
+PYTHONDONTWRITEBYTECODE=1 "$AUDIO_PY" tools/check_game_audio.py > "$OUT/final-game-audio.txt" 2>&1 || { cat "$OUT/final-game-audio.txt"; stop "game audio checks failed"; }
+cat "$OUT/final-game-audio.txt"
+echo "game audio: $(tail -1 "$OUT/final-game-audio.txt")" >> "$SUMMARY"
 
 echo "-- 2. import and headless suites"
 LOG="$OUT/final-import.txt"; : > "$LOG"

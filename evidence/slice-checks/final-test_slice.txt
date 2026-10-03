@@ -35,23 +35,32 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"sfx-rapid-hops-once-each","observed":{"counts":{"SFX-HOP":5,"SFX-LAND":5},"jumps":5},"status":"PASS"}
 {"id":"sfx-held-jump-once","observed":{"counts":{"SFX-HOP":1,"SFX-LAND":1}},"status":"PASS"}
 {"id":"sfx-respawn-silent","observed":{"counts":{"SFX-SPLAT-SAUCE":1}},"status":"PASS"}
-{"id":"sfx-fork-splat-once","observed":{"cause":"fork","counts":{"SFX-SPLAT-FORK":1,"SFX-WARN":5}},"status":"PASS"}
-{"id":"sfx-sauce-splat-once-no-land","observed":{"cause":"sauce","counts":{"SFX-SPLAT-SAUCE":1,"SFX-WARN":2}},"status":"PASS"}
+{"id":"sfx-fork-splat-once","observed":{"cause":"fork","counts":{"SFX-SPLAT-FORK":1,"SFX-WARN":2}},"status":"PASS"}
+{"id":"sfx-sauce-splat-once-no-land","observed":{"cause":"sauce","counts":{"SFX-SPLAT-SAUCE":1,"SFX-WARN":1}},"status":"PASS"}
 {"id":"sfx-win-once","observed":{"counts":{"SFX-WIN":1},"state":5},"status":"PASS"}
-{"id":"sfx-calls-record-frame-and-state","observed":{"sample":[{"frame":2698,"id":"SFX-WIN","state":"WON"}]},"status":"PASS"}
-{"id":"offscreen-shadow-no-warn-dip-once-on-screen","observed":{"music_once_on_screen":["warning"],"music_through_strike":["warning","normal"],"music_while_off_screen":[],"scrolled_into_view_while_growing":true,"sfx_warn":0,"started_off_screen":true},"status":"PASS"}
-{"id":"onscreen-shadow-warns-and-dips","observed":{"music_targets":["warning"],"sfx_warn":1},"status":"PASS"}
-{"id":"intro-shows-shadows-frozen","observed":{"forks_frozen":true,"intro_ticks_checked":230,"plates_with_visible_shadow_during_pan":{"5":0.51,"6":0.52},"sfx_warn":0},"status":"PASS"}
+{"id":"sfx-calls-record-frame-and-state","observed":{"sample":[{"frame":2700,"id":"SFX-WIN","state":"WON"}]},"status":"PASS"}
+{"id":"offscreen-shadow-dip-once-on-screen-warn-at-strike","observed":{"music_once_on_screen":["warning"],"music_through_strike":["warning","normal"],"music_while_off_screen":[],"scrolled_into_view_while_growing":true,"sfx_warn_at_descent_start":1,"sfx_warn_while_shadow_grows":0,"started_off_screen":true},"status":"PASS"}
+{"id":"onscreen-shadow-dips-no-warn-at-start","observed":{"music_targets":["warning"],"sfx_warn":0},"status":"PASS"}
+{"id":"intro-shows-shadows-frozen","observed":{"forks_frozen":true,"intro_ticks_checked":229,"plates_with_visible_shadow_during_pan":{"5":0.51,"6":0.52},"sfx_warn":0},"status":"PASS"}
 {"id":"play-starts-quiet-no-onscreen-shadow","observed":{"music":"normal","off_screen_in_shadow":[5,6],"on_screen_in_shadow":[],"sfx_warn_first_5_ticks":0},"status":"PASS"}
 {"id":"replay-starts-quiet-no-onscreen-shadow","observed":{"music":"normal","on_screen_in_shadow":[],"sfx_warn":0},"status":"PASS"}
-{"id":"overlapping-shadows-one-dip","observed":{"first_warning_frame":3463,"last_warning_end_frame":3602,"music_entries":[{"cutoff":900.0,"db":-9.0,"frame":3463,"target":"warning"},{"cutoff":20500.0,"db":0.0,"frame":3602,"target":"normal"}],"overlap_ticks":91,"sfx_warn":2},"status":"PASS"}
-{"id":"overlapping-shadows-two-warns","observed":{"sfx_warn":2},"status":"PASS"}
-{"id":"music-intro-quieter-then-normal","observed":{"changes":[{"event":"restart","frame":3621},{"cutoff":20500.0,"db":-8.0,"frame":3622,"target":"intro"},{"cutoff":20500.0,"db":0.0,"frame":3636,"target":"normal"}]},"status":"PASS"}
+{"id":"overlapping-shadows-one-dip","observed":{"first_warning_frame":3464,"last_warning_end_frame":3603,"music_entries":[{"cutoff":900.0,"db":-9.0,"frame":3464,"target":"warning"},{"cutoff":20500.0,"db":0.0,"frame":3603,"target":"normal"}],"overlap_ticks":91,"sfx_warn":1},"status":"PASS"}
+{"id":"overlapping-strikes-warn-only-near-fork","observed":{"both_on_screen":true,"descent_frames":{"2":3560,"3":3578},"jelly_plate":1,"sfx_warn_by_fork_plate":{"2":1,"3":0},"sfx_warn_total":1},"status":"PASS"}
+{"id":"music-intro-quieter-then-normal","observed":{"changes":[{"event":"restart","frame":3622},{"cutoff":20500.0,"db":-8.0,"frame":3623,"target":"intro"},{"cutoff":20500.0,"db":0.0,"frame":3638,"target":"normal"}]},"status":"PASS"}
 {"id":"music-splat-dip-back-on-respawn","observed":{"targets":["splat","normal"]},"status":"PASS"}
 {"id":"music-pause-quiet-muffled","observed":{"targets":["pause","normal"]},"status":"PASS"}
 {"id":"music-win-fade-quiet-restart","observed":{"sequence":["win_fade","end_quiet","restart","normal"]},"status":"PASS"}
 {"id":"music-bus-follows-target","observed":{"cutoff_hz":20500.0,"music_db":0.0},"status":"PASS"}
 {"id":"mute-changes-no-state","observed":{"after":{"music":"normal","sound":0,"state":1,"x":259.995086669922},"before":{"music":"normal","sound":0,"state":1,"x":259.995086669922},"forks_kept_rhythm":true,"master_muted":true,"music_muted":true},"status":"PASS"}
 {"id":"hud-text-per-state","observed":{"intro":["JELLY HOP","Fork From Above","any key skips the intro"],"muted":["MUTED (M)","MUSIC OFF (N)"],"paused":["PAUSED","Esc to resume","Left/Right or A/D: move     Space, Up or W: hop     Esc: pause     M: mute all     N: mute music"],"playing":[],"prompt":["SAFE!","press any key to play again"],"won":["SAFE!"]},"status":"PASS"}
-SLICE TESTS: 52 checks / 0 failures
+{"id":"audio-every-event-has-a-stream","observed":{"missing":[],"not_ogg":[],"placeholder":false,"player_problems":[],"streams":6},"status":"PASS"}
+{"id":"audio-music-loops-and-plays","observed":{"bus":"Music","loop":true,"playing":true,"stream":"(res://assets/audio/MUS-LOOP.ogg):<AudioStreamOggVorbis#-9223371276192575993>"},"status":"PASS"}
+{"id":"audio-hop-plays-its-stream","observed":{"hop_player_playing":true,"sfx_hop_calls":1},"status":"PASS"}
+{"id":"warn-none-while-shadow-grows","observed":{"current_plate_fork":{"fork_plate":2,"jelly_plate":2,"on_screen":true,"still_in_shadow":true,"warns":0},"next_plate_fork":{"fork_plate":3,"jelly_plate":2,"on_screen":true,"still_in_shadow":true,"warns":0}},"status":"PASS"}
+{"id":"warn-current-plate-fork-descends-once","observed":{"descended":true,"fork_plate":2,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":1,"warns_total":1},"status":"PASS"}
+{"id":"warn-next-plate-fork-descends-once","observed":{"descended":true,"fork_plate":3,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":1,"warns_total":1},"status":"PASS"}
+{"id":"warn-far-on-screen-fork-silent","observed":{"descended":true,"fork_plate":4,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":0,"warns_total":0},"status":"PASS"}
+{"id":"warn-offscreen-next-fork-silent","observed":{"descended":true,"fork_plate":3,"jelly_plate":2,"on_screen":false,"splats":0,"warns_at_descent_start":0,"warns_total":0},"status":"PASS"}
+{"id":"warn-airborne-uses-last-plate","observed":{"airborne_at_start":true,"far_fork":{"descended":true,"fork_plate":4,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":0,"warns_total":0},"next_plate_fork":{"descended":true,"fork_plate":3,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":1,"warns_total":1}},"status":"PASS"}
+SLICE TESTS: 61 checks / 0 failures
 exit: 0

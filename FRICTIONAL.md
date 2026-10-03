@@ -460,3 +460,89 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Audio (Batch 3), with failures #8, #9 and #10 by ear.
 
 **Traceability:** `evidence/slice-plan.md`, `evidence/slice-batch-review.md` (§7: my review), `evidence/slice-checks/` (step, review and final logs), `evidence/slice-screens/`, `evidence/slice-art-copy.txt`, the JSON test reports in `evidence/`.
+
+---
+
+## 2026-10-03 — Batch 3: sound effects and music
+
+**Status (my current choices; not yet committed):**
+- Six sound effects and the music loop are selected, processed and playing in the game.
+- My confirmed listening judgment is about the improved fork timing; the other listening judgments are pending (see "Still pending").
+- Final run of `bash tools/run_slice_checks.sh`: art and audio copies byte-identical; game audio 8/0; mechanics 25/0; keyboard 12/0; slice checks 61/0; 7 screenshots; launch with no errors. These checks do not replace my listening.
+
+**My prediction (written before generating; reviewed and confirmed by me),** from `evidence/batch3-prediction.md`, saved at 02:47:33 EDT before any generation:
+"I expect the models to capture the wet, squishy sounds more easily than a short metallic warning scrape that feels tense without being harsh. I expect the music to capture the playful tension, but its rhythm and loop seam may need editing so repeated playback sounds natural."
+
+**Decisions (mine):**
+- **Models, prompts and the planned edits:** as committed before generation in `gen-inputs/batch3-audio-prompts.md` (`5fc8efb`); "Models (my choice, 2026-10-03)".
+- **torchsde workaround:** I approved it before the full run: "start the full generation (step 2) with the torchsde fix".
+- **Provisional technical selections,** "made from the listening sheet's measurements before listening", recorded word for word in `evidence/batch3-listening.md`: HOP 3, LAND 2, SPLAT-FORK 3, SPLAT-SAUCE 2, WARN 1, WIN 3, MUS-LOOP 1. They were provisional because they came from measurements, not listening.
+- **Comparison:** I asked for loudness-matched comparison copies of all 21 takes outside the repo, so I could compare by ear and confirm or change those picks.
+- **Provisional technical shortlist** (the same takes), recorded as my "provisional technical shortlist for an in-game audition; final acceptance and listening reasons pending". On the music: "For music, take 1 is closest to the requested 100 bpm, so I'll start there and compare its loop with take 3's cleaner measured join."
+- **Leveling:** "match perceived loudness for the game too (gain only, no limiting, peaks ≤ −1 dBFS)", with one fixed sound-effect loudness target for every take and later swap. This is recorded as a dated note in the prompts file.
+- **Audition 1 (sound on, provisional takes), my note:** "i played the game the fork souyjds are random and it should there only when the fork comes down right? the fork sound plays randomly even if the forks are not coming down". Follow-up: "My observation is that metallic sounds seem disconnected from visible fork movement; the cause isn't confirmed yet."
+- **Trigger decision 1 (after verification):** SFX-WARN only for the fork over the jelly's current plate or the next plate, keeping the on-screen requirement and one scrape per warning phase; music unchanged.
+- **Audition 2, my note:** "i want the sound only when the fork is coming down. it is still not connected to forks."
+- **Trigger decision 2:** "move the SFX-WARN trigger from the start of the shadow phase to the moment the fork starts descending". The existing scrape plays once when the current-plate or next-plate fork starts descending, if it is on screen. Nothing plays when a shadow starts growing; "the shadow alone does the warning". Music unchanged.
+- **Audition 3, my note:** "this looks good actually"
+- **Final selections, my current choices and their design purposes,** word for word:
+  - SFX-HOP: take 3 — intended to give each hop a clear takeoff cue.
+  - SFX-LAND: take 2 — intended to distinguish landing safely from jumping.
+  - SFX-WARN: take 1 — the scrape now feels connected to the fork descending, which is what I wanted.
+  - SFX-SPLAT-FORK: take 3 — intended to identify a fork failure.
+  - SFX-SPLAT-SAUCE: take 2 — intended to distinguish a sauce failure from a fork hit.
+  - SFX-WIN: take 3 — intended to mark reaching the dome.
+  - MUS-LOOP: take 1 — keep the current music; I haven't separately confirmed whether the seam is audible.
+  - Volume: leave it unchanged for now.
+- "These are my current choices and their design purposes. My confirmed listening judgment is about the improved fork timing. Keep the remaining listening judgments pending rather than recording specific sound qualities or a clean music seam that I haven't confirmed."
+- **The 14 other takes are "not selected".** I gave no per-take rejection reasons.
+
+**Claude chat (claude.ai) in Batch 3:** recommended Stable Audio Open 1.0 for the sound effects and MusicGen-small for the music after checking their licenses (I chose them); drafted gen-inputs/batch3-audio-prompts.md (prompts, seeds, settings, planned edits), AUDIO-BRIEF.md and tools/audio_prompts_commit.sh, which I reviewed and committed before generation; guided the Hugging Face license and login steps; made one mistake: an unpinned install upgraded huggingface_hub to 2.1.1 in my conda base environment, which it then restored to 0.36.2 (outside the repository and the audio environment); recommended processing all 21 takes for an equal-loudness comparison, and offered the in-game leveling and SFX-WARN trigger options, which I decided; drafted the Claude Code prompts I pasted, carrying my decisions and notes word for word.
+
+**Routine choices made by Claude Code (from AUDIO-BRIEF.md and my decisions):**
+- **Environment:** built from Homebrew's Python (not conda base). Both models ran on the GPU (MPS) after test takes.
+- **torchsde workaround:** snap noise-time values within 1e-6 of the sampler bounds onto the bound. Proposed by Claude Code; approved by me before the full run.
+- **Loudness measurement** (for the comparison and the game): sound effects use the maximum momentary loudness (BS.1770 K-weighting, 400 ms window); music uses BS.1770 integrated loudness.
+- **Music level:** −40.1 LUFS integrated, 10 LU below the sound effects (my decision was that the sound effects stay clearly audible over the music; the number is Claude Code's).
+- **Fade-out:** 15 ms linear.
+- **Leading trim:** repeated at the delivered level after the 10 ms start check failed.
+- **Delivery:** OGG Vorbis at compression level 0.1, with one player per sound event so sounds do not cut each other off.
+- **Loop selection:** music loop chosen by beat tracking and a seam measurement.
+- **Shutdown fix:** players stop when the game is freed, and the test scripts wait before quitting.
+- **Trace:** the route for the sound traces.
+
+**What came back (the models' outputs; measurements only, no listening claims):**
+- Stable Audio Open 1.0 made 18 sound-effect takes and MusicGen-small made 3 music takes of 29.94 s. They took 190–262 s and 96–109 s per take on MPS.
+- Many raw sound-effect peaks were above 0 dBFS (up to +7.1), which was kept, because the raw files are float.
+- Leading silence before −50 dBFS ranged from 0 to 370 ms.
+- Beat tracking found 101 bpm in music take 1 and 134 bpm in takes 2 and 3; the prompt asked for 100 bpm.
+- Measurements and waveforms: `evidence/batch3-listening.md`, `evidence/batch3-takes-waveforms.png`.
+
+**Inspect and revise:**
+- **Setup:** torchsde needed installing; then a `RecursionError` on MPS and CPU, traced to a float32 rounding at the sampler's final step and worked around as above.
+- **Model downloads:** Stable Audio Open took about 10.1 GB of cache, not the about 5.3 GB first estimated (diffusers also fetched the unused original checkpoint).
+- **Comparison copies:** the sound-effect group target (−30.1 LUFS) is set by SFX-SPLAT-SAUCE take 3's peak, so those copies played quietly. The seam measurement passes any crossfade of 2 ms or more, so it rules out only a hard cut.
+- **Game processing:** the 10 ms start check failed for SFX-WARN (244 ms) and SFX-HOP (60 ms); fixed by trimming at the delivered level.
+- **Godot import:** crashed once (exit 139) at `MUS-LOOP.ogg`; not reproduced in later imports; the cause is unknown.
+- **Leak at exit:** the first full check run stopped on "6 resources still in use at exit" (audio still playing when a test quit); fixed in shutdown.
+- **Swap tool:** tested by swapping SFX-HOP to take 2 and back. The re-encoded file differs only in its Ogg serial number; the decoded audio is identical.
+- **Verification traces** (real game, scripted input; route plates 1 → 2 → 3 → 2 → 1, 25.5 s):
+  - before decision 1: 22 SFX-WARN calls, 18 from forks not over the jelly's plate, 16 while no fork was down;
+  - after decision 1: 9;
+  - after decision 2: 8, all in the same tick as their fork started descending, 0 while no fork was down. One scrape came from the jelly's own fork, which then hit it; SFX-SPLAT-FORK followed 7 ticks (0.117 s) later.
+- **First trace run:** its script mis-credited simultaneous scrapes and did not complete the route. Its file was deleted by mistake and restored from the console output, with the flaws noted.
+- **Test fixture:** the first off-screen check had a wrong camera fixture and was corrected. The changed checks were replaced with explained equivalents (listed in `evidence/batch3-review.md`).
+
+**Human / Claude / model:**
+- **Kiran:** chose the models ("Models (my choice, 2026-10-03)") and committed the prompts file and AUDIO-BRIEF.md before generation; wrote the prediction; accepted the license and logged in to Hugging Face; approved the torchsde workaround and the full run; made the provisional selections, the shortlist, the leveling decision and the two trigger decisions; played three in-game auditions; made the final selections and their design purposes.
+- **Claude chat (claude.ai):** recommended Stable Audio Open 1.0 for the sound effects and MusicGen-small for the music after checking their licenses (I chose them); drafted gen-inputs/batch3-audio-prompts.md (prompts, seeds, settings, planned edits), AUDIO-BRIEF.md and tools/audio_prompts_commit.sh, which I reviewed and committed before generation; guided the Hugging Face license and login steps; made one mistake: an unpinned install upgraded huggingface_hub to 2.1.1 in my conda base environment, which it then restored to 0.36.2 (outside the repository and the audio environment); recommended processing all 21 takes for an equal-loudness comparison, and offered the in-game leveling and SFX-WARN trigger options, which I decided; drafted the Claude Code prompts I pasted, carrying my decisions and notes word for word.
+- **Claude Code:** set up the environment; ran the test takes and all 21 generations; wrote the scripts, checks and traces; made the listening sheet and comparison copies; processed and wired in my selections; implemented the trigger decisions; drafted this entry, the ASSET-LOG section, the SOURCES additions and the review sheet.
+- **Models:** Stable Audio Open 1.0 produced the 18 sound-effect takes and MusicGen-small the 3 music takes.
+
+**Still pending:**
+- the music seam over three repetitions, by my listening;
+- the listening judgments for the other sounds (only the fork timing is confirmed);
+- the overall volume ("leave it unchanged for now");
+- a full muted playtest.
+
+**Traceability:** `gen-inputs/batch3-audio-prompts.md` (with its two dated notes), AUDIO-BRIEF.md, ASSET-LOG.md Batch 3, SOURCES.md, `evidence/batch3-*` (prediction, setup, generation, listening, compare, process, audio copy, checks, audition notes, traces, swaps, review), `audio/game/`, `godot/assets/audio/`.

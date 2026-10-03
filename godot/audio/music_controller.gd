@@ -9,7 +9,8 @@ const T = preload("res://game/slice_tuning.gd")
 var target: String = ""
 var changes: Array[Dictionary] = []   # {frame, target, db, cutoff} or {frame, event: "restart"}
 var player: AudioStreamPlayer
-var stream: AudioStream = null    # MUS-LOOP goes here in the audio batch
+const LOOP_PATH := "res://assets/audio/MUS-LOOP.ogg"   # imported with looping on
+var stream: AudioStream = null
 var music_bus: int
 var lowpass: AudioEffectLowPassFilter
 var tween: Tween
@@ -21,6 +22,8 @@ func _ready() -> void:
 	player = AudioStreamPlayer.new()
 	player.bus = "Music"
 	add_child(player)
+	if ResourceLoader.exists(LOOP_PATH):
+		stream = load(LOOP_PATH)
 
 static func ensure_buses() -> void:
 	## Master, Music (with a low-pass filter) and SFX. Created in code so they also exist when a
@@ -49,6 +52,9 @@ func set_target(wanted: String) -> void:
 	tween = create_tween().set_parallel(true).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_method(func(v: float): AudioServer.set_bus_volume_db(music_bus, v), AudioServer.get_bus_volume_db(music_bus), spec.db, time)
 	tween.tween_property(lowpass, "cutoff_hz", spec.cutoff, time)
+
+func _exit_tree() -> void:
+	player.stop()
 
 func restart() -> void:
 	## Start the loop from the top (intro, and replay after the dome).

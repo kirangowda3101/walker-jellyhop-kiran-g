@@ -1,0 +1,9 @@
+PASS SFX-HOP: take 3, lead 0.00 ms, peak -15.97 dBFS, loudness -30.05 LUFS (target -30.1), 0.138 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-LAND: take 2, lead 0.00 ms, peak -10.66 dBFS, loudness -30.04 LUFS (target -30.1), 0.146 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-WARN: take 1, lead 0.00 ms, peak -17.08 dBFS, loudness -30.11 LUFS (target -30.1), 0.367 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-SPLAT-FORK: take 3, lead 0.00 ms, peak -8.90 dBFS, loudness -30.06 LUFS (target -30.1), 0.153 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-SPLAT-SAUCE: take 2, lead 0.00 ms, peak -6.07 dBFS, loudness -30.09 LUFS (target -30.1), 0.229 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-WIN: take 3, lead 0.00 ms, peak -14.54 dBFS, loudness -30.05 LUFS (target -30.1), 1.615 s, 44100 Hz x2, process-log SHA match True
+PASS MUS-LOOP: take 1, lead 0.00 ms, peak -23.51 dBFS, loudness -40.05 LUFS (target -40.1), 9.600 s, 32000 Hz x1, process-log SHA match True
+PASS MUS-LOOP imports with looping on (loop=true)
+GAME AUDIO CHECKS: 8 checks / 0 failures

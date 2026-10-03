@@ -1,0 +1,93 @@
+== Batch 3 audio trace (real game, scripted input; not a playtest)  2026-10-03T18:15:58
+route: stand on plate 1, hop to 2, 3, back to 2 and 1; times from the start of play; plates numbered 1-6
+  0.37 s  fork 6 comes DOWN (on screen false; jelly on plate 1)
+  0.47 s  fork 5 comes DOWN (on screen false; jelly on plate 1)
+  0.77 s  fork 3 shadow starts (on screen true; jelly on plate 1)
+  1.07 s  fork 4 shadow starts (on screen true; jelly on plate 1)
+  2.07 s  fork 2 shadow starts (on screen true; jelly on plate 1)
+  2.17 s  fork 3 comes DOWN (on screen true; jelly on plate 1)
+  2.27 s  fork 6 shadow starts (on screen false; jelly on plate 1)
+  2.37 s  fork 4 comes DOWN (on screen true; jelly on plate 1)
+  2.57 s  fork 5 shadow starts (on screen false; jelly on plate 1)
+  3.27 s  fork 6 comes DOWN (on screen false; jelly on plate 1)
+  3.67 s  fork 2 comes DOWN (on screen true; jelly on plate 1)
+  3.67 s  SOUND SFX-WARN        | caused by: fork over plate 2, phase DOWN, shadow on screen true | jelly on plate 1 | forks down now: [2, 6] | state PLAYING
+  3.77 s  fork 5 comes DOWN (on screen false; jelly on plate 1)
+  4.67 s  fork 4 shadow starts (on screen true; jelly on plate 1)
+  4.77 s  fork 3 shadow starts (on screen true; jelly on plate 1)
+  5.17 s  fork 6 shadow starts (on screen false; jelly on plate 1)
+  5.87 s  fork 5 shadow starts (on screen false; jelly on plate 1)
+  5.97 s  fork 4 comes DOWN (on screen true; jelly on plate 1)
+  6.17 s  fork 3 comes DOWN (on screen true; jelly on plate 1)
+  6.17 s  fork 6 comes DOWN (on screen false; jelly on plate 1)
+  6.57 s  fork 2 shadow starts (on screen true; jelly on plate 1)
+  7.07 s  fork 5 comes DOWN (on screen false; jelly on plate 1)
+  8.07 s  fork 6 shadow starts (on screen false; jelly on plate 1)
+  8.17 s  fork 2 comes DOWN (on screen true; jelly on plate 1)
+  8.17 s  SOUND SFX-WARN        | caused by: fork over plate 2, phase DOWN, shadow on screen true | jelly on plate 1 | forks down now: [2] | state PLAYING
+  8.27 s  fork 4 shadow starts (on screen true; jelly on plate 1)
+  8.73 s  SOUND SFX-HOP         | caused by: the jelly | jelly on plate 1 | forks down now: [] | state PLAYING
+  8.77 s  fork 3 shadow starts (on screen true; jelly on plate 1)
+  9.07 s  fork 6 comes DOWN (on screen false; jelly on plate 1)
+  9.17 s  fork 5 shadow starts (on screen false; jelly on plate 1)
+  9.42 s  SOUND SFX-LAND        | caused by: the jelly | jelly on plate 2 | forks down now: [6] | state PLAYING
+  9.57 s  fork 4 comes DOWN (on screen true; jelly on plate 2)
+ 10.17 s  fork 3 comes DOWN (on screen true; jelly on plate 2)
+ 10.17 s  SOUND SFX-WARN        | caused by: fork over plate 3, phase DOWN, shadow on screen true | jelly on plate 2 | forks down now: [3] | state PLAYING
+ 10.37 s  fork 5 comes DOWN (on screen false; jelly on plate 2)
+ 10.97 s  fork 6 shadow starts (on screen false; jelly on plate 2)
+ 11.07 s  fork 2 shadow starts (on screen true; jelly on plate 2)
+ 11.77 s  SOUND SFX-HOP         | caused by: the jelly | jelly on plate 2 | forks down now: [] | state PLAYING
+ 11.87 s  fork 4 shadow starts (on screen true; jelly on plate 2)
+ 11.97 s  fork 6 comes DOWN (on screen false; jelly on plate 2)
+ 12.45 s  SOUND SFX-LAND        | caused by: the jelly | jelly on plate 3 | forks down now: [] | state PLAYING
+ 12.47 s  fork 5 shadow starts (on screen true; jelly on plate 3)
+ 12.67 s  fork 2 comes DOWN (on screen true; jelly on plate 3)
+ 12.77 s  fork 3 shadow starts (on screen true; jelly on plate 3)
+ 13.17 s  fork 4 comes DOWN (on screen true; jelly on plate 3)
+ 13.17 s  SOUND SFX-WARN        | caused by: fork over plate 4, phase DOWN, shadow on screen true | jelly on plate 3 | forks down now: [4] | state PLAYING
+ 13.67 s  fork 5 comes DOWN (on screen true; jelly on plate 3)
+ 13.87 s  fork 6 shadow starts (on screen false; jelly on plate 3)
+ 14.17 s  fork 3 comes DOWN (on screen true; jelly on plate 3)
+ 14.17 s  SOUND SFX-WARN        | caused by: fork over plate 3, phase DOWN, shadow on screen true | jelly on plate 3 | forks down now: [3] | state PLAYING
+ 14.28 s  SOUND SFX-SPLAT-FORK  | caused by: fork over plate 3, phase HOLD, shadow on screen true | jelly on plate 3 | forks down now: [3] | state SPLAT
+ 14.87 s  fork 6 comes DOWN (on screen false; jelly on plate 3)
+ 15.47 s  fork 4 shadow starts (on screen true; jelly on plate 3)
+ 15.57 s  fork 2 shadow starts (on screen true; jelly on plate 3)
+ 15.77 s  fork 5 shadow starts (on screen true; jelly on plate 3)
+ 16.77 s  fork 4 comes DOWN (on screen true; jelly on plate 3)
+ 16.77 s  fork 6 shadow starts (on screen false; jelly on plate 3)
+ 16.77 s  SOUND SFX-WARN        | caused by: fork over plate 4, phase DOWN, shadow on screen true | jelly on plate 3 | forks down now: [4] | state PLAYING
+ 16.97 s  fork 5 comes DOWN (on screen true; jelly on plate 3)
+ 17.17 s  fork 2 comes DOWN (on screen true; jelly on plate 3)
+ 17.48 s  fork 3 shadow starts (on screen true; jelly on plate 3)
+ 17.73 s  SOUND SFX-HOP         | caused by: the jelly | jelly on plate 3 | forks down now: [] | state PLAYING
+ 17.77 s  fork 6 comes DOWN (on screen false; jelly on plate 3)
+ 18.42 s  SOUND SFX-LAND        | caused by: the jelly | jelly on plate 2 | forks down now: [] | state PLAYING
+ 18.88 s  fork 3 comes DOWN (on screen true; jelly on plate 2)
+ 18.88 s  SOUND SFX-WARN        | caused by: fork over plate 3, phase DOWN, shadow on screen true | jelly on plate 2 | forks down now: [3] | state PLAYING
+ 19.07 s  fork 4 shadow starts (on screen true; jelly on plate 2)
+ 19.07 s  fork 5 shadow starts (on screen false; jelly on plate 2)
+ 19.67 s  fork 6 shadow starts (on screen false; jelly on plate 2)
+ 20.07 s  fork 2 shadow starts (on screen true; jelly on plate 2)
+ 20.27 s  fork 5 comes DOWN (on screen false; jelly on plate 2)
+ 20.37 s  fork 4 comes DOWN (on screen true; jelly on plate 2)
+ 20.67 s  fork 6 comes DOWN (on screen false; jelly on plate 2)
+ 20.83 s  SOUND SFX-HOP         | caused by: the jelly | jelly on plate 2 | forks down now: [6] | state PLAYING
+ 21.48 s  fork 3 shadow starts (on screen true; jelly on plate 2)
+ 21.52 s  SOUND SFX-LAND        | caused by: the jelly | jelly on plate 1 | forks down now: [] | state PLAYING
+ 21.67 s  fork 2 comes DOWN (on screen true; jelly on plate 1)
+ 21.67 s  SOUND SFX-WARN        | caused by: fork over plate 2, phase DOWN, shadow on screen true | jelly on plate 1 | forks down now: [2] | state PLAYING
+ 22.37 s  fork 5 shadow starts (on screen false; jelly on plate 1)
+ 22.57 s  fork 6 shadow starts (on screen false; jelly on plate 1)
+ 22.67 s  fork 4 shadow starts (on screen true; jelly on plate 1)
+ 22.88 s  fork 3 comes DOWN (on screen true; jelly on plate 1)
+ 23.57 s  fork 5 comes DOWN (on screen false; jelly on plate 1)
+ 23.57 s  fork 6 comes DOWN (on screen false; jelly on plate 1)
+ 23.97 s  fork 4 comes DOWN (on screen true; jelly on plate 1)
+ 24.57 s  fork 2 shadow starts (on screen true; jelly on plate 1)
+ 25.47 s  fork 6 shadow starts (on screen false; jelly on plate 1)
+ 25.48 s  fork 3 shadow starts (on screen true; jelly on plate 1)
+SCRAPES: 8 SFX-WARN calls, 8 of them in the same tick as their fork's descent start
+SPLAT: fork 3 hit the jelly at 14.28 s; its scrape played at 14.17 s: 7 ticks (0.117 s) earlier
+SUMMARY: 8 SFX-WARN calls; 7 from a fork not over the jelly's plate; 0 while no fork was down; splats 1; route completed (plates 1-2-3-2-1); run 25.5 s

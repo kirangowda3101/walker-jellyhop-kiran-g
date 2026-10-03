@@ -1,0 +1,2 @@
+2026-10-03 11:06  SFX-HOP -> take 2  sha256 8a794b5a9465ece95db7d25652efaae24fdcdc956ba2f060e89620c9e88043fe -> 1f46b3d12b9bfaa95686bd0b591bea30d8e0e4db95622710d400c7c75eb3d242  checks: game audio 0 failures; copy byte-identical; SLICE TESTS: 55 checks / 0 failures
+2026-10-03 11:07  SFX-HOP -> take 3  sha256 1f46b3d12b9bfaa95686bd0b591bea30d8e0e4db95622710d400c7c75eb3d242 -> 5866c925b87436b4fda27276544339d02d12043383184317a384c485f48e750d  checks: game audio 0 failures; copy byte-identical; SLICE TESTS: 55 checks / 0 failures

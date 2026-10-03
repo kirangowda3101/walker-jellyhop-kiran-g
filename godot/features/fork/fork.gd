@@ -23,7 +23,7 @@ var period: int
 var t: int = 0                   # position in the cycle, 0 = start of the safe window
 var held: bool = false           # frozen raised at the start of its safe window (respawn)
 var hold_pending: bool = false   # finish the current strike, then hold
-var announced: bool = false      # this shadow phase started on screen (SFX-WARN played)
+var announced: bool = false      # SFX-WARN played for this strike (set by the session when the fork starts descending)
 var head: Node2D
 var sprite: Sprite2D
 var hit_area: Area2D
@@ -141,21 +141,25 @@ func harmless_in(k: int) -> bool:
 		return true
 	return phase_of(t + k) in [Phase.SAFE, Phase.SHADOW]
 
-func advance() -> bool:
-	## One physics tick. Returns true when the shadow phase starts on this tick.
+func advance() -> String:
+	## One physics tick. Returns "shadow" when the shadow phase starts on this tick, "down" when the fork
+	## starts descending (the start of its strike), otherwise "".
 	if held:
-		return false
+		return ""
 	var before := phase()
 	t = posmod(t + 1, period)
 	if hold_pending and phase() == Phase.SAFE:
 		t = 0
 		held = true
 		hold_pending = false
-	var started := before != Phase.SHADOW and phase() == Phase.SHADOW
-	if started:
+	var event := ""
+	if before != Phase.SHADOW and phase() == Phase.SHADOW:
+		event = "shadow"
 		announced = false
+	elif before != Phase.DOWN and phase() == Phase.DOWN:
+		event = "down"
 	_apply()
-	return started
+	return event
 
 func hold_raised() -> void:
 	## Respawn on this plate: no new shadow or strike until control returns.

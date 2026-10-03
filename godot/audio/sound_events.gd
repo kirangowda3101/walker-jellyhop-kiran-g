@@ -1,21 +1,32 @@
 extends Node
 ## The one entry point for sound effects (SLICE-BRIEF.md §7). Each approved event ID is called
 ## only from the code that already represents its event (CHANGE-BRIEF.md event-to-sound map).
-## Placeholder mode: plays nothing, but records every call so tests can count triggers.
-## Adding audio later = putting an AudioStream in `streams` for an ID; no game logic changes.
-## Sounds never decide game state.
+## Every call is recorded (event ID, physics frame, game state) so tests can count triggers.
+## Batch 3: each ID plays res://assets/audio/<ID>.ogg on its own player on the SFX bus, so one
+## sound never cuts off another. When anything plays did not change. Sounds never decide game state.
 
 const IDS := ["SFX-HOP", "SFX-LAND", "SFX-WARN", "SFX-SPLAT-FORK", "SFX-SPLAT-SAUCE", "SFX-WIN"]
-var placeholder: bool = true
-var streams: Dictionary = {}        # event ID -> AudioStream (none yet: no audio until the audio batch)
+const AUDIO_DIR := "res://assets/audio/"
+var placeholder: bool = false       # true = record calls but play nothing (the slice before Batch 3)
+var streams: Dictionary = {}        # event ID -> AudioStream
+var players: Dictionary = {}        # event ID -> AudioStreamPlayer
 var calls: Array[Dictionary] = []   # {id, frame, state}
 var context: Callable = func() -> String: return ""
-var player: AudioStreamPlayer
 
 func _ready() -> void:
-	player = AudioStreamPlayer.new()
-	player.bus = "SFX"
-	add_child(player)
+	for id in IDS:
+		var path: String = AUDIO_DIR + id + ".ogg"
+		if ResourceLoader.exists(path):
+			streams[id] = load(path)
+		var p := AudioStreamPlayer.new()
+		p.bus = "SFX"
+		p.stream = streams.get(id)
+		add_child(p)
+		players[id] = p
+
+func _exit_tree() -> void:
+	for p in players.values():
+		p.stop()   # release playbacks so nothing is still playing when the game is freed
 
 func play(id: String) -> void:
 	if not id in IDS:
@@ -23,8 +34,7 @@ func play(id: String) -> void:
 		return
 	calls.append({"id": id, "frame": Engine.get_physics_frames(), "state": context.call()})
 	if not placeholder and streams.has(id):
-		player.stream = streams[id]
-		player.play()
+		players[id].play()
 
 func count(id: String) -> int:
 	var n := 0

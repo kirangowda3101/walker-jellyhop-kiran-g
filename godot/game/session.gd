@@ -21,6 +21,7 @@ var sauce_areas: Array[Area2D] = []
 var forks: Array = []                # one entry per plate: a fork node or null
 var goal: Area2D
 var checkpoint: int = 0
+var jelly_plate: int = 0   # the plate the jelly stands on, or the last plate it stood on (airborne or on bare table)
 var splats: int = 0
 var splat_cause: String = ""
 var timer: float = 0.0
@@ -217,6 +218,7 @@ func start_session() -> void:
 		music.restart()   # replay: the loop starts again from the top
 	splats = 0
 	checkpoint = 0
+	jelly_plate = 0
 	prompt_shown = false
 	won_once = false
 	shake_ticks = 0
@@ -290,15 +292,16 @@ func shadow_on_screen(fork) -> bool:
 func _advance_forks() -> void:
 	## Forks keep their fixed rhythm during play, splat and re-form (paused, intro and win freeze them).
 	for fork in forks:
-		if fork and fork.advance():
-			# SFX-WARN only when the shadow phase starts with the shadow on screen; a shadow
-			# that starts off screen stays silent even after it scrolls in (failure #8).
-			fork.announced = shadow_on_screen(fork)
+		if fork and fork.advance() == "down":
+			# SFX-WARN (Kiran, 2026-10-03, after the second audition): the scrape plays once when the fork
+			# over the jelly's current or next plate starts descending, if that fork is on screen at that
+			# moment. Nothing plays when a shadow starts growing; the shadow alone does the warning.
+			fork.announced = shadow_on_screen(fork) and fork.plate_index in [jelly_plate, jelly_plate + 1]
 			if fork.announced:
 				on_warning(fork)
 
 func on_warning(_fork) -> void:
-	sound.play("SFX-WARN")   # once per fork cycle, at the start of its shadow phase
+	sound.play("SFX-WARN")   # once per strike, as the fork starts descending
 
 func warnings_on_screen() -> int:
 	## Forks warning (shadow growing, or striking) with any part of the shadow on screen.
@@ -348,6 +351,7 @@ func _physics_process(delta: float) -> void:
 				state = State.REFORM
 				timer = T.REFORM_TIME
 				player.reset_at(spawn_point(checkpoint))
+				jelly_plate = checkpoint
 		State.REFORM:
 			timer -= delta
 			if timer <= 0.0:
@@ -381,6 +385,8 @@ func _physics_process(delta: float) -> void:
 		camera.offset = Vector2.ZERO
 	music.set_target(music_target())
 	var under := plate_under(player.position.x)
+	if under >= 0 and player.is_on_floor() and state == State.PLAYING:
+		jelly_plate = under
 	player.worried = state == State.PLAYING and under >= 0 and forks[under] != null and forks[under].phase() == Fork.Phase.SHADOW
 	player.override_pose = {State.SPLAT: "SPLAT", State.REFORM: "RESPAWN", State.WON: "CELEBRATE"}.get(state, "")
 	if is_instance_valid(hud):

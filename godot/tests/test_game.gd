@@ -172,5 +172,6 @@ func run() -> void:
 	file.close()
 	print("WALKER TESTS: %d checks / %d failures" % [results.size(), failures])
 	game.queue_free()
-	await process_frame
+	for i in range(30):
+		await process_frame   # let the audio server release stopped playbacks before quitting
 	quit(1 if failures else 0)

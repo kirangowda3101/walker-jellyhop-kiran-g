@@ -1,0 +1,605 @@
+## run 1 (SUPERSEDED: leading trim only at the raw level; decoded lead silence SFX-WARN 244 ms, SFX-HOP 60 ms > 10 ms; outputs replaced by run 2)
+== 2026-10-03T10:56:20  SFX-HOP take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-HOP.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take3-seed7272.wav
+   source_sha256: 68f5fad91ab11009d080037469838a2aee616328e6b281c9bdddb8e521c391fa
+   raw_peak_dbfs: 0.94
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 39.07
+   tail_trim_ms: 763.15
+   kept_ms: 197.78
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   trimmed_peak_dbfs: 0.94
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -13.14
+   target_lufs: -30.1
+   gain_db: -16.96
+   peak_before_encode_dbfs: -16.03
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1978
+   decoded_peak_dbfs: -15.95
+   decoded_lead_silence_ms: 60.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.05
+   output_sha256: 5b24f6f0e0b848f223a52db8a79034497fab8b9d8bdca39cec4df268ec3a7367
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:56:20  SFX-LAND take 2 (seed 7271) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-LAND.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-LAND-take2-seed7271.wav
+   source_sha256: 51e31b9b5c75b7de053edcbc9b0cebb04e74469d82d89c658c3210a769343c4b
+   raw_peak_dbfs: -3.14
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 76.51
+   tail_trim_ms: 777.12
+   kept_ms: 146.37
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   trimmed_peak_dbfs: -3.14
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -22.55
+   target_lufs: -30.1
+   gain_db: -7.55
+   peak_before_encode_dbfs: -10.69
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1464
+   decoded_peak_dbfs: -10.57
+   decoded_lead_silence_ms: 0.18
+   rate_ok: True
+   decoded_loudness_lufs: -30.03
+   output_sha256: 3e9a7ef482408a4f4468818426d4053b9b6f8a2c88438d41bcb7762a63430ae5
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:56:20  SFX-WARN take 1 (seed 7270) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-WARN.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-WARN-take1-seed7270.wav
+   source_sha256: 54758a63ed4e886e581ec20220f68251ba790668a906bbc46806d63deffcfeaa
+   raw_peak_dbfs: -2.04
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 98.3
+   tail_trim_ms: 790.07
+   kept_ms: 611.63
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   trimmed_peak_dbfs: -2.04
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -14.94
+   target_lufs: -30.1
+   gain_db: -15.16
+   peak_before_encode_dbfs: -17.2
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.6116
+   decoded_peak_dbfs: -17.29
+   decoded_lead_silence_ms: 244.31
+   rate_ok: True
+   decoded_loudness_lufs: -30.14
+   output_sha256: 33370f193892960a669e8e84b3f65f57e01b2f6dda86dd9ddd7db209bf5df110
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:56:20  SFX-SPLAT-FORK take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-SPLAT-FORK.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-FORK-take3-seed7272.wav
+   source_sha256: 1d676427774962405aa2125366437fc855b7ccd5351a8dc44953bf40c8f73ead
+   raw_peak_dbfs: 1.77
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 5.49
+   tail_trim_ms: 1040.43
+   kept_ms: 154.08
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   trimmed_peak_dbfs: 1.77
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -19.41
+   target_lufs: -30.1
+   gain_db: -10.69
+   peak_before_encode_dbfs: -8.92
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1541
+   decoded_peak_dbfs: -8.9
+   decoded_lead_silence_ms: 0.82
+   rate_ok: True
+   decoded_loudness_lufs: -30.08
+   output_sha256: b769f4f3eca95d8cbdfb0cbe65a4c13b1918e3d4cc18433b721ecccb5686be81
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:56:20  SFX-SPLAT-SAUCE take 2 (seed 7271) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-SPLAT-SAUCE.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-SAUCE-take2-seed7271.wav
+   source_sha256: a2dc0af444c5b3682e8d9611bc15037eeb40778ab85cb4c07f7cd3b9c9ab4482
+   raw_peak_dbfs: 1.64
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 6.71
+   tail_trim_ms: 758.3
+   kept_ms: 234.99
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   trimmed_peak_dbfs: 1.64
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -22.43
+   target_lufs: -30.1
+   gain_db: -7.67
+   peak_before_encode_dbfs: -6.03
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.235
+   decoded_peak_dbfs: -6.0
+   decoded_lead_silence_ms: 5.78
+   rate_ok: True
+   decoded_loudness_lufs: -30.04
+   output_sha256: 66ae0f2e052247558f6ec1527e0faead6e05c64764b3249f6bd4dfb6ad9c4429
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:56:20  SFX-WIN take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-WIN.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-WIN-take3-seed7272.wav
+   source_sha256: 8d80957a659f2e6423d407af2c3a180f5d1b2a4cb73d6d5c14b923edbbef2d6f
+   raw_peak_dbfs: -6.95
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 0.0
+   tail_trim_ms: 385.03
+   kept_ms: 1614.97
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   trimmed_peak_dbfs: -6.95
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -22.53
+   target_lufs: -30.1
+   gain_db: -7.57
+   peak_before_encode_dbfs: -14.53
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 1.615
+   decoded_peak_dbfs: -14.52
+   decoded_lead_silence_ms: 0.02
+   rate_ok: True
+   decoded_loudness_lufs: -30.04
+   output_sha256: 761746ebf18b7577d6796b9b404064092b8f27c74d30b0b533cbef363260f53d
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:56:21  MUS-LOOP take 1 (seed 7270) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/MUS-LOOP.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take1-seed7270.wav
+   source_sha256: 72b1cc76b9d5426d5b3fcdd9d01215a07391ad675d3daa3ebe0b13a243692725
+   raw_peak_dbfs: -2.84
+   ogg_compression_level: 0.1
+   edit: loop
+   tempo_bpm: 101.35
+   beats_tracked: 50
+   bar_s: 2.368
+   bars: 4
+   beats_per_bar_assumed: 4
+   loop_start_s: 16.88
+   loop_end_s: 26.48
+   loop_start_beat: 28
+   seam_mel_distance: 0.8707
+   candidates_tried: 9
+   neighbour_jump_median: 0.005971
+   neighbour_jump_p95: 0.024681
+   neighbour_jump_p99_9: 0.064767
+   crossfade_ms: 2
+   loop_s: 9.6
+   loudness_method: BS.1770-4 integrated
+   loudness_before_lufs: -19.44
+   target_lufs: -40.1
+   gain_db: -20.66
+   peak_before_encode_dbfs: -23.5
+   decoded_rate: 32000
+   decoded_channels: 1
+   decoded_length_s: 9.6
+   decoded_peak_dbfs: -23.51
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -40.05
+   decoded_seam_jump: 0.001545
+   decoded_neighbour_jump_p95: 0.002291
+   output_sha256: e3b3dc988be2e10099dc3cbe17611dc7f2fc4a98433777b6d890d85afaac815f
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+   crossfade trial 0 ms: seam jump 0.091363, crossfade-region max jump 0.091363, passes False
+   crossfade trial 2 ms: seam jump 0.016843, crossfade-region max jump 0.02527, passes True
+   crossfade trial 5 ms: seam jump 0.016843, crossfade-region max jump 0.028748, passes True
+   crossfade trial 10 ms: seam jump 0.016843, crossfade-region max jump 0.030809, passes True
+   crossfade trial 20 ms: seam jump 0.016843, crossfade-region max jump 0.03223, passes True
+   crossfade trial 40 ms: seam jump 0.016843, crossfade-region max jump 0.036387, passes True
+   crossfade trial 80 ms: seam jump 0.016843, crossfade-region max jump 0.038463, passes True
+== 2026-10-03T10:56:21  MUS-LOOP take 3 (seed 7272) -> /Users/kiran/Documents/jellyhop-generations/audio-game-alt/MUS-LOOP-take3.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take3-seed7272.wav
+   source_sha256: c358154060f7882367620f79ac28b02c7c2d8e7a0541da402d0775b9feef131c
+   raw_peak_dbfs: -3.58
+   ogg_compression_level: 0.1
+   edit: loop
+   tempo_bpm: 133.93
+   beats_tracked: 64
+   bar_s: 1.792
+   bars: 5
+   beats_per_bar_assumed: 4
+   loop_start_s: 5.712
+   loop_end_s: 14.72
+   loop_start_beat: 12
+   seam_mel_distance: 1.8192
+   candidates_tried: 11
+   neighbour_jump_median: 0.001754
+   neighbour_jump_p95: 0.011011
+   neighbour_jump_p99_9: 0.040032
+   crossfade_ms: 2
+   loop_s: 9.008
+   loudness_method: BS.1770-4 integrated
+   loudness_before_lufs: -23.28
+   target_lufs: -40.1
+   gain_db: -16.82
+   peak_before_encode_dbfs: -24.02
+   decoded_rate: 32000
+   decoded_channels: 1
+   decoded_length_s: 9.008
+   decoded_peak_dbfs: -23.99
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -40.05
+   decoded_seam_jump: 0.000281
+   decoded_neighbour_jump_p95: 0.001591
+   output_sha256: 93a151f1269b270ee9d3fbcc8d93947d6d55d67bc2cfb25a095f2594a4e7333e
+   replaced_sha256: None
+   raw_sha256_unchanged_after: True
+   crossfade trial 0 ms: seam jump 0.110686, crossfade-region max jump 0.110686, passes False
+   crossfade trial 2 ms: seam jump 0.001649, crossfade-region max jump 0.00435, passes True
+   crossfade trial 5 ms: seam jump 0.001649, crossfade-region max jump 0.005396, passes True
+   crossfade trial 10 ms: seam jump 0.001649, crossfade-region max jump 0.00575, passes True
+   crossfade trial 20 ms: seam jump 0.001649, crossfade-region max jump 0.005926, passes True
+   crossfade trial 40 ms: seam jump 0.001649, crossfade-region max jump 0.006014, passes True
+   crossfade trial 80 ms: seam jump 0.001649, crossfade-region max jump 0.006057, passes True
+
+## run 2 (current: leading trim repeated at the delivered level)
+== 2026-10-03T10:57:01  SFX-HOP take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-HOP.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take3-seed7272.wav
+   source_sha256: 68f5fad91ab11009d080037469838a2aee616328e6b281c9bdddb8e521c391fa
+   raw_peak_dbfs: 0.94
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 39.07
+   tail_trim_ms: 763.15
+   kept_ms: 137.78
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 60.0
+   trimmed_peak_dbfs: 0.94
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -13.14
+   loudness_after_delivered_trim_lufs: -13.14
+   target_lufs: -30.1
+   gain_db: -16.96
+   peak_before_encode_dbfs: -16.02
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1378
+   decoded_peak_dbfs: -15.97
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.05
+   output_sha256: 8a794b5a9465ece95db7d25652efaae24fdcdc956ba2f060e89620c9e88043fe
+   replaced_sha256: 5b24f6f0e0b848f223a52db8a79034497fab8b9d8bdca39cec4df268ec3a7367
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:57:01  SFX-LAND take 2 (seed 7271) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-LAND.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-LAND-take2-seed7271.wav
+   source_sha256: 51e31b9b5c75b7de053edcbc9b0cebb04e74469d82d89c658c3210a769343c4b
+   raw_peak_dbfs: -3.14
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 76.51
+   tail_trim_ms: 777.12
+   kept_ms: 146.19
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 0.18
+   trimmed_peak_dbfs: -3.14
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -22.55
+   loudness_after_delivered_trim_lufs: -22.55
+   target_lufs: -30.1
+   gain_db: -7.55
+   peak_before_encode_dbfs: -10.69
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1462
+   decoded_peak_dbfs: -10.66
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.04
+   output_sha256: ec29f67ea388988a30d429951820957d18e832f508d9e0f17890841bb04cc894
+   replaced_sha256: 3e9a7ef482408a4f4468818426d4053b9b6f8a2c88438d41bcb7762a63430ae5
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:57:01  SFX-WARN take 1 (seed 7270) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-WARN.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-WARN-take1-seed7270.wav
+   source_sha256: 54758a63ed4e886e581ec20220f68251ba790668a906bbc46806d63deffcfeaa
+   raw_peak_dbfs: -2.04
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 98.3
+   tail_trim_ms: 790.07
+   kept_ms: 367.32
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 244.31
+   trimmed_peak_dbfs: -2.04
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -14.94
+   loudness_after_delivered_trim_lufs: -14.95
+   target_lufs: -30.1
+   gain_db: -15.15
+   peak_before_encode_dbfs: -17.2
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.3673
+   decoded_peak_dbfs: -17.08
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.11
+   output_sha256: 73f73611c94a1453a592310d03912d7b59bb1ff0fe5dec6d33d5eea314610442
+   replaced_sha256: 33370f193892960a669e8e84b3f65f57e01b2f6dda86dd9ddd7db209bf5df110
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:57:01  SFX-SPLAT-FORK take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-SPLAT-FORK.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-FORK-take3-seed7272.wav
+   source_sha256: 1d676427774962405aa2125366437fc855b7ccd5351a8dc44953bf40c8f73ead
+   raw_peak_dbfs: 1.77
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 5.49
+   tail_trim_ms: 1040.43
+   kept_ms: 153.31
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 0.77
+   trimmed_peak_dbfs: 1.77
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -19.41
+   loudness_after_delivered_trim_lufs: -19.41
+   target_lufs: -30.1
+   gain_db: -10.69
+   peak_before_encode_dbfs: -8.92
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1533
+   decoded_peak_dbfs: -8.9
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.06
+   output_sha256: 83452335c5ac2f29a0b38283fd16675f0bd992bfaa97752437b12dc63e3b7168
+   replaced_sha256: b769f4f3eca95d8cbdfb0cbe65a4c13b1918e3d4cc18433b721ecccb5686be81
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:57:01  SFX-SPLAT-SAUCE take 2 (seed 7271) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-SPLAT-SAUCE.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-SAUCE-take2-seed7271.wav
+   source_sha256: a2dc0af444c5b3682e8d9611bc15037eeb40778ab85cb4c07f7cd3b9c9ab4482
+   raw_peak_dbfs: 1.64
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 6.71
+   tail_trim_ms: 758.3
+   kept_ms: 229.21
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 5.78
+   trimmed_peak_dbfs: 1.64
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -22.43
+   loudness_after_delivered_trim_lufs: -22.43
+   target_lufs: -30.1
+   gain_db: -7.67
+   peak_before_encode_dbfs: -6.03
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.2292
+   decoded_peak_dbfs: -6.07
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.09
+   output_sha256: 3a763e0eb42a939209144ca89dfa4b1ab9fcb368a94c4397e66fee2dcbcc8e92
+   replaced_sha256: 66ae0f2e052247558f6ec1527e0faead6e05c64764b3249f6bd4dfb6ad9c4429
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:57:01  SFX-WIN take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-WIN.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-WIN-take3-seed7272.wav
+   source_sha256: 8d80957a659f2e6423d407af2c3a180f5d1b2a4cb73d6d5c14b923edbbef2d6f
+   raw_peak_dbfs: -6.95
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 0.0
+   tail_trim_ms: 385.03
+   kept_ms: 1614.94
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 0.02
+   trimmed_peak_dbfs: -6.95
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -22.53
+   loudness_after_delivered_trim_lufs: -22.53
+   target_lufs: -30.1
+   gain_db: -7.57
+   peak_before_encode_dbfs: -14.53
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 1.6149
+   decoded_peak_dbfs: -14.54
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.05
+   output_sha256: f8031458a1746f4013ac2e24029ee4de1c3293f6f23612449fe9bdf4c527a485
+   replaced_sha256: 761746ebf18b7577d6796b9b404064092b8f27c74d30b0b533cbef363260f53d
+   raw_sha256_unchanged_after: True
+== 2026-10-03T10:57:01  MUS-LOOP take 1 (seed 7270) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/MUS-LOOP.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take1-seed7270.wav
+   source_sha256: 72b1cc76b9d5426d5b3fcdd9d01215a07391ad675d3daa3ebe0b13a243692725
+   raw_peak_dbfs: -2.84
+   ogg_compression_level: 0.1
+   edit: loop
+   tempo_bpm: 101.35
+   beats_tracked: 50
+   bar_s: 2.368
+   bars: 4
+   beats_per_bar_assumed: 4
+   loop_start_s: 16.88
+   loop_end_s: 26.48
+   loop_start_beat: 28
+   seam_mel_distance: 0.8707
+   candidates_tried: 9
+   neighbour_jump_median: 0.005971
+   neighbour_jump_p95: 0.024681
+   neighbour_jump_p99_9: 0.064767
+   crossfade_ms: 2
+   loop_s: 9.6
+   loudness_method: BS.1770-4 integrated
+   loudness_before_lufs: -19.44
+   target_lufs: -40.1
+   gain_db: -20.66
+   peak_before_encode_dbfs: -23.5
+   decoded_rate: 32000
+   decoded_channels: 1
+   decoded_length_s: 9.6
+   decoded_peak_dbfs: -23.51
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -40.05
+   decoded_seam_jump: 0.001545
+   decoded_neighbour_jump_p95: 0.002291
+   output_sha256: 39f6a5fe7b24bad4f5cad961a6e18fa07f9dd8b224b69e8e3bc4c631f7b88690
+   replaced_sha256: e3b3dc988be2e10099dc3cbe17611dc7f2fc4a98433777b6d890d85afaac815f
+   raw_sha256_unchanged_after: True
+   crossfade trial 0 ms: seam jump 0.091363, crossfade-region max jump 0.091363, passes False
+   crossfade trial 2 ms: seam jump 0.016843, crossfade-region max jump 0.02527, passes True
+   crossfade trial 5 ms: seam jump 0.016843, crossfade-region max jump 0.028748, passes True
+   crossfade trial 10 ms: seam jump 0.016843, crossfade-region max jump 0.030809, passes True
+   crossfade trial 20 ms: seam jump 0.016843, crossfade-region max jump 0.03223, passes True
+   crossfade trial 40 ms: seam jump 0.016843, crossfade-region max jump 0.036387, passes True
+   crossfade trial 80 ms: seam jump 0.016843, crossfade-region max jump 0.038463, passes True
+== 2026-10-03T10:57:02  MUS-LOOP take 3 (seed 7272) -> /Users/kiran/Documents/jellyhop-generations/audio-game-alt/MUS-LOOP-take3.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take3-seed7272.wav
+   source_sha256: c358154060f7882367620f79ac28b02c7c2d8e7a0541da402d0775b9feef131c
+   raw_peak_dbfs: -3.58
+   ogg_compression_level: 0.1
+   edit: loop
+   tempo_bpm: 133.93
+   beats_tracked: 64
+   bar_s: 1.792
+   bars: 5
+   beats_per_bar_assumed: 4
+   loop_start_s: 5.712
+   loop_end_s: 14.72
+   loop_start_beat: 12
+   seam_mel_distance: 1.8192
+   candidates_tried: 11
+   neighbour_jump_median: 0.001754
+   neighbour_jump_p95: 0.011011
+   neighbour_jump_p99_9: 0.040032
+   crossfade_ms: 2
+   loop_s: 9.008
+   loudness_method: BS.1770-4 integrated
+   loudness_before_lufs: -23.28
+   target_lufs: -40.1
+   gain_db: -16.82
+   peak_before_encode_dbfs: -24.02
+   decoded_rate: 32000
+   decoded_channels: 1
+   decoded_length_s: 9.008
+   decoded_peak_dbfs: -23.99
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -40.05
+   decoded_seam_jump: 0.000281
+   decoded_neighbour_jump_p95: 0.001591
+   output_sha256: 37bff85e86061783f1420ef32376e5d7166ea5ae51eef8aaa7c2e2358272e338
+   replaced_sha256: 93a151f1269b270ee9d3fbcc8d93947d6d55d67bc2cfb25a095f2594a4e7333e
+   raw_sha256_unchanged_after: True
+   crossfade trial 0 ms: seam jump 0.110686, crossfade-region max jump 0.110686, passes False
+   crossfade trial 2 ms: seam jump 0.001649, crossfade-region max jump 0.00435, passes True
+   crossfade trial 5 ms: seam jump 0.001649, crossfade-region max jump 0.005396, passes True
+   crossfade trial 10 ms: seam jump 0.001649, crossfade-region max jump 0.00575, passes True
+   crossfade trial 20 ms: seam jump 0.001649, crossfade-region max jump 0.005926, passes True
+   crossfade trial 40 ms: seam jump 0.001649, crossfade-region max jump 0.006014, passes True
+   crossfade trial 80 ms: seam jump 0.001649, crossfade-region max jump 0.006057, passes True
+== 2026-10-03T11:05:31  SFX-HOP take 2 (seed 7271) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-HOP.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take2-seed7271.wav
+   source_sha256: 2f5414a52b06d35888716dc25ec43f69aa641cac0a45f97e1b801c6738c8e0b5
+   raw_peak_dbfs: 3.24
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 103.97
+   tail_trim_ms: 568.05
+   kept_ms: 306.94
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 21.04
+   trimmed_peak_dbfs: 3.24
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -14.02
+   loudness_after_delivered_trim_lufs: -14.02
+   target_lufs: -30.1
+   gain_db: -16.08
+   peak_before_encode_dbfs: -12.84
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.3069
+   decoded_peak_dbfs: -12.78
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.05
+   output_sha256: 1f46b3d12b9bfaa95686bd0b591bea30d8e0e4db95622710d400c7c75eb3d242
+   replaced_sha256: 8a794b5a9465ece95db7d25652efaae24fdcdc956ba2f060e89620c9e88043fe
+   raw_sha256_unchanged_after: True
+== 2026-10-03T11:06:40  SFX-HOP take 3 (seed 7272) -> /Users/kiran/Documents/walker-jellyhop-kiran-g/audio/game/SFX-HOP.ogg
+   source: /Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take3-seed7272.wav
+   source_sha256: 68f5fad91ab11009d080037469838a2aee616328e6b281c9bdddb8e521c391fa
+   raw_peak_dbfs: 0.94
+   ogg_compression_level: 0.1
+   edit: trim+gain
+   lead_trim_ms: 39.07
+   tail_trim_ms: 763.15
+   kept_ms: 137.78
+   fade_out_ms: 15.01
+   fade_in_ms: 0
+   trim_threshold_dbfs: -50.0
+   fade_shape: linear
+   lead_trim_at_delivered_level_extra_ms: 60.0
+   trimmed_peak_dbfs: 0.94
+   loudness_method: BS.1770 K-weighted maximum momentary (400 ms)
+   loudness_before_lufs: -13.14
+   loudness_after_delivered_trim_lufs: -13.14
+   target_lufs: -30.1
+   gain_db: -16.96
+   peak_before_encode_dbfs: -16.02
+   decoded_rate: 44100
+   decoded_channels: 2
+   decoded_length_s: 0.1378
+   decoded_peak_dbfs: -15.97
+   decoded_lead_silence_ms: 0.0
+   rate_ok: True
+   decoded_loudness_lufs: -30.05
+   output_sha256: 5866c925b87436b4fda27276544339d02d12043383184317a384c485f48e750d
+   replaced_sha256: 1f46b3d12b9bfaa95686bd0b591bea30d8e0e4db95622710d400c7c75eb3d242
+   raw_sha256_unchanged_after: True

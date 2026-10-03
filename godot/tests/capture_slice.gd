@@ -121,5 +121,6 @@ func run() -> void:
 	file.close()
 	print("SLICE CAPTURES: %d" % notes.size())
 	game.queue_free()
-	await process_frame
+	for i in range(30):
+		await process_frame   # let the audio server release stopped playbacks before quitting
 	quit()

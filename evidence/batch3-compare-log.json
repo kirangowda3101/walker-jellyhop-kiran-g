@@ -1,0 +1,764 @@
+{
+  "created": "2026-10-03T10:42:32",
+  "output_dir": "/Users/kiran/Documents/jellyhop-generations/audio-compare",
+  "settings": {
+    "trim_threshold_dbfs": -50.0,
+    "fade_in_ms": 0,
+    "fade_out_ms": 15.0,
+    "fade_shape": "linear",
+    "peak_ceiling_dbfs": -1.0,
+    "gain_only": "one scalar gain per file; no compression, limiting or EQ",
+    "sfx_loudness": "maximum momentary loudness, LUFS: ITU-R BS.1770 K-weighting (pyloudnorm filters), 400 ms window (EBU R128 / Tech 3341 momentary), 10 ms hop, channel weights 1.0, clip followed by 400 ms silence",
+    "music_loudness": "integrated loudness, LUFS: ITU-R BS.1770-4 with gating (pyloudnorm Meter.integrated_loudness)",
+    "group_target": "the highest common loudness at which every file in the group peaks at or below the ceiling",
+    "output_format": "WAV, 24-bit PCM, original sample rate and channels",
+    "music_full_takes": "no trim needed (no leading silence above -50 dBFS); same 15 ms fade-out at the end",
+    "loop": "beat tracking (librosa 1.0.0), 4/4 assumed, bar 1 = first tracked beat; whole bars >= 8.0 s; candidate start chosen by the seam measure below; crossfade candidates [0, 2, 5, 10, 20, 40, 80] ms",
+    "libraries": {
+      "pyloudnorm": "0.2.0",
+      "librosa": "1.0.0",
+      "numpy": "2.5.3",
+      "soundfile": "0.14.0"
+    }
+  },
+  "files": {
+    "SFX-HOP-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-HOP-take1-compare.wav",
+      "lead_trim_ms": 36.39,
+      "tail_trim_ms": 780.52,
+      "kept_ms": 183.08,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 1.98,
+      "trimmed_peak_dbfs": 1.98,
+      "loudness_lufs_m_max": -12.73,
+      "gain_db": -17.37,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -15.39,
+      "sha256": "b92697829e7f2b683f6d84d429e5595fe742021d2ad325bb54a9b5a557560ad7"
+    },
+    "SFX-HOP-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-HOP-take2-compare.wav",
+      "lead_trim_ms": 103.97,
+      "tail_trim_ms": 568.05,
+      "kept_ms": 327.98,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 3.24,
+      "trimmed_peak_dbfs": 3.24,
+      "loudness_lufs_m_max": -14.02,
+      "gain_db": -16.08,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -12.84,
+      "sha256": "de0440f6da64019acb29276b43ed5223e1a76ab7a09517954f29e84f45837cc4"
+    },
+    "SFX-HOP-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-HOP-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-HOP-take3-compare.wav",
+      "lead_trim_ms": 39.07,
+      "tail_trim_ms": 763.15,
+      "kept_ms": 197.78,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 0.94,
+      "trimmed_peak_dbfs": 0.94,
+      "loudness_lufs_m_max": -13.14,
+      "gain_db": -16.96,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -16.03,
+      "sha256": "fc9b7e338375822bbe069e78a4dbca83b982563c32c69fae946f2c65b5c92447"
+    },
+    "SFX-LAND-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-LAND-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-LAND-take1-compare.wav",
+      "lead_trim_ms": 0.0,
+      "tail_trim_ms": 741.36,
+      "kept_ms": 258.64,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 2.09,
+      "trimmed_peak_dbfs": 2.09,
+      "loudness_lufs_m_max": -19.14,
+      "gain_db": -10.96,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -8.86,
+      "sha256": "d01ffa8ce9127e5352e461c57a8008da5c80c1d761485a37c337b48a439b4bbc"
+    },
+    "SFX-LAND-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-LAND-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-LAND-take2-compare.wav",
+      "lead_trim_ms": 76.51,
+      "tail_trim_ms": 777.12,
+      "kept_ms": 146.37,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": -3.14,
+      "trimmed_peak_dbfs": -3.14,
+      "loudness_lufs_m_max": -22.55,
+      "gain_db": -7.55,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -10.69,
+      "sha256": "03dd3f419bd3587a8a144a599fc00e02b545304dfa2b6f2022a6fe629568cc83"
+    },
+    "SFX-LAND-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-LAND-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-LAND-take3-compare.wav",
+      "lead_trim_ms": 0.0,
+      "tail_trim_ms": 909.14,
+      "kept_ms": 90.86,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": -3.92,
+      "trimmed_peak_dbfs": -3.92,
+      "loudness_lufs_m_max": -25.87,
+      "gain_db": -4.23,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -8.15,
+      "sha256": "3e576b3519ac730953d090bb5188901c26db8e36aa7b27189eaead0a955f6254"
+    },
+    "SFX-WARN-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-WARN-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-WARN-take1-compare.wav",
+      "lead_trim_ms": 98.3,
+      "tail_trim_ms": 790.07,
+      "kept_ms": 611.63,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": -2.04,
+      "trimmed_peak_dbfs": -2.04,
+      "loudness_lufs_m_max": -14.94,
+      "gain_db": -15.16,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -17.2,
+      "sha256": "6e6d82d8a757431b80842db3c89b5cb83d6692486942ca24de6b09cd050658ff"
+    },
+    "SFX-WARN-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-WARN-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-WARN-take2-compare.wav",
+      "lead_trim_ms": 160.34,
+      "tail_trim_ms": 929.59,
+      "kept_ms": 410.07,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 4.33,
+      "trimmed_peak_dbfs": 4.33,
+      "loudness_lufs_m_max": -12.54,
+      "gain_db": -17.56,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -13.23,
+      "sha256": "fd8bcf0f4180f701fdf8c77600f4d1475f04d05d7e2c0de0ad2d7ef58f42a617"
+    },
+    "SFX-WARN-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-WARN-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-WARN-take3-compare.wav",
+      "lead_trim_ms": 369.75,
+      "tail_trim_ms": 434.81,
+      "kept_ms": 695.44,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": -2.89,
+      "trimmed_peak_dbfs": -2.89,
+      "loudness_lufs_m_max": -15.91,
+      "gain_db": -14.19,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -17.08,
+      "sha256": "10b2e94b1456ac83afa41ff85bf838a6c1d9581c2c87e63545f36cd9f23acb57"
+    },
+    "SFX-SPLAT-FORK-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-FORK-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-SPLAT-FORK-take1-compare.wav",
+      "lead_trim_ms": 0.02,
+      "tail_trim_ms": 946.73,
+      "kept_ms": 253.24,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 6.16,
+      "trimmed_peak_dbfs": 6.16,
+      "loudness_lufs_m_max": -12.94,
+      "gain_db": -17.16,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -11.0,
+      "sha256": "56026a2ccf52f5c55b63b6309e3d5d6618835210af36ee9154f25f392fd216db"
+    },
+    "SFX-SPLAT-FORK-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-FORK-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-SPLAT-FORK-take2-compare.wav",
+      "lead_trim_ms": 6.08,
+      "tail_trim_ms": 1065.6,
+      "kept_ms": 128.32,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 4.7,
+      "trimmed_peak_dbfs": 4.7,
+      "loudness_lufs_m_max": -18.23,
+      "gain_db": -11.87,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -7.17,
+      "sha256": "9d66ba759f48caa80d0c787da050d3729cf85bf555edbb9d47d5ac07eff106d5"
+    },
+    "SFX-SPLAT-FORK-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-FORK-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-SPLAT-FORK-take3-compare.wav",
+      "lead_trim_ms": 5.49,
+      "tail_trim_ms": 1040.43,
+      "kept_ms": 154.08,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 1.77,
+      "trimmed_peak_dbfs": 1.77,
+      "loudness_lufs_m_max": -19.41,
+      "gain_db": -10.69,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -8.92,
+      "sha256": "1fa0b57ca3e89412c543b406471796e56960ce20ab5ddfc0aa4e66935be493d8"
+    },
+    "SFX-SPLAT-SAUCE-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-SAUCE-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-SPLAT-SAUCE-take1-compare.wav",
+      "lead_trim_ms": 18.66,
+      "tail_trim_ms": 740.73,
+      "kept_ms": 240.61,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 4.65,
+      "trimmed_peak_dbfs": 4.65,
+      "loudness_lufs_m_max": -20.65,
+      "gain_db": -9.45,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -4.8,
+      "sha256": "9e856c35408384c6abec3c68886bfda5e997e6aa692dc41a1add394d73e8783d"
+    },
+    "SFX-SPLAT-SAUCE-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-SAUCE-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-SPLAT-SAUCE-take2-compare.wav",
+      "lead_trim_ms": 6.71,
+      "tail_trim_ms": 758.3,
+      "kept_ms": 234.99,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 1.64,
+      "trimmed_peak_dbfs": 1.64,
+      "loudness_lufs_m_max": -22.43,
+      "gain_db": -7.67,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -6.03,
+      "sha256": "111b313489d7b5ab470d70c9ec02157191de78f98d440490ca3926a88bf1b21f"
+    },
+    "SFX-SPLAT-SAUCE-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-SPLAT-SAUCE-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-SPLAT-SAUCE-take3-compare.wav",
+      "lead_trim_ms": 11.79,
+      "tail_trim_ms": 849.25,
+      "kept_ms": 138.96,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 7.06,
+      "trimmed_peak_dbfs": 7.06,
+      "loudness_lufs_m_max": -22.01,
+      "gain_db": -8.09,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -1.03,
+      "sha256": "0f12eca8b1180fcb0647f8397096f9f0096ba87fc1e6a5e9cebb38beb630016c"
+    },
+    "SFX-WIN-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-WIN-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-WIN-take1-compare.wav",
+      "lead_trim_ms": 0.05,
+      "tail_trim_ms": 976.83,
+      "kept_ms": 1023.13,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": 0.33,
+      "trimmed_peak_dbfs": 0.33,
+      "loudness_lufs_m_max": -14.85,
+      "gain_db": -15.25,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -14.92,
+      "sha256": "d365110d03048b2399e1b9fd9e4a7221980755aa718b380eac9948ed894ef601"
+    },
+    "SFX-WIN-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-WIN-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-WIN-take2-compare.wav",
+      "lead_trim_ms": 0.0,
+      "tail_trim_ms": 543.42,
+      "kept_ms": 1456.58,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": -12.62,
+      "trimmed_peak_dbfs": -12.62,
+      "loudness_lufs_m_max": -23.63,
+      "gain_db": -6.47,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -19.09,
+      "sha256": "c3f2d5dd4dc6d1512b840efa1d11909033fde72a12b9b02bb3f47184ab7dfbf7"
+    },
+    "SFX-WIN-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/SFX-WIN-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/SFX-WIN-take3-compare.wav",
+      "lead_trim_ms": 0.0,
+      "tail_trim_ms": 385.03,
+      "kept_ms": 1614.97,
+      "fade_out_ms": 15.01,
+      "fade_in_ms": 0,
+      "raw_peak_dbfs": -6.95,
+      "trimmed_peak_dbfs": -6.95,
+      "loudness_lufs_m_max": -22.53,
+      "gain_db": -7.57,
+      "output_loudness_lufs_m_max": -30.1,
+      "output_peak_dbfs": -14.53,
+      "sha256": "dbf38b4fb64d55a2e35d3213de74af67f725c0645e3d9856310882b9b16272b7"
+    },
+    "MUS-LOOP-take1": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take1-seed7270.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/MUS-LOOP-take1-compare.wav",
+      "lead_trim_ms": 0.0,
+      "fade_out_ms": 15.0,
+      "loudness_lufs_integrated": -19.47,
+      "raw_peak_dbfs": -2.84,
+      "gain_db": -2.03,
+      "output_loudness_lufs_integrated": -21.5,
+      "output_peak_dbfs": -4.88,
+      "sha256": "2211b86facc2fd15e9ec3307e0aa02d6f73141f625a0feedc8f6b5b90122a19a",
+      "loop": {
+        "tempo_bpm": 101.35,
+        "beats_tracked": 50,
+        "bar_s": 2.368,
+        "bars": 4,
+        "beats_per_bar_assumed": 4,
+        "chosen": {
+          "start_beat": 28,
+          "start_s": 16.88,
+          "end_s": 26.48,
+          "seam_mel_distance": 0.8707
+        },
+        "candidates_tried": 9,
+        "neighbour_jump_median": 0.005971,
+        "neighbour_jump_p95": 0.024681,
+        "neighbour_jump_p99_9": 0.064767,
+        "crossfade_trials": [
+          {
+            "crossfade_ms": 0,
+            "seam_jump": 0.091363,
+            "crossfade_region_max_jump": 0.091363,
+            "passes": false
+          },
+          {
+            "crossfade_ms": 2,
+            "seam_jump": 0.016843,
+            "crossfade_region_max_jump": 0.02527,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 5,
+            "seam_jump": 0.016843,
+            "crossfade_region_max_jump": 0.028748,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 10,
+            "seam_jump": 0.016843,
+            "crossfade_region_max_jump": 0.030809,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 20,
+            "seam_jump": 0.016843,
+            "crossfade_region_max_jump": 0.03223,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 40,
+            "seam_jump": 0.016843,
+            "crossfade_region_max_jump": 0.036387,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 80,
+            "seam_jump": 0.016843,
+            "crossfade_region_max_jump": 0.038463,
+            "passes": true
+          }
+        ],
+        "crossfade_ms": 2,
+        "loop_s": 9.6,
+        "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/MUS-LOOP-take1-loop-x3.wav",
+        "repeats": 3,
+        "output_peak_dbfs": -4.88,
+        "sha256": "e1100ef2765d6ffd19de3b827eb6a9cfed8220336d43e13c8dede9d4c58bb3f5"
+      },
+      "loop_candidates": [
+        {
+          "start_beat": 0,
+          "start_s": 0.08,
+          "end_s": 9.68,
+          "seam_mel_distance": 1.5085
+        },
+        {
+          "start_beat": 4,
+          "start_s": 2.48,
+          "end_s": 12.08,
+          "seam_mel_distance": 1.8428
+        },
+        {
+          "start_beat": 8,
+          "start_s": 4.88,
+          "end_s": 14.48,
+          "seam_mel_distance": 0.8896
+        },
+        {
+          "start_beat": 12,
+          "start_s": 7.28,
+          "end_s": 16.88,
+          "seam_mel_distance": 0.9875
+        },
+        {
+          "start_beat": 16,
+          "start_s": 9.68,
+          "end_s": 19.28,
+          "seam_mel_distance": 0.9939
+        },
+        {
+          "start_beat": 20,
+          "start_s": 12.08,
+          "end_s": 21.68,
+          "seam_mel_distance": 1.032
+        },
+        {
+          "start_beat": 24,
+          "start_s": 14.48,
+          "end_s": 24.08,
+          "seam_mel_distance": 1.08
+        },
+        {
+          "start_beat": 28,
+          "start_s": 16.88,
+          "end_s": 26.48,
+          "seam_mel_distance": 0.8707
+        },
+        {
+          "start_beat": 32,
+          "start_s": 19.28,
+          "end_s": 28.88,
+          "seam_mel_distance": 1.1835
+        }
+      ]
+    },
+    "MUS-LOOP-take2": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take2-seed7271.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/MUS-LOOP-take2-compare.wav",
+      "lead_trim_ms": 0.0,
+      "fade_out_ms": 15.0,
+      "loudness_lufs_integrated": -20.87,
+      "raw_peak_dbfs": -5.54,
+      "gain_db": -0.63,
+      "output_loudness_lufs_integrated": -21.5,
+      "output_peak_dbfs": -6.17,
+      "sha256": "cada5cce1a9e7b015d1b1ab489066e297f4d94f677a83d513e52bf4c6c2ae7ec",
+      "loop": {
+        "tempo_bpm": 133.93,
+        "beats_tracked": 66,
+        "bar_s": 1.792,
+        "bars": 5,
+        "beats_per_bar_assumed": 4,
+        "chosen": {
+          "start_beat": 24,
+          "start_s": 11.312,
+          "end_s": 20.32,
+          "seam_mel_distance": 1.5262
+        },
+        "candidates_tried": 12,
+        "neighbour_jump_median": 0.004256,
+        "neighbour_jump_p95": 0.022445,
+        "neighbour_jump_p99_9": 0.138973,
+        "crossfade_trials": [
+          {
+            "crossfade_ms": 0,
+            "seam_jump": 0.104725,
+            "crossfade_region_max_jump": 0.104725,
+            "passes": false
+          },
+          {
+            "crossfade_ms": 2,
+            "seam_jump": 0.014832,
+            "crossfade_region_max_jump": 0.038543,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 5,
+            "seam_jump": 0.014832,
+            "crossfade_region_max_jump": 0.042308,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 10,
+            "seam_jump": 0.014832,
+            "crossfade_region_max_jump": 0.043547,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 20,
+            "seam_jump": 0.014832,
+            "crossfade_region_max_jump": 0.044164,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 40,
+            "seam_jump": 0.014832,
+            "crossfade_region_max_jump": 0.071108,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 80,
+            "seam_jump": 0.014832,
+            "crossfade_region_max_jump": 0.053966,
+            "passes": true
+          }
+        ],
+        "crossfade_ms": 2,
+        "loop_s": 9.008,
+        "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/MUS-LOOP-take2-loop-x3.wav",
+        "repeats": 3,
+        "output_peak_dbfs": -6.78,
+        "sha256": "d7bc7d9d27ddd3ad8d8bf21f2b4f4bd04f25296f98f70ebe601a43f8cad92615"
+      },
+      "loop_candidates": [
+        {
+          "start_beat": 0,
+          "start_s": 0.528,
+          "end_s": 9.52,
+          "seam_mel_distance": 2.2199
+        },
+        {
+          "start_beat": 4,
+          "start_s": 2.32,
+          "end_s": 11.312,
+          "seam_mel_distance": 2.1859
+        },
+        {
+          "start_beat": 8,
+          "start_s": 4.128,
+          "end_s": 13.12,
+          "seam_mel_distance": 2.1354
+        },
+        {
+          "start_beat": 12,
+          "start_s": 5.92,
+          "end_s": 14.928,
+          "seam_mel_distance": 1.7058
+        },
+        {
+          "start_beat": 16,
+          "start_s": 7.728,
+          "end_s": 16.72,
+          "seam_mel_distance": 1.6675
+        },
+        {
+          "start_beat": 20,
+          "start_s": 9.52,
+          "end_s": 18.528,
+          "seam_mel_distance": 2.2696
+        },
+        {
+          "start_beat": 24,
+          "start_s": 11.312,
+          "end_s": 20.32,
+          "seam_mel_distance": 1.5262
+        },
+        {
+          "start_beat": 28,
+          "start_s": 13.12,
+          "end_s": 22.128,
+          "seam_mel_distance": 1.5707
+        },
+        {
+          "start_beat": 32,
+          "start_s": 14.928,
+          "end_s": 23.92,
+          "seam_mel_distance": 1.7338
+        },
+        {
+          "start_beat": 36,
+          "start_s": 16.72,
+          "end_s": 25.728,
+          "seam_mel_distance": 1.6582
+        },
+        {
+          "start_beat": 40,
+          "start_s": 18.528,
+          "end_s": 27.52,
+          "seam_mel_distance": 2.3197
+        },
+        {
+          "start_beat": 44,
+          "start_s": 20.32,
+          "end_s": 29.344,
+          "seam_mel_distance": 1.6464
+        }
+      ]
+    },
+    "MUS-LOOP-take3": {
+      "source": "/Users/kiran/Documents/jellyhop-generations/audio/MUS-LOOP-take3-seed7272.wav",
+      "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/MUS-LOOP-take3-compare.wav",
+      "lead_trim_ms": 0.0,
+      "fade_out_ms": 15.0,
+      "loudness_lufs_integrated": -24.05,
+      "raw_peak_dbfs": -3.58,
+      "gain_db": 2.55,
+      "output_loudness_lufs_integrated": -21.5,
+      "output_peak_dbfs": -1.03,
+      "sha256": "4a2a3cbf7a4c7177eb53d542bd2e9d28dfd4808948492c348f5578c1b5c2ded8",
+      "loop": {
+        "tempo_bpm": 133.93,
+        "beats_tracked": 64,
+        "bar_s": 1.792,
+        "bars": 5,
+        "beats_per_bar_assumed": 4,
+        "chosen": {
+          "start_beat": 12,
+          "start_s": 5.712,
+          "end_s": 14.72,
+          "seam_mel_distance": 1.8192
+        },
+        "candidates_tried": 11,
+        "neighbour_jump_median": 0.001754,
+        "neighbour_jump_p95": 0.011011,
+        "neighbour_jump_p99_9": 0.040032,
+        "crossfade_trials": [
+          {
+            "crossfade_ms": 0,
+            "seam_jump": 0.110686,
+            "crossfade_region_max_jump": 0.110686,
+            "passes": false
+          },
+          {
+            "crossfade_ms": 2,
+            "seam_jump": 0.001649,
+            "crossfade_region_max_jump": 0.00435,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 5,
+            "seam_jump": 0.001649,
+            "crossfade_region_max_jump": 0.005396,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 10,
+            "seam_jump": 0.001649,
+            "crossfade_region_max_jump": 0.00575,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 20,
+            "seam_jump": 0.001649,
+            "crossfade_region_max_jump": 0.005926,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 40,
+            "seam_jump": 0.001649,
+            "crossfade_region_max_jump": 0.006014,
+            "passes": true
+          },
+          {
+            "crossfade_ms": 80,
+            "seam_jump": 0.001649,
+            "crossfade_region_max_jump": 0.006057,
+            "passes": true
+          }
+        ],
+        "crossfade_ms": 2,
+        "loop_s": 9.008,
+        "output": "/Users/kiran/Documents/jellyhop-generations/audio-compare/MUS-LOOP-take3-loop-x3.wav",
+        "repeats": 3,
+        "output_peak_dbfs": -4.65,
+        "sha256": "8985f954fec20cde6f8a53ed698b05763d4d04ab547a09a24b88bedeb6e5fa7a"
+      },
+      "loop_candidates": [
+        {
+          "start_beat": 0,
+          "start_s": 0.16,
+          "end_s": 9.312,
+          "seam_mel_distance": 3.5143
+        },
+        {
+          "start_beat": 4,
+          "start_s": 2.112,
+          "end_s": 11.104,
+          "seam_mel_distance": 2.7132
+        },
+        {
+          "start_beat": 8,
+          "start_s": 3.92,
+          "end_s": 12.896,
+          "seam_mel_distance": 2.7572
+        },
+        {
+          "start_beat": 12,
+          "start_s": 5.712,
+          "end_s": 14.72,
+          "seam_mel_distance": 1.8192
+        },
+        {
+          "start_beat": 16,
+          "start_s": 7.504,
+          "end_s": 16.512,
+          "seam_mel_distance": 2.7089
+        },
+        {
+          "start_beat": 20,
+          "start_s": 9.312,
+          "end_s": 18.304,
+          "seam_mel_distance": 2.8588
+        },
+        {
+          "start_beat": 24,
+          "start_s": 11.104,
+          "end_s": 20.112,
+          "seam_mel_distance": 2.2872
+        },
+        {
+          "start_beat": 28,
+          "start_s": 12.896,
+          "end_s": 21.904,
+          "seam_mel_distance": 1.9179
+        },
+        {
+          "start_beat": 32,
+          "start_s": 14.72,
+          "end_s": 23.712,
+          "seam_mel_distance": 2.7673
+        },
+        {
+          "start_beat": 36,
+          "start_s": 16.512,
+          "end_s": 25.504,
+          "seam_mel_distance": 2.3144
+        },
+        {
+          "start_beat": 40,
+          "start_s": 18.304,
+          "end_s": 27.296,
+          "seam_mel_distance": 2.2641
+        }
+      ]
+    }
+  },
+  "groups": {
+    "sfx": {
+      "target_lufs_momentary_max": -30.1,
+      "set_by": "SFX-SPLAT-SAUCE-take3"
+    },
+    "music": {
+      "target_lufs_integrated": -21.5,
+      "set_by": "MUS-LOOP-take3"
+    }
+  },
+  "checks": {
+    "no_output_above_ceiling": true,
+    "raw_sha256_unchanged_after": true,
+    "raw_files_checked": 21
+  }
+}

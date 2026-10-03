@@ -1,0 +1,74 @@
+== Batch 3 comparison audio (listening only; not for the repo or the game)  2026-10-03T10:42:32
+output: /Users/kiran/Documents/jellyhop-generations/audio-compare
+settings:
+  trim_threshold_dbfs: -50.0
+  fade_in_ms: 0
+  fade_out_ms: 15.0
+  fade_shape: linear
+  peak_ceiling_dbfs: -1.0
+  gain_only: one scalar gain per file; no compression, limiting or EQ
+  sfx_loudness: maximum momentary loudness, LUFS: ITU-R BS.1770 K-weighting (pyloudnorm filters), 400 ms window (EBU R128 / Tech 3341 momentary), 10 ms hop, channel weights 1.0, clip followed by 400 ms silence
+  music_loudness: integrated loudness, LUFS: ITU-R BS.1770-4 with gating (pyloudnorm Meter.integrated_loudness)
+  group_target: the highest common loudness at which every file in the group peaks at or below the ceiling
+  output_format: WAV, 24-bit PCM, original sample rate and channels
+  music_full_takes: no trim needed (no leading silence above -50 dBFS); same 15 ms fade-out at the end
+  loop: beat tracking (librosa 1.0.0), 4/4 assumed, bar 1 = first tracked beat; whole bars >= 8.0 s; candidate start chosen by the seam measure below; crossfade candidates [0, 2, 5, 10, 20, 40, 80] ms
+  libraries: {'pyloudnorm': '0.2.0', 'librosa': '1.0.0', 'numpy': '2.5.3', 'soundfile': '0.14.0'}
+group targets: sound effects -30.1 LUFS (max momentary), set by SFX-SPLAT-SAUCE-take3; music -21.5 LUFS (integrated), set by MUS-LOOP-take3
+
+sound effects: take | lead trim ms | tail trim ms | kept ms | fade-out ms | raw peak | trimmed peak | loudness (M max) | gain | out loudness | out peak
+  SFX-HOP-take1 | 36.39 | 780.52 | 183.08 | 15.01 | +1.98 | +1.98 | -12.73 | -17.37 dB | -30.10 | -15.39
+  SFX-HOP-take2 | 103.97 | 568.05 | 327.98 | 15.01 | +3.24 | +3.24 | -14.02 | -16.08 dB | -30.10 | -12.84
+  SFX-HOP-take3 | 39.07 | 763.15 | 197.78 | 15.01 | +0.94 | +0.94 | -13.14 | -16.96 dB | -30.10 | -16.03
+  SFX-LAND-take1 | 0.0 | 741.36 | 258.64 | 15.01 | +2.09 | +2.09 | -19.14 | -10.96 dB | -30.10 | -8.86
+  SFX-LAND-take2 | 76.51 | 777.12 | 146.37 | 15.01 | -3.14 | -3.14 | -22.55 | -7.55 dB | -30.10 | -10.69
+  SFX-LAND-take3 | 0.0 | 909.14 | 90.86 | 15.01 | -3.92 | -3.92 | -25.87 | -4.23 dB | -30.10 | -8.15
+  SFX-WARN-take1 | 98.3 | 790.07 | 611.63 | 15.01 | -2.04 | -2.04 | -14.94 | -15.16 dB | -30.10 | -17.20
+  SFX-WARN-take2 | 160.34 | 929.59 | 410.07 | 15.01 | +4.33 | +4.33 | -12.54 | -17.56 dB | -30.10 | -13.23
+  SFX-WARN-take3 | 369.75 | 434.81 | 695.44 | 15.01 | -2.89 | -2.89 | -15.91 | -14.19 dB | -30.10 | -17.08
+  SFX-SPLAT-FORK-take1 | 0.02 | 946.73 | 253.24 | 15.01 | +6.16 | +6.16 | -12.94 | -17.16 dB | -30.10 | -11.00
+  SFX-SPLAT-FORK-take2 | 6.08 | 1065.6 | 128.32 | 15.01 | +4.70 | +4.70 | -18.23 | -11.87 dB | -30.10 | -7.17
+  SFX-SPLAT-FORK-take3 | 5.49 | 1040.43 | 154.08 | 15.01 | +1.77 | +1.77 | -19.41 | -10.69 dB | -30.10 | -8.92
+  SFX-SPLAT-SAUCE-take1 | 18.66 | 740.73 | 240.61 | 15.01 | +4.65 | +4.65 | -20.65 | -9.45 dB | -30.10 | -4.80
+  SFX-SPLAT-SAUCE-take2 | 6.71 | 758.3 | 234.99 | 15.01 | +1.64 | +1.64 | -22.43 | -7.67 dB | -30.10 | -6.03
+  SFX-SPLAT-SAUCE-take3 | 11.79 | 849.25 | 138.96 | 15.01 | +7.06 | +7.06 | -22.01 | -8.09 dB | -30.10 | -1.03
+  SFX-WIN-take1 | 0.05 | 976.83 | 1023.13 | 15.01 | +0.33 | +0.33 | -14.85 | -15.25 dB | -30.10 | -14.92
+  SFX-WIN-take2 | 0.0 | 543.42 | 1456.58 | 15.01 | -12.62 | -12.62 | -23.63 | -6.47 dB | -30.10 | -19.09
+  SFX-WIN-take3 | 0.0 | 385.03 | 1614.97 | 15.01 | -6.95 | -6.95 | -22.53 | -7.57 dB | -30.10 | -14.53
+
+music: take | loudness (integrated) | raw peak | gain | out loudness | out peak
+  MUS-LOOP-take1 | -19.47 | -2.84 | -2.03 dB | -21.50 | -4.88
+  MUS-LOOP-take2 | -20.87 | -5.54 | -0.63 dB | -21.50 | -6.17
+  MUS-LOOP-take3 | -24.05 | -3.58 | +2.55 dB | -21.50 | -1.03
+
+candidate loops (for listening to the seam; the final loop is decided in step 4):
+  MUS-LOOP-take1: tempo 101.35 bpm, 50 beats tracked, bar 2.368 s, 4 bars from 16.88 s to 26.48 s (start beat 28; 9 candidates; seam mel distance 0.8707); loop 9.6 s; crossfade 2 ms; out peak -4.88
+    neighbour jumps: median 0.005971, p95 0.024681, p99.9 0.064767
+    crossfade   0 ms: seam jump 0.091363, crossfade-region max jump 0.091363, passes False
+    crossfade   2 ms: seam jump 0.016843, crossfade-region max jump 0.02527, passes True
+    crossfade   5 ms: seam jump 0.016843, crossfade-region max jump 0.028748, passes True
+    crossfade  10 ms: seam jump 0.016843, crossfade-region max jump 0.030809, passes True
+    crossfade  20 ms: seam jump 0.016843, crossfade-region max jump 0.03223, passes True
+    crossfade  40 ms: seam jump 0.016843, crossfade-region max jump 0.036387, passes True
+    crossfade  80 ms: seam jump 0.016843, crossfade-region max jump 0.038463, passes True
+  MUS-LOOP-take2: tempo 133.93 bpm, 66 beats tracked, bar 1.792 s, 5 bars from 11.312 s to 20.32 s (start beat 24; 12 candidates; seam mel distance 1.5262); loop 9.008 s; crossfade 2 ms; out peak -6.78
+    neighbour jumps: median 0.004256, p95 0.022445, p99.9 0.138973
+    crossfade   0 ms: seam jump 0.104725, crossfade-region max jump 0.104725, passes False
+    crossfade   2 ms: seam jump 0.014832, crossfade-region max jump 0.038543, passes True
+    crossfade   5 ms: seam jump 0.014832, crossfade-region max jump 0.042308, passes True
+    crossfade  10 ms: seam jump 0.014832, crossfade-region max jump 0.043547, passes True
+    crossfade  20 ms: seam jump 0.014832, crossfade-region max jump 0.044164, passes True
+    crossfade  40 ms: seam jump 0.014832, crossfade-region max jump 0.071108, passes True
+    crossfade  80 ms: seam jump 0.014832, crossfade-region max jump 0.053966, passes True
+  MUS-LOOP-take3: tempo 133.93 bpm, 64 beats tracked, bar 1.792 s, 5 bars from 5.712 s to 14.72 s (start beat 12; 11 candidates; seam mel distance 1.8192); loop 9.008 s; crossfade 2 ms; out peak -4.65
+    neighbour jumps: median 0.001754, p95 0.011011, p99.9 0.040032
+    crossfade   0 ms: seam jump 0.110686, crossfade-region max jump 0.110686, passes False
+    crossfade   2 ms: seam jump 0.001649, crossfade-region max jump 0.00435, passes True
+    crossfade   5 ms: seam jump 0.001649, crossfade-region max jump 0.005396, passes True
+    crossfade  10 ms: seam jump 0.001649, crossfade-region max jump 0.00575, passes True
+    crossfade  20 ms: seam jump 0.001649, crossfade-region max jump 0.005926, passes True
+    crossfade  40 ms: seam jump 0.001649, crossfade-region max jump 0.006014, passes True
+    crossfade  80 ms: seam jump 0.001649, crossfade-region max jump 0.006057, passes True
+
+checks: no output above -1.0 dBFS: True; raw SHA-256 unchanged after processing: True (21 files)
+output SHA-256: see evidence/batch3-compare-log.json
