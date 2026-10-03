@@ -1,0 +1,60 @@
+== Step 3: table level (room, table, 6 plates, sauce, dome goal), 52x58 box, checkpoint respawn; test_game ported  2026-10-03 01:00
+$ godot --headless --path godot --import
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (6 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  14% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+exit: 0
+
+$ godot --headless --path godot --script res://tests/test_game.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"launch-grounded","observed":{"engine":"4.7.2-stable (official)","position":"(259.9951, 497.9554)"},"status":"PASS"}
+{"id":"speed-cap","observed":{"velocity_x":320.0},"status":"PASS"}
+{"id":"neutral-stop","observed":{"velocity_x":0.0},"status":"PASS"}
+{"id":"simultaneous-directions","observed":{"velocity_x":0.0},"status":"PASS"}
+{"id":"left-wall","observed":{"x":26.0034637451172},"status":"PASS"}
+{"id":"fixed-jump-and-no-double","observed":{"jumps":1,"rise_px":112.07470703125},"status":"PASS"}
+{"id":"held-jump-no-bounce","observed":{"jumps":1},"status":"PASS"}
+{"id":"coyote-5","observed":{"age":5,"jumps":1},"status":"PASS"}
+{"id":"coyote-6","observed":{"age":6,"jumps":1},"status":"PASS"}
+{"id":"coyote-7","observed":{"age":7,"jumps":0},"status":"PASS"}
+{"id":"buffer-5","observed":{"age":5,"jumps":1},"status":"PASS"}
+{"id":"buffer-6","observed":{"age":6,"jumps":1},"status":"PASS"}
+{"id":"buffer-7","observed":{"age":7,"jumps":0},"status":"PASS"}
+{"id":"low-ceiling","observed":{"jumps":1,"minimum_feet_y":457.955688476562},"status":"PASS"}
+{"id":"pause-freezes","observed":{"position":"(259.9951, 449.8807)","timer":0.166666666666667},"status":"PASS"}
+{"id":"focus-loss-pauses","observed":{"state":2},"status":"PASS"}
+{"id":"actual-sauce-collision","observed":{"cause":"sauce","splats":1,"state":3},"status":"PASS"}
+{"id":"duplicate-death-ignored","observed":{"splats":1},"status":"PASS"}
+{"id":"respawn","observed":{"position":"(259.9951, 497.9554)","state":1},"status":"PASS"}
+{"id":"checkpoint-respawn","observed":{"checkpoint":1,"position":"(579.9853, 497.9554)","splats":1},"status":"PASS"}
+{"id":"twenty-retries","observed":{"limit":80,"max_retry_ticks":78,"splats":21},"status":"PASS"}
+{"id":"death-before-finish","observed":{"state":3},"status":"PASS"}
+{"id":"level-bounds","observed":{"level_width":2683.8412,"x":2657.83984375},"status":"PASS"}
+{"id":"complete-real-route","observed":{"jump_marks_used":6,"position":"(2279.912, 449.8797)","splats":0,"state":5,"ticks":382},"status":"PASS"}
+{"id":"replay-idempotent","observed":{"jumps":0,"splats":0,"state":1},"status":"PASS"}
+WALKER TESTS: 25 checks / 0 failures
+exit: 0
+

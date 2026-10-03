@@ -1,0 +1,8 @@
+Scripted screenshots (not a playtest); engine 4.7.2-stable (official)
+01-intro-pan: rendered 1280x720, saved 1280x720; pose=IDLE state=INTRO; 35% into the pan; title and skip hint on screen
+02-hop: rendered 1280x720, saved 1280x720; pose=RISE state=PLAYING; real input route: run right, hop at plate 1's edge
+03-warning: rendered 1280x720, saved 1280x720; pose=WORRY state=PLAYING; fixture: plate 2's fork started its shadow phase; worried pose
+04-safe-landing: rendered 1280x720, saved 1280x720; pose=LAND state=PLAYING; fixture: fork timing; real hop; landing squash while plate 2 is struck
+05-splat: rendered 1280x720, saved 1280x720; pose=SPLAT state=SPLAT; fixture: fork timing; real overlap with the tines
+06-respawn: rendered 1280x720, saved 1280x720; pose=RESPAWN state=REFORM; fixture: checkpoint plate 3; real sauce splat in gap 4; re-forming, camera gliding back
+07-dome: rendered 1280x720, saved 1280x720; pose=CELEBRATE state=WON; walked into the dome; prompt shown

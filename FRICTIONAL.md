@@ -401,3 +401,62 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 **Still unresolved:** fork timings, bored delay, splat and re-form durations, pan length and plate spacing (tuned in playtesting); room parallax and brightness; cups; the audio and music models (Batch 3).
 
 **Traceability:** commit `d7f0c97` (starter import, unchanged; `git show --stat d7f0c97`); the setup commit with SLICE-BRIEF.md, CLAUDE.md, this entry and SOURCES.md; `evidence/slice-setup-log.txt`.
+
+---
+
+## 2026-10-03 — Slice setup batch: the playable slice with silent sound placeholders
+
+**Status (confirmed after my review; not yet committed):**
+- The slice runs from the Godot editor and from the command line, with the six plates, forks, sauce, the dome, the 12 poses, the intro pan, respawn and restart, and silent sound and music placeholders that log their calls.
+- Final run after the review changes (`bash tools/run_slice_checks.sh`): art copies 18/18 byte-identical; mechanics 25/0; keyboard 12/0; slice checks 52/0; 7 screenshots at 1280 × 720; game launched 8 s with no errors.
+- The automated checks use scripted input; my playtest is below.
+
+**My playtest (from the Godot editor, F5, silent build with no audio yet), in my words:**
+"1. Yes i can see the shadow growing and yeah it acts like a clue to when to jump 2. yes the timing is fair 3. its good"
+
+**Decisions (mine):**
+- **Units:** I chose "1280×720 base, ×2 units": the world matches the design sizes, and the starter's movement values are doubled. The unchanged starter suite passed at ×2 with every length exactly doubled and every tick count the same.
+- **Fork reach:** first I chose "Bigger fork, hits most of plate". When the plan still left a safe edge band, I asked to "Size the fork so its tines span the plate's full width (head about 200 px), so there is no standing position on a forked plate outside the tines' hit zone. Keep the hit zone equal to the visible tines. Change the edge-band test to assert the safe band is 0 px."
+- **Traceability:** "Save this approved plan into the repo as evidence/slice-plan.md as part of step 0, so it is traceable."
+- **Batch review:**
+  - **#12 (music through the strike):** kept. "Quiet and muffled through the shadow and the strike, back as the fork rises."
+  - **#13 (off-screen shadow):** changed. "Follow CHANGE-BRIEF's music rule: a shadow that started growing off screen dips the music once any part of it is on screen while still growing, but still never plays SFX-WARN." SLICE-BRIEF §8 #4's "no music dip" wording came from the Claude chat brief and is superseded by this decision; SLICE-BRIEF.md is not edited.
+  - **#7 (intro shadows):** changed. "Start the forks that are off screen when play begins partway into their shadow phase, frozen during the pan, so the intro shows shadows as panel 1 lists. No fork may be on screen and in its shadow phase when play starts, and nothing warns at the start."
+  - **#11 (held direction ignored after a lock):** kept.
+  - All other differences accepted as listed.
+  - Routine: rename the root node to "JellyHop"; stage the JSON test reports.
+- **Where the recommendations came from:** the Claude chat (claude.ai) recommended the units and fork options, drafted the fork feedback wording I pasted, and recommended the Q1 choice; the decisions were mine. (In Claude Code's questions, the same options were marked "(Recommended)".)
+
+**Routine choices made by Claude (from the approved design):**
+- The §9 defaults are in `godot/game/slice_tuning.gd`, listed in `evidence/slice-batch-review.md` §2.
+  - P5 and P6 now start halfway into their shadow phase (offsets 2.0 and 1.7 s), for my #7 decision.
+  - Combining #12 with #13: "still growing" for an off-screen-started shadow means the same warning window as any shadow, the shadow phase plus the strike.
+- The differences from the design or the plan are listed in `evidence/slice-batch-review.md` §3. Among them:
+  - The airborne crouch keeps the standing box.
+  - The fork is drawn behind the jelly.
+  - The camera snaps at the start of play and glides only on respawn.
+  - No handle extension was needed at the decided fork size.
+
+**What came back (inspect and revise):**
+- **The starter's low-ceiling check failed** once the airborne crouch used the low box (feet rose 48 px under 40 px of headroom). The code was changed; the check was not.
+- **A test script that failed to compile still exited 0.** The run script now also requires each suite's summary line.
+- **The edge-band check got a negative control.** Squeezed to the Batch 2 fork size, it finds a 128 px safe band.
+- **Step 7 had 7 failures.**
+  - Two were real bugs: the camera glided from the dome at the start of play, and the music ramps ran on render frames.
+  - Two were test windows: counting before a placement landing, and an overlap window running into the next cycle.
+  - The rest followed from the camera bug.
+- **Screenshots:** the warning shadow was too faint, and the splat was hidden by the tines; both were revised.
+- **After my review:** the new intro check first ran one tick past the pan. Its coverage threshold then failed at 230 observed ticks, because a headless run can batch physics ticks. The window and the threshold were fixed; the "frozen" assertion is unchanged.
+- The intro screenshot now shows the shadows on plates 5 and 6.
+
+**Human / Claude:**
+- **Kiran:** approved the plan with two changes; chose the units and the fork reach; played the slice from the editor; made the review decisions above.
+- **Claude chat (claude.ai):** recommended the units and fork options, drafted the fork feedback wording I pasted, and recommended the Q1 choice.
+- **Claude Code:** inspected the starter; wrote the plan, the code, the tests, the run script, the review sheet and this entry; ran every automated check listed.
+
+**Still unresolved:**
+- Failures #2, #3, #4, #11, #13, #14 and #15, beyond what my playtest notes cover.
+- Room parallax and brightness.
+- Audio (Batch 3), with failures #8, #9 and #10 by ear.
+
+**Traceability:** `evidence/slice-plan.md`, `evidence/slice-batch-review.md` (§7: my review), `evidence/slice-checks/` (step, review and final logs), `evidence/slice-screens/`, `evidence/slice-art-copy.txt`, the JSON test reports in `evidence/`.

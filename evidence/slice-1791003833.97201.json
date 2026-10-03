@@ -1,0 +1,121 @@
+{
+  "created_at": "2026-10-03T05:03:53",
+  "engine": "4.7.2-stable (official)",
+  "failures": 0,
+  "results": [
+    {
+      "id": "pose-idle-size-64",
+      "observed": {
+        "idle_art_px": "(606, 602)",
+        "on_screen": "(64.236, 63.812)"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-bottom-flush",
+      "observed": {
+        "art_bottom_minus_box_bottom_px": 0.106
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-idle",
+      "observed": {
+        "box": "(52.0, 58.0)",
+        "pose": "IDLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-bored-after-delay",
+      "observed": {
+        "box": "(52.0, 44.0)",
+        "delay_s": 4.0,
+        "pose": "BORED"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-worry-overrides-bored",
+      "observed": {
+        "box": "(52.0, 58.0)",
+        "pose": "WORRY"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-scoot-loop",
+      "observed": {
+        "seen": [
+          "SCOOT-A",
+          "SCOOT-B"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-flip-keeps-facing",
+      "observed": {
+        "flip_h": true,
+        "pose": "IDLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-hop-sequence",
+      "observed": {
+        "boxes": {
+          "ANTIC": "(52.0, 58.0)",
+          "FALL": "(52.0, 58.0)",
+          "IDLE": "(52.0, 58.0)",
+          "LAND": "(52.0, 44.0)",
+          "RISE": "(52.0, 58.0)"
+        },
+        "sequence": [
+          "ANTIC",
+          "RISE",
+          "FALL",
+          "LAND",
+          "IDLE"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-hop-boxes",
+      "observed": {
+        "boxes": {
+          "ANTIC": "(52.0, 58.0)",
+          "FALL": "(52.0, 58.0)",
+          "IDLE": "(52.0, 58.0)",
+          "LAND": "(52.0, 44.0)",
+          "RISE": "(52.0, 58.0)"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-splat",
+      "observed": {
+        "pose": "SPLAT"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-respawn",
+      "observed": {
+        "pose": "RESPAWN"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-control-returns-idle",
+      "observed": {
+        "pose": "IDLE",
+        "state": 1
+      },
+      "status": "PASS"
+    }
+  ],
+  "scope": "Jelly Hop slice checks (scripted input); not human playtesting"
+}

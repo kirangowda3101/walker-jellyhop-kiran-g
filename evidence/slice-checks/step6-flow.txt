@@ -1,0 +1,113 @@
+== Step 6: intro pan + any-key skip, camera look-ahead/glide (physics-tick camera), fork-only shake, win slide + prompt + any-key restart, held direction ignored after a lock  2026-10-03 01:12
+$ godot --headless --path godot --import
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (3 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+exit: 0
+
+$ godot --headless --path godot --script res://tests/test_slice.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"pose-idle-size-64","observed":{"idle_art_px":"(606, 602)","on_screen":"(64.236, 63.812)"},"status":"PASS"}
+{"id":"pose-bottom-flush","observed":{"art_bottom_minus_box_bottom_px":0.106},"status":"PASS"}
+{"id":"pose-idle","observed":{"box":"(52.0, 58.0)","pose":"IDLE"},"status":"PASS"}
+{"id":"pose-bored-after-delay","observed":{"box":"(52.0, 44.0)","delay_s":4.0,"pose":"BORED"},"status":"PASS"}
+{"id":"pose-worry-overrides-bored","observed":{"box":"(52.0, 58.0)","pose":"WORRY"},"status":"PASS"}
+{"id":"pose-scoot-loop","observed":{"seen":["SCOOT-A","SCOOT-B"]},"status":"PASS"}
+{"id":"pose-flip-keeps-facing","observed":{"flip_h":true,"pose":"IDLE"},"status":"PASS"}
+{"id":"pose-hop-sequence","observed":{"boxes":{"ANTIC":"(52.0, 58.0)","FALL":"(52.0, 58.0)","IDLE":"(52.0, 58.0)","LAND":"(52.0, 44.0)","RISE":"(52.0, 58.0)"},"sequence":["ANTIC","RISE","FALL","LAND","IDLE"]},"status":"PASS"}
+{"id":"pose-hop-boxes","observed":{"boxes":{"ANTIC":"(52.0, 58.0)","FALL":"(52.0, 58.0)","IDLE":"(52.0, 58.0)","LAND":"(52.0, 44.0)","RISE":"(52.0, 58.0)"}},"status":"PASS"}
+{"id":"pose-splat","observed":{"pose":"SPLAT"},"status":"PASS"}
+{"id":"pose-respawn","observed":{"pose":"RESPAWN"},"status":"PASS"}
+{"id":"pose-control-returns-idle","observed":{"pose":"IDLE","state":1},"status":"PASS"}
+{"id":"fork-edge-band-0px","observed":{"safe_band_px_per_plate":{"1":0,"2":0,"3":0,"4":0,"5":0}},"status":"PASS"}
+{"id":"fork-edge-band-control-70px","observed":{"safe_band_px_with_70px_tines":128},"status":"PASS"}
+{"id":"fork-hit-equals-tines","observed":{"per_plate":{"1":{"hit":[-100.0,100.6],"landing_y":498.0,"plate_landing":[-98.5056,98.5056],"tips_y":498.0,"visible_tines":[-100.0,100.6]},"2":{"hit":[-100.0,100.6],"landing_y":498.0,"plate_landing":[-98.5056,98.5056],"tips_y":498.0,"visible_tines":[-100.0,100.6]},"3":{"hit":[-100.0,100.6],"landing_y":498.0,"plate_landing":[-98.5056,98.5056],"tips_y":498.0,"visible_tines":[-100.0,100.6]},"4":{"hit":[-100.0,100.6],"landing_y":498.0,"plate_landing":[-98.5056,98.5056],"tips_y":498.0,"visible_tines":[-100.0,100.6]},"5":{"hit":[-100.0,100.6],"landing_y":498.0,"plate_landing":[-98.5056,98.5056],"tips_y":498.0,"visible_tines":[-100.0,100.6]}}},"status":"PASS"}
+{"id":"fork-top-off-screen","observed":{"fork_art_top_y_with_tines_down":{"1":-295.7,"2":-295.7,"3":-295.7,"4":-295.7,"5":-295.7}},"status":"PASS"}
+{"id":"respawn-checkpoint-fork-safe","observed":{"cause":"fork","checkpoint":1,"fork_phase":0,"fork_t":0,"held":false},"status":"PASS"}
+{"id":"respawn-other-forks-keep-rhythm","observed":{"t_minus_expected":{"2":0,"3":0,"4":0,"5":0},"ticks_waited":78},"status":"PASS"}
+{"id":"respawn-safe-window-lasts","observed":{"safe_ticks":132,"stood_ticks":132},"status":"PASS"}
+{"id":"held-jump-through-splat-no-hop","observed":{"control_returned":true,"jumps_before_splat":1,"jumps_while_held":0},"status":"PASS"}
+{"id":"fresh-press-hops-after-lock","observed":{"jumps_after_fresh_press":1},"status":"PASS"}
+{"id":"intro-pan-dome-to-jelly","observed":{"dome_in_first_view":true,"mid_state":0,"state_after":1},"status":"PASS"}
+{"id":"skip-key-no-hop-no-move-space-held","observed":{"dx":0.0,"jumps":0,"state":1},"status":"PASS"}
+{"id":"skip-key-no-hop-no-move-space-tap","observed":{"dx":0.0,"jumps":0,"state":1},"status":"PASS"}
+{"id":"skip-key-no-hop-no-move-d-held","observed":{"dx":0.0,"jumps":0,"state":1},"status":"PASS"}
+{"id":"mute-keys-do-not-skip","observed":{"state":0},"status":"PASS"}
+{"id":"shake-none-on-sauce-splat","observed":{"jelly_moved":false,"max_camera_offset":0.0},"status":"PASS"}
+{"id":"shake-on-fork-splat-camera-only","observed":{"collider_after":"(259.9951, 468.9554)","collider_before":"(259.9951, 468.9554)","jelly_moved":false,"max_camera_offset":6.30141639709473,"offset_after":"(0.0, 0.0)"},"status":"PASS"}
+{"id":"look-ahead-next-shadow-on-screen","observed":{"per_plate":{"1":{"inside":true,"next_shadow":[473.985290527344,685.985290527344],"view_x":[0.0,1280.0]},"2":{"inside":true,"next_shadow":[813.975524902344,1025.9755859375],"view_x":[266.490905761719,1546.49096679688]},"3":{"inside":true,"next_shadow":[1163.96569824219,1375.96569824219],"view_x":[606.481079101562,1886.48107910156]},"4":{"inside":true,"next_shadow":[1523.95593261719,1735.95593261719],"view_x":[956.471313476562,2236.47119140625]},"5":{"inside":true,"next_shadow":[1893.94604492188,2105.94604492188],"view_x":[1316.46154785156,2596.46142578125]}}},"status":"PASS"}
+{"id":"win-dome-celebrate-prompt","observed":{"dome_center":2341.8912,"early_key_ignored":true,"pose":"CELEBRATE","prompt":true,"won":true,"x":2341.89111328125},"status":"PASS"}
+{"id":"restart-key-no-hop-first-plate-reset","observed":{"at_first_plate":true,"checkpoint":0,"fork_elapsed_ticks":[32],"forks_reset":true,"jumps":0,"splats":0,"state":1},"status":"PASS"}
+SLICE TESTS: 31 checks / 0 failures
+exit: 0
+
+$ godot --headless --path godot --script res://tests/test_game.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"launch-grounded","observed":{"engine":"4.7.2-stable (official)","position":"(259.9951, 497.9554)"},"status":"PASS"}
+{"id":"speed-cap","observed":{"velocity_x":320.0},"status":"PASS"}
+{"id":"neutral-stop","observed":{"velocity_x":0.0},"status":"PASS"}
+{"id":"simultaneous-directions","observed":{"velocity_x":0.0},"status":"PASS"}
+{"id":"left-wall","observed":{"x":26.0034637451172},"status":"PASS"}
+{"id":"fixed-jump-and-no-double","observed":{"jumps":1,"rise_px":112.07470703125},"status":"PASS"}
+{"id":"held-jump-no-bounce","observed":{"jumps":1},"status":"PASS"}
+{"id":"coyote-5","observed":{"age":5,"jumps":1},"status":"PASS"}
+{"id":"coyote-6","observed":{"age":6,"jumps":1},"status":"PASS"}
+{"id":"coyote-7","observed":{"age":7,"jumps":0},"status":"PASS"}
+{"id":"buffer-5","observed":{"age":5,"jumps":1},"status":"PASS"}
+{"id":"buffer-6","observed":{"age":6,"jumps":1},"status":"PASS"}
+{"id":"buffer-7","observed":{"age":7,"jumps":0},"status":"PASS"}
+{"id":"low-ceiling","observed":{"jumps":1,"minimum_feet_y":457.955688476562},"status":"PASS"}
+{"id":"pause-freezes","observed":{"position":"(259.9951, 449.8807)","timer":0.25},"status":"PASS"}
+{"id":"focus-loss-pauses","observed":{"state":2},"status":"PASS"}
+{"id":"actual-sauce-collision","observed":{"cause":"sauce","splats":1,"state":3},"status":"PASS"}
+{"id":"duplicate-death-ignored","observed":{"splats":1},"status":"PASS"}
+{"id":"respawn","observed":{"position":"(259.9951, 497.9554)","state":1},"status":"PASS"}
+{"id":"checkpoint-respawn","observed":{"checkpoint":1,"position":"(579.9853, 497.9554)","splats":1},"status":"PASS"}
+{"id":"twenty-retries","observed":{"limit":80,"max_retry_ticks":78,"splats":21},"status":"PASS"}
+{"id":"death-before-finish","observed":{"state":3},"status":"PASS"}
+{"id":"level-bounds","observed":{"level_width":2683.8412,"x":2657.83984375},"status":"PASS"}
+{"id":"complete-real-route","observed":{"hops":[{"plate":1,"tick":111},{"plate":2,"tick":187},{"plate":3,"tick":267},{"plate":4,"tick":349},{"plate":5,"tick":440},{"plate":6,"tick":511}],"jump_marks_used":6,"position":"(2278.132, 441.8797)","splats":0,"state":5,"ticks":545},"status":"PASS"}
+{"id":"replay-idempotent","observed":{"jumps":0,"splats":0,"state":1},"status":"PASS"}
+WALKER TESTS: 25 checks / 0 failures
+exit: 0
+
+-- test_keyboard ported to the decided controls; m-n-mute-only is expected to fail until step 7 wires the buses:
+$ godot --headless --path godot --script res://tests/test_keyboard.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"any-key-start","observed":"state=1","status":"PASS"}
+{"id":"keyboard-move-d","observed":"dx=57.2444152832031","status":"PASS"}
+{"id":"keyboard-move-a","observed":"dx=-57.2444458007812","status":"PASS"}
+{"id":"keyboard-move-right-arrow","observed":"dx=57.2444458007812","status":"PASS"}
+{"id":"keyboard-move-left-arrow","observed":"dx=-57.2444458007812","status":"PASS"}
+{"id":"keyboard-jump-space","observed":"jumps=1","status":"PASS"}
+{"id":"keyboard-jump-up","observed":"jumps=2","status":"PASS"}
+{"id":"keyboard-jump-w","observed":"jumps=3","status":"PASS"}
+{"id":"escape-pause","observed":"state=2","status":"PASS"}
+{"id":"escape-resume","observed":"state=1","status":"PASS"}
+{"id":"any-key-replay","observed":"state=1","status":"PASS"}
+{"id":"m-n-mute-only","observed":"state=1 master_muted=false music_muted=false","status":"FAIL"}
+KEYBOARD TESTS: 12 checks / 1 failures
+exit: 1
+

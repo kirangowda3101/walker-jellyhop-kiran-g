@@ -1,0 +1,290 @@
+{
+  "created_at": "2026-10-03T05:10:29",
+  "engine": "4.7.2-stable (official)",
+  "failures": 0,
+  "results": [
+    {
+      "id": "pose-idle-size-64",
+      "observed": {
+        "idle_art_px": "(606, 602)",
+        "on_screen": "(64.236, 63.812)"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-bottom-flush",
+      "observed": {
+        "art_bottom_minus_box_bottom_px": 0.106
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-idle",
+      "observed": {
+        "box": "(52.0, 58.0)",
+        "pose": "IDLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-bored-after-delay",
+      "observed": {
+        "box": "(52.0, 44.0)",
+        "delay_s": 4.0,
+        "pose": "BORED"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-worry-overrides-bored",
+      "observed": {
+        "box": "(52.0, 58.0)",
+        "pose": "WORRY"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-scoot-loop",
+      "observed": {
+        "seen": [
+          "SCOOT-A",
+          "SCOOT-B"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-flip-keeps-facing",
+      "observed": {
+        "flip_h": true,
+        "pose": "IDLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-hop-sequence",
+      "observed": {
+        "boxes": {
+          "ANTIC": "(52.0, 58.0)",
+          "FALL": "(52.0, 58.0)",
+          "IDLE": "(52.0, 58.0)",
+          "LAND": "(52.0, 44.0)",
+          "RISE": "(52.0, 58.0)"
+        },
+        "sequence": [
+          "ANTIC",
+          "RISE",
+          "FALL",
+          "LAND",
+          "IDLE"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-hop-boxes",
+      "observed": {
+        "boxes": {
+          "ANTIC": "(52.0, 58.0)",
+          "FALL": "(52.0, 58.0)",
+          "IDLE": "(52.0, 58.0)",
+          "LAND": "(52.0, 44.0)",
+          "RISE": "(52.0, 58.0)"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-splat",
+      "observed": {
+        "pose": "SPLAT"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-respawn",
+      "observed": {
+        "pose": "RESPAWN"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-control-returns-idle",
+      "observed": {
+        "pose": "IDLE",
+        "state": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-edge-band-0px",
+      "observed": {
+        "safe_band_px_per_plate": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-edge-band-control-70px",
+      "observed": {
+        "safe_band_px_with_70px_tines": 128
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-hit-equals-tines",
+      "observed": {
+        "per_plate": {
+          "1": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "2": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "3": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "4": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "5": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-top-off-screen",
+      "observed": {
+        "fork_art_top_y_with_tines_down": {
+          "1": -295.7,
+          "2": -295.7,
+          "3": -295.7,
+          "4": -295.7,
+          "5": -295.7
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "respawn-checkpoint-fork-safe",
+      "observed": {
+        "cause": "fork",
+        "checkpoint": 1,
+        "fork_phase": 0,
+        "fork_t": 0,
+        "held": false
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "respawn-other-forks-keep-rhythm",
+      "observed": {
+        "t_minus_expected": {
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "ticks_waited": 78
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "respawn-safe-window-lasts",
+      "observed": {
+        "safe_ticks": 132,
+        "stood_ticks": 132
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "held-jump-through-splat-no-hop",
+      "observed": {
+        "control_returned": true,
+        "jumps_before_splat": 1,
+        "jumps_while_held": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fresh-press-hops-after-lock",
+      "observed": {
+        "jumps_after_fresh_press": 1
+      },
+      "status": "PASS"
+    }
+  ],
+  "scope": "Jelly Hop slice checks (scripted input); not human playtesting"
+}

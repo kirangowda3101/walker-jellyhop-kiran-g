@@ -1,0 +1,9 @@
+== Jelly Hop slice checks  2026-10-03 02:18
+engine: 4.7.2.stable.official.ed1daf0bf
+repo: 8799d35 on main (uncommitted batch changes present)
+art copies: copied this run: 0; verified: 18 of 18 byte-identical (cmp + SHA-256)
+test_game: WALKER TESTS: 25 checks / 0 failures (exit 0)
+test_keyboard: KEYBOARD TESTS: 12 checks / 0 failures (exit 0)
+test_slice: SLICE TESTS: 52 checks / 0 failures (exit 0)
+screenshots: 7 of 7 at 1280x720 in evidence/slice-screens/
+game launch: ran 8 s from the command line with no errors logged, then closed by the script (not a playtest)

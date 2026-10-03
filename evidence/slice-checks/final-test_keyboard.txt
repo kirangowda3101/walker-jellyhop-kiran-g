@@ -1,0 +1,17 @@
+$ godot --headless --path godot --script res://tests/test_keyboard.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"any-key-start","observed":"state=1","status":"PASS"}
+{"id":"keyboard-move-d","observed":"dx=57.2444152832031","status":"PASS"}
+{"id":"keyboard-move-a","observed":"dx=-57.2444458007812","status":"PASS"}
+{"id":"keyboard-move-right-arrow","observed":"dx=57.2444458007812","status":"PASS"}
+{"id":"keyboard-move-left-arrow","observed":"dx=-57.2444458007812","status":"PASS"}
+{"id":"keyboard-jump-space","observed":"jumps=1","status":"PASS"}
+{"id":"keyboard-jump-up","observed":"jumps=2","status":"PASS"}
+{"id":"keyboard-jump-w","observed":"jumps=3","status":"PASS"}
+{"id":"escape-pause","observed":"state=2","status":"PASS"}
+{"id":"escape-resume","observed":"state=1","status":"PASS"}
+{"id":"any-key-replay","observed":"state=1","status":"PASS"}
+{"id":"m-n-mute-only","observed":"state=1 master_muted=true music_muted=true","status":"PASS"}
+KEYBOARD TESTS: 12 checks / 0 failures
+exit: 0

@@ -1,0 +1,775 @@
+{
+  "created_at": "2026-10-03T06:18:43",
+  "engine": "4.7.2-stable (official)",
+  "failures": 0,
+  "results": [
+    {
+      "id": "pose-idle-size-64",
+      "observed": {
+        "idle_art_px": "(606, 602)",
+        "on_screen": "(64.236, 63.812)"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-bottom-flush",
+      "observed": {
+        "art_bottom_minus_box_bottom_px": 0.106
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-idle",
+      "observed": {
+        "box": "(52.0, 58.0)",
+        "pose": "IDLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-bored-after-delay",
+      "observed": {
+        "box": "(52.0, 44.0)",
+        "delay_s": 4.0,
+        "pose": "BORED"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-worry-overrides-bored",
+      "observed": {
+        "box": "(52.0, 58.0)",
+        "pose": "WORRY"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-scoot-loop",
+      "observed": {
+        "seen": [
+          "SCOOT-A",
+          "SCOOT-B"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-flip-keeps-facing",
+      "observed": {
+        "flip_h": true,
+        "pose": "IDLE"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-hop-sequence",
+      "observed": {
+        "boxes": {
+          "ANTIC": "(52.0, 58.0)",
+          "FALL": "(52.0, 58.0)",
+          "IDLE": "(52.0, 58.0)",
+          "LAND": "(52.0, 44.0)",
+          "RISE": "(52.0, 58.0)"
+        },
+        "sequence": [
+          "ANTIC",
+          "RISE",
+          "FALL",
+          "LAND",
+          "IDLE"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-hop-boxes",
+      "observed": {
+        "boxes": {
+          "ANTIC": "(52.0, 58.0)",
+          "FALL": "(52.0, 58.0)",
+          "IDLE": "(52.0, 58.0)",
+          "LAND": "(52.0, 44.0)",
+          "RISE": "(52.0, 58.0)"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-splat",
+      "observed": {
+        "pose": "SPLAT"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-respawn",
+      "observed": {
+        "pose": "RESPAWN"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "pose-control-returns-idle",
+      "observed": {
+        "pose": "IDLE",
+        "state": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-edge-band-0px",
+      "observed": {
+        "safe_band_px_per_plate": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-edge-band-control-70px",
+      "observed": {
+        "safe_band_px_with_70px_tines": 128
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-hit-equals-tines",
+      "observed": {
+        "per_plate": {
+          "1": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "2": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "3": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "4": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          },
+          "5": {
+            "hit": [
+              -100.0,
+              100.6
+            ],
+            "landing_y": 498.0,
+            "plate_landing": [
+              -98.5056,
+              98.5056
+            ],
+            "tips_y": 498.0,
+            "visible_tines": [
+              -100.0,
+              100.6
+            ]
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fork-top-off-screen",
+      "observed": {
+        "fork_art_top_y_with_tines_down": {
+          "1": -295.7,
+          "2": -295.7,
+          "3": -295.7,
+          "4": -295.7,
+          "5": -295.7
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "respawn-checkpoint-fork-safe",
+      "observed": {
+        "cause": "fork",
+        "checkpoint": 1,
+        "fork_phase": 0,
+        "fork_t": 0,
+        "held": false
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "respawn-other-forks-keep-rhythm",
+      "observed": {
+        "t_minus_expected": {
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0
+        },
+        "ticks_waited": 78
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "respawn-safe-window-lasts",
+      "observed": {
+        "safe_ticks": 132,
+        "stood_ticks": 132
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "held-jump-through-splat-no-hop",
+      "observed": {
+        "control_returned": true,
+        "jumps_before_splat": 1,
+        "jumps_while_held": 0,
+        "sfx_hop_while_held": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "fresh-press-hops-after-lock",
+      "observed": {
+        "jumps_after_fresh_press": 1,
+        "sfx_hop_after_splat": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "intro-pan-dome-to-jelly",
+      "observed": {
+        "dome_in_first_view": true,
+        "mid_state": 0,
+        "state_after": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "skip-key-no-hop-no-move-space-held",
+      "observed": {
+        "dx": 0.0,
+        "jumps": 0,
+        "sfx_hop": 0,
+        "state": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "skip-key-no-hop-no-move-space-tap",
+      "observed": {
+        "dx": 0.0,
+        "jumps": 0,
+        "sfx_hop": 0,
+        "state": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "skip-key-no-hop-no-move-d-held",
+      "observed": {
+        "dx": 0.0,
+        "jumps": 0,
+        "sfx_hop": 0,
+        "state": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "mute-keys-do-not-skip",
+      "observed": {
+        "state": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "shake-none-on-sauce-splat",
+      "observed": {
+        "jelly_moved": false,
+        "max_camera_offset": 0.0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "shake-on-fork-splat-camera-only",
+      "observed": {
+        "collider_after": "(259.9951, 468.9554)",
+        "collider_before": "(259.9951, 468.9554)",
+        "jelly_moved": false,
+        "max_camera_offset": 6.30141639709473,
+        "offset_after": "(0.0, 0.0)"
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "look-ahead-next-shadow-on-screen",
+      "observed": {
+        "per_plate": {
+          "1": {
+            "inside": true,
+            "next_shadow": [
+              473.985290527344,
+              685.985290527344
+            ],
+            "view_x": [
+              0.0,
+              1280.0
+            ]
+          },
+          "2": {
+            "inside": true,
+            "next_shadow": [
+              813.975524902344,
+              1025.9755859375
+            ],
+            "view_x": [
+              266.490905761719,
+              1546.49096679688
+            ]
+          },
+          "3": {
+            "inside": true,
+            "next_shadow": [
+              1163.96569824219,
+              1375.96569824219
+            ],
+            "view_x": [
+              606.481079101562,
+              1886.48107910156
+            ]
+          },
+          "4": {
+            "inside": true,
+            "next_shadow": [
+              1523.95593261719,
+              1735.95593261719
+            ],
+            "view_x": [
+              956.471313476562,
+              2236.47119140625
+            ]
+          },
+          "5": {
+            "inside": true,
+            "next_shadow": [
+              1893.94604492188,
+              2105.94604492188
+            ],
+            "view_x": [
+              1316.46154785156,
+              2596.46142578125
+            ]
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "win-dome-celebrate-prompt",
+      "observed": {
+        "dome_center": 2341.8912,
+        "early_key_ignored": true,
+        "pose": "CELEBRATE",
+        "prompt": true,
+        "won": true,
+        "x": 2341.89111328125
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "restart-key-no-hop-first-plate-reset",
+      "observed": {
+        "at_first_plate": true,
+        "checkpoint": 0,
+        "fork_elapsed_ticks": [
+          32
+        ],
+        "forks_reset": true,
+        "jumps": 0,
+        "sfx_hop": 0,
+        "splats": 0,
+        "state": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-rapid-hops-once-each",
+      "observed": {
+        "counts": {
+          "SFX-HOP": 5,
+          "SFX-LAND": 5
+        },
+        "jumps": 5
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-held-jump-once",
+      "observed": {
+        "counts": {
+          "SFX-HOP": 1,
+          "SFX-LAND": 1
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-respawn-silent",
+      "observed": {
+        "counts": {
+          "SFX-SPLAT-SAUCE": 1
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-fork-splat-once",
+      "observed": {
+        "cause": "fork",
+        "counts": {
+          "SFX-SPLAT-FORK": 1,
+          "SFX-WARN": 5
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-sauce-splat-once-no-land",
+      "observed": {
+        "cause": "sauce",
+        "counts": {
+          "SFX-SPLAT-SAUCE": 1,
+          "SFX-WARN": 2
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-win-once",
+      "observed": {
+        "counts": {
+          "SFX-WIN": 1
+        },
+        "state": 5
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "sfx-calls-record-frame-and-state",
+      "observed": {
+        "sample": [
+          {
+            "frame": 2696,
+            "id": "SFX-WIN",
+            "state": "WON"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "offscreen-shadow-no-warn-dip-once-on-screen",
+      "observed": {
+        "music_once_on_screen": [
+          "warning"
+        ],
+        "music_through_strike": [
+          "warning",
+          "normal"
+        ],
+        "music_while_off_screen": [],
+        "scrolled_into_view_while_growing": true,
+        "sfx_warn": 0,
+        "started_off_screen": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "onscreen-shadow-warns-and-dips",
+      "observed": {
+        "music_targets": [
+          "warning"
+        ],
+        "sfx_warn": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "intro-shows-shadows-frozen",
+      "observed": {
+        "forks_frozen": true,
+        "intro_ticks_checked": 230,
+        "plates_with_visible_shadow_during_pan": {
+          "5": 0.51,
+          "6": 0.52
+        },
+        "sfx_warn": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "play-starts-quiet-no-onscreen-shadow",
+      "observed": {
+        "music": "normal",
+        "off_screen_in_shadow": [
+          5,
+          6
+        ],
+        "on_screen_in_shadow": [],
+        "sfx_warn_first_5_ticks": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "replay-starts-quiet-no-onscreen-shadow",
+      "observed": {
+        "music": "normal",
+        "on_screen_in_shadow": [],
+        "sfx_warn": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "overlapping-shadows-one-dip",
+      "observed": {
+        "first_warning_frame": 3460,
+        "last_warning_end_frame": 3599,
+        "music_entries": [
+          {
+            "cutoff": 900.0,
+            "db": -9.0,
+            "frame": 3460,
+            "target": "warning"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": 0.0,
+            "frame": 3599,
+            "target": "normal"
+          }
+        ],
+        "overlap_ticks": 91,
+        "sfx_warn": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "overlapping-shadows-two-warns",
+      "observed": {
+        "sfx_warn": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "music-intro-quieter-then-normal",
+      "observed": {
+        "changes": [
+          {
+            "event": "restart",
+            "frame": 3618
+          },
+          {
+            "cutoff": 20500.0,
+            "db": -8.0,
+            "frame": 3619,
+            "target": "intro"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": 0.0,
+            "frame": 3633,
+            "target": "normal"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": -12.0,
+            "frame": 3639,
+            "target": "splat"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": 0.0,
+            "frame": 3716,
+            "target": "normal"
+          },
+          {
+            "cutoff": 500.0,
+            "db": -20.0,
+            "frame": 3720,
+            "target": "pause"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": 0.0,
+            "frame": 3727,
+            "target": "normal"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": -40.0,
+            "frame": 3734,
+            "target": "win_fade"
+          },
+          {
+            "cutoff": 20500.0,
+            "db": -40.0,
+            "frame": 3793,
+            "target": "end_quiet"
+          },
+          {
+            "event": "restart",
+            "frame": 3796
+          },
+          {
+            "cutoff": 20500.0,
+            "db": 0.0,
+            "frame": 3797,
+            "target": "normal"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "music-splat-dip-back-on-respawn",
+      "observed": {
+        "targets": [
+          "splat",
+          "normal"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "music-pause-quiet-muffled",
+      "observed": {
+        "targets": [
+          "pause",
+          "normal"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "music-win-fade-quiet-restart",
+      "observed": {
+        "sequence": [
+          "win_fade",
+          "end_quiet",
+          "restart",
+          "normal"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "music-bus-follows-target",
+      "observed": {
+        "cutoff_hz": 20500.0,
+        "music_db": 0.0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "mute-changes-no-state",
+      "observed": {
+        "after": {
+          "music": "normal",
+          "sound": 0,
+          "state": 1,
+          "x": 259.995086669922
+        },
+        "before": {
+          "music": "normal",
+          "sound": 0,
+          "state": 1,
+          "x": 259.995086669922
+        },
+        "forks_kept_rhythm": true,
+        "master_muted": true,
+        "music_muted": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "hud-text-per-state",
+      "observed": {
+        "intro": [
+          "JELLY HOP",
+          "Fork From Above",
+          "any key skips the intro"
+        ],
+        "muted": [
+          "MUTED (M)",
+          "MUSIC OFF (N)"
+        ],
+        "paused": [
+          "PAUSED",
+          "Esc to resume",
+          "Left/Right or A/D: move     Space, Up or W: hop     Esc: pause     M: mute all     N: mute music"
+        ],
+        "playing": [],
+        "prompt": [
+          "SAFE!",
+          "press any key to play again"
+        ],
+        "won": [
+          "SAFE!"
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "scope": "Jelly Hop slice checks (scripted input); not human playtesting"
+}

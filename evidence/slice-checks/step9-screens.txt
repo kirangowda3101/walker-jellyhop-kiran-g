@@ -1,0 +1,45 @@
+== Step 9: windowed screenshot capture of the 7 storyboard moments  2026-10-03 01:23
+$ godot --path godot --script res://tests/capture_slice.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+Captured: 01-intro-pan: rendered 1280x720, saved 1280x720; pose=IDLE state=INTRO; 35% into the pan; title and skip hint on screen
+Captured: 02-hop: rendered 1280x720, saved 1280x720; pose=RISE state=PLAYING; real input route: run right, hop at plate 1's edge
+Captured: 03-warning: rendered 1280x720, saved 1280x720; pose=WORRY state=PLAYING; fixture: plate 2's fork started its shadow phase; worried pose
+Captured: 04-safe-landing: rendered 1280x720, saved 1280x720; pose=LAND state=PLAYING; fixture: fork timing; real hop; landing squash while plate 2 is struck
+Captured: 05-splat: rendered 1280x720, saved 1280x720; pose=SPLAT state=SPLAT; fixture: fork timing; real overlap with the tines
+Captured: 06-respawn: rendered 1280x720, saved 1280x720; pose=RESPAWN state=REFORM; fixture: checkpoint plate 3; real sauce splat in gap 4; re-forming, camera gliding back
+Captured: 07-dome: rendered 1280x720, saved 1280x720; pose=CELEBRATE state=WON; walked into the dome; prompt shown
+SLICE CAPTURES: 7
+exit: 0
+
+-- inspect: 03 shadow on the jelly's plate too faint; 05 splat hidden behind the tines. Revise: shadow darker (ring alpha 0.10*(0.4..1) -> 0.17*(0.5..1)) and taller (5 -> 7 px); fork drawn behind the jelly. Recapture:
+$ godot --path godot --script res://tests/capture_slice.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+Captured: 01-intro-pan: rendered 1280x720, saved 1280x720; pose=IDLE state=INTRO; 35% into the pan; title and skip hint on screen
+Captured: 02-hop: rendered 1280x720, saved 1280x720; pose=RISE state=PLAYING; real input route: run right, hop at plate 1's edge
+Captured: 03-warning: rendered 1280x720, saved 1280x720; pose=WORRY state=PLAYING; fixture: plate 2's fork started its shadow phase; worried pose
+Captured: 04-safe-landing: rendered 1280x720, saved 1280x720; pose=LAND state=PLAYING; fixture: fork timing; real hop; landing squash while plate 2 is struck
+Captured: 05-splat: rendered 1280x720, saved 1280x720; pose=SPLAT state=SPLAT; fixture: fork timing; real overlap with the tines
+Captured: 06-respawn: rendered 1280x720, saved 1280x720; pose=RESPAWN state=REFORM; fixture: checkpoint plate 3; real sauce splat in gap 4; re-forming, camera gliding back
+Captured: 07-dome: rendered 1280x720, saved 1280x720; pose=CELEBRATE state=WON; walked into the dome; prompt shown
+SLICE CAPTURES: 7
+exit: 0
+
+-- inspect 2: 05 splat now visible in front of the tines. 03 shadow still faint; revise again: 5 rings, ring alpha 0.28*(0.45..1). Recapture:
+$ godot --path godot --script res://tests/capture_slice.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+Captured: 01-intro-pan: rendered 1280x720, saved 1280x720; pose=IDLE state=INTRO; 35% into the pan; title and skip hint on screen
+Captured: 02-hop: rendered 1280x720, saved 1280x720; pose=RISE state=PLAYING; real input route: run right, hop at plate 1's edge
+Captured: 03-warning: rendered 1280x720, saved 1280x720; pose=WORRY state=PLAYING; fixture: plate 2's fork started its shadow phase; worried pose
+Captured: 04-safe-landing: rendered 1280x720, saved 1280x720; pose=LAND state=PLAYING; fixture: fork timing; real hop; landing squash while plate 2 is struck
+Captured: 05-splat: rendered 1280x720, saved 1280x720; pose=SPLAT state=SPLAT; fixture: fork timing; real overlap with the tines
+Captured: 06-respawn: rendered 1280x720, saved 1280x720; pose=RESPAWN state=REFORM; fixture: checkpoint plate 3; real sauce splat in gap 4; re-forming, camera gliding back
+Captured: 07-dome: rendered 1280x720, saved 1280x720; pose=CELEBRATE state=WON; walked into the dome; prompt shown
+SLICE CAPTURES: 7
+exit: 0
+
