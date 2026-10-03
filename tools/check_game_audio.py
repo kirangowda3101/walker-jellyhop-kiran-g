@@ -19,7 +19,8 @@ GAME = REPO / "audio" / "game"
 ids = ["SFX-HOP", "SFX-LAND", "SFX-WARN", "SFX-SPLAT-FORK", "SFX-SPLAT-SAUCE", "SFX-WIN", "MUS-LOOP"]
 records = {}
 for r in json.loads((REPO / "evidence" / "batch3-process-log.json").read_text())["records"]:
-    if Path(r["output"]).parent == GAME and "superseded" not in r:
+    # Match by the repo-relative path, so the check also works in a fresh clone at another location.
+    if r["output"].endswith(f"/audio/game/{r['sound']}.ogg") and "superseded" not in r:
         records[r["sound"]] = r          # the latest record for each game file
 fails, lines = [], []
 for sid in ids:

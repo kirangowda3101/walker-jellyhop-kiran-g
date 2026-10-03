@@ -1,3 +1,92 @@
+-- 1. art copies
+== Game art copy check (check)  2026-10-03 18:54
+source: art/game/   copy: godot/assets/art/
+OK  14951969a120ab120af6d3091c172b08673715d390b3654ecc042740cb43bb59  CHAR-ANTIC.png
+OK  af5b20431da785ab1ca0112ea1dbf372f87fdb9c71fb2ff86cd0fc42b7c34e9c  CHAR-BORED.png
+OK  bd32aa5dc4e4200a6f55e4159b0319acee8910dffa1602c8f394f721219a67fd  CHAR-CELEBRATE.png
+OK  665eadd9a774608c8c20785f13740fa814983eb202ff9ba95128b4b841b59c4d  CHAR-FALL.png
+OK  2b5ef1aad00cddb51ca6b155bd9a14c343f0b923e0a00c356107c3d56fc08099  CHAR-IDLE.png
+OK  8f5b4c5a4b65adf3aa7e28a3d862414cfc69718f1880652f125a358de45d7747  CHAR-LAND.png
+OK  f03caa7f696a357c9a4e9791e1c9ff2f22afa2fe7374607a9f826233a15f4ca6  CHAR-RESPAWN.png
+OK  0dad0fb69001be073a2143b10923262e57bf7ec21a840e267bc51c406f2b6753  CHAR-RISE.png
+OK  6aa35cf27aa3ed6202f2d0254f1defe456d0db4a387981cf0104be03af6b916a  CHAR-SCOOT-A.png
+OK  f95dacdb13614d9ed7d4a5798e3bf6df8902d5dcd5186f368631bcce0a4bb271  CHAR-SCOOT-B.png
+OK  13072d39a1d9018616a2a3070f2fc56fde607fd2ad95e0b07d7941dafa0d7c9c  CHAR-SPLAT.png
+OK  e2c7091dcefe82b101367907e6c5d78e69b8d2d337d928768343c3bc8ac4f8ab  CHAR-WORRY.png
+OK  e120a185905b15322dd4251cb569396e3ab0d27fd666ff8588af1d0807d0509b  ENV-DOME.png
+OK  23156c6907098d6ae57f78d918a65d246bfb036d1352cf7554a5d057f6a9d0e0  ENV-FORK.png
+OK  b6e15b201538dcdad3c75299bb6c184227364072ccea1f91ebe50af405409add  ENV-PLATE.png
+OK  24864e4b825c86f1f3d4b83eecf835c2d28ceddd355a79d616418c10fe945723  ENV-ROOM.png
+OK  0286e7d99d0e05cd952e41c77bd430d26b56e940a00b1401af8a5213483f7488  ENV-SAUCE.png
+OK  f098c5a22089d1b59738e420368d6bfc1347d92067c3348b9f4afd592121a72f  ENV-TABLE.png
+copied this run: 0; verified: 18 of 18 byte-identical (cmp + SHA-256)
+== Game audio copy check (check)  2026-10-03 18:54
+source: audio/game/   copy: godot/assets/audio/
+OK  39f6a5fe7b24bad4f5cad961a6e18fa07f9dd8b224b69e8e3bc4c631f7b88690  MUS-LOOP.ogg
+OK  5866c925b87436b4fda27276544339d02d12043383184317a384c485f48e750d  SFX-HOP.ogg
+OK  ec29f67ea388988a30d429951820957d18e832f508d9e0f17890841bb04cc894  SFX-LAND.ogg
+OK  83452335c5ac2f29a0b38283fd16675f0bd992bfaa97752437b12dc63e3b7168  SFX-SPLAT-FORK.ogg
+OK  3a763e0eb42a939209144ca89dfa4b1ab9fcb368a94c4397e66fee2dcbcc8e92  SFX-SPLAT-SAUCE.ogg
+OK  73f73611c94a1453a592310d03912d7b59bb1ff0fe5dec6d33d5eea314610442  SFX-WARN.ogg
+OK  f8031458a1746f4013ac2e24029ee4de1c3293f6f23612449fe9bdf4c527a485  SFX-WIN.ogg
+copied this run: 0; verified: 7 of 7 byte-identical (cmp + SHA-256)
+PASS SFX-HOP: take 3, lead 0.00 ms, peak -15.97 dBFS, loudness -30.05 LUFS (target -30.1), 0.138 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-LAND: take 2, lead 0.00 ms, peak -10.66 dBFS, loudness -30.04 LUFS (target -30.1), 0.146 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-WARN: take 1, lead 0.00 ms, peak -17.08 dBFS, loudness -30.11 LUFS (target -30.1), 0.367 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-SPLAT-FORK: take 3, lead 0.00 ms, peak -8.90 dBFS, loudness -30.06 LUFS (target -30.1), 0.153 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-SPLAT-SAUCE: take 2, lead 0.00 ms, peak -6.07 dBFS, loudness -30.09 LUFS (target -30.1), 0.229 s, 44100 Hz x2, process-log SHA match True
+PASS SFX-WIN: take 3, lead 0.00 ms, peak -14.54 dBFS, loudness -30.05 LUFS (target -30.1), 1.615 s, 44100 Hz x2, process-log SHA match True
+PASS MUS-LOOP: take 1, lead 0.00 ms, peak -23.51 dBFS, loudness -40.05 LUFS (target -40.1), 9.600 s, 32000 Hz x1, process-log SHA match True
+PASS MUS-LOOP imports with looping on (loop=true)
+GAME AUDIO CHECKS: 8 checks / 0 failures
+-- 2. import and headless suites
+$ godot --headless --path godot --script res://tests/test_game.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"launch-grounded","observed":{"engine":"4.7.2-stable (official)","position":"(259.9951, 497.9554)"},"status":"PASS"}
+{"id":"speed-cap","observed":{"velocity_x":320.0},"status":"PASS"}
+{"id":"neutral-stop","observed":{"velocity_x":0.0},"status":"PASS"}
+{"id":"simultaneous-directions","observed":{"velocity_x":0.0},"status":"PASS"}
+{"id":"left-wall","observed":{"x":26.0034637451172},"status":"PASS"}
+{"id":"fixed-jump-and-no-double","observed":{"jumps":1,"rise_px":112.07470703125},"status":"PASS"}
+{"id":"held-jump-no-bounce","observed":{"jumps":1},"status":"PASS"}
+{"id":"coyote-5","observed":{"age":5,"jumps":1},"status":"PASS"}
+{"id":"coyote-6","observed":{"age":6,"jumps":1},"status":"PASS"}
+{"id":"coyote-7","observed":{"age":7,"jumps":0},"status":"PASS"}
+{"id":"buffer-5","observed":{"age":5,"jumps":1},"status":"PASS"}
+{"id":"buffer-6","observed":{"age":6,"jumps":1},"status":"PASS"}
+{"id":"buffer-7","observed":{"age":7,"jumps":0},"status":"PASS"}
+{"id":"low-ceiling","observed":{"jumps":1,"minimum_feet_y":457.955688476562},"status":"PASS"}
+{"id":"pause-freezes","observed":{"position":"(259.9951, 449.8807)","timer":0.25},"status":"PASS"}
+{"id":"focus-loss-pauses","observed":{"state":2},"status":"PASS"}
+{"id":"actual-sauce-collision","observed":{"cause":"sauce","splats":1,"state":3},"status":"PASS"}
+{"id":"duplicate-death-ignored","observed":{"splats":1},"status":"PASS"}
+{"id":"respawn","observed":{"position":"(259.9951, 497.9554)","state":1},"status":"PASS"}
+{"id":"checkpoint-respawn","observed":{"checkpoint":1,"position":"(579.9853, 497.9554)","splats":1},"status":"PASS"}
+{"id":"twenty-retries","observed":{"limit":80,"max_retry_ticks":78,"splats":21},"status":"PASS"}
+{"id":"death-before-finish","observed":{"state":3},"status":"PASS"}
+{"id":"level-bounds","observed":{"level_width":2683.8412,"x":2657.83984375},"status":"PASS"}
+{"id":"complete-real-route","observed":{"hops":[{"plate":1,"tick":70},{"plate":2,"tick":146},{"plate":3,"tick":220},{"plate":4,"tick":302},{"plate":5,"tick":386},{"plate":6,"tick":457}],"jump_marks_used":6,"position":"(2278.132, 441.8797)","splats":0,"state":5,"ticks":491},"status":"PASS"}
+{"id":"replay-idempotent","observed":{"jumps":0,"splats":0,"state":1},"status":"PASS"}
+WALKER TESTS: 25 checks / 0 failures
+exit: 0
+$ godot --headless --path godot --script res://tests/test_keyboard.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"any-key-start","observed":"state=1","status":"PASS"}
+{"id":"keyboard-move-d","observed":"dx=57.2444152832031","status":"PASS"}
+{"id":"keyboard-move-a","observed":"dx=-57.2444458007812","status":"PASS"}
+{"id":"keyboard-move-right-arrow","observed":"dx=57.2444458007812","status":"PASS"}
+{"id":"keyboard-move-left-arrow","observed":"dx=-57.2444458007812","status":"PASS"}
+{"id":"keyboard-jump-space","observed":"jumps=1","status":"PASS"}
+{"id":"keyboard-jump-up","observed":"jumps=2","status":"PASS"}
+{"id":"keyboard-jump-w","observed":"jumps=3","status":"PASS"}
+{"id":"escape-pause","observed":"state=2","status":"PASS"}
+{"id":"escape-resume","observed":"state=1","status":"PASS"}
+{"id":"any-key-replay","observed":"state=1","status":"PASS"}
+{"id":"m-n-mute-only","observed":"state=1 master_muted=true music_muted=true","status":"PASS"}
+KEYBOARD TESTS: 12 checks / 0 failures
+exit: 0
 $ godot --headless --path godot --script res://tests/test_slice.gd
 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
@@ -38,7 +127,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"sfx-fork-splat-once","observed":{"cause":"fork","counts":{"SFX-SPLAT-FORK":1,"SFX-WARN":2}},"status":"PASS"}
 {"id":"sfx-sauce-splat-once-no-land","observed":{"cause":"sauce","counts":{"SFX-SPLAT-SAUCE":1,"SFX-WARN":1}},"status":"PASS"}
 {"id":"sfx-win-once","observed":{"counts":{"SFX-WIN":1},"state":5},"status":"PASS"}
-{"id":"sfx-calls-record-frame-and-state","observed":{"sample":[{"frame":2696,"id":"SFX-WIN","state":"WON"}]},"status":"PASS"}
+{"id":"sfx-calls-record-frame-and-state","observed":{"sample":[{"frame":2695,"id":"SFX-WIN","state":"WON"}]},"status":"PASS"}
 {"id":"offscreen-shadow-dip-once-on-screen-warn-at-strike","observed":{"music_once_on_screen":["warning"],"music_through_strike":["warning","normal"],"music_while_off_screen":[],"scrolled_into_view_while_growing":true,"sfx_warn_at_descent_start":1,"sfx_warn_while_shadow_grows":0,"started_off_screen":true},"status":"PASS"}
 {"id":"onscreen-shadow-dips-no-warn-at-start","observed":{"music_targets":["warning"],"sfx_warn":0},"status":"PASS"}
 {"id":"intro-shows-shadows-frozen","observed":{"forks_frozen":true,"intro_ticks_checked":230,"plates_with_visible_shadow_during_pan":{"5":0.51,"6":0.52},"sfx_warn":0},"status":"PASS"}
@@ -54,7 +143,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"mute-changes-no-state","observed":{"after":{"music":"normal","sound":0,"state":1,"x":259.995086669922},"before":{"music":"normal","sound":0,"state":1,"x":259.995086669922},"forks_kept_rhythm":true,"master_muted":true,"music_muted":true},"status":"PASS"}
 {"id":"hud-text-per-state","observed":{"intro":["JELLY HOP","Fork From Above","any key skips the intro"],"muted":["MUTED (M)","MUSIC OFF (N)"],"paused":["PAUSED","Esc to resume","Left/Right or A/D: move     Space, Up or W: hop     Esc: pause     M: mute all     N: mute music"],"playing":[],"prompt":["SAFE!","press any key to play again"],"won":["SAFE!"]},"status":"PASS"}
 {"id":"audio-every-event-has-a-stream","observed":{"missing":[],"not_ogg":[],"placeholder":false,"player_problems":[],"streams":6},"status":"PASS"}
-{"id":"audio-music-loops-and-plays","observed":{"bus":"Music","loop":true,"playing":true,"stream":"(res://assets/audio/MUS-LOOP.ogg):<AudioStreamOggVorbis#-9223371065990836742>"},"status":"PASS"}
+{"id":"audio-music-loops-and-plays","observed":{"bus":"Music","loop":true,"playing":true,"stream":"(res://assets/audio/MUS-LOOP.ogg):<AudioStreamOggVorbis#-9223372005380717057>"},"status":"PASS"}
 {"id":"audio-hop-plays-its-stream","observed":{"hop_player_playing":true,"sfx_hop_calls":1},"status":"PASS"}
 {"id":"warn-none-while-shadow-grows","observed":{"current_plate_fork":{"fork_plate":2,"jelly_plate":2,"on_screen":true,"still_in_shadow":true,"warns":0},"next_plate_fork":{"fork_plate":3,"jelly_plate":2,"on_screen":true,"still_in_shadow":true,"warns":0}},"status":"PASS"}
 {"id":"warn-current-plate-fork-descends-once","observed":{"descended":true,"fork_plate":2,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":1,"warns_total":1},"status":"PASS"}
@@ -64,3 +153,37 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"warn-airborne-uses-last-plate","observed":{"airborne_at_start":true,"far_fork":{"descended":true,"fork_plate":4,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":0,"warns_total":0},"next_plate_fork":{"descended":true,"fork_plate":3,"jelly_plate":2,"on_screen":true,"splats":0,"warns_at_descent_start":1,"warns_total":1}},"status":"PASS"}
 SLICE TESTS: 61 checks / 0 failures
 exit: 0
+-- 3. screenshots (opens a window)
+$ godot --path godot --script res://tests/capture_slice.gd
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+Captured: 01-intro-pan: rendered 1280x720, saved 1280x720; pose=IDLE state=INTRO; 35% into the pan; title and skip hint on screen
+Captured: 02-hop: rendered 1280x720, saved 1280x720; pose=RISE state=PLAYING; real input route: run right, hop at plate 1's edge
+Captured: 03-warning: rendered 1280x720, saved 1280x720; pose=WORRY state=PLAYING; fixture: plate 2's fork started its shadow phase; worried pose
+Captured: 04-safe-landing: rendered 1280x720, saved 1280x720; pose=LAND state=PLAYING; fixture: fork timing; real hop; landing squash while plate 2 is struck
+Captured: 05-splat: rendered 1280x720, saved 1280x720; pose=SPLAT state=SPLAT; fixture: fork timing; real overlap with the tines
+Captured: 06-respawn: rendered 1280x720, saved 1280x720; pose=RESPAWN state=REFORM; fixture: checkpoint plate 3; real sauce splat in gap 4; re-forming, camera gliding back
+Captured: 07-dome: rendered 1280x720, saved 1280x720; pose=CELEBRATE state=WON; walked into the dome; prompt shown
+SLICE CAPTURES: 7
+exit: 0
+-- 4. smoke launch of the game (8 s, then closed)
+tools/run_slice_checks.sh: line 37: 83499 Terminated: 15          "$GODOT" "$@" >> "$log" 2>&1
+$ godot --path godot
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+TIMEOUT after 8s
+
+== Jelly Hop slice checks  2026-10-03 18:54
+engine: 4.7.2.stable.official.ed1daf0bf
+repo: 23ae39c on main (uncommitted batch changes present)
+art copies: copied this run: 0; verified: 18 of 18 byte-identical (cmp + SHA-256)
+audio copies: copied this run: 0; verified: 7 of 7 byte-identical (cmp + SHA-256)
+game audio: GAME AUDIO CHECKS: 8 checks / 0 failures
+test_game: WALKER TESTS: 25 checks / 0 failures (exit 0)
+test_keyboard: KEYBOARD TESTS: 12 checks / 0 failures (exit 0)
+test_slice: SLICE TESTS: 61 checks / 0 failures (exit 0)
+screenshots: 7 of 7 at 1280x720 in evidence/slice-screens/
+game launch: ran 8 s from the command line with no errors logged, then closed by the script (not a playtest)
+ALL SLICE CHECKS PASSED

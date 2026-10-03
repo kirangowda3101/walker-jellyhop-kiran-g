@@ -1,6 +1,6 @@
-== Jelly Hop slice checks  2026-10-03 18:38
+== Jelly Hop slice checks  2026-10-03 19:05
 engine: 4.7.2.stable.official.ed1daf0bf
-repo: 5fc8efb on main (uncommitted batch changes present)
+repo: 23ae39c on main (uncommitted batch changes present)
 art copies: copied this run: 0; verified: 18 of 18 byte-identical (cmp + SHA-256)
 audio copies: copied this run: 0; verified: 7 of 7 byte-identical (cmp + SHA-256)
 game audio: GAME AUDIO CHECKS: 8 checks / 0 failures

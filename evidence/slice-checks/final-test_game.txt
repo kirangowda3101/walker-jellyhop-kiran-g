@@ -24,7 +24,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"twenty-retries","observed":{"limit":80,"max_retry_ticks":78,"splats":21},"status":"PASS"}
 {"id":"death-before-finish","observed":{"state":3},"status":"PASS"}
 {"id":"level-bounds","observed":{"level_width":2683.8412,"x":2657.83984375},"status":"PASS"}
-{"id":"complete-real-route","observed":{"hops":[{"plate":1,"tick":71},{"plate":2,"tick":147},{"plate":3,"tick":221},{"plate":4,"tick":303},{"plate":5,"tick":387},{"plate":6,"tick":458}],"jump_marks_used":6,"position":"(2278.132, 441.8797)","splats":0,"state":5,"ticks":492},"status":"PASS"}
+{"id":"complete-real-route","observed":{"hops":[{"plate":1,"tick":72},{"plate":2,"tick":148},{"plate":3,"tick":222},{"plate":4,"tick":304},{"plate":5,"tick":388},{"plate":6,"tick":459}],"jump_marks_used":6,"position":"(2278.132, 441.8797)","splats":0,"state":5,"ticks":493},"status":"PASS"}
 {"id":"replay-idempotent","observed":{"jumps":0,"splats":0,"state":1},"status":"PASS"}
 WALKER TESTS: 25 checks / 0 failures
 exit: 0

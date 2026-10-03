@@ -1,0 +1,25 @@
+pose | facing | sprite flip_h | collision box (px) | box kind
+IDLE | right | false | (52.0, 58.0) | standing
+IDLE | left | true | (52.0, 58.0) | standing
+BORED | right | false | (52.0, 44.0) | low
+BORED | left | true | (52.0, 44.0) | low
+SCOOT-A | right | false | (52.0, 58.0) | standing
+SCOOT-A | left | true | (52.0, 58.0) | standing
+SCOOT-B | right | false | (52.0, 58.0) | standing
+SCOOT-B | left | true | (52.0, 58.0) | standing
+ANTIC | right | false | (52.0, 58.0) | standing
+ANTIC | left | true | (52.0, 58.0) | standing
+RISE | right | false | (52.0, 58.0) | standing
+RISE | left | true | (52.0, 58.0) | standing
+FALL | right | false | (52.0, 58.0) | standing
+FALL | left | true | (52.0, 58.0) | standing
+LAND | right | false | (52.0, 44.0) | low
+LAND | left | true | (52.0, 44.0) | low
+WORRY | right | false | (52.0, 58.0) | standing
+WORRY | left | true | (52.0, 58.0) | standing
+SPLAT | right | false | (52.0, 58.0) | standing
+SPLAT | left | true | (52.0, 58.0) | standing
+RESPAWN | right | false | (52.0, 58.0) | standing
+RESPAWN | left | true | (52.0, 58.0) | standing
+CELEBRATE | right | false | (52.0, 58.0) | standing
+CELEBRATE | left | true | (52.0, 58.0) | standing

@@ -1,0 +1,52 @@
+== Fresh-copy verification  2026-10-03 18:54 EDT
+machine: macOS 26.5.1 (25F80), arm64; Godot 4.7.2.stable.official.ed1daf0bf
+$ git clone https://github.com/kirangowda3101/walker-jellyhop-kiran-g.git <scratch>/fresh-clone
+clone exit: 0
+cloned revision: 23ae39ce6c84b683670640d6ef51502376896dbe (Add generated sound effects and music loop to the slice; move the fork scrape to)
+no .godot import cache in the fresh copy (expected; it is git-ignored)
+$ godot --headless --path godot --import
+import exit: 0
+$ bash tools/run_slice_checks.sh
+run_slice_checks exit: 1
+STOPPED: game audio checks failed
+
+-- the run above STOPPED at the game audio checks: 7 of 8 failed only on 'process-log SHA match False'; every audio measurement passed. Cause: tools/check_game_audio.py matched process-log records by the absolute path of the original working copy. Fix (part of the TEST-REPORT changes): match by the repo-relative path. Fixed script copied into the fresh clone; rerun:
+$ bash tools/run_slice_checks.sh
+run_slice_checks exit: 0
+== Jelly Hop slice checks  2026-10-03 18:54
+engine: 4.7.2.stable.official.ed1daf0bf
+repo: 23ae39c on main (uncommitted batch changes present)
+art copies: copied this run: 0; verified: 18 of 18 byte-identical (cmp + SHA-256)
+audio copies: copied this run: 0; verified: 7 of 7 byte-identical (cmp + SHA-256)
+game audio: GAME AUDIO CHECKS: 8 checks / 0 failures
+test_game: WALKER TESTS: 25 checks / 0 failures (exit 0)
+test_keyboard: KEYBOARD TESTS: 12 checks / 0 failures (exit 0)
+test_slice: SLICE TESTS: 61 checks / 0 failures (exit 0)
+screenshots: 7 of 7 at 1280x720 in evidence/slice-screens/
+game launch: ran 8 s from the command line with no errors logged, then closed by the script (not a playtest)
+ALL SLICE CHECKS PASSED
+clone working tree after the run: 13 changed files (the copied check script plus regenerated evidence)
+
+$ ./walker-jumpman.command   (launched, closed after 8 s by the check)
+still running after 8 s: yes (closed by the check)
+launch log: no errors
+
+-- every asset the game loads is tracked in git (present in a fresh copy):
+(eval):1: no matches found: --include=*.gd
+   referenced: 
+   tracked: 18 PNG in godot/assets/art (12 poses + 6 environment), 7 OGG in godot/assets/audio (6 SFX + MUS-LOOP); untracked asset files: 0
+   all 12 poses, 6 environment images and 7 audio files present
+-- repo limits in the fresh copy: largest file 853843 evidence/batch2-review.png; MP3/MP4 files: 0
+-- (the 'referenced' listing above failed on zsh glob quoting; rerun with the pattern quoted:)
+   referenced in code: ENV-DOME.png
+   referenced in code: ENV-FORK.png
+   referenced in code: ENV-PLATE.png
+   referenced in code: ENV-ROOM.png
+   referenced in code: ENV-SAUCE.png
+   referenced in code: ENV-TABLE.png
+   referenced in code: res://assets/art/
+   referenced in code: res://assets/art/CHAR-
+   referenced in code: res://assets/art/ENV-FORK.png
+   referenced in code: res://assets/audio/
+   referenced in code: res://assets/audio/MUS-LOOP.ogg
+   (CHAR-%s.png is filled with the 12 pose names in features/player/player.gd: IDLE BORED SCOOT-A SCOOT-B ANTIC RISE FALL LAND WORRY SPLAT RESPAWN CELEBRATE; res://assets/audio/ + <event ID>.ogg in audio/sound_events.gd)

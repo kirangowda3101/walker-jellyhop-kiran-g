@@ -270,3 +270,12 @@ Every edit reads the raw file without changing it. Pixel fingerprints are the fi
 - 14 takes are "not selected". Kiran gave no per-take reasons.
 - Their thumbnail is the waveform contact sheet `evidence/batch3-takes-waveforms.png`.
 - Their raw files stay outside the repository; their SHA-256 values are in `evidence/batch3-generation-log.txt`.
+
+### Note added 2026-10-03: pending listening judgments confirmed by Kiran's playtest (TEST-REPORT.md)
+
+The rows above are unchanged. Kiran's playtest at source revision `23ae39c` (sound on, then muted, on his Mac) confirmed these Batch 3 items that were pending, in his words:
+- **The sounds against their events** (all six selected sound effects; "listening judgment pending" in the rows above): "Yeah it all looks good". This confirms each sound against its event. It does not record specific sound qualities.
+- **The music seam** (MUS-LOOP take 1, "I haven't separately confirmed whether the seam is audible"), standing still for 30+ seconds (three or more loops): "No. I dont hear any gap or jump when it repeats"
+- **Music behavior** (intro quieter, splat dip, pause very quiet, fade at the dome, fresh start on replay): "yes"
+- **Overall volume at his normal level** (left unchanged in Batch 3): "yes"
+- **Muted play:** "yes with mute also I can see the clues like the shadow keep increasing on the plate and i can also understand what killed me and when i won"; and N mutes music only: "this works too"

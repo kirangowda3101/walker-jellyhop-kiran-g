@@ -546,3 +546,54 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - a full muted playtest.
 
 **Traceability:** `gen-inputs/batch3-audio-prompts.md` (with its two dated notes), AUDIO-BRIEF.md, ASSET-LOG.md Batch 3, SOURCES.md, `evidence/batch3-*` (prediction, setup, generation, listening, compare, process, audio copy, checks, audition notes, traces, swaps, review), `audio/game/`, `godot/assets/audio/`.
+
+---
+
+## 2026-10-03 — TEST-REPORT: my playtest (sound on, then muted) and the fresh-copy check
+
+**Status (not yet committed):** TEST-REPORT.md is written for the assignment's "Use It" section, at source revision `23ae39c`, Godot 4.7.2.stable.official.ed1daf0bf, macOS 26.5.1 (Apple M4).
+
+**My playtest (at `23ae39c`, on my Mac), in my words:**
+1. Sound on, each sound against its event: "Yeah it all looks good"
+2. Music seam, standing still for 30+ seconds (three or more loops): "No. I dont hear any gap or jump when it repeats"
+3. Music behavior (intro quieter, splat dip, pause very quiet, fade at the dome, fresh start on replay): "yes"
+4. Overall volume at my normal level: "yes"
+5. Muted run (M) to the dome: "yes with mute also I can see the clues like the shadow keep increasing on the plate and i can also understand what killed me and when i won"
+6. N mutes music only: "this works too"
+
+**Which Batch 3 pending items these confirm:**
+- the music seam over three repetitions (note 2);
+- the other sounds' listening judgments, as each sound against its event (note 1; no specific sound qualities recorded);
+- the overall volume (note 4);
+- a full muted playtest (notes 5 and 6);
+- the music's behavior by ear (note 3).
+
+A dated note in ASSET-LOG.md after the Batch 3 section records the same confirmations; the existing rows are unchanged.
+
+**What came back (Claude Code's checks for the report):**
+- **Fresh copy:** cloned from GitHub into a temporary folder and imported.
+  - The first `tools/run_slice_checks.sh` STOPPED at the game audio checks: 7 of 8 failed only on "process-log SHA match", because `tools/check_game_audio.py` looked the records up by the original working copy's absolute path.
+  - Fixed to match the repo-relative path (a check-script fix; no game change). The rerun in the fresh copy passed everything: art 18/18, audio 7/7, game audio 8/0, mechanics 25/0, keyboard 12/0, slice 61/0, 7 screenshots, launch with no errors.
+  - `./walker-jumpman.command` launched the game with no errors. All 18 art and 7 audio files are tracked.
+- **Character against the sheet:** 24 in-engine pose captures (12 poses × right and left) beside the sheet (`evidence/test-character-vs-sheet.png`). Mismatches recorded:
+  - the airborne crouch keeps the standing box;
+  - the splat and re-form collider stays while hits are off by state.
+- **Storyboard against the slice:** the 7 panels beside the slice screenshots (`evidence/test-storyboard-vs-slice.png`). The differences, and the shots the slice does not cover (the three design-view angles), are listed in TEST-REPORT.md §3.
+
+**Routine choices made by Claude Code:**
+- The pose captures use a second camera at 4× zoom and a magenta box overlay drawn by the capture script only.
+- The sheet and storyboard SVGs are rendered with cairosvg (added to the audio environment, outside the repository).
+- The report's limitations list (TEST-REPORT.md §9).
+
+**Human / Claude:**
+- **Kiran:** played the game sound on and muted at `23ae39c` and wrote the six notes; the only playtester.
+- **Claude Code:** ran the fresh-copy check and the automated suites, fixed the check script, made the comparison images, and drafted TEST-REPORT.md, this entry and the ASSET-LOG note.
+
+**Still not verified by a human** (TEST-REPORT.md §9):
+- face readability at 64 px;
+- the jelly's visibility on each surface beyond the screenshots;
+- Scoot A's 2 px box near strikes;
+- the look-ahead and shake by feel;
+- any machine other than this Mac.
+
+**Traceability:** TEST-REPORT.md; `evidence/test-fresh-copy.txt` (+ `test-fresh-*-full.txt`); `evidence/test-character-vs-sheet.png`, `evidence/test-poses/`; `evidence/test-storyboard-vs-slice.png`; `godot/tests/capture_poses.gd`; `tools/test_report_images.py`; `tools/check_game_audio.py`.
