@@ -4,7 +4,7 @@ Credits, models, tools, and terms for this project. The generation-by-generation
 
 ## Starting point
 
-- Not decided yet: an empty Godot 4 project or the walker-jumpman structure. No Godot project exists in this repository yet. Whichever I start from will be credited here.
+- **walker-jumpman** "First Steps" starter by Nik Bear Brown (https://github.com/nikbearbrown/walker-jumpman), commit `9387542`, imported unchanged into `godot/` (with its launcher, if present) in this repository's commit `d7f0c97`, so every later change to it is a visible diff. The starter's other documents were not imported. License file in the starter: none in the starter repository.
 
 ## Generative models
 
@@ -16,6 +16,7 @@ Credits, models, tools, and terms for this project. The generation-by-generation
 
 ## Tools
 
+- **Godot** `4.7.2.stable.official.ed1daf0bf` (engine for the slice).
 - **Draw Things** 26.0924.0 (260924.0), free macOS app. Local generation only; no Draw Things+ subscription, cloud compute, or in-app purchases used.
 - **Python scripts in `tools/`,** written by Claude at my request and run by me: `make_storyboard_svgs.py` (storyboard sketches), `make_character_svgs.py` (character sheet images), `check_64px.py` (readability check at game size), `remove_specks.py` (the logged speck cleanups), `make_pose_guide.py` and `make_pose_guides.py` (pose guides warped from CHAR-REF), `make_env_guides.py` (the four environment guides), `process_env.py` (magenta cut-outs, the dome transparency edit, the table seam, the room resize, guide comparison), `batch2_review.py` (Batch 2 review images and contrast numbers). Shell scripts `batch1_*.sh` and `batch2_*.sh` run each batch's steps.
 - **macOS built-ins:** `qlmanage` (SVG to PNG), `sips` (thumbnails), `shasum` (checksums).
@@ -23,6 +24,7 @@ Credits, models, tools, and terms for this project. The generation-by-generation
 ## Collaborators and AI assistance
 
 - **Claude** (Anthropic, used through the claude.ai chat): checked the design against the assignment, asked design questions, drafted documents and prompts from my decisions, wrote the scripts above, and pointed out issues in outputs. Claude does not generate images or audio; its SVG drawings are design references, not generated assets. The environment guides drawn by Claude's script were inputs to SDXL at 50% strength, and the accepted plate, sauce, fork, and dome stay close to them (measured in ASSET-LOG.md, Batch 2).
+- **Claude Code** (Anthropic): builds the slice in this repository from SLICE-BRIEF.md under the rules in CLAUDE.md (from 2026-10-02).
 - **Me (Kiran):** every design decision and reason, every accept and reject decision, all generation runs, edits, and commits.
 - No other collaborators so far.
 

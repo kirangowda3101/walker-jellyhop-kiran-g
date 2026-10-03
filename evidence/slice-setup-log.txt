@@ -1,0 +1,10 @@
+== Slice setup  2026-10-03 00:16
+repo: main at e6f1644, clean apart from the setup kit; kit files verified
+Godot: 4.7.2.stable.official.ed1daf0bf (/Applications/Godot.app/Contents/MacOS/Godot)
+Claude Code: 2.1.280 (Claude Code)
+Brutalist skill: `godot-gamedev` found in my brutalist.art clone at `skills/make/godot-gamedev` (commit `6a8380a`); its SKILL.md describes it as making a Liam-narrated Godot development film, using `walker` for Claude/GDD bookends, and says it "Does not build or publish a game"
+starter: https://github.com/nikbearbrown/walker-jumpman.git at 9387542 (2026-09-10, Add Walker Jumpman playable First Steps prototype)
+importing: godot walker-jumpman.command (license file: none in the starter repository)
+commit A: d7f0c97  (17 starter files, identical to 9387542)
+installed SLICE-BRIEF.md, CLAUDE.md; SOURCES.md credits the starter; FRICTIONAL.md has the setup entry
+starter import: d7f0c97; next: open Claude Code in this folder (see the chat for the first prompt)

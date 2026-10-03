@@ -379,3 +379,25 @@ A 2D side-view platformer. The player is a small jelly cube left on a dinner tab
 - Final in-game sizes; audio (Batch 3); the Godot slice, testing, and the film.
 
 **Traceability:** ASSET-LOG.md Batch 2; `gen-inputs/batch2-env-prompts.md` (restored) and `gen-inputs/ENV-*-guide.png`; `evidence/batch2-review.png`, `batch2-mock-scene.png`, `batch2-table-seam.png`, `batch2-sprites.png`, `batch2-poses.png`, `batch2-process-log.txt`, `batch2-checksums.txt`; thumbnails in `art/rejected/` and `art/source/`; processed files in `art/game/`.
+
+---
+
+## 2026-10-02 — Slice setup: build order, starting point, controls
+
+**Status (confirmed):** the walker-jumpman starter is imported unchanged into `godot/` (nikbearbrown/walker-jumpman at `9387542`, in commit `d7f0c97`). The slice's build brief (`SLICE-BRIEF.md`) and working rules (`CLAUDE.md`) are committed before any slice code. Engine on my Mac: `4.7.2.stable.official.ed1daf0bf`.
+
+**Decisions (mine):**
+- **Build order:** "Let's build the Godot slice next, with silent placeholders for the approved sound events." We review the running game before integrating generated audio.
+- **Workflow:** I asked to "use the required course Brutalist workflow with the walker modifier in Claude Code from the start." Claude pointed out that the Brutalist `godot-gamedev` skill makes the development film from the finished project, and that the course's loop for building in Claude Code is Walker's brief → build → playtest → inspect → revise. The slice is built in Claude Code with that loop; the film follows with `godot-gamedev` and the `walker` modifier. Local skill check: `godot-gamedev` found in my brutalist.art clone at `skills/make/godot-gamedev` (commit `6a8380a`); its SKILL.md describes it as making a Liam-narrated Godot development film, using `walker` for Claude/GDD bookends, and says it "Does not build or publish a game".
+- **Starting point:** the walker-jumpman starter, the option Claude recommended because its tested movement, camera, headless test runner and keyboard checks give the automated sound-count check a base, and the Brutalist Godot skills expect that layout. License file in the starter: none in the starter repository.
+- **Controls:** ← / → or A / D move; Space, ↑ or W jump; Esc pause; M mute all; N mute music only.
+
+**Routine choices made by Claude (from the approved design):** the brief's build defaults. These are: game sizes from the Batch 2 review; art copied into `godot/assets/` with a byte-identical check; one sound-event entry point that records its calls in placeholder mode; a music controller on real audio buses that logs its changes; seven automated checks mapped to predicted failures 5–9, 12 and 13; cups left out; a static room unless parallax is approved; tunable values in one file, marked as defaults.
+
+**Human / Claude:**
+- **Kiran:** chose the build order, Claude Code from the start, the starter, and the controls; ran the setup script.
+- **Claude:** wrote SLICE-BRIEF.md, CLAUDE.md, the setup script and this entry, and dry-ran the script.
+
+**Still unresolved:** fork timings, bored delay, splat and re-form durations, pan length and plate spacing (tuned in playtesting); room parallax and brightness; cups; the audio and music models (Batch 3).
+
+**Traceability:** commit `d7f0c97` (starter import, unchanged; `git show --stat d7f0c97`); the setup commit with SLICE-BRIEF.md, CLAUDE.md, this entry and SOURCES.md; `evidence/slice-setup-log.txt`.
