@@ -644,3 +644,11 @@ A dated note in ASSET-LOG.md after the Batch 3 section records the same confirma
 **Fix (my choice, option 1):** B02's held frame cropped above the curtain; re-rendered and re-exported on 2026-10-05. GATE T, GATE V and the godot-gamedev check all pass. New export SHA-256 `e7cdb04c15af0e4106ac6da03f08eb52ef642decf95af2f1108ea4869480d817` (MEDIA.md).
 
 **My B02 check of the new export:** "it looks good"
+
+## 2026-10-05 — Submission packaging: where the film goes
+
+**Decision (mine):** the film MP4 goes to Canvas inside the submission ZIP, not into git and not to YouTube. My words: "i want to upload the mp4 in project zip folder as instructed by the TA in assignment 1".
+- **Course basis:** the professor's two options for film storage, relayed by the TA, Zuoyu Wang, on 2026-09-23: "1. YouTube 2. Zip the video together and upload to Canvas". I chose option 2.
+- **Identification:** the ZIP holds `claude-liam-jelly-hop-gamedev.mp4`, SHA-256 `e7cdb04c15af0e4106ac6da03f08eb52ef642decf95af2f1108ea4869480d817` (MEDIA.md). The film shows source revision `7a48ea8`.
+
+**Routine choices made by Claude Code:** the README's layout and wording from the repository's records; packaging the source with `git archive` of the submitted commit.
