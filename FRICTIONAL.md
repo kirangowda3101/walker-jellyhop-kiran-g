@@ -597,3 +597,50 @@ A dated note in ASSET-LOG.md after the Batch 3 section records the same confirma
 - any machine other than this Mac.
 
 **Traceability:** TEST-REPORT.md; `evidence/test-fresh-copy.txt` (+ `test-fresh-*-full.txt`); `evidence/test-character-vs-sheet.png`, `evidence/test-poses/`; `evidence/test-storyboard-vs-slice.png`; `godot/tests/capture_poses.gd`; `tools/test_report_images.py`; `tools/check_game_audio.py`.
+
+## 2026-10-03 — Explainer film: captures, script review, and the slice-audio decision
+
+**Status:** film finished and reviewed (2026-10-05); this entry is committed with the film record. Folder: `youtube/claude-liam-jelly-hop-gamedev/` (BUILD-LOG.md, CAPTURE.md, FACTCHECK.md).
+
+**What was made:** a ~4.5-minute landscape 4K explainer with the course's Brutalist `godot-gamedev` skill and the `walker` modifier, narrated by "Liam, in for Bear" (local Kokoro `am_onyx`).
+- **Footage:** two scripted-input Godot Movie Maker takes of revision `7a48ea8`, together containing all six sound events in real play. No human-played footage; my playtest is quoted from TEST-REPORT.md as text.
+- **Asset trace:** the jelly, CHARACTER-SHEET → prompt → raw SDXL output → speck removal and cut-out → `player.gd:54` → in-engine crop.
+- **Cause and effect:** the SFX-WARN change in `23ae39c`.
+
+**My decisions:**
+- **Batch 1:** a second, short take with a sauce splat, "so all six sound events appear in real play".
+- **Script review:**
+  - **Verdict next step:** "My next step would be a second level that introduces new fork rhythms gradually, then combines them into more challenging timing decisions."
+  - **B01 correction:** keep it, "corrected so the scrape plays as the fork starts descending, while the shadow provides the warning".
+  - **Title:** "Jelly Hop: Fork From Above".
+  - **Credits:** distinguish the Claude chat (drafted documents and prompts) from Claude Code (implementation, audio generation, film production); credit me for the design decisions, the image generation runs, the asset selections, the reviews and the playtesting; name the models per asset.
+  - **Length:** cut to about 4.9 minutes while keeping all required evidence and the game-audio-only section.
+  - **Figures:** commit the four figures (`images/`).
+- **Slice audio with no narration (B09):**
+  - **Background:** the skill's pipeline strips gameplay-clip audio by default, and the brief says to ask for the course-provided method.
+  - **What I decided:** not to ask the course, and to use the premixed `--audio` master built from the captures' own recorded engine audio, with nothing dubbed. My reason: "lets use the fall back option only. even that satisfies the requirements".
+  - **On screen:** "Slice audio · no narration · scripted-input capture".
+
+**Routine choices made by Claude Code:**
+- **Capture driver:** keyboard events through `Input.parse_input_event`; `game.test_mode = true` (it only disables pause-on-focus-loss); a copy-only `override.cfg` for a native 4K window (both disclosed in CAPTURE.md).
+- **Clip labels:** drawn as PNG overlays.
+- **Code views:** B05 shows `player.gd` lines 149–162, cut from 147–163 because the panel overflowed.
+- **Timing:** silences around the narration; B09's audio is cut from the captures' PCM rather than an AAC copy.
+- **Corrections Claude Code made to its own drafts:**
+  - a FACTCHECK line that said I had asked the course (I had not);
+  - "about a second" → "about a second and a quarter";
+  - two unverified details in RIFF.md.
+
+**Human / Claude:**
+- **Kiran:** the decisions above; the script review; the film review to come.
+- **Claude Code:** the capture driver and scripts, the captures, figures, beat sheet, narration text drafts, renders and checks.
+
+**Not a human playtest:** every gameplay clip in the film is scripted input, labeled as such.
+
+**My film review (2026-10-05):** "the video looks good."
+
+**GATE T** (the toolkit's type check), run with my audio environment's Python, nothing installed: **FAIL** on one beat. B02, local contrast 2.04:1 < 3.0:1 at a box inside the held game frame (the curtain beside "any key skips the intro"). Per my instruction, no re-export and no commit; the details are in BUILD-LOG.md.
+
+**Fix (my choice, option 1):** B02's held frame cropped above the curtain; re-rendered and re-exported on 2026-10-05. GATE T, GATE V and the godot-gamedev check all pass. New export SHA-256 `e7cdb04c15af0e4106ac6da03f08eb52ef642decf95af2f1108ea4869480d817` (MEDIA.md).
+
+**My B02 check of the new export:** "it looks good"

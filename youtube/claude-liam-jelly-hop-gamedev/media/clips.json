@@ -1,0 +1,333 @@
+{
+ "B06": {
+  "take": "run-01",
+  "ticks": [
+   241,
+   961
+  ],
+  "duration": "12",
+  "poses": [
+   [
+    245,
+    "SCOOT-A"
+   ],
+   [
+    248,
+    "SCOOT-B"
+   ],
+   [
+    255,
+    "SCOOT-A"
+   ],
+   [
+    262,
+    "SCOOT-B"
+   ],
+   [
+    269,
+    "SCOOT-A"
+   ],
+   [
+    270,
+    "IDLE"
+   ],
+   [
+    323,
+    "ANTIC"
+   ],
+   [
+    327,
+    "RISE"
+   ],
+   [
+    343,
+    "FALL"
+   ],
+   [
+    364,
+    "LAND"
+   ],
+   [
+    372,
+    "SCOOT-A"
+   ],
+   [
+    374,
+    "SCOOT-B"
+   ],
+   [
+    381,
+    "SCOOT-A"
+   ],
+   [
+    388,
+    "WORRY"
+   ],
+   [
+    470,
+    "IDLE"
+   ],
+   [
+    477,
+    "SPLAT"
+   ],
+   [
+    513,
+    "RESPAWN"
+   ],
+   [
+    555,
+    "IDLE"
+   ],
+   [
+    558,
+    "SCOOT-A"
+   ],
+   [
+    564,
+    "SCOOT-B"
+   ],
+   [
+    571,
+    "SCOOT-A"
+   ],
+   [
+    578,
+    "SCOOT-B"
+   ],
+   [
+    583,
+    "IDLE"
+   ],
+   [
+    687,
+    "WORRY"
+   ],
+   [
+    763,
+    "ANTIC"
+   ],
+   [
+    767,
+    "RISE"
+   ],
+   [
+    783,
+    "FALL"
+   ],
+   [
+    804,
+    "LAND"
+   ],
+   [
+    812,
+    "SCOOT-A"
+   ],
+   [
+    816,
+    "SCOOT-B"
+   ],
+   [
+    823,
+    "SCOOT-A"
+   ],
+   [
+    830,
+    "SCOOT-B"
+   ],
+   [
+    832,
+    "WORRY"
+   ],
+   [
+    843,
+    "ANTIC"
+   ],
+   [
+    847,
+    "RISE"
+   ],
+   [
+    863,
+    "FALL"
+   ],
+   [
+    884,
+    "LAND"
+   ],
+   [
+    892,
+    "SCOOT-B"
+   ],
+   [
+    893,
+    "SCOOT-A"
+   ],
+   [
+    900,
+    "SCOOT-B"
+   ],
+   [
+    907,
+    "SCOOT-A"
+   ],
+   [
+    910,
+    "ANTIC"
+   ],
+   [
+    914,
+    "RISE"
+   ],
+   [
+    930,
+    "FALL"
+   ],
+   [
+    951,
+    "LAND"
+   ],
+   [
+    959,
+    "SCOOT-B"
+   ]
+  ],
+  "label_regions": [
+   {
+    "label": "capture label",
+    "box": [
+     0.0521,
+     0.0556,
+     0.4794,
+     0.0926
+    ]
+   },
+   {
+    "label": "pose label",
+    "box": [
+     0.0521,
+     0.8935,
+     0.288,
+     0.937
+    ]
+   }
+  ],
+  "frames_30fps": 360,
+  "duration_s": 12.0
+ },
+ "B09": {
+  "parts": [
+   {
+    "take": "run-01",
+    "ticks": [
+     300,
+     620
+    ],
+    "sounds": [
+     [
+      323,
+      "SFX-HOP"
+     ],
+     [
+      364,
+      "SFX-LAND"
+     ],
+     [
+      379,
+      "SFX-WARN"
+     ],
+     [
+      469,
+      "SFX-WARN"
+     ],
+     [
+      476,
+      "SFX-SPLAT-FORK"
+     ],
+     [
+      619,
+      "SFX-WARN"
+     ]
+    ]
+   },
+   {
+    "take": "run-01",
+    "ticks": [
+     1001,
+     1211
+    ],
+    "sounds": [
+     [
+      1028,
+      "SFX-LAND"
+     ],
+     [
+      1058,
+      "SFX-HOP"
+     ],
+     [
+      1091,
+      "SFX-WIN"
+     ]
+    ]
+   },
+   {
+    "take": "run-02",
+    "ticks": [
+     123,
+     297
+    ],
+    "sounds": [
+     [
+      143,
+      "SFX-HOP"
+     ],
+     [
+      184,
+      "SFX-LAND"
+     ],
+     [
+      199,
+      "SFX-WARN"
+     ],
+     [
+      217,
+      "SFX-SPLAT-SAUCE"
+     ]
+    ]
+   }
+  ],
+  "audio": "capture engine audio, AAC 256k",
+  "duration_s": 11.733333333333333,
+  "label_regions": [
+   {
+    "label": "capture label",
+    "box": [
+     0.0521,
+     0.0556,
+     0.4794,
+     0.0926
+    ]
+   },
+   {
+    "label": "slice-audio banner",
+    "box": [
+     0.0521,
+     0.0991,
+     0.3187,
+     0.1398
+    ]
+   },
+   {
+    "label": "excerpt label",
+    "box": [
+     0.0521,
+     0.8935,
+     0.2656,
+     0.9333
+    ]
+   }
+  ],
+  "frames_30fps": 352
+ }
+}

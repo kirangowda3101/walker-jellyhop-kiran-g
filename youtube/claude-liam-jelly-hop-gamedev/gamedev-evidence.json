@@ -1,0 +1,709 @@
+{
+ "schema_version": 1,
+ "teaching_contract": "code-then-result-v1",
+ "game_revision": "7a48ea8",
+ "files": [
+  {
+   "path": "assets/art/CHAR-ANTIC.png",
+   "sha256": "14951969a120ab120af6d3091c172b08673715d390b3654ecc042740cb43bb59",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png.import",
+   "sha256": "0938e6a6dfa9799ed0b9f15fa269f94a89e9f1d992173f505c81e36a875badbe",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png",
+   "sha256": "af5b20431da785ab1ca0112ea1dbf372f87fdb9c71fb2ff86cd0fc42b7c34e9c",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png.import",
+   "sha256": "e18414f845ce82d818987f2f45c7269a28dbda4acb7b1888926b745fb9592bc3",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png",
+   "sha256": "bd32aa5dc4e4200a6f55e4159b0319acee8910dffa1602c8f394f721219a67fd",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png.import",
+   "sha256": "6bf80ceda72388bc9055222ce9be706da0efd515b531d9940db2e06094cd2968",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png",
+   "sha256": "665eadd9a774608c8c20785f13740fa814983eb202ff9ba95128b4b841b59c4d",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png.import",
+   "sha256": "41a2aa022fa8cb8f2b76581b5cfe9baba830b2aecc3e75110e3e39fe1d6f3a17",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png",
+   "sha256": "2b5ef1aad00cddb51ca6b155bd9a14c343f0b923e0a00c356107c3d56fc08099",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png.import",
+   "sha256": "72463d16c3f821f87b0d18d5538c93db6cc43e9ecf5af5cc65f3a895ed565075",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png",
+   "sha256": "8f5b4c5a4b65adf3aa7e28a3d862414cfc69718f1880652f125a358de45d7747",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png.import",
+   "sha256": "139e152ecbd02e426e3d57c6bdb953a42dbf7e15fc0725f0ba8b259dac7996df",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png",
+   "sha256": "f03caa7f696a357c9a4e9791e1c9ff2f22afa2fe7374607a9f826233a15f4ca6",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png.import",
+   "sha256": "df119174c7859e01bf5f4786a2acbccb63a98fd74b3efd5fcf5baa5ed02b217b",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png",
+   "sha256": "0dad0fb69001be073a2143b10923262e57bf7ec21a840e267bc51c406f2b6753",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png.import",
+   "sha256": "648490dfb3def1d50f05cf21851ecaa74995e8d574ef2eacb1036b2de08c3d2b",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png",
+   "sha256": "6aa35cf27aa3ed6202f2d0254f1defe456d0db4a387981cf0104be03af6b916a",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png.import",
+   "sha256": "e9795e6034c03d7e82849d5f4c2ba0db84a1586705d0d2cb192e94c631f940dd",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png",
+   "sha256": "f95dacdb13614d9ed7d4a5798e3bf6df8902d5dcd5186f368631bcce0a4bb271",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png.import",
+   "sha256": "79e2ede8545e64c31870ba824809b94ab2889b37b5d55b68012a0019a6298a5a",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png",
+   "sha256": "13072d39a1d9018616a2a3070f2fc56fde607fd2ad95e0b07d7941dafa0d7c9c",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png.import",
+   "sha256": "096e99c37bb450dd4363995b34f54f067004d5554c147bf55f00f5f7d4eccf80",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png",
+   "sha256": "e2c7091dcefe82b101367907e6c5d78e69b8d2d337d928768343c3bc8ac4f8ab",
+   "role": "asset",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png.import",
+   "sha256": "d1ef06effa792551a8e669b64873c51ca6e8c0664d62237cfd0dbba5f3a9a22f",
+   "role": "import settings",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-DOME.png",
+   "sha256": "e120a185905b15322dd4251cb569396e3ab0d27fd666ff8588af1d0807d0509b",
+   "role": "asset",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-DOME.png.import",
+   "sha256": "ee24cb15ac56ae0052dfbe76f4571bef8705bc5b09e28c98c917bf02cd9929d2",
+   "role": "import settings",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-FORK.png",
+   "sha256": "23156c6907098d6ae57f78d918a65d246bfb036d1352cf7554a5d057f6a9d0e0",
+   "role": "asset",
+   "component_ids": [
+    "fork-warning"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-FORK.png.import",
+   "sha256": "8a3e3311c3bb40968a77b199ddcbc3c088b078f81405bad49b884fca34450361",
+   "role": "import settings",
+   "component_ids": [
+    "fork-warning"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png",
+   "sha256": "b6e15b201538dcdad3c75299bb6c184227364072ccea1f91ebe50af405409add",
+   "role": "asset",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png.import",
+   "sha256": "eb441be868856c9d58ac0d2cc9c06345ebed6eef5991b4625a03c9bf89b81df3",
+   "role": "import settings",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png",
+   "sha256": "24864e4b825c86f1f3d4b83eecf835c2d28ceddd355a79d616418c10fe945723",
+   "role": "asset",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png.import",
+   "sha256": "8d25453e6ff5cd57454cfe9adb370eff28fea99c07c16f6a9d8fcbf513e9bf8a",
+   "role": "import settings",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png",
+   "sha256": "0286e7d99d0e05cd952e41c77bd430d26b56e940a00b1401af8a5213483f7488",
+   "role": "asset",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png.import",
+   "sha256": "c96a621b1e83ba1b7059baf39dab4b45bba34946d3eacfc26be474f665d8c5a1",
+   "role": "import settings",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png",
+   "sha256": "f098c5a22089d1b59738e420368d6bfc1347d92067c3348b9f4afd592121a72f",
+   "role": "asset",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png.import",
+   "sha256": "1d08fd57e1486d85884c86a2c3061839f4982aa4d3f236258899e7a7abd75a87",
+   "role": "import settings",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg",
+   "sha256": "39f6a5fe7b24bad4f5cad961a6e18fa07f9dd8b224b69e8e3bc4c631f7b88690",
+   "role": "asset",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg.import",
+   "sha256": "defb459ff9b0b08afc6cd36fa352d836ec77338e3fba6155e48eb4ab1f0bd5e6",
+   "role": "import settings",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg",
+   "sha256": "5866c925b87436b4fda27276544339d02d12043383184317a384c485f48e750d",
+   "role": "asset",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg.import",
+   "sha256": "ad2802988685190e352f7cf0119b59e7b816a3366cbcd02e80e608711c2832ee",
+   "role": "import settings",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg",
+   "sha256": "ec29f67ea388988a30d429951820957d18e832f508d9e0f17890841bb04cc894",
+   "role": "asset",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg.import",
+   "sha256": "3892dc1f5518c325b76ec017b437f475e8614de2c067b8c13a6a372a80ce1796",
+   "role": "import settings",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg",
+   "sha256": "83452335c5ac2f29a0b38283fd16675f0bd992bfaa97752437b12dc63e3b7168",
+   "role": "asset",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg.import",
+   "sha256": "351eb25bb314e62b0c97a1698143e78428b9ea903c10ad1820aaf22ab3e10878",
+   "role": "import settings",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg",
+   "sha256": "3a763e0eb42a939209144ca89dfa4b1ab9fcb368a94c4397e66fee2dcbcc8e92",
+   "role": "asset",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg.import",
+   "sha256": "c4b25ae9243cfb7eb7783a2f6bb2fc3b0d29982fd5f37537dbae443c87e8f8c0",
+   "role": "import settings",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg",
+   "sha256": "73f73611c94a1453a592310d03912d7b59bb1ff0fe5dec6d33d5eea314610442",
+   "role": "asset",
+   "component_ids": [
+    "fork-warning",
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg.import",
+   "sha256": "20b0b56f6c3804272898826f28449479f8ac4b2565823ab5ad07e12cd64cfbce",
+   "role": "import settings",
+   "component_ids": [
+    "fork-warning",
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg",
+   "sha256": "f8031458a1746f4013ac2e24029ee4de1c3293f6f23612449fe9bdf4c527a485",
+   "role": "asset",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg.import",
+   "sha256": "80a2463612a86d552a89e5972502c807335a4dcee7777a92bcdc275d0d033872",
+   "role": "import settings",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "audio/music_controller.gd",
+   "sha256": "e50a89520846c292d06ac6b573af87e8ec9fe8056306432765c6ef082c1466ed",
+   "role": "source",
+   "component_ids": [
+    "sound-events"
+   ]
+  },
+  {
+   "path": "audio/sound_events.gd",
+   "sha256": "72326ffb394b127bc2a182964ea86eb01f466483120a66ba8fdbec14f1ad578e",
+   "role": "source",
+   "component_ids": [
+    "fork-warning",
+    "sound-events"
+   ]
+  },
+  {
+   "path": "features/fork/fork.gd",
+   "sha256": "20e3bb22bab4623a83bb7f1a28eba9a448fe459b5289ed9b8947493c8c1ed94a",
+   "role": "source",
+   "component_ids": [
+    "fork-warning"
+   ]
+  },
+  {
+   "path": "features/player/player.gd",
+   "sha256": "4c3b09d9aac4b985932d3de5ec07bf30d4e8788e13451eb39c5d6d9335a906bd",
+   "role": "source",
+   "component_ids": [
+    "jelly-poses"
+   ]
+  },
+  {
+   "path": "game/main.tscn",
+   "sha256": "97590b0fd703cd69b1ad74709ddd346fefa4d62e7c40e3a217f99f627dcd3c46",
+   "role": "source",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "game/session.gd",
+   "sha256": "4a8f5aae22040e11c67e402ad420d8faa59b8f6a6d08b7719ea96fb816e14270",
+   "role": "source",
+   "component_ids": [
+    "level",
+    "fork-warning"
+   ]
+  },
+  {
+   "path": "game/slice_tuning.gd",
+   "sha256": "f290e3820837834e0c6211bb85f34b5f7767d9757c769b1efeaab4a9be480c87",
+   "role": "source",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "project.godot",
+   "sha256": "c0be287109e74f3f26655a1e5bc4f1af80366e55941e472196fe06f98b4b87ba",
+   "role": "source",
+   "component_ids": [
+    "level"
+   ]
+  },
+  {
+   "path": "tests/capture_poses.gd",
+   "sha256": "7dc4856a2acc1cff046e702e310a850e1755c1506cf8cee6c5cc1272ad53d86a",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "tests/capture_slice.gd",
+   "sha256": "89da8e35a0b5e3a99345a4b08367d0b07ab270230ed567fcdd3510d5abc5cdc8",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "tests/route_driver.gd",
+   "sha256": "520f0127e600de22a2973b497329835bf68f0f140de0b4e0065fdbe28d5ed6f1",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "tests/test_game.gd",
+   "sha256": "f9d406e23c8879ede5076b26fc09be85cf7b5d318a4545ba8dab8cfe448644ec",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "tests/test_keyboard.gd",
+   "sha256": "9dbd20f04d14a4203aa7495d9155456669c4602a4db3998668945578534a93ba",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "tests/test_slice.gd",
+   "sha256": "bdde8b9fec4cab18114df9261ae75e2c6385ea771e06f1902a18d6ab9caff93f",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "tests/trace_audio.gd",
+   "sha256": "e8c75464e034959e903fb4107e280042bb334c587344ee25d463cf7c69d98e50",
+   "role": "source",
+   "component_ids": [
+    "tests"
+   ]
+  },
+  {
+   "path": "ui/hud.gd",
+   "sha256": "cc6a38846070dc7e7c03ff03512db8b50b109869db6e3856545fa49ab8d985ee",
+   "role": "source",
+   "component_ids": [
+    "level"
+   ]
+  }
+ ],
+ "exclusions": [
+  {
+   "path": ".gitignore",
+   "reason": "Version-control ignore list (.godot/); no runtime role."
+  },
+  {
+   "path": "features/player/tuning.gd",
+   "reason": "Movement constants from the walker-jumpman starter, unchanged; not explained in this short film (named in TEST-REPORT and the starter credit)."
+  }
+ ],
+ "components": [
+  {
+   "id": "level",
+   "explanation": "The level and its session: six plates, sauce gaps, the dome, the intro pan, the HUD, project settings.",
+   "beat_ids": [
+    "B02",
+    "BVDT"
+   ],
+   "files": [
+    "assets/art/ENV-DOME.png",
+    "assets/art/ENV-DOME.png.import",
+    "assets/art/ENV-PLATE.png",
+    "assets/art/ENV-PLATE.png.import",
+    "assets/art/ENV-ROOM.png",
+    "assets/art/ENV-ROOM.png.import",
+    "assets/art/ENV-SAUCE.png",
+    "assets/art/ENV-SAUCE.png.import",
+    "assets/art/ENV-TABLE.png",
+    "assets/art/ENV-TABLE.png.import",
+    "game/main.tscn",
+    "game/session.gd",
+    "game/slice_tuning.gd",
+    "project.godot",
+    "ui/hud.gd"
+   ]
+  },
+  {
+   "id": "jelly-poses",
+   "explanation": "The jelly: 12 generated pose textures loaded by name, and choose_pose() picking one per tick.",
+   "beat_ids": [
+    "B03",
+    "B04",
+    "B05",
+    "B06"
+   ],
+   "files": [
+    "assets/art/CHAR-ANTIC.png",
+    "assets/art/CHAR-ANTIC.png.import",
+    "assets/art/CHAR-BORED.png",
+    "assets/art/CHAR-BORED.png.import",
+    "assets/art/CHAR-CELEBRATE.png",
+    "assets/art/CHAR-CELEBRATE.png.import",
+    "assets/art/CHAR-FALL.png",
+    "assets/art/CHAR-FALL.png.import",
+    "assets/art/CHAR-IDLE.png",
+    "assets/art/CHAR-IDLE.png.import",
+    "assets/art/CHAR-LAND.png",
+    "assets/art/CHAR-LAND.png.import",
+    "assets/art/CHAR-RESPAWN.png",
+    "assets/art/CHAR-RESPAWN.png.import",
+    "assets/art/CHAR-RISE.png",
+    "assets/art/CHAR-RISE.png.import",
+    "assets/art/CHAR-SCOOT-A.png",
+    "assets/art/CHAR-SCOOT-A.png.import",
+    "assets/art/CHAR-SCOOT-B.png",
+    "assets/art/CHAR-SCOOT-B.png.import",
+    "assets/art/CHAR-SPLAT.png",
+    "assets/art/CHAR-SPLAT.png.import",
+    "assets/art/CHAR-WORRY.png",
+    "assets/art/CHAR-WORRY.png.import",
+    "features/player/player.gd"
+   ]
+  },
+  {
+   "id": "fork-warning",
+   "explanation": "Fork cycle, drawn shadow, hit shape from the tines, and the SFX-WARN trigger changed in 23ae39c.",
+   "beat_ids": [
+    "B07",
+    "B08"
+   ],
+   "files": [
+    "assets/art/ENV-FORK.png",
+    "assets/art/ENV-FORK.png.import",
+    "assets/audio/SFX-WARN.ogg",
+    "assets/audio/SFX-WARN.ogg.import",
+    "audio/sound_events.gd",
+    "features/fork/fork.gd",
+    "game/session.gd"
+   ]
+  },
+  {
+   "id": "sound-events",
+   "explanation": "Six sound events and the music bus: one entry point, one call site per event, recorded calls.",
+   "beat_ids": [
+    "B08",
+    "B10",
+    "BVDT"
+   ],
+   "files": [
+    "assets/audio/MUS-LOOP.ogg",
+    "assets/audio/MUS-LOOP.ogg.import",
+    "assets/audio/SFX-HOP.ogg",
+    "assets/audio/SFX-HOP.ogg.import",
+    "assets/audio/SFX-LAND.ogg",
+    "assets/audio/SFX-LAND.ogg.import",
+    "assets/audio/SFX-SPLAT-FORK.ogg",
+    "assets/audio/SFX-SPLAT-FORK.ogg.import",
+    "assets/audio/SFX-SPLAT-SAUCE.ogg",
+    "assets/audio/SFX-SPLAT-SAUCE.ogg.import",
+    "assets/audio/SFX-WARN.ogg",
+    "assets/audio/SFX-WARN.ogg.import",
+    "assets/audio/SFX-WIN.ogg",
+    "assets/audio/SFX-WIN.ogg.import",
+    "audio/music_controller.gd",
+    "audio/sound_events.gd"
+   ]
+  },
+  {
+   "id": "tests",
+   "explanation": "Headless suites, the scripted route the capture driver reuses, screenshot and trace tools.",
+   "beat_ids": [
+    "B10"
+   ],
+   "files": [
+    "tests/capture_poses.gd",
+    "tests/capture_slice.gd",
+    "tests/route_driver.gd",
+    "tests/test_game.gd",
+    "tests/test_keyboard.gd",
+    "tests/test_slice.gd",
+    "tests/trace_audio.gd"
+   ]
+  }
+ ],
+ "excerpts": [
+  {
+   "beat_id": "B05",
+   "path": "features/player/player.gd",
+   "start_line": 149,
+   "end_line": 162,
+   "text": "\tif override_pose != \"\":\n\t\treturn override_pose\n\tif not was_grounded:\n\t\tif hop_ticks >= 0 and hop_ticks <= T.ANTIC_TICKS:\n\t\t\treturn \"ANTIC\"   # visual only: shown at takeoff, no input delay\n\t\treturn \"RISE\" if velocity.y < 0.0 else \"FALL\"\n\tif land_ticks > 0:\n\t\treturn \"LAND\"\n\tif absf(velocity.x) > 8.0:\n\t\treturn \"SCOOT-A\" if (tick / T.ticks(T.SCOOT_FRAME)) % 2 == 0 else \"SCOOT-B\"\n\tif worried:\n\t\treturn \"WORRY\"\n\tif idle_ticks >= T.ticks(T.BORED_DELAY):\n\t\treturn \"BORED\""
+  },
+  {
+   "beat_id": "B07",
+   "path": "game/session.gd",
+   "start_line": 294,
+   "end_line": 301,
+   "text": "\tfor fork in forks:\n\t\tif fork and fork.advance() == \"down\":\n\t\t\t# SFX-WARN (Kiran, 2026-10-03, after the second audition): the scrape plays once when the fork\n\t\t\t# over the jelly's current or next plate starts descending, if that fork is on screen at that\n\t\t\t# moment. Nothing plays when a shadow starts growing; the shadow alone does the warning.\n\t\t\tfork.announced = shadow_on_screen(fork) and fork.plate_index in [jelly_plate, jelly_plate + 1]\n\t\t\tif fork.announced:\n\t\t\t\ton_warning(fork)"
+  }
+ ],
+ "code_result_pairs": [
+  {
+   "code_beat": "B05",
+   "result_beat": "B06",
+   "observation": "The pose readout steps through SCOOT, ANTIC, RISE, FALL, LAND, WORRY, SPLAT and RESPAWN in the order choose_pose() ranks them, in the real run.",
+   "media": {
+    "path": "media/B06.mp4",
+    "sha256": "d298ceb9ba9d42edbb4b49ae7edeed54c4b84939f03e79d1c56882e5fe45b1a3"
+   }
+  },
+  {
+   "code_beat": "B07",
+   "result_beat": "B08",
+   "observation": "SFX-WARN fires at tick 469, the tick fork 2 starts down, 7 ticks before the tines land; the traces show 0 scrapes with no fork moving after the change.",
+   "media": {
+    "path": "images/B08-scrape-on-descent.png",
+    "sha256": "3ffd42b3df99bdf3e52de4934575492c600c7fc4ecfa7601f1fbc3f66795e905"
+   }
+  }
+ ]
+}
