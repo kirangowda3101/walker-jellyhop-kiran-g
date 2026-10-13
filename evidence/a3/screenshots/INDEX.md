@@ -26,3 +26,4 @@ Screenshots I took with macOS (Cmd + Shift + 4) during the session and shared in
 | 20-godot-editor-behind-view-UNSAVED-accidental-change.png | View from behind; tab marked (*) because of an accidental box-size change I later discarded |
 | 21-godot-editor-below-floor-blocks-view.png | View from below: the floor hides the asset bottoms |
 | 22-godot-editor-below-floor-hidden-UNSAVED.png | From below with the floor hidden temporarily (discarded afterwards) |
+| 23-claude-code-fork-prompt.png | My fork prompt to Claude Code in Terminal ("We are using Walker's Game brief…"), captured from my own session at 03:16 |
