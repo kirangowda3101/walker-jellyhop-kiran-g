@@ -91,3 +91,73 @@ General rule: each sound plays only from the code that already represents its ga
 | 13 | The camera shakes on a sauce splat | Playtest both failure types |
 | 14 | Scoot A's 2 px box mismatch feels unfair | Playtest near fork strikes while scooting |
 | 15 | The slice is hard to understand with sound muted | A full muted playtest |
+
+---
+
+## Assignment 3 — Three 3D assets (Blender MCP → Godot)
+
+Version 1 · 2026-10-12 · written before any 3D asset was built. Added as a new dated section; the Assignment 2 sections above are unchanged. Later A3 revisions are added as new dated sections at the end of this file; this version is not rewritten.
+
+### Scale reference
+
+The jelly cube (the player) is **0.5 m** on each side. All asset sizes below are justified against it. Blender units are metres and Godot 3D units are metres, so no conversion is needed.
+
+### Measurements that informed this brief
+
+Taken in my own Blender 5.2.2 "Learn the window" session:
+
+- Default cube: 2 m × 2 m × 2 m, 12 triangles.
+- Default UV Sphere: 960 triangles (scene total went from 12 to 972).
+- UV Sphere at 12 segments and 6 rings: about 120 triangles (scene total 132).
+
+### Asset 1: Fork
+
+- **Role:** The hazard the jelly avoids.
+  - *Planned placement (to be confirmed against the Assignment 2 project):* stabbing down from above at selected spots along the jumping route, so the jelly has to time its jumps.
+- **Size:** 0.5 m wide × 0.05 m deep × 1.5 m tall. That's 3 jellies tall, 1 jelly wide at the prongs, and a tenth of a jelly thick, so it looks threatening beside the jelly without being oversized, and stays fairly flat while still showing visible depth.
+- **Origin:** At the centre point between the prong tips. The fork points down, with the handle extending upward. Placed at floor level in Godot, the tips should touch the floor, which is easy to check.
+- **Look:** 4 prongs, a wider head, and a narrow handle, using 6 basic shapes in total, all box-shaped. The whole fork is silver-grey with a simple flat-colour material, so it's easy to recognise.
+- **Budget:** 100 triangles. Six box parts use about 72, which leaves a little room for adjustments while keeping the fork simple.
+
+### Asset 2: Dessert dome
+
+- **Role:** The goal.
+  - *Planned placement (to be confirmed against the Assignment 2 project):* at the end of the level, on the final platform, as the finish point.
+- **Size:** 1 m wide × 1 m deep × 0.75 m tall, including the base and top knob. That's 2 jellies wide and 1.5 jellies tall, so it stands out as the goal and looks like a rounded dessert cover.
+- **Origin:** At the centre of the underside of the base, so the dome sits on the floor when placed at floor level in Godot.
+- **Look:** Three low-poly shapes with solid colours: a flat cream-coloured cylinder for the base, a pale pink half-sphere for the cover, and a small red sphere for the top knob, like a cherry.
+- **Budget:** 300 triangles. The cover, base, and cherry are all rounded, so they need more triangles than the fork's boxes. Low segment counts should keep them recognisable and leave some room for adjustments.
+
+### Asset 3: Biscuit platform
+
+- **Role:** Something for the jelly to jump onto.
+  - *Planned for future levels, not implemented in Assignment 2:* stepping stones along the route, with forks over some of them and the dome on the final one.
+- **Size:** 2 m wide × 1.5 m deep × 0.25 m thick. That's 4 jellies wide, 3 deep, and half a jelly thick, giving the jelly room to land and leaving space around the dome on the final platform.
+- **Origin:** At the centre of the underside, consistent with the dome and easy to floor-check. The landing surface is 0.25 m above the origin.
+- **Look:** A sandwich biscuit made of three flattened boxes: golden-brown biscuit layers on the top and bottom, with a thinner cream-coloured filling between them. Total thickness stays 0.25 m, all in solid colours.
+- **Budget:** 60 triangles. Three boxes use about 36, which leaves a little room for adjustments while keeping it simple and low-poly.
+
+### Summary
+
+| Asset | Width (X) | Depth (Y) | Height (Z) | Origin | Shapes | Triangle budget |
+|---|---|---|---|---|---|---|
+| Fork | 0.5 m | 0.05 m | 1.5 m | Centre between prong tips (fork points down) | 6 boxes | 100 |
+| Dessert dome | 1 m | 1 m | 0.75 m | Centre of base underside | 3 (cylinder, half-sphere, sphere) | 300 |
+| Biscuit platform | 2 m | 1.5 m | 0.25 m | Centre of underside | 3 boxes | 60 |
+
+### Predicted failure cases and checks
+
+1. **Fork arrives sideways or upside down.** The fork might import into Godot sideways, or with its prongs pointing up.
+   *Check:* In the 3D scene, make sure the handle extends upward and all four prong tips point down and touch the floor when the asset is placed at floor level.
+2. **Dome arrives at the wrong size.** The dessert dome might import at the wrong size.
+   *Check:* Compare its dimensions in Blender and its bounding-box size in Godot with the brief (1 m wide, 1 m deep, 0.75 m tall), and confirm its node scale in Godot is 1, 1, 1.
+3. **Platform origin in the wrong place.** The biscuit platform's origin might end up in its centre instead of the underside, making it sink into the floor.
+   *Check:* Place it at floor level in Godot and check from the side that its underside touches the floor and its top is 0.25 m above it.
+4. **The MCP doesn't connect to Blender.**
+   *Check:* Check the server status in Blender and ask Claude Code to read the scene with `get_scene_info`. If it fails, record the exact errors and steps tried. After about two hours of unsuccessful attempts, use the permitted script-route fallback.
+5. **Claude exceeds a triangle budget**, especially with the dome's rounded shapes.
+   *Check:* Check each asset's triangle count in Blender against its budget: 100 for the fork, 300 for the dome, and 60 for the platform.
+
+### Open items
+
+- Check the Assignment 2 project to confirm where the fork and dome currently appear. Record the result as a later dated revision rather than editing this text.
