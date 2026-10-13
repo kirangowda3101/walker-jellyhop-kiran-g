@@ -10,3 +10,7 @@
 
 # Blender backup saves (do not commit)
 *.blend[0-9]*
+
+# Python caches (do not commit)
+__pycache__/
+*.pyc
