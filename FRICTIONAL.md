@@ -652,3 +652,76 @@ A dated note in ASSET-LOG.md after the Batch 3 section records the same confirma
 - **Identification:** the ZIP holds `claude-liam-jelly-hop-gamedev.mp4`, SHA-256 `e7cdb04c15af0e4106ac6da03f08eb52ef642decf95af2f1108ea4869480d817` (MEDIA.md). The film shows source revision `7a48ea8`.
 
 **Routine choices made by Claude Code:** the README's layout and wording from the repository's records; packaging the source with `git archive` of the submitted commit.
+
+---
+
+# Assignment 3 — Three 3D assets with Claude, the Blender MCP and Blender
+
+**How these notes were made:** I reported each step, error and decision to Claude (claude.ai chat) while I worked on 12–13 October 2026, and it kept a running log from those reports. It organised that log into the entries below on 13 October at about 02:45; the content is what I did, saw and decided at the time. Times are EDT. "Claude Code" is the session that drove Blender and wrote the Godot files; "Claude chat" is the assistant guiding me.
+
+## 2026-10-12 — A3: learning Blender's window and writing the brief
+
+- **Tried:** installed Blender 5.2.2 (the course used 5.1.2) and spent a session only looking. Orbiting by dragging the axis gizmo worked. Clicking the magnifier once did nothing (it needs click, hold and drag), so I used trackpad pinch to zoom and Shift + two-finger swipe to pan.
+- **Difficulty:** I right-clicked the red X-axis line in the viewport and got the Object menu instead of the status-bar menu, then found the status bar is the thin strip below the timeline numbers.
+- **Checked and learned:** default cube 2 × 2 × 2 m and 12 triangles; a default UV sphere is 960 triangles on its own (the scene went from 12 to 972), nearly double the 500 limit; at 12 segments and 6 rings it is about 120 and still looks round, slightly angular. These numbers shaped my budgets.
+- **Decided:** fork (hazard), dessert dome (goal) and biscuit platform (stepping stone), with the jelly cube as a 0.5 m reference. I labelled the fork and dome placements as planned, to be confirmed against my A2 project, and the platform placement as a new idea not implemented in A2.
+- **Difficulty:** the repo already had an A2 CHANGE-BRIEF.md. `mv -n` silently refused to overwrite it. Because the A2 brief says later revisions are added as new dated sections, I appended the A3 brief instead (70 lines added, 0 removed).
+- **Traceability:** brief committed before building in eaaa66f; interface notes and screenshot in 7d9c184.
+
+## 2026-10-12 — A3: connecting the Blender MCP (time box 22:25–22:40)
+
+- **Expected:** the chapter's manual steps to work as written.
+- **What happened:** `brew install uv` gave uv 0.13.0. The chapter's command `claude mcp add -e DISABLE_TELEMETRY=true blender -- uvx mcp-for-blender` failed with "Invalid environment variable format: blender, environment variables should be added as: -e KEY1=value1 -e KEY2=value2", because `-e` takes several values and swallowed `blender`. Putting the name first worked: `claude mcp add blender -e DISABLE_TELEMETRY=true -- uvx mcp-for-blender`.
+- **Checked:** `claude mcp get blender` said "Connected", which only means Claude Code can start the server. `uvx mcp-for-blender install-addon` installed into Blender 5.2's add-on folder. Preferences lists it as "MCP for Blender", not "Interface: MCP for Blender", and the add-on's own message calls it "Interface: Blender MCP". The add-on (1.8) auto-started and showed "Connected on port 9876" with a Disconnect button; I found no Start button. `lsof` showed Blender listening on 127.0.0.1:9876 only. The server package is 2.1.9.
+- **Difficulty:** my first test prompt got "Login expired". After `/login`, Claude Code ran the MCP calls without asking me, because auto mode was on. The server then asked to "Contribute session data" (prompts, code, screenshots, scene data); I declined.
+- **Result:** `get_addon_status` and `get_scene_info` worked at 22:40; Claude reported the default cube at (0, 0, 0), 2 × 2 × 2, which matched Blender's own sidebar. That took about 15 minutes, so no script-route fallback was needed. I then switched Claude Code to manual mode so every later tool call needed my approval.
+- **Unresolved:** the add-on's note says that with telemetry off it still sends minimal anonymous usage data, and I could not verify whether `DISABLE_TELEMETRY=true` on the server stops that.
+- **Traceability:** evidence/a3/mcp-connection-test.txt (commit 2ec6d48).
+
+## 2026-10-12 — A3: the fork
+
+- **Difficulty:** my first Save As went to my home folder because I hadn't changed the path. Pasting the repo path into Blender's path box jumped back to /Users/kiran even though the folder existed; double-clicking through the folders worked. I deleted the stray copy and added `*.blend[0-9]*` to .gitignore, because Blender's `.blend1` backups must not be committed.
+- **Claude Code's plan (23:26):** four 0.05 m prongs, a 0.5 m head and a 0.1 m handle, all 0.05 m deep, 72 triangles, joined into one object, origin at the world origin between the tips, material Fork_Silver with metallic 0. I **accepted** the plan, the join and metallic 0.
+- **What Claude Code did beyond the plan:** removed an unused "Dots Stroke" material, set a fake user on Fork_Silver, and ran read-only shell commands without an approval prompt even in manual mode. It reported each afterwards.
+- **My checks:** Outliner empty after step 1; after the six parts, the fork pointed down with the tips at the origin and Tris 72. The prong tips look blunt because the brief uses boxes only. After the join: 0.5 × 0.05 × 1.5 m, scale 1, lowest vertex Z = 0. I chose to remove the five orphan meshes the join left. In Material Preview it looked silver-grey.
+- **Odd:** the timeline frame changed from 1 to 0 at some point; Claude Code noticed it too and could not say why. Double-clicking the frame box did nothing; Shift + Left Arrow set it back to 1.
+- **Traceability:** commit 032d254 (fork.blend, build_fork.py calls 1–9, .gitignore).
+
+## 2026-10-12 to 2026-10-13 — A3: the dessert dome and my hand edit
+
+- **Claude Code's plan (23:56):** a 16-sided cylinder base, the top half of a 16 × 8 UV sphere, and an 8 × 6 cherry, 266 triangles in total. I **accepted** the join and flat shading, and **modified** the cherry: instead of touching the cover at a single point, it is 0.24 m across and sunk 0.04 m into the cover, with its top still at 0.75 m.
+- **Observation:** after the parts were built, the colours looked washed out in Material Preview: the cover nearly white-lavender, the base nearly white, the cherry salmon.
+- **Hand edit (me, in the Material tab):** Dome_Pink #D1AAB6 → #D17390 (Saturation 0.184 → 0.45); Dome_Red #DA303F → #A6111E (Saturation 0.90, Value 0.65); Dome_Cream → #F9DEA2 (Saturation 0.35; I didn't read its before value, and ≈ #F9EDD3 is computed from Claude's linear values).
+- **Mistakes:** I typed 0.65 into Hue instead of Value and the cherry turned blue; then I changed the Hex field by accident. I restored the original #DA303F before redoing it.
+- **What it taught me, in my words:** "I learned how to change a material's colour through the Material tab, using saturation, value, and the Hex field. Typing into the wrong field changed the cherry to blue, so I learned to check both the selected material and the field before entering a value."
+- **Re-check:** after the join, Claude Code read the base colours back, and they converted exactly to my three hex values. I chose **not** to add a script call that sets my colours, so my hand edit stays clearly separate; as a result, a fresh run of build_dome.py recreates Claude's original colours.
+- **Traceability:** commit 782924c (dome.blend, build_dome.py calls 1–5).
+
+## 2026-10-13 — A3: the biscuit platform
+
+- **Claude Code's plan (01:14):** two 2.0 × 1.5 × 0.10 m biscuit layers and a 1.90 × 1.40 × 0.05 m filling inset 0.05 m, 36 triangles, colours set from hex in the script. I **accepted** the inset, Claude's biscuit colour #B8752A and the join, and asked for the cream to reuse my hand-edited #F9DEA2 so the creams match.
+- **My check:** Tris 36; in Material Preview it reads as a sandwich biscuit with the cream line visible from the side. The top looks lighter under the preview lighting, and from directly above the plain top could pass for a plank.
+- **Traceability:** commit 9445931 (platform.blend, build_platform.py calls 1–5).
+
+## 2026-10-13 — A3: export, Godot import and the headless check
+
+- **Checked:** +Y Up was ticked by default in Blender 5.2.2's glTF exporter for all three exports; I didn't change it.
+- **Difficulty:** the dome and fork exports went into `blender/` because the export window opens in the .blend file's own folder; I found them with `find` and moved them to godot/assets/models/.
+- **Setup:** `godot` wasn't on my Terminal path, so I linked /Applications/Godot.app (4.7.2) into /opt/homebrew/bin, and installed coreutils 9.12 for `timeout`.
+- **Import:** `godot --headless --path godot --import` gave no errors (commit caa382b).
+- **Claude Code's plan for the scene and check:** I **accepted** the scene location godot/showcase/, a JSON report in evidence/ like my A2 tests, and the extra orientation and triangle checks, which test my predicted failures 1 and 5. While reading the .glb files, Claude Code found the stored bounds were already Y-up and matched the brief, and that the fork's lowest Y was 2.98e-08 m rather than 0.
+- **Result (01:46):** 36 checks / 0 failures, exit 0, no ERROR lines. None of my five predicted failures happened. Claude Code pointed out that its cherry test is weak.
+- **Difficulty:** the three .blend files showed as modified in git because I had saved them after their commits; they are the files the .glb exports came from, so I committed them with the scene and check (commit 8a019a2). I deleted a `__pycache__` folder left by Claude Code's syntax checks.
+
+## 2026-10-13 — A3: human check in Godot and the revision decision
+
+- **Through the scene camera:** "At this size, I can recognise the fork, dessert dome, and sandwich biscuit. I don't see obvious holes in the visible surfaces, but the dark sides hide some detail." In the editor's own view the fork had looked nearly white; through the scene's light it reads as silver-grey.
+- **Difficulty:** while orbiting I accidentally changed a box mesh size in the editor. I discarded it with Scene → Reload Saved Scene and confirmed with `git status --short godot/showcase` that nothing changed on disk.
+- **From below:** the floor hid the asset bottoms at first. With the floor hidden temporarily: "the platform's underside and the dome's base look closed, with no obvious holes. They're quite dark, though, and the fork tips are too small in this view for me to confidently check every face." I skipped the close-up of the fork tips, so that stays unverified.
+- **Decided:** my documented evidence-based revision is the dome colour fix. The pure-black shaded sides are a known limitation of the one-light scene the assignment specifies; I did not add ambient light.
+
+## A3 — human and AI contributions
+
+- **Claude Code wrote and ran:** every execute_blender_code call (part sizes, segment counts, joins, origins, materials), the showcase scene and the headless check.
+- **Claude chat:** step-by-step guidance, reviewing plans and numbers with me, and organising these notes.
+- **I decided, checked, changed or rejected:** the asset choices, the jelly scale and every number in the brief; my interface notes; approving each plan and each Blender call in manual mode; modifying the cherry; removing the orphan meshes; the dome colour hand edit; not adding a colour-setting call; reusing my cream on the platform; the scene location and extra checks; ignoring Claude Code's suggested follow-up prompts where they would repeat checks or let it commit for me; all installs, exports, imports and commits; and every human check in Blender and Godot.

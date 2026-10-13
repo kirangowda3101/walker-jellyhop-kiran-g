@@ -52,3 +52,48 @@ Credits, models, tools, and terms for this project. The generation-by-generation
 - No real person's voice is cloned or imitated.
 - Batch 3: no audio prompt names an artist, a band, a song, a brand, or a real person's voice (`gen-inputs/batch3-audio-prompts.md`). No existing recordings or music were used as inputs. Both audio models ran from text prompts only.
 - No API keys or account credentials are stored in this repository.
+
+---
+
+## Assignment 3 — 3D assets
+
+Added 2026-10-13. The Assignment 2 sections above are unchanged.
+
+### Starting point
+
+The same Jelly Hop repository (`walker-jellyhop-kiran-g`) and Godot project as Assignment 2. Assignment 3 adds three 3D assets, their Blender sources and build scripts, a 3D showcase scene and a headless check.
+
+### Tools and versions
+
+| Tool | Version | Used for |
+|---|---|---|
+| Blender | 5.2.2 LTS, macOS arm64 | Building the three assets; my hand edit |
+| Khronos glTF Blender I/O (built into Blender) | v5.2.40 | Exporting `.glb` files (+Y Up, default) |
+| MCP for Blender server (`mcp-for-blender`) | 2.1.9, run with `uvx` | Letting Claude Code drive my open Blender session |
+| MCP for Blender add-on (`blender_mcp.py`) | 1.8 | The Blender side of the MCP connection, on 127.0.0.1:9876 |
+| uv | 0.13.0 (Homebrew) | Running the MCP server |
+| Homebrew | 7.0.6 | Installing uv and coreutils |
+| GNU coreutils | 9.12 (Homebrew) | `timeout` for the headless check |
+| Godot | 4.7.2.stable.official.ed1daf0bf | Import, showcase scene, headless check |
+| Claude Code | 2.1.288 (Opus 5.5) | Writing and running the Blender code, scene and check |
+
+The MCP project is the community "MCP for Blender" named in the syllabus (website mcp-for-blender.com; add-on maintainer listed as Siddharth Ahuja). I installed it with the assignment's manual steps, not the one-line installer. `DISABLE_TELEMETRY=true` was set for the server, "Allow Telemetry" was left unticked in the add-on, and I declined the server's "Contribute session data" request. Note: the add-on's own text says that with telemetry off it still sends minimal anonymous usage data (tool names, success/failure, duration; no prompts or code); I could not verify whether the server setting stops that.
+
+Claude Code access: I logged in with `/login` using my Northeastern premium Claude access. (The session header showed "Opus 5.5 · API Usage Billing".)
+
+### Geometry, materials and rights
+
+- All geometry was built inside my own Blender session from Blender's basic shapes (cubes, a cylinder, UV spheres), by Python that Claude Code ran through the MCP's `execute_blender_code`, after I approved each plan and each call. The exact code is in `tools/blender/build_fork.py`, `build_dome.py` and `build_platform.py`.
+- No downloaded models and no AI-generated meshes. Poly Haven, Sketchfab, Poly Pizza, Hyper3D Rodin, Hunyuan3D and Tripo were all off (the add-on's API-key fields were left empty, and `get_addon_status` reported every library and generator off), and `generate_3d`, `search_assets` and `import_asset` were never called.
+- Colours: Fork_Silver and the original dome colours were chosen by Claude Code; I changed all three dome colours by hand (TEST-REPORT A3.10). Platform_Biscuit #B8752A was chosen by Claude Code and approved by me; Platform_Cream reuses my hand-edited dome cream, #F9DEA2. No external colour or material sources.
+- Nothing paid was used. No credentials are in the repository; the MCP registration lives in `~/.claude.json`, outside the repo.
+
+### AI assistance and my contributions
+
+- **Claude Code** proposed each asset's part sizes, segment counts and materials, wrote and ran all `execute_blender_code` calls, wrote `godot/showcase/a3_assets.tscn` and `godot/tests/test_a3_assets.gd`, and ran the check.
+- **Claude (claude.ai chat)** guided me step by step, checked plans and numbers with me, and organised my notes and reports into these documents. It did not run anything on my machine.
+- **Me:** chose the three assets, the jelly scale and every size, origin, look and budget in the brief; wrote the interface notes; ran every install, export, import and git command; approved, modified or rejected each plan and call (details in FRICTIONAL.md); made the hand edit to the dome colours; and did all the human checks in Blender and Godot.
+
+### Collaborators
+
+None.

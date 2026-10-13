@@ -196,3 +196,122 @@ Kiran played the game from the Godot editor (F5) in the slice setup review (FRIC
 - **Godot crashed once (exit 139)** importing `MUS-LOOP.ogg` during Batch 3. It was not reproduced in later imports (including the fresh copy's), and the cause is unknown.
 - **The audio models' output and the check tools depend on an environment outside the repository** (`~/Documents/jellyhop-audio-env`). Regenerating audio also needs the torchsde workaround in `tools/batch3_generate.py`.
 - **Design differences:** the SFX-WARN trigger differs from CHANGE-BRIEF.md by Kiran's decisions (recorded, not edited into CHANGE-BRIEF.md). Cups are not in the slice.
+
+---
+
+## Assignment 3 — Three 3D assets (fork, dessert dome, biscuit platform)
+
+Added 2026-10-13. The Assignment 2 sections above are unchanged.
+
+**Machine and versions:** MacBook Pro, Apple M4 (Apple Silicon), macOS. Blender 5.2.2 LTS (macOS arm64 build). glTF exporter: Khronos glTF Blender I/O v5.2.40. MCP for Blender: server package `mcp-for-blender` 2.1.9 (run with `uvx`), Blender add-on 1.8. Godot 4.7.2.stable.official.ed1daf0bf, Compatibility renderer (OpenGL 4.1 Metal). Commands below were run on macOS from the repository root.
+
+### A3.1 Interface notes
+
+Six parts of Blender's window described in my own words, with a screenshot of my own session: `BLENDER-NOTES.md` and `evidence/a3/blender-interface.png` (commit 7d9c184).
+
+### A3.2 Size: brief, Blender sidebar, Godot
+
+Blender is Z-up and Godot is Y-up. The glTF exporter's +Y Up option was ticked by default for all three exports (I checked it and did not change it), so Blender (X, Y, Z) becomes Godot (X, Z, −Y): Blender's height becomes Godot's Y and Blender's depth becomes Godot's Z.
+
+| Asset | Brief W × D × H (m) | Blender sidebar X, Y, Z (read by me) | Godot bounding box X × Y × Z (headless check) |
+|---|---|---|---|
+| Fork | 0.5 × 0.05 × 1.5 | 0.5, 0.05, 1.5 | 0.5 × 1.5 × 0.05 |
+| Dessert dome | 1 × 1 × 0.75 | 1, 1, 0.75 | 1.0 × 0.75 × 1.0 |
+| Biscuit platform | 2 × 1.5 × 0.25 | 2, 1.5, 0.25 | 2.0 × 0.25 × 1.5 |
+
+All three match the brief within the check's 1 mm tolerance.
+
+### A3.3 Upright and scale
+
+- Blender sidebar: scale 1, 1, 1 for Fork, Dome and Platform (read by me); rotation and scale were applied in the build scripts before export.
+- Godot: every node in each imported .glb has scale (1, 1, 1) and rotation 0, and each instance in the scene has an identity transform basis (checks A2 and B3).
+- Orientation from the vertices (check A6): the fork is 0.5 m wide near the bottom (prongs) and 0.1 m wide near the top (handle), so it points down as designed; the dome is 1.0 m wide at its base, so it is not upside down; the platform's top face at Y = 0.25 spans the full 2.0 × 1.5 m.
+- Seen by me through the scene camera: all three stand the right way up.
+
+### A3.4 Origin
+
+Each asset is placed at Y = 0 in `godot/showcase/a3_assets.tscn`, on a floor whose top is at Y = 0 (check B1). Check B2 compares each asset's lowest vertex in world space with the top of the Floor node's own mesh (two different nodes, so the asset is not measured against itself):
+
+| Asset | Lowest vertex − floor top |
+|---|---|
+| Fork (prong tips) | 2.98e-08 m (floating-point rounding from export, inside the 1 mm tolerance) |
+| Dessert dome | 0 |
+| Biscuit platform | 0 (landing surface at Y = 0.25) |
+
+Seen by me through the scene camera: all three sit on the floor; none floats or sinks.
+
+### A3.5 Triangle count
+
+| Asset | Budget (brief) | Blender status bar (seen by me) | Godot (check A7) |
+|---|---|---|---|
+| Fork | 100 | 72 | 72 |
+| Dessert dome | 300 | 266 | 266 |
+| Biscuit platform | 60 | 36 | 36 |
+
+### A3.6 Imports and appears
+
+`godot --headless --path godot --import` imported `dome.glb`, `fork.glb` and `platform.glb` with no errors or warnings and created their `.import` files (commit caa382b). All three appear in `godot/showcase/a3_assets.tscn`, side by side with a 0.5 m `JellyScaleRef` cube (a size reference for the 0.5 m jelly, not an asset).
+
+### A3.7 Automated check (command and result)
+
+```
+set -o pipefail
+timeout 120 godot --headless --path godot --script res://tests/test_a3_assets.gd --fixed-fps 60 2>&1 | tee evidence/a3-assets-run.log
+echo "exit: $?"
+```
+
+Result (2026-10-13, 01:46): `A3 ASSET CHECKS: 36 checks / 0 failures`, exit code 0, and no ERROR, FAIL or WARNING lines in `evidence/a3-assets-run.log`. JSON report: `evidence/a3-assets-1791870366.json` (commit 8a019a2). Claude Code wrote the check; I read its plan and its report before accepting it.
+
+**What the check shows:** each .glb loads; its bounding box, scale, rotation, lowest and highest Y, rough shape orientation and triangle count match the brief converted to Godot's axes; each asset's lowest point sits on this scene's floor; every asset is inside the camera's view.
+
+**What it does not show:** nothing is rendered, so it says nothing about colours, lighting or how the shot looks; "inside the camera's view" is geometric only; "on the floor" is only this scene's floor, which was built for the check; no gameplay or colliders are tested; differences under 1 mm pass; the dome's cherry test is weak (it would pass for any small shape on top, as Claude Code itself pointed out); only the current imports are tested.
+
+### A3.8 HUMAN CHECK: look
+
+My own words after running the scene and orbiting the editor camera:
+
+- Through the scene camera: "At this size, I can recognise the fork, dessert dome, and sandwich biscuit. I don't see obvious holes in the visible surfaces, but the dark sides hide some detail."
+- From below: "From below, the floor blocks the assets, so I haven't verified their undersides yet." I then hid the floor temporarily: "With the floor hidden, the platform's underside and the dome's base look closed, with no obvious holes. They're quite dark, though, and the fork tips are too small in this view for me to confidently check every face."
+- Scale beside the jelly reference: the fork is about three reference cubes tall and the dome about one and a half, as the brief intends.
+- No other person has looked at the scene.
+
+### A3.9 What Claude got wrong
+
+- **Dome colours.** Claude Code's original Dome_Pink, Dome_Cream and Dome_Red read as washed out in Material Preview: the cover looked nearly white-lavender, the base nearly white and the cherry salmon. I corrected all three by hand (A3.10).
+- **Cherry placement.** Claude Code's first dome plan had the cherry touching the cover at a single point. I asked for it to sit 0.04 m into the cover, keeping the top at 0.75 m.
+- **Beyond the plan.** In step 1 of each build Claude Code also removed an unused "Dots Stroke" material and set fake users on new materials, which its plan had not mentioned; it reported both afterwards.
+- **Its own check.** Claude Code flagged that its cherry test is weak (A3.7).
+- Not Claude: the course chapter's `claude mcp add -e DISABLE_TELEMETRY=true blender -- uvx mcp-for-blender` failed on Claude Code 2.1.288 (see FRICTIONAL.md).
+
+### A3.10 Inspect and revise (evidence-based revision)
+
+**Observation:** in Blender's Material Preview, the dome's colours looked washed out (see A3.9).
+**Change (my hand edit in Blender's Material tab):**
+
+| Material | Before (perceptual hex) | After | What I changed |
+|---|---|---|---|
+| Dome_Pink (cover) | #D1AAB6 | #D17390 | Saturation 0.184 → 0.45 |
+| Dome_Red (cherry) | #DA303F | #A6111E | Saturation 0.90, Value 0.65 |
+| Dome_Cream (base) | ≈ #F9EDD3 (computed from Claude's linear 0.95, 0.85, 0.65; not read by me) | #F9DEA2 | Saturation 0.35 |
+
+**Re-check:** Claude Code read the base colours back after the join; converted to sRGB they equal my three hex values exactly. In Godot, through the scene camera, the dome reads clearly as a pink cover with a red cherry and a cream rim.
+
+### A3.11 Predicted failure cases (from CHANGE-BRIEF.md) and results
+
+| # | Prediction | Check | Result |
+|---|---|---|---|
+| 1 | Fork arrives sideways or upside down | Scene camera; checks A2, A5, A6 | Did not happen: handle up, prong tips on the floor |
+| 2 | Dome arrives at the wrong size | Blender sidebar vs Godot bounding box; node scale | Did not happen: 1 × 1 × 0.75 in Blender, 1.0 × 0.75 × 1.0 in Godot, scale 1, 1, 1 |
+| 3 | Platform origin in its centre, so it sinks | Check B2; side view | Did not happen: underside on the floor, top at 0.25 m |
+| 4 | MCP does not connect | Add-on panel; `get_scene_info` | Connected after about 15 minutes, with one command fix |
+| 5 | Claude exceeds a triangle budget | Blender status bar vs budget | Did not happen: 72 / 266 / 36 against 100 / 300 / 60 |
+
+### A3.12 Limitations and what is not verified
+
+- **Black shaded sides.** The scene has one DirectionalLight3D and no WorldEnvironment, so faces turned away from the light render pure black. This hides colour and detail there: the platform's right side and its cream line, the reference cube's side, and the undersides seen from below. I kept the one-light scene the assignment specifies rather than adding ambient light.
+- The fork's prong tips were not checked close up from below.
+- The editor's preview lighting made the fork look nearly white; through the scene's own light it reads as silver-grey. Material Preview in Blender and Godot's lighting also show the same colours differently.
+- The dome's Solid-mode viewport colours in Blender still hold Claude Code's original values, and a fresh run of `tools/blender/build_dome.py` recreates the original colours, not my hand-edited ones (the hand edit is recorded in the call 5 comment and here).
+- Box-only shapes: the fork's prong tips are blunt, and the biscuit's plain top could pass for a plank from directly above.
+- Where the fork and dome currently appear in the Assignment 2 game is still to be confirmed (open item in CHANGE-BRIEF.md); the platform placement is planned for future levels and is not implemented.
+- The assets are not in the 2D game and have no colliders; nothing here is a playtest.

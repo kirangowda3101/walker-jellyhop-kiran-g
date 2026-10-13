@@ -151,3 +151,44 @@ This follows the professor's two options for film storage, as relayed by the TA,
   - MusicGen-small: the music
 
   Details and licenses: [SOURCES.md](SOURCES.md).
+
+---
+
+## Assignment 3 — Three 3D assets (tag `a3`)
+
+Added 2026-10-13. Everything above describes the Assignment 2 slice and is unchanged.
+
+**What this assignment added:** three simple 3D assets for Jelly Hop, built in Blender by directing Claude Code through the Blender MCP, exported as `.glb`, and shown together in a small Godot 3D scene with a headless size check.
+
+| Asset | Role in Jelly Hop | Size (W × D × H) | Triangles |
+|---|---|---|---|
+| Fork | The hazard that stabs down from above | 0.5 × 0.05 × 1.5 m | 72 |
+| Dessert dome | The goal at the end of the level | 1 × 1 × 0.75 m | 266 |
+| Biscuit platform | A stepping stone to jump onto (planned for future levels) | 2 × 1.5 × 0.25 m | 36 |
+
+**Versions:** Godot 4.7.2.stable, Blender 5.2.2 LTS, MCP for Blender server 2.1.9 with add-on 1.8, on macOS (Apple Silicon). Full list in SOURCES.md.
+
+**Where things are:**
+- Blender sources: `blender/fork.blend`, `blender/dome.blend`, `blender/platform.blend`
+- Code Claude Code ran in Blender: `tools/blender/build_fork.py`, `build_dome.py`, `build_platform.py` (a record of each MCP call in order; not tested as standalone scripts)
+- Exported assets: `godot/assets/models/*.glb` and their `.import` files
+- 3D scene: `godot/showcase/a3_assets.tscn`
+- Check: `godot/tests/test_a3_assets.gd`; last run in `evidence/a3-assets-run.log` and `evidence/a3-assets-1791870366.json`
+- A3 documents: the Assignment 3 sections of CHANGE-BRIEF.md, TEST-REPORT.md, FRICTIONAL.md and SOURCES.md, plus BLENDER-NOTES.md and `evidence/a3/`
+
+**Open the scene:** run `godot -e --path godot`, then in the FileSystem panel open `showcase/a3_assets.tscn` and use Run Current Scene to see it through its camera.
+
+**Run the check** (from the repository root, macOS; `timeout` is from Homebrew coreutils):
+
+```
+godot --headless --path godot --import
+set -o pipefail
+timeout 120 godot --headless --path godot --script res://tests/test_a3_assets.gd --fixed-fps 60 2>&1 | tee evidence/a3-assets-run.log
+echo "exit: $?"
+```
+
+A pass is exit code 0, a summary line `A3 ASSET CHECKS: 36 checks / 0 failures`, and no ERROR lines. The check proves sizes, scale, orientation, triangle counts and floor contact in numbers only; it does not render anything (see TEST-REPORT.md, A3.7).
+
+**Known limitations:** with the scene's single light and no environment, faces turned away from the light are pure black and hide colour and detail; the fork tips were not checked close up from below; a fresh run of `build_dome.py` recreates Claude Code's original dome colours, not my hand-edited ones; the assets are not yet in the 2D game. Full list in TEST-REPORT.md, A3.12.
+
+**Final film:** [to be added: link, filename and SHA-256]
