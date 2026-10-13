@@ -161,3 +161,35 @@ Taken in my own Blender 5.2.2 "Learn the window" session:
 ### Open items
 
 - Check the Assignment 2 project to confirm where the fork and dome currently appear. Record the result as a later dated revision rather than editing this text.
+
+---
+
+## Assignment 3 — Revision 1 (2026-10-13): where the fork and dome appear in the A2 game
+
+**Drafted by Claude Code from the code; to be confirmed by me.** Added as a new dated section; the text above is unchanged. This answers the open item in the A3 brief. It reads the Assignment 2 game at revision `948ab6a` (files under `godot/`, excluding `godot/showcase/` and `godot/tests/`); nothing was run or played to produce it.
+
+### What the A2 code shows
+
+The A2 game is 2D. Its main scene (`godot/project.godot:14` → `godot/game/main.tscn`) is a single Node2D running `godot/game/session.gd`, which builds the whole level in code (`_build_level()`, `session.gd:86`). Positions are in screen pixels on a 1280 × 720 view, not metres. No A2 game file loads the A3 `.glb` models; only `godot/showcase/a3_assets.tscn` and `godot/tests/test_a3_assets.gd` reference them.
+
+- **The level:** six plates in a row on a table whose top is at y = 520 (`slice_tuning.gd:8`, floor body at `session.gd:106`). The first plate's left edge is at x = 160 and the edge-to-edge gaps are 120, 140, 150, 160 and 170 px (`slice_tuning.gd:29–30`). Plates are about 200 px wide (`slice_tuning.gd:96–97`), so their centres work out at about x = 260, 580, 920, 1270, 1630 and 2000 (computed by Claude Code from those constants).
+- **Forks:** one fork per plate that has a cycle in `FORK_CYCLES` (`slice_tuning.gd:42–49`). Plate 1 has none (`null`); plates 2–6 each have one fork, with its own fixed cycle (shadow 1.6 → 1.0 s, safe 2.2 → 1.2 s, getting shorter along the level). `session.gd:113–132` creates each fork and places it at the centre of its plate, on the plate's landing surface (`session.gd:129`, `fork.position = Vector2(center, land_y)`). The fork drawn is the 2D sprite `ENV-FORK.png` (`features/fork/fork.gd:43`), pointing down, with its tine tips as its origin; while raised the tips are at y = 240, above the jelly's hop peak (`slice_tuning.gd:26`, `fork.gd:183–185`), and on a strike they come down to the plate surface. The forks stay over their plates; they do not move sideways.
+- **Dome:** one dome, at the far right end of the level, **on the table, not on a plate**. `session.gd:146–152` places the 2D sprite `ENV-DOME.png` with its centre at `dome_left() + dome_width() / 2` on the table top (y = 521). `dome_left()` is the right edge of plate 6 plus 150 px of bare table (`slice_tuning.gd:32`, `slice_tuning.gd:107–108`), which puts the dome at about x = 2250–2434 (centre about 2342, about 184 px wide; computed by Claude Code). The win area is inside the dome's footprint (`session.gd:153`). The camera's intro pan starts at the dome and pans back to the jelly (`slice_tuning.gd:65`, `session.gd:205`).
+
+### Compared with the planned placements in the A3 brief
+
+| Asset | Planned in the A3 brief | What the A2 code shows | Same or different |
+|---|---|---|---|
+| Fork | "stabbing down from above at selected spots along the jumping route, so the jelly has to time its jumps" | One fork above each of plates 2–6 (not plate 1), striking straight down onto the plate centre on a fixed cycle | Same idea. The "selected spots" are five of the six plates. |
+| Dessert dome | "at the end of the level, on the final platform, as the finish point" | At the end of the level as the finish point, but on the bare table 150 px past the last plate, not on a plate | **Different:** the A2 dome is not on the final platform. |
+| Biscuit platform | Planned for future levels, not implemented in A2 | A2's stepping stones are plates (`ENV-PLATE.png`), not biscuits; nothing in A2 uses a biscuit | As planned: not in A2. |
+
+### Not checked
+
+- This reads the code only; it does not show the 3D assets in the game, and nothing was played.
+- The pixel positions are worked out from the constants, not measured in a running game.
+- Whether the dome should move onto the final platform when the 3D assets go into a level is a design decision for me, not made here.
+
+### Revision 1 confirmed by me (2026-10-13)
+
+I confirm the drafted Revision 1 above: in my Assignment 2 game the dessert dome sits on the table after the last plate, not on a plate. So the A3 brief's planned placement ("on the final platform") differs from A2. Whether to move the dome onto a final platform when the 3D assets go into a level is left as the next step.

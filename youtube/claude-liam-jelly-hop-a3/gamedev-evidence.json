@@ -1,0 +1,458 @@
+{
+ "schema_version": 1,
+ "teaching_contract": "code-then-result-v1",
+ "game_revision": "948ab6a",
+ "files": [
+  {
+   "path": "assets/models/dome.glb",
+   "sha256": "406fd1812b2e446716d9679dd9ab94638a001776f81e8bc23aaef5f50208f8af",
+   "role": "asset",
+   "component_ids": [
+    "a3-models"
+   ]
+  },
+  {
+   "path": "assets/models/dome.glb.import",
+   "sha256": "3318f96fb5422f14ac13cbbfe0cee5918388ecb9b1a51184df8eceb9453f8ffc",
+   "role": "import settings",
+   "component_ids": [
+    "a3-models"
+   ]
+  },
+  {
+   "path": "assets/models/fork.glb",
+   "sha256": "a3660c09a7696489c21e0fddbddcb969899eb02db8b32f692db44b7d201f02c1",
+   "role": "asset",
+   "component_ids": [
+    "a3-models"
+   ]
+  },
+  {
+   "path": "assets/models/fork.glb.import",
+   "sha256": "e1d864953b4bf2231ca50874ecd07ae5fa83a91d140f280cc2b7ad8544521a8a",
+   "role": "import settings",
+   "component_ids": [
+    "a3-models"
+   ]
+  },
+  {
+   "path": "assets/models/platform.glb",
+   "sha256": "856a40d68366745bdbf97aaf81847c66a57d061f4f96da2f947d57987bf59a20",
+   "role": "asset",
+   "component_ids": [
+    "a3-models"
+   ]
+  },
+  {
+   "path": "assets/models/platform.glb.import",
+   "sha256": "809bbd57c36f83766ec14b920e2cc5b706624c22e1cc267003f9c57350a5c735",
+   "role": "import settings",
+   "component_ids": [
+    "a3-models"
+   ]
+  },
+  {
+   "path": "features/fork/fork.gd",
+   "sha256": "20e3bb22bab4623a83bb7f1a28eba9a448fe459b5289ed9b8947493c8c1ed94a",
+   "role": "source",
+   "component_ids": [
+    "a2-placement"
+   ]
+  },
+  {
+   "path": "game/main.tscn",
+   "sha256": "97590b0fd703cd69b1ad74709ddd346fefa4d62e7c40e3a217f99f627dcd3c46",
+   "role": "source",
+   "component_ids": [
+    "a2-placement"
+   ]
+  },
+  {
+   "path": "game/session.gd",
+   "sha256": "4a8f5aae22040e11c67e402ad420d8faa59b8f6a6d08b7719ea96fb816e14270",
+   "role": "source",
+   "component_ids": [
+    "a2-placement"
+   ]
+  },
+  {
+   "path": "game/slice_tuning.gd",
+   "sha256": "f290e3820837834e0c6211bb85f34b5f7767d9757c769b1efeaab4a9be480c87",
+   "role": "source",
+   "component_ids": [
+    "a2-placement"
+   ]
+  },
+  {
+   "path": "project.godot",
+   "sha256": "c0be287109e74f3f26655a1e5bc4f1af80366e55941e472196fe06f98b4b87ba",
+   "role": "source",
+   "component_ids": [
+    "a2-placement"
+   ]
+  },
+  {
+   "path": "showcase/a3_assets.tscn",
+   "sha256": "f3ad486dc0728b7b85ff32edad0f146f34e3dafffdd9ed9d5f9facda6e48341a",
+   "role": "source",
+   "component_ids": [
+    "a3-showcase"
+   ]
+  },
+  {
+   "path": "tests/test_a3_assets.gd",
+   "sha256": "c73f317c7d709a75a2d78b48632cfe8d97f27819fb704bccdcfd901daf4e2028",
+   "role": "source",
+   "component_ids": [
+    "a3-check"
+   ]
+  }
+ ],
+ "exclusions": [
+  {
+   "path": ".gitignore",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg.import",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "audio/music_controller.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "audio/sound_events.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "features/player/player.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "features/player/tuning.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/capture_poses.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/capture_slice.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/route_driver.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/test_game.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/test_keyboard.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/test_slice.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "tests/trace_audio.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  },
+  {
+   "path": "ui/hud.gd",
+   "reason": "Assignment 2 slice file, unchanged since 7a48ea8 and explained in the A2 film (youtube/claude-liam-jelly-hop-gamedev/); outside this A3 film's scope."
+  }
+ ],
+ "components": [
+  {
+   "id": "a3-models",
+   "explanation": "The three exported glTF assets (fork, dessert dome, biscuit platform) and their import settings.",
+   "beat_ids": [
+    "B02",
+    "B04",
+    "B05",
+    "B07",
+    "B09"
+   ],
+   "files": [
+    "assets/models/dome.glb",
+    "assets/models/dome.glb.import",
+    "assets/models/fork.glb",
+    "assets/models/fork.glb.import",
+    "assets/models/platform.glb",
+    "assets/models/platform.glb.import"
+   ]
+  },
+  {
+   "id": "a3-showcase",
+   "explanation": "The 3D showcase scene: three instances, a floor, a 0.5 m jelly reference cube, one light, a camera.",
+   "beat_ids": [
+    "B06",
+    "B07"
+   ],
+   "files": [
+    "showcase/a3_assets.tscn"
+   ]
+  },
+  {
+   "id": "a3-check",
+   "explanation": "The headless asset check: the brief in Godot axes, sizes, scale, orientation, triangles, floor contact.",
+   "beat_ids": [
+    "B08",
+    "B09"
+   ],
+   "files": [
+    "tests/test_a3_assets.gd"
+   ]
+  },
+  {
+   "id": "a2-placement",
+   "explanation": "Where the A2 game places its forks and dome (read for the placement question; not changed).",
+   "beat_ids": [
+    "B10"
+   ],
+   "files": [
+    "features/fork/fork.gd",
+    "game/main.tscn",
+    "game/session.gd",
+    "game/slice_tuning.gd",
+    "project.godot"
+   ]
+  }
+ ],
+ "excerpts": [
+  {
+   "beat_id": "B06",
+   "path": "showcase/a3_assets.tscn",
+   "start_line": 27,
+   "end_line": 37,
+   "text": "[node name=\"Platform\" parent=\".\" instance=ExtResource(\"1_platform\")]\ntransform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)\n\n[node name=\"Dome\" parent=\".\" instance=ExtResource(\"2_dome\")]\n\n[node name=\"Fork\" parent=\".\" instance=ExtResource(\"3_fork\")]\ntransform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)\n\n[node name=\"JellyScaleRef\" type=\"MeshInstance3D\" parent=\".\"]\ntransform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.25, 0)\nmesh = SubResource(\"BoxMesh_ref\")"
+  },
+  {
+   "beat_id": "B08",
+   "path": "tests/test_a3_assets.gd",
+   "start_line": 7,
+   "end_line": 12,
+   "text": "# Expected values come from the brief (Blender X, Y, Z -> Godot X, Z, Y), never from the files checked.\nconst ASSETS := [\n\t{\"key\": \"fork\", \"path\": \"res://assets/models/fork.glb\", \"node\": \"Fork\", \"size\": Vector3(0.5, 1.5, 0.05), \"budget\": 100, \"blender_tris\": 72},\n\t{\"key\": \"dome\", \"path\": \"res://assets/models/dome.glb\", \"node\": \"Dome\", \"size\": Vector3(1.0, 0.75, 1.0), \"budget\": 300, \"blender_tris\": 266},\n\t{\"key\": \"platform\", \"path\": \"res://assets/models/platform.glb\", \"node\": \"Platform\", \"size\": Vector3(2.0, 0.25, 1.5), \"budget\": 60, \"blender_tris\": 36},\n]"
+  }
+ ],
+ "code_result_pairs": [
+  {
+   "code_beat": "B06",
+   "result_beat": "B07",
+   "observation": "The instances at x = -2.5, 0 and 1.5 and the reference cube at 3 appear left to right as platform, dome, fork and cube, upright on the floor, in Kiran's screenshot 19 of Run Current Scene.",
+   "media": {
+    "path": "images/B07-scene-camera.png",
+    "sha256": "8c69c42ed8187ff7bc2c252b4f4eeccf13a060e122bfd077c5c3be250a1efc26"
+   }
+  },
+  {
+   "code_beat": "B08",
+   "result_beat": "B09",
+   "observation": "The headless run reports sizes 0.5x1.5x0.05, 1.0x0.75x1.0 and 2.0x0.25x1.5, triangles 72/266/36 and \"A3 ASSET CHECKS: 36 checks / 0 failures\" (evidence/a3-assets-run.log).",
+   "media": {
+    "path": "images/B09-headless-vs-brief.png",
+    "sha256": "9dccd6c9722656f8533e036c8d419f6e34491393ab34931a4afc6726ff2e1de7"
+   }
+  }
+ ]
+}
