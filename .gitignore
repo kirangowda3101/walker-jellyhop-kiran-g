@@ -7,3 +7,6 @@
 # The course keeps these out of GitHub
 *.mp3
 *.mp4
+
+# Blender backup saves (do not commit)
+*.blend[0-9]*
