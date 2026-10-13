@@ -1,0 +1,93 @@
+Assignment 3 - MCP connection test (read-only)
+Date: Mon 12 Oct 2026, prompt at 22:36 EDT, reply finished 22:40 EDT
+Machine: MacBook Pro, Apple Silicon (arm64), macOS
+Tools: Blender 5.2.2 LTS; MCP for Blender add-on 1.8; mcp-for-blender server 2.1.9 (via uvx); uv 0.13.0 (Homebrew); Claude Code 2.1.288 (Opus 5.5)
+
+Copied from my Terminal (Claude Code session in ~/Documents/walker-jellyhop-kiran-g).
+The terminal scrollback repeated part of the reply when I copied it; the repeated lines are included once here. Nothing else was edited.
+
+---------------------------------------------------------------------------
+Setup notes leading up to this test
+---------------------------------------------------------------------------
+- Chapter command `claude mcp add -e DISABLE_TELEMETRY=true blender -- uvx mcp-for-blender` failed:
+  "Invalid environment variable format: blender, environment variables should be added as: -e KEY1=value1 -e KEY2=value2"
+- Working command: `claude mcp add blender -e DISABLE_TELEMETRY=true -- uvx mcp-for-blender`
+- `claude mcp get blender`: Scope Local config; Status Connected; Command uvx; Args mcp-for-blender; Environment DISABLE_TELEMETRY=true
+- Blender port check `lsof -nP -iTCP:9876 -sTCP:LISTEN`: Blender (PID 78776) listening on TCP 127.0.0.1:9876 (localhost only)
+- `/mcp` in Claude Code: 1 local server, "blender", 9 tools
+- First prompt attempt returned "Login expired · Please run /login" (no tool was called). After /login, Claude Code ran the calls automatically because auto mode was on.
+- The blender MCP server asked "Contribute session data: Yes, contribute my prompts, generated code, screenshots and scene data to help improve Blender MCP." I left it unticked and chose Decline.
+- After this test I switched Claude Code to manual mode ("⏸ manual mode on") so every later tool call needs my approval.
+
+---------------------------------------------------------------------------
+My prompt
+---------------------------------------------------------------------------
+Use the blender MCP server. Call get_addon_status, then get_scene_info. Report exactly what each returns. Do not call any other tool, do not run any code, and do not change the scene.
+
+---------------------------------------------------------------------------
+Claude Code's reply
+---------------------------------------------------------------------------
+Called blender 2 times
+
+I called the two tools and nothing else. Both are read-only, and the scene was not changed.
+
+1. get_addon_status
+
+{
+  "up_to_date": true,
+  "protocol_version": 13,
+  "expected_protocol_version": 13,
+  "addon_version": [1, 8],
+  "capabilities": [
+    "bpy_api_lookup",
+    "describe_node_type",
+    "drain_human_activity",
+    "execute_code",
+    "get_addon_info",
+    "get_object_info",
+    "get_scene_info",
+    "get_telemetry_consent",
+    "get_viewport_screenshot",
+    "get_world_state_snapshot",
+    "list_scene_items",
+    "pick_viewport_object",
+    "set_telemetry_consent"
+  ],
+  "blender_version": "5.2.2 LTS",
+  "premium_generators": [],
+  "libraries": {
+    "polyhaven": "off",
+    "sketchfab": "off",
+    "polypizza": "off"
+  },
+  "generators": {
+    "tripo": "off (Premium only)",
+    "hunyuan3d": "off",
+    "hyper3d": "off"
+  },
+  "source": "native",
+  "warning": null,
+  "telemetry_consent": false,
+  "update_command": "uvx mcp-for-blender install-addon",
+  "after_install": "If the addon file was updated: in Blender, Preferences → Add-ons → disable/enable 'Interface: Blender MCP', or restart Blender, then Start MCP Server."
+}
+
+2. get_scene_info (default fields)
+
+Scene 'Scene' | 1 camera, 1 light, 1 mesh | active Cube | selected none | mode OBJECT
+
+Showing 3 of 3 (name | type | location | size | hidden | children):
+Cube | mesh | at (0.0, 0.0, 0.0) | size 2.0x2.0x2.0
+Light | light | at (4.08, 1.01, 5.9)
+Camera | camera | at (7.36, -6.93, 4.96)
+
+What this means
+
+- Connection: The add-on in Blender (version 1.8, protocol 13) matches what the server expects, and there's no warning. It's talking to Blender 5.2.2 LTS, the same version as your interface notes in commit 7d9c184.
+- Outside sources are off: All three asset libraries (Poly Haven, Sketchfab, Poly Pizza) and all three 3D generators are switched off. So in this setup, models can't be downloaded or generated. They can only be built inside Blender. Telemetry (sending usage data back) is also off.
+- Scene: This looks like Blender's default startup scene, with no A3 work in it yet. It has the 2 m cube at the origin (the active object, though nothing is selected), one light and one camera. You're in Object Mode.
+
+---------------------------------------------------------------------------
+How I checked it
+---------------------------------------------------------------------------
+Blender's own sidebar (N > Item) showed the Cube at Location 0, 0, 0 with the default 2 m size, matching what Claude reported through the MCP. The MCP for Blender sidebar tab showed "Connected on port 9876" and all five service checkboxes (Poly Haven, Sketchfab, Poly Pizza, Hyper3D Rodin, Tencent Hunyuan 3D) unticked.
