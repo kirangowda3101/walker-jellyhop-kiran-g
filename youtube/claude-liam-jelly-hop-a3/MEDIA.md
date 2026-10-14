@@ -2,7 +2,7 @@
 
 MP4, MP3 and WAV files are not committed (the repository's .gitignore and this folder's .gitignore). The final film is identified by filename and SHA-256.
 
-## Final film (rebuilt after Kiran's script review, awaiting Kiran's viewing)
+## Final film (rebuilt after Kiran's script review, watched by Kiran; on YouTube, unlisted: https://youtu.be/RBnJpG0Cnjc)
 
 | Field | Value |
 |---|---|

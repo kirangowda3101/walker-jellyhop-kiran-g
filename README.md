@@ -191,4 +191,4 @@ A pass is exit code 0, a summary line `A3 ASSET CHECKS: 36 checks / 0 failures`,
 
 **Known limitations:** with the scene's single light and no environment, faces turned away from the light are pure black and hide colour and detail; the fork tips were not checked close up from below; a fresh run of `build_dome.py` recreates Claude Code's original dome colours, not my hand-edited ones; the assets are not yet in the 2D game. Full list in TEST-REPORT.md, A3.12.
 
-**Final film:** [link to add] · filename `claude-liam-jelly-hop-a3.mp4` · SHA-256 `10adb47d931ffa23d500f409658eee709397dcc48303ae61805a62aadfe599fc` (in the Canvas submission ZIP, as for Assignment 2; record in [youtube/claude-liam-jelly-hop-a3/MEDIA.md](youtube/claude-liam-jelly-hop-a3/MEDIA.md))
+**Final film:** [YouTube, unlisted](https://youtu.be/RBnJpG0Cnjc) · filename `claude-liam-jelly-hop-a3.mp4` · SHA-256 `10adb47d931ffa23d500f409658eee709397dcc48303ae61805a62aadfe599fc` (the SHA-256 is of the uploaded file, which YouTube re-encodes; record in [youtube/claude-liam-jelly-hop-a3/MEDIA.md](youtube/claude-liam-jelly-hop-a3/MEDIA.md))

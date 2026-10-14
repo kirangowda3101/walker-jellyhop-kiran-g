@@ -4,12 +4,13 @@ Prepared from the repository's records (drafted by Claude Code, reviewed and cor
 
 | Field | Value |
 |---|---|
-| Assignment | CSYE 7270, Assignment 3 — Three 3D assets with Claude, the Blender MCP and Blender |
+| Assignment | Assignment 3 - Your First 3D Game Assets with Claude, the Blender MCP, and Blender |
 | Student | Kiran Gowda Ramanagara Jayaram |
 | Project name | Jelly Hop: Fork From Above |
 | Repository URL | https://github.com/kirangowda3101/walker-jellyhop-kiran-g |
 | Tag | `a3` |
 | Submitted commit SHA | given in the Canvas submission note (a commit cannot contain its own SHA) |
+| Revisions | The film shows game source `948ab6a7f126f08dca8d49786f5adeb863aad044`; the submitted commit adds documentation only. `git diff --stat 948ab6a a3 -- godot/assets godot/showcase godot/game godot/features blender tools` prints nothing; the only other godot/ change is the generated `godot/tests/test_a3_assets.gd.uid`. |
 | Game-source revision shown in the film | `948ab6a7f126f08dca8d49786f5adeb863aad044` (`948ab6a`) |
 | OS | macOS 26.5.1 (build 25F80), MacBook Pro, Apple M4 (Apple Silicon) |
 | Blender | 5.2.2 LTS (macOS arm64); glTF exporter Khronos glTF Blender I/O v5.2.40 (+Y Up, default) |
@@ -57,9 +58,9 @@ Claude Code read the colours back after the join; they converted exactly to my h
 
 | Field | Value |
 |---|---|
-| Filename | `claude-liam-jelly-hop-a3.mp4` (284.133 s = 4 min 44.1 s, 3840×2160, 21,145,123 bytes; rebuilt after my script review — confirm after watching it) |
+| Filename | `claude-liam-jelly-hop-a3.mp4` (284.133 s = 4 min 44.1 s, 3840×2160, 21,145,123 bytes; rebuilt after my script review — watched start to finish by me) |
 | SHA-256 | `10adb47d931ffa23d500f409658eee709397dcc48303ae61805a62aadfe599fc` (changes if the film is re-rendered) |
-| Where | In the Canvas submission ZIP (not in git, not on YouTube), as for Assignment 2 |
+| Final film URL | https://youtu.be/RBnJpG0Cnjc (YouTube, unlisted; I checked it plays in a logged-out private window). The SHA-256 is of the uploaded file; YouTube re-encodes it. |
 
 ## Summary of changes (Assignment 3)
 
