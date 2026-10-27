@@ -1,0 +1,25 @@
+I approve both of your proposed fixes to the step 5 test code:
+1. Window start: find the first PLAYING frame after the 600-tick wait,
+   not before it.
+2. Frame period: measure it from the frame sampler's delta during INTRO
+   (time scale 1.0) and set fps = round(1/delta). Record both the delta
+   and the fps in the evidence, and name the evidence files with that
+   measured fps.
+
+Do not change any assertion, tolerance or expected value. Then rerun
+step 5 at 30, 60 and 144, compare the three MD5s, and continue with
+steps 6, 7 and 8 as approved in prompts/prompt-2b-implement.txt, under
+the same rules: the same file whitelist, stop at the first failure and
+report it, never weaken an assertion, stop at a step boundary if you are
+near your turn limit, and do not commit.
+
+Answers to your two notes:
+- The dark-wood .import files were created by my own headless --import
+  on 2026-10-27. Leave them alone; I will set their import settings
+  myself in a later task.
+- Do not create test_fork_warning.gd.uid and do not run the editor. It
+  will be generated when I open the project.
+
+End with the step 8 summary: the counts at each frame rate, the three
+MD5s, what the test proves, what it cannot prove headlessly, and the
+human checks left for me.
