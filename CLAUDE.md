@@ -4,7 +4,7 @@
 
 ## Project context
 
-- **Engine:** Godot 4.7 (`godot/project.godot` line 15, `config/features="4.7"`); README.md line 13 names 4.7.2.stable.official.ed1daf0bf.
+- **Engine:** Godot 4.7.2.stable.official.ed1daf0bf (`godot --version` on this machine, 2026-10-27; README.md line 13 agrees). `godot/project.godot` line 15: `config/features=PackedStringArray("4.7", "GL Compatibility")`.
 - **Renderer:** Compatibility, `renderer/rendering_method="gl_compatibility"` and `.mobile` the same (`godot/project.godot` lines 32–33). No `rendering/viewport/hdr_2d` line, so HDR 2D is off (`godot/project.godot` lines 30–34).
 - **Viewport:** 1280 × 720, stretch mode `canvas_items` (`godot/project.godot` lines 19–21).
 - **Main scene:** `res://game/main.tscn` (`godot/project.godot` line 14). It is a single `Node2D` named `JellyHop` with `res://game/session.gd` attached (`godot/game/main.tscn` lines 3–6). The whole level is built in code by `session.gd` `_build_level()` (`godot/game/session.gd` lines 86–153).
@@ -12,7 +12,7 @@
   - Forks are created in code, one per plate with a cycle: `Fork.new()`, `add_child(fork)`, `fork.setup(i, cycle)` (`godot/game/session.gd` lines 124–132). Plate 1 has no fork (`godot/game/slice_tuning.gd` line 43), so there are five forks.
   - Each fork is a `Node2D` (`godot/features/fork/fork.gd` line 1). `setup()` makes a child `head` (`Node2D`) and under it a `Sprite2D` with texture `res://assets/art/ENV-FORK.png`, `centered = false`, `offset = (-167.5, -1258)`, scale `T.fork_scale()`, filter `TEXTURE_FILTER_LINEAR_WITH_MIPMAPS` (`fork.gd` lines 39–48). The sprite is held in `var sprite` (`fork.gd` line 28).
   - The sprite has no material today: nothing in `fork.gd` sets `material` (`fork.gd` lines 42–48).
-  - `ENV-FORK.png` is 335 × 1267 RGBA (checked with `file`).
+  - `ENV-FORK.png` is 335 × 1267, 8-bit RGBA (`file` output recorded in `sessions/session-1.jsonl`).
   - The shadow ellipse is a separate thing, drawn by the fork node's own `_draw()` (`fork.gd` lines 224–236), not by the sprite.
   - The hit area is the tine outlines traced from the texture alpha (`fork.gd` lines 49–59, 62–109).
 - **Game state that drives the effect:**
@@ -30,11 +30,11 @@
   - Light: `Sun` (`DirectionalLight3D`, shadows on) (lines 39–41).
   - Camera: `Camera3D` (lines 43–46).
   - The plan in CHANGE-BRIEF.md §7 is a new scene `godot/showcase/a5_materials.tscn` that instances this scene rather than editing it.
-- **Textures present:** `godot/assets/textures/dark_wood/` holds `dark_wood_diff_2k.png`, `dark_wood_rough_2k.png`, `dark_wood_nor_gl_2k.png` and `dark_wood_nor_dx_2k.png`. The folder is untracked in git (`git status`).
+- **Textures present:** `godot/assets/textures/dark_wood/` holds `dark_wood_diff_2k.png`, `dark_wood_rough_2k.png`, `dark_wood_nor_gl_2k.png` and `dark_wood_nor_dx_2k.png` (CHANGE-BRIEF.md §7).
 - **How the tests load the game:**
   - Every test is a `SceneTree` script (`extends SceneTree`, `_initialize()`).
   - The game tests build the session directly with `Game.new()` / `root.add_child(game)`, not through `main.tscn` (`godot/tests/test_game.gd` lines 5, 30–32; `test_slice.gd` lines 29–31; `test_keyboard.gd` lines 53–55).
-  - `test_a3_assets.gd` loads `res://showcase/a3_assets.tscn` (`test_a3_assets.gd` line 6).
+  - `test_a3_assets.gd` tests `res://showcase/a3_assets.tscn`, named in its `SHOWCASE` constant (`test_a3_assets.gd` line 6).
 - **Test commands:** run from the repository root, always through the wrapper (`scripts/run-test.sh`, executable). The wrapper:
   - runs `godot --headless --path godot --script res://tests/<file> --fixed-fps <fps>` under `timeout 120`;
   - tees the output to `logs/<name>_<fps>fps.log`;
@@ -48,6 +48,17 @@
   ```
 
   Each test exits 1 if any check fails (`quit(1 if failures else 0)`; same files, lines 177, 64, 103, 126). The expected counts before A5 are 25, 61, 12 and 36 checks (CHANGE-BRIEF.md §4). New A5 tests run the same way at 30, 60 and 144: `scripts/run-test.sh <test>.gd 30`, then `60`, then `144`.
+
+## Headless facts
+
+Confirmed on this machine on 2026-10-27 with `godot/tests/probe_headless.gd` (logs: `logs/probe_headless_30fps.log`, `_60fps.log`, `_144fps.log`) unless marked otherwise.
+
+- A headless run uses a dummy renderer and draws nothing (course statement, not probed), so no headless test can judge a colour, texture or material. Every visual rule ends in a human check.
+- `Shader.get_shader_uniform_list()` reports each uniform's name, type and hint headlessly (probe: `w`, type 3, hint 1, `"0.0,1.0,0.001"`) but not its default; `RenderingServer.shader_get_parameter_default()` returns `null`. Tests read defaults from the shader source text.
+- A shader that fails to parse prints `SHADER ERROR` and returns an empty uniform list (probe: size 0). The wrapper turns that into exit 1; Godot's own exit code 0 does not mean no errors.
+- `set_shader_parameter()` with an undeclared name raises no error and `get_shader_parameter()` returns the stored value (probe: 1.0), so only a uniform-list assertion catches a renamed uniform. A value outside `hint_range` set from code is stored unclamped (probe: 2.0); whether the GPU clamps it is checked by a capture.
+- `--fixed-fps N` gives N frames per game second while physics stays at 60 ticks per second: 2 ticks per frame at 30 fps (119–120 per 60 frames), 1 at 60, and 25 per 60 frames at 144. `Engine.time_scale = 0.5` halves the physics `delta` but leaves the tick count unchanged at all three.
+- The existing suites print `ObjectDB instances were leaked` (WARNING) and `resources still in use` (ERROR) at exit. These are pre-existing (baseline logs, 2026-10-27) and are not `SHADER ERROR` or `SCRIPT ERROR`.
 
 ## Current change
 
@@ -74,7 +85,6 @@
 
 ## Unconfirmed
 
-- **Godot binary version:** I did not run `godot --version`. `godot` resolves to `/opt/homebrew/bin/godot`, and `4.7.2` comes from README.md only.
 - **Dark-wood import settings:** none of the four PNGs has a `.import` file yet. The settings in CHANGE-BRIEF.md §7 are not applied yet. The Poly Haven source and licence are not checked here.
 - **Files that do not exist yet:** `godot/shaders/`, `godot/materials/`, `godot/showcase/a5_materials.tscn` and any A5 test file.
 - **Which script sets `warning` (the "driver"):** the brief does not name it. It also does not say whether the per-fork `ShaderMaterial` is created in `fork.gd` `setup()` or elsewhere. Both need Kiran's decision.
