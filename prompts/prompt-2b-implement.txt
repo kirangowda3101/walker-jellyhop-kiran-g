@@ -1,0 +1,47 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md, including "Revision 1 — 2026-10-27"
+at its end, is the contract. Your plan from the previous run is in
+sessions/plan-2a.md. I approve steps 1 to 8 of that plan, with the
+changes below. Implement the steps in order. After each step, show the
+diff and the real test output.
+
+Changes to the plan (my decisions, recorded in CHANGE-BRIEF.md Revision 1):
+
+Step 1 (driver):
+- Create godot/materials/fork_warning.tres: a ShaderMaterial whose shader
+  is res://shaders/fork_warning.gdshader, with no shader parameters set.
+- In fork.gd setup(), give the sprite a duplicate of that base material
+  (base.duplicate()), not a ShaderMaterial created from scratch. Keep the
+  warning() function and the one line in _apply() as you proposed.
+
+Check 3: also assert that no fork's material is the base .tres object
+itself, and that all five share the same Shader object.
+
+Check 4 (replaces your version): each fork's strength and warn_color
+equal the base material's values for those parameters. Report what an
+unset parameter reads back headlessly; do not guess it.
+
+Check 1: report the type you observe for warn_color; do not adjust the
+assertion to match it without saying so.
+
+Check 10b (tree-pause fixture): include it.
+
+WON: do not add a WON check; it is out of scope for this change.
+
+Rules for this run:
+- You may create or edit only: godot/features/fork/fork.gd,
+  godot/materials/fork_warning.tres, godot/tests/test_fork_warning.gd and
+  its .uid, and files the tests write under logs/ and evidence/.
+- Do not edit any .gdshader file, scripts/run-test.sh, CHANGE-BRIEF.md,
+  CLAUDE.md, AGENTS.md, anything in archive/, or the existing tests.
+- If a step fails, stop and report the failure and the output. Do not
+  weaken an assertion, change an expected value, or work around the
+  failure to get a green run.
+- If you are close to your turn limit, stop at the end of a step and
+  report which steps are done.
+- Run every test through ./scripts/run-test.sh, the existing four at 60
+  and the new test at 30, 60 and 144.
+- Do not commit.
+
+End with the summary from step 8: what passed at each frame rate, what
+the test proves, what it cannot prove headlessly, and the human checks
+left for me.
