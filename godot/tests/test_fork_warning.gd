@@ -15,7 +15,10 @@ var ticks: TickSampler
 var frames: FrameSampler
 var results: Array[Dictionary] = []
 var failures: int = 0
-var fps: int = 0
+var fps: int = 0                    # measured, see measure_fps()
+var frame_delta: float = 0.0
+var frame_delta_range: Array = []
+var idle_rows: Array = []           # the per-tick rows of the idle window (checks 6-9)
 
 class TickSampler extends Node:
 	## Every physics tick, after the player (priority 0) and the session (10) have run, so it sees
@@ -61,10 +64,17 @@ func check(id: String, passed: bool, observation: Dictionary) -> void:
 		failures += 1
 	print(JSON.stringify(results.back()))
 
-func fixed_fps() -> int:
-	var args := OS.get_cmdline_args()
-	var i := args.find("--fixed-fps")
-	return int(args[i + 1]) if i >= 0 and i + 1 < args.size() else 0
+func measure_fps() -> void:
+	## --fixed-fps is not in OS.get_cmdline_args(), so the frame period is measured: the median
+	## _process delta of the INTRO frames (Engine.time_scale is 1.0 there), fps = round(1 / delta).
+	var deltas := []
+	for r in frames.rows:
+		if r.state == Game.State.INTRO:
+			deltas.append(r.delta)
+	deltas.sort()
+	frame_delta = deltas[deltas.size() / 2] if not deltas.is_empty() else 0.0
+	fps = int(round(1.0 / frame_delta)) if frame_delta > 0.0 else 0
+	frame_delta_range = [deltas.front(), deltas.back()] if not deltas.is_empty() else []
 
 func fork_indices() -> Array:
 	var out := []
@@ -74,12 +84,15 @@ func fork_indices() -> Array:
 	return out
 
 func run() -> void:
-	fps = fixed_fps()
 	shader_checks()
 	start_game()
 	material_checks()
 	await intro_checks()
+	measure_fps()
 	await idle_checks()
+	await pause_checks()
+	await tree_pause_checks()
+	await time_scale_checks()
 	await finish()
 
 func wait_until(condition: Callable, max_ticks: int) -> bool:
@@ -89,6 +102,28 @@ func wait_until(condition: Callable, max_ticks: int) -> bool:
 			return false
 		await process_frame
 	return true
+
+func key(code: Key, pressed: bool) -> void:
+	## A real key event through Godot Input, as test_keyboard.gd sends them.
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+	await process_frame
+	await process_frame
+
+func tap(code: Key) -> void:
+	await key(code, true)
+	await key(code, false)
+
+func w_of(i: int) -> float:
+	return game.forks[i].sprite.material.get_shader_parameter("warning")
+
+func wait_mid_shadow(i: int, max_ticks: int) -> bool:
+	## Until plate i's fork is between a quarter and 0.6 of the way through SHADOW, so one more
+	## tick keeps it in SHADOW.
+	return await wait_until(func(): return w_of(i) >= 0.25 and w_of(i) <= 0.6, max_ticks)
 
 func wait_ticks(n: int) -> void:
 	var target := Engine.get_physics_frames() + n
@@ -122,7 +157,7 @@ func start_game() -> void:
 	root.add_child(frames)
 
 func finish() -> void:
-	var report := {"scope": "Fork warning shader checks (headless, scripted input); not human playtesting and no colour on screen", "engine": Engine.get_version_info().string, "fixed_fps": fps, "created_at": Time.get_datetime_string_from_system(true), "results": results, "failures": failures}
+	var report := {"scope": "Fork warning shader checks (headless, scripted input); not human playtesting and no colour on screen", "engine": Engine.get_version_info().string, "measured_fps": fps, "measured_frame_delta_s": frame_delta, "intro_frame_delta_min_max_s": frame_delta_range, "created_at": Time.get_datetime_string_from_system(true), "results": results, "failures": failures}
 	var out := ProjectSettings.globalize_path("res://../evidence")
 	DirAccess.make_dir_recursive_absolute(out)
 	var file := FileAccess.open(out + "/fork-warning-%dfps-%d.json" % [fps, int(Time.get_unix_time_from_system())], FileAccess.WRITE)
@@ -316,16 +351,19 @@ func idle_checks() -> void:
 		if ticks.rows[r].state == Game.State.PLAYING:
 			s0 = r
 			break
+	var reached: bool = await wait_until(func(): return ticks.rows.size() > s0 + IDLE_TICKS, IDLE_TICKS + 30)
+	# Searched only after the wait: process_frame resumes this coroutine before the frame sampler's
+	# _process() has recorded the frame on which play started.
 	var f0 := -1
 	for f in range(frames.rows.size()):
 		if frames.rows[f].state == Game.State.PLAYING:
 			f0 = f
 			break
-	var reached: bool = await wait_until(func(): return ticks.rows.size() > s0 + IDLE_TICKS, IDLE_TICKS + 30)
 	var window: Array = ticks.rows.slice(s0, s0 + IDLE_TICKS + 1)
+	idle_rows = window
 	var end_tick: int = window.back().tick
 	var frame_window := []
-	for f in range(f0, frames.rows.size()):
+	for f in range(f0 if f0 >= 0 else frames.rows.size(), frames.rows.size()):   # no PLAYING frame: empty, so check 9 fails
 		if frames.rows[f].tick <= end_tick:
 			frame_window.append(frames.rows[f])
 	var idx := fork_indices()
@@ -408,3 +446,118 @@ func idle_checks() -> void:
 			counted_fail += 1
 	var control_ok := counted_fail == 0 if fps == 60 else counted_fail == idx.size()
 	check("9c-control-frame-counted-ramp", control_ok, {"fps": fps, "frame_counted_seconds": counted, "plates_failing_rule_2": counted_fail})
+
+# ---------------------------------------------------------------- 10, 10b, 11: pause and time scale
+
+const HOLD_TICKS := 120
+
+func hold_report(i: int, tick_mark: int, frame_mark: int, frozen: Callable) -> Dictionary:
+	## From tick_mark on: every frozen tick and frame shows every fork's value from the last tick
+	## before the freeze, t does not move, and plate i rises by exactly 1/n on the first tick after.
+	var before := -1
+	var after := -1
+	var frozen_ticks := 0
+	for r in range(tick_mark, ticks.rows.size()):
+		if frozen.call(ticks.rows[r]):
+			if before < 0:
+				before = r - 1
+			frozen_ticks += 1
+		elif before >= 0:
+			after = r
+			break
+	if before < 0 or after < 0:
+		return {"ok": false, "reason": "no complete freeze found", "frozen_ticks": frozen_ticks}
+	var held := tick_w(ticks.rows[before])
+	var tick_diff := 0.0
+	var t_moved := []
+	for r in range(before + 1, after):
+		tick_diff = maxf(tick_diff, max_diff(tick_w(ticks.rows[r]), held))
+		for j in fork_indices():
+			if ticks.rows[r].forks[j].t != ticks.rows[before].forks[j].t and not t_moved.has(j + 1):
+				t_moved.append(j + 1)
+	var frozen_frames := 0
+	var frame_diff := 0.0
+	for f in range(frame_mark, frames.rows.size()):
+		if frozen.call(frames.rows[f]):
+			frozen_frames += 1
+			frame_diff = maxf(frame_diff, max_diff(frames.rows[f].w, held))
+	var n: int = cycle_of(i).shadow
+	var rise: float = ticks.rows[after].forks[i].w - held[i]
+	var ok := frozen_ticks >= HOLD_TICKS - 2 and frozen_frames > 0 and tick_diff == 0.0 and frame_diff == 0.0 and t_moved.is_empty() and absf(rise - 1.0 / n) < EPS
+	return {"ok": ok, "plate": i + 1, "held_value": held[i], "frozen_ticks": frozen_ticks, "frozen_frames": frozen_frames, "max_tick_diff": tick_diff, "max_frame_diff": frame_diff, "plates_whose_t_moved": t_moved, "rise_after_resume": rise, "want_rise": 1.0 / n}
+
+func pause_checks() -> void:
+	# 10: a real Esc press while plate 2's fork is mid-SHADOW; a second Esc resumes.
+	var i := 1
+	var found: bool = await wait_mid_shadow(i, cycle_of(i).period + 10)
+	var tick_mark := ticks.rows.size()
+	var frame_mark := frames.rows.size()
+	await tap(KEY_ESCAPE)
+	var paused: bool = game.state == Game.State.PAUSED
+	await wait_ticks(HOLD_TICKS)
+	await tap(KEY_ESCAPE)
+	await wait_ticks(5)
+	var rep := hold_report(i, tick_mark, frame_mark, func(r): return r.state == Game.State.PAUSED)
+	rep["found_mid_shadow"] = found
+	rep["esc_paused"] = paused
+	rep["resumed"] = game.state == Game.State.PLAYING
+	check("10-esc-pause-holds-warning-then-resumes-by-1-over-n", found and paused and rep.resumed and rep.ok, rep)
+
+func tree_pause_checks() -> void:
+	# 10b: fixture, not the game's own pause: SceneTree.paused while plate 3's fork is mid-SHADOW.
+	var i := 2
+	var found: bool = await wait_mid_shadow(i, cycle_of(i).period + 10)
+	var tick_mark := ticks.rows.size()
+	var frame_mark := frames.rows.size()
+	paused = true
+	await wait_ticks(HOLD_TICKS)
+	paused = false
+	await wait_ticks(5)
+	var rep := hold_report(i, tick_mark, frame_mark, func(r): return r.paused)
+	rep["found_mid_shadow"] = found
+	rep["state_stayed_playing"] = game.state == Game.State.PLAYING
+	check("10b-tree-paused-holds-warning-then-resumes-by-1-over-n", found and rep.state_stayed_playing and rep.ok, rep)
+
+func tick_ramps(i: int, rows: Array) -> Array:
+	## Per-tick ramps of plate i in rows: {ticks: first tick with warning > 0 to the first tick back at 0, start_row}.
+	var out := []
+	var start := -1
+	for r in range(1, rows.size()):
+		var w: float = rows[r].forks[i].w
+		if start < 0 and rows[r - 1].forks[i].w == 0.0 and w > 0.0:
+			start = r
+		elif start >= 0 and w == 0.0:
+			out.append({"ticks": rows[r].tick - rows[start].tick, "start": start, "end": r})
+			start = -1
+	return out
+
+func time_scale_checks() -> void:
+	# 11: one full ramp of plate 2's fork at Engine.time_scale = 0.5 (fixture), against the same
+	# fork's ramps at 1.0 in the idle window.
+	var i := 1
+	var n: int = cycle_of(i).shadow
+	var at_one := tick_ramps(i, idle_rows).map(func(r): return r.ticks)   # idle window only: no pause inside
+	await wait_until(func(): return game.forks[i].phase() == Fork.Phase.SAFE, cycle_of(i).period)
+	var tick_mark := ticks.rows.size()
+	var frame_mark := frames.rows.size()
+	Engine.time_scale = 0.5
+	var done: bool = await wait_until(func(): return tick_ramps(i, ticks.rows.slice(tick_mark - 1)).size() >= 1, cycle_of(i).period + 10)
+	Engine.time_scale = 1.0
+	var slow := tick_ramps(i, ticks.rows.slice(tick_mark - 1))
+	var slow_ticks: int = slow[0].ticks if not slow.is_empty() else -1
+	# The same ramp per frame: game time (scaled delta) and real time (frames x frame period).
+	var fr: Array = frames.rows.slice(frame_mark - 1)
+	var f_start := -1
+	var f_end := -1
+	for f in range(1, fr.size()):
+		if f_start < 0 and fr[f - 1].w[i] == 0.0 and fr[f].w[i] > 0.0:
+			f_start = f
+		elif f_start >= 0 and fr[f].w[i] == 0.0:
+			f_end = f
+			break
+	var game_s: float = fr[f_end].time - fr[f_start].time if f_end > 0 else -1.0
+	var real_s: float = float(f_end - f_start) * frame_period() if f_end > 0 else -1.0
+	var deltas_halved: bool = f_end > 0 and absf(fr[f_start].delta - 0.5 * frame_delta) < 1e-9
+	check("11-time-scale-0.5-same-tick-count", done and slow_ticks == n and not at_one.is_empty() and at_one.all(func(x): return x == n), {"plate": i + 1, "ramp_ticks_at_0.5": slow_ticks, "ramp_ticks_at_1.0": at_one, "shadow_ticks": n})
+	# Prediction (CHANGE-BRIEF.md rule 5): about 0.8 s of scaled game time, 1.6 s of real time.
+	check("11-time-scale-0.5-game-time-half", deltas_halved and absf(game_s - 0.5 * n / 60.0) <= 0.5 * frame_period() + 1e-9 and absf(real_s - float(n) / 60.0) <= frame_period() + 1e-9, {"scaled_game_seconds": game_s, "want_game_seconds": 0.5 * n / 60.0, "real_seconds_from_frames": real_s, "want_real_seconds": float(n) / 60.0, "frame_delta_at_0.5": fr[f_start].delta if f_start > 0 else null, "time_scale_after": Engine.time_scale})
