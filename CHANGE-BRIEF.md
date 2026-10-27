@@ -194,3 +194,13 @@ Worked example for 128 without `source_color`: x = 128/255 = 0.502; 1.055 × 0.5
 5. **Frame-counting version:** tuned as 96 frames for the 1.6 s fork at 60 fps, it would last 3.2 s at 30 fps, 1.6 s at 60 and 0.67 s at 144. In general, `shadow_ticks / fps` seconds. Mine counts physics ticks, so at `time_scale = 1.0` it lasts 1.6 s at all three.
 6. **Default vs current value:** the default lives in the `Shader` resource (the source text of `fork_warning.gdshader`). The current value lives in each `ShaderMaterial`, set by `set_shader_parameter`. If two forks shared one material they would share one `warning`, and both would glow whenever either was in SHADOW. That is why each fork gets its own material (rule 7, failure 1).
 7. **Does `hint_range` clamp a value set from code?** Prediction: no. It only limits the Inspector slider. `warning = 2.0` gives a mix amount of 1.3, which overshoots amber; P1 becomes about (278, 176, 36), clipped on output to (255, 176, 36). Checked by a capture in Use It.
+
+## Revision 1 — 2026-10-27 (after the Claude Code planning run, `sessions/plan-2a.md`; decisions mine)
+
+**Driver location and timing (replaces "every physics tick" in the §2 uniform table).** The driver lives in `godot/features/fork/fork.gd`. `warning` is initialized during `setup()` (through `reset_cycle()`), and updated in `_apply()` whenever `t` or `held` changes. While a fork is frozen (held, or the session in INTRO, PAUSED or WON, or the tree paused) nothing is written and `warning` retains its value. When a fork is held during SHADOW, `warning` is `0.0` on that same tick, unchanged from rule 6.
+
+**Boundary clarification (§4).** The driver adds presentation-only lines to `fork.gd`: the material in `setup()`, a function that reads the phase and returns the `warning` value, and one line in `_apply()` that sets it. The phase logic, the tick counter and every timing stay unchanged, and the driver never writes `t`, `held`, `hold_pending` or `announced`.
+
+**Base material (replaces the §2 "Material" line).** `godot/materials/fork_warning.tres` is a `ShaderMaterial` using `fork_warning.gdshader`. Each fork's `setup()` gives its sprite a **duplicate** of it, so every fork has its own material and its own `warning` (rule 7), while `strength` and `warn_color` are tuned once in the Inspector on the base `.tres`. Until I tune it, the base material sets no parameters, so the shader defaults apply.
+
+**Uncovered rule.** Rule 5's "WON holds its value" has no headless check in this change. I will observe it by eye in a windowed run when the jelly reaches the dome, and record the result in TEST-REPORT.md.
