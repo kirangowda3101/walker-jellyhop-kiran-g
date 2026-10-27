@@ -1,0 +1,23 @@
+I approve your proposed fix for check 11: in time_scale_checks(), add
+await wait_ticks(5) after Engine.time_scale = 1.0 and before reading the
+frame rows. Then rerun step 6 at 30, 60 and 144, and continue with steps
+7 and 8 as approved in prompts/prompt-2b-implement.txt, under the same
+rules and file whitelist.
+
+Standing approval for one kind of failure only (my decision): if a check
+fails because the test reads sampler rows before the sampler has recorded
+them (the same coroutine-ordering problem as in step 5 and check 11),
+you may fix it by adding a wait before the read, without asking me. For
+each such fix, report the check name, why it is the same kind of
+problem, and the diff. Keep every assertion, tolerance and expected
+value unchanged.
+
+Any other failure still stops the run: report it with the output and a
+proposed fix, and wait for me. Do not commit, do not create
+test_fork_warning.gd.uid, do not run the editor, and leave the dark-wood
+.import files alone.
+
+End with the step 8 summary: the counts at each frame rate, the three
+per-tick MD5s, every ordering fix you made under the standing approval,
+what the test proves, what it cannot prove headlessly, and the human
+checks left for me.
