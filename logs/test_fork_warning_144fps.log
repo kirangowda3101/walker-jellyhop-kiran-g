@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"1-uniform-names","observed":{"names":["strength","warn_color","warning"]},"status":"PASS"}
+{"id":"1-warning-float-range-0-1","observed":{"hint":1,"hint_string":"0.0,1.0,0.0010000000475","type":3,"type_name":"float"},"status":"PASS"}
+{"id":"1-strength-float-range-0-1","observed":{"hint":1,"hint_string":"0.0,1.0,0.0010000000475","type":3,"type_name":"float"},"status":"PASS"}
+{"id":"1-warn_color-type-color","observed":{"hint":0,"hint_string":"","type":20,"type_name":"Color"},"status":"PASS"}
+{"id":"2-source-defaults-and-modes","observed":{"render_mode":true,"shader_type":true,"strength":true,"warn_color":true,"warning":true},"status":"PASS"}
+{"id":"2-source-colour-line","observed":{"colour_line":true,"sampler_uniform":false,"writes_COLOR_a":false},"status":"PASS"}
+{"id":"3-five-forks-plate-1-none","observed":{"fork_plates":[2,3,4,5,6]},"status":"PASS"}
+{"id":"3-distinct-materials","observed":{"distinct_material_ids":5},"status":"PASS"}
+{"id":"3-none-is-the-base-tres","observed":{"base_is_preloaded_object":true,"plates_using_base_object":[]},"status":"PASS"}
+{"id":"3-one-shared-shader","observed":{"base_shader_path":"res://shaders/fork_warning.gdshader","distinct_shader_ids":1,"same_as_base_shader":true},"status":"PASS"}
+{"id":"4-strength-warn_color-equal-base","observed":{"base_reads_back":{"strength":{"type":"Nil","value":"<null>"},"warn_color":{"type":"Nil","value":"<null>"}},"mismatches":[]},"status":"PASS"}
+{"id":"5-start-values-are-the-brief-numbers","observed":{"expected_per_plate":[null,0.0,0.0,0.0,0.513888888888889,0.516666666666667]},"status":"PASS"}
+{"id":"5-first-frame-intro-plates-5-6-mid-shadow","observed":{"max_abs_diff":0.0,"state":0,"w":[null,0.0,0.0,0.0,0.513888888888889,0.516666666666667]},"status":"PASS"}
+{"id":"5-intro-holds-every-frame","observed":{"intro_frames":574,"max_abs_diff":0.0,"pan_ended_by_itself":true},"status":"PASS"}
+{"id":"5-intro-holds-every-tick","observed":{"intro_ticks_sampled":239,"max_abs_diff":0.0,"pan_ticks":240},"status":"PASS"}
+FORK WARNING TESTS: 15 checks / 0 failures
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

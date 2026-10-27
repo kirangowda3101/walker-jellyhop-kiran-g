@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"1-uniform-names","observed":{"names":["strength","warn_color","warning"]},"status":"PASS"}
+{"id":"1-warning-float-range-0-1","observed":{"hint":1,"hint_string":"0.0,1.0,0.0010000000475","type":3,"type_name":"float"},"status":"PASS"}
+{"id":"1-strength-float-range-0-1","observed":{"hint":1,"hint_string":"0.0,1.0,0.0010000000475","type":3,"type_name":"float"},"status":"PASS"}
+{"id":"1-warn_color-type-color","observed":{"hint":0,"hint_string":"","type":20,"type_name":"Color"},"status":"PASS"}
+{"id":"2-source-defaults-and-modes","observed":{"render_mode":true,"shader_type":true,"strength":true,"warn_color":true,"warning":true},"status":"PASS"}
+{"id":"2-source-colour-line","observed":{"colour_line":true,"sampler_uniform":false,"writes_COLOR_a":false},"status":"PASS"}
+{"id":"3-five-forks-plate-1-none","observed":{"fork_plates":[2,3,4,5,6]},"status":"PASS"}
+{"id":"3-distinct-materials","observed":{"distinct_material_ids":5},"status":"PASS"}
+{"id":"3-none-is-the-base-tres","observed":{"base_is_preloaded_object":true,"plates_using_base_object":[]},"status":"PASS"}
+{"id":"3-one-shared-shader","observed":{"base_shader_path":"res://shaders/fork_warning.gdshader","distinct_shader_ids":1,"same_as_base_shader":true},"status":"PASS"}
+{"id":"4-strength-warn_color-equal-base","observed":{"base_reads_back":{"strength":{"type":"Nil","value":"<null>"},"warn_color":{"type":"Nil","value":"<null>"}},"mismatches":[]},"status":"PASS"}
+{"id":"5-start-values-are-the-brief-numbers","observed":{"expected_per_plate":[null,0.0,0.0,0.0,0.513888888888889,0.516666666666667]},"status":"PASS"}
+{"id":"5-first-frame-intro-plates-5-6-mid-shadow","observed":{"max_abs_diff":0.0,"state":0,"w":[null,0.0,0.0,0.0,0.513888888888889,0.516666666666667]},"status":"PASS"}
+{"id":"5-intro-holds-every-frame","observed":{"intro_frames":120,"max_abs_diff":0.0,"pan_ended_by_itself":true},"status":"PASS"}
+{"id":"5-intro-holds-every-tick","observed":{"intro_ticks_sampled":239,"max_abs_diff":0.0,"pan_ticks":240},"status":"PASS"}
+FORK WARNING PER-TICK SEQUENCE MD5 (601 ticks x 5 forks): 35385bc4a519009a685ec285b3ba7529
+{"id":"6-per-tick-equals-formula","observed":{"exactly_equal":true,"first_mismatch":{},"max_abs_diff":0.0,"sequence_md5":"35385bc4a519009a685ec285b3ba7529","stayed_playing":true,"ticks":601},"status":"PASS"}
+{"id":"7-ramp-0-then-1-over-n-to-exactly-1-then-0","observed":{"2":{"complete_ramps":2,"errors":[],"shadow_ticks":96},"3":{"complete_ramps":2,"errors":[],"shadow_ticks":84},"4":{"complete_ramps":3,"errors":[],"shadow_ticks":78},"5":{"complete_ramps":2,"errors":[],"shadow_ticks":72},"6":{"complete_ramps":3,"errors":[],"shadow_ticks":60}},"status":"PASS"}
+{"id":"8-shadow-fork-glows-safe-fork-reads-0","observed":{"safe_plate":2,"safe_w":0.0,"shadow_plate":5,"shadow_w":0.513888888888889,"tick":241},"status":"PASS"}
+{"id":"9-per-frame-ramp-duration","observed":{"fps":0,"frames":421,"per_plate":{"2":{"bad":[],"expected_s":1.6,"ramps":[{"first":0.0104166666666667,"last":0.989583333333333,"seconds":1.59999999999999},{"first":0.0104166666666667,"last":0.989583333333333,"seconds":1.59999999999999}]},"3":{"bad":[],"expected_s":1.4,"ramps":[{"first":0.0119047619047619,"last":0.988095238095238,"seconds":1.4},{"first":0.0119047619047619,"last":0.988095238095238,"seconds":1.4}]},"4":{"bad":[],"expected_s":1.3,"ramps":[{"first":0.0128205128205128,"last":0.987179487179487,"seconds":1.3},{"first":0.0128205128205128,"last":0.987179487179487,"seconds":1.3},{"first":0.0128205128205128,"last":0.987179487179487,"seconds":1.3}]},"5":{"bad":[],"expected_s":1.2,"ramps":[{"first":0.0138888888888889,"last":0.986111111111111,"seconds":1.2},{"first":0.0138888888888889,"last":0.986111111111111,"seconds":1.2}]},"6":{"bad":[{"first":0.516666666666667,"last":0.983333333333333,"seconds":4.49999999999999}],"expected_s":1.0,"ramps":[{"first":0.516666666666667,"last":0.983333333333333,"seconds":4.49999999999999},{"first":0.0166666666666667,"last":0.983333333333333,"seconds":0.999999999999996},{"first":0.0166666666666667,"last":0.983333333333333,"seconds":0.999999999999996},{"first":0.0166666666666667,"last":0.983333333333333,"seconds":0.999999999999996}]}},"tolerance_s":0.0166666666666667},"status":"FAIL"}
+{"id":"9c-control-one-tick-late-fails-check-7","observed":{"errors_found_in_late_sequence":36},"status":"PASS"}
+{"id":"9c-control-frame-counted-ramp","observed":{"fps":0,"frame_counted_seconds":{"2":1.6,"3":1.4,"4":1.3,"5":1.2,"6":1.0},"plates_failing_rule_2":0},"status":"FAIL"}
+FORK WARNING TESTS: 21 checks / 2 failures
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

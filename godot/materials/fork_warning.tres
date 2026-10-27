@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" uid="uid://uw0kr563expl" path="res://shaders/fork_warning.gdshader" id="1_fork_warning"]
+
+[resource]
+shader = ExtResource("1_fork_warning")

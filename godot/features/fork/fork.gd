@@ -6,6 +6,7 @@ extends Node2D
 ## Hit zone = the visible tines: one polygon per tine, traced from the art's alpha.
 
 const T = preload("res://game/slice_tuning.gd")
+const WARNING_MATERIAL = preload("res://materials/fork_warning.tres")   # base; each fork's sprite gets a duplicate
 enum Phase { SAFE, SHADOW, DOWN, HOLD, UP }
 const ART_TIP_ROW := 1258.0       # first transparent row below the tips (tips end at row 1257)
 const ART_TINE_CENTER_X := 167.5  # centre of the tine span (9..326)
@@ -45,6 +46,7 @@ func setup(index: int, cycle: Dictionary) -> void:
 	sprite.offset = Vector2(-ART_TINE_CENTER_X, -ART_TIP_ROW)   # origin = tine tips
 	sprite.scale = Vector2.ONE * scale_factor
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	sprite.material = WARNING_MATERIAL.duplicate()   # one per fork, so each holds its own `warning` (CHANGE-BRIEF.md rule 7)
 	head.add_child(sprite)
 	hit_area = Area2D.new()
 	hit_area.collision_layer = 8   # Hazard
@@ -216,9 +218,17 @@ func is_warning() -> bool:
 	## Music "warning": the shadow grows and the strike lands (CONCEPT.md: fades back after the strike).
 	return not held and phase() in [Phase.SHADOW, Phase.DOWN, Phase.HOLD]
 
+func warning() -> float:
+	## Shader `warning` (CHANGE-BRIEF.md §2): the shadow growth during SHADOW; 0 in other phases or when held.
+	if held or phase() != Phase.SHADOW:
+		return 0.0
+	return shadow_amount()
+
 func _apply() -> void:
 	if head:
 		head.position.y = tip_y()
+	if sprite:
+		sprite.material.set_shader_parameter("warning", warning())
 	queue_redraw()
 
 func _draw() -> void:
