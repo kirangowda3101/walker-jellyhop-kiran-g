@@ -735,3 +735,80 @@ A dated note in ASSET-LOG.md after the Batch 3 section records the same confirma
 - **Human and AI:** Claude Code wrote the beat sheet, script, figures and on-screen text, generated Liam's narration with the local Kokoro voice, rendered and quality-checked the film, and chose the title, the labelled reconstruction in the opening, the Your Turn prompt and the next step; I kept them after watching. Claude chat checked the script against my session record with me. I set the rules for the run, rejected the unconfirmed Hue claim, confirmed the dome placement, and watched both exports.
 - **Traceability:** film sources in `youtube/claude-liam-jelly-hop-a3/` (SCRIPT.md, FACTCHECK.md, BUILD-LOG.md, MEDIA.md); final film `claude-liam-jelly-hop-a3.mp4`, 284.133 s, SHA-256 `10adb47d931ffa23d500f409658eee709397dcc48303ae61805a62aadfe599fc`; superseded overnight export `825ce7bf…` (said "Hue").
 - **Published (2026-10-13):** I uploaded the final film to YouTube as Unlisted (https://youtu.be/RBnJpG0Cnjc) and checked that it plays in a logged-out private window. Before submitting, I moved the `a3` tag twice: from a2e38b5 to a11e6ff to remove a committed Python cache file, then to the commit that adds this film link.
+
+## Assignment 5 — Shaders, materials and the Godot shading language (2026-10-27 to 2026-10-28)
+
+Organised with Claude in chat from our session record and the commits; every entry is something that actually happened, and I checked each one. "I" is me (Kiran); "the agent" is Claude Code; "Claude" is the chat assistant that guided me step by step.
+
+### A5-1 The spec, before any shader (1b4acb1)
+- **Tried:** chose the fork's SHADOW phase as my state (a gold glow ramping with the shadow), mix toward amber, strength 0.65, kept the Compatibility renderer.
+- **Checked / changed:** before committing I made four edits myself: "before shader implementation" in the header, "to be hand-written", durations at `time_scale = 1.0`, and splitting per-tick from per-frame checks, because at 30 fps a frame spans two ticks and could skip the first SHADOW value.
+- **Learned:** that split later mattered. In session 2c the 30 fps per-frame ramp ended at `(n−1)/n`, not `1.0`, exactly the case I had written into rule 1.
+
+### A5-2 Keeping the old rules (99e2020, 920a890)
+- **Difficulty:** the agent would overwrite my A2/A3 CLAUDE.md and its honesty and assertion rules would silently disappear.
+- **Response:** archived the old file unchanged, moved the lasting rules into AGENTS.md, and added two clarifications of my own: `.import` sidecars may change while source files may not, and `standard_generated.gdshader` is Godot's output, not hand-written.
+
+### A5-3 CLAUDE.md draft and review (0837d18, dda6bd9)
+- **Expected:** the agent would only run git and `ls`.
+- **What happened:** `file`, `wc`, `head` and `which` ran too; only one compound `grep` was denied. So the permissions did not contain the agent; the `git diff godot/shaders/` check after every session was the real guarantee.
+- **Checked:** all ~35 line references (all correct), then 5 corrections. I added a "Headless facts" block confirmed by a probe at 30/60/144 fps (probe written by Claude): defaults are not reported headlessly, an undeclared uniform name is stored silently, and `time_scale` changes `delta` but not the tick count.
+
+### A5-4 Protecting the shaders in prompt 2
+- **Spotted:** the course command blocks `Edit(godot/shaders/**)` but not `Write`, so a shader could still be overwritten. I added `Write(godot/shaders/**)` and protected `scripts/run-test.sh` in every implementation run.
+- **Decided:** run a read-only planning session first (2a), then write my approval as its own prompt (2b), so the plan and my decisions are separate in history.
+
+### A5-5 Driver and test: two stops, then a narrow standing approval (0b5934f, ffe81f0, 2385d6b)
+- **What happened:** the agent stopped twice, as my rules required, on the same bug in its own test: it read sampler rows before the sampler had recorded the frame.
+- **Response:** I approved each fix after reading it, then gave a standing approval for that one failure kind only, with each fix reported and any other failure still stopping the run.
+- **Checked:** I read the test, not the summary: a grep showed it never calls `advance()` / `_apply()`, never sets the uniform, and never writes `t`, `held` or `state`. 29 / 0 at 30, 60, 144, with identical per-tick MD5s.
+
+### A5-6 What the rename mutation taught me (17eedef)
+- **Surprise:** after renaming `warning` in my shader only, **25 of 29 checks still passed**, because `set_shader_parameter` stores an undeclared name and reads it back. Only the uniform-list check failed.
+- **Learned:** value round-trips can look perfect while the shader never sees the value. The name contract has to be checked against the shader itself.
+
+### A5-7 Editor slips I caught by reading files, not the screen (25468ed)
+- **What happened:** after Duplicate, my polished-board values were saved into `table_wood_worn.tres`; `cat` showed the files swapped. Separately, `A3Assets` was dragged to (3.42, 1.47, −2.78) inside my A5 scene, which I found when the serving board floated off the table and the saved `.tscn` showed the transform. Once I also had the `a3_assets` tab open with unsaved changes; I closed it without saving and `git status` confirmed the A3 scene was untouched.
+- **Response:** fixed each material only after checking Inspector → Resource → Path, reset `A3Assets` to the origin, switched to the select tool, and created the hint materials fresh instead of duplicating.
+- **Learned:** an editor slip is invisible until you read the saved file.
+
+### A5-8 The audit corrected my spec (444bfff, 07106ef, fada7c4)
+- **Agent found:** a `BoxMesh` top face is a 1/3 × 1/2 UV slice, so my §7 claim that `uv_scale` means "repeats across the surface" was wrong; and `a5_materials.tscn` has no environment.
+- **I decided** (Revision 4): correct the spec and keep the meshes and the test expectations; state the lighting as Sun only, no ambient, and judge only from in-engine captures.
+- **My review of the audit:** confirmed the `.import` enum names by name in the Import dock (`compress/normal_map` is hidden and inert in Lossless), checked with `file` that the PNGs are 16-bit (Godot decodes them to 8-bit), and deleted the agent's unmeasured video-memory estimate.
+
+### A5-9 Fresh cache: a reproducible crash (75c15e3)
+- **What happened:** after `rm -rf godot/.godot`, the first headless `--import` segfaulted (exit 139) and the material test showed 81 checks / 9 failures. I reran it with the full log saved: the crash repeated (2 / 2), always at `reimport | SFX-WIN.ogg`, one of my A2 sounds, and the second `--import` always completed, after which the test passed 108 / 0.
+- **Response:** recorded the workaround (run `--import` twice on a fresh clone). The root cause is unresolved.
+
+### A5-10 Captures: one plan failed, one prediction failed (71e1c9b, abca5cc, 0891ad4, 83bb26d)
+- **Failed plan:** my P1 at art (168, 300) was flat in the art but never on screen, because the fork is taller than the 720 px view. I moved P1 to (194, 1144) in Revision 5 before re-capturing; every fork pixel then matched my predictions within one 8-bit step, and `warning = 2.0` showed `hint_range` does not clamp a code-set value.
+- **Failed prediction:** on Compatibility the hint experiment showed 64/128/192 on both quads, not 137/188/225 without `source_color`. I ran the same script once on Forward+ with a command-line override (project unchanged): 64/128/192 and 137/188/225, exactly my §8 predictions. The difference is the renderer.
+- **Also:** while watching, I asked why some forks were already gold and one suddenly turned gold. The sudden one was the script setting values; the others were frozen mid-SHADOW (rules 4 and 5).
+
+### A5-11 The sweep: two controls I could not see (a1ee038)
+- **What I saw:** `roughness_scale` and `normal_strength` "all look the same". A pixel difference agreed: roughness changes the table by at most 20 / 255 with no Sun highlight, and normal strength by at most 2 / 255. My §7 prediction of a sharp highlight did not hold under Sun-only lighting.
+
+### Still unresolved
+- Why Compatibility shows the hint strip unchanged with and without `source_color` on this unshaded path.
+- The exact difference between Godot's `hint_roughness_normal` and my `hint_normal`.
+- Whether the table's `tint` is converted to linear (not measured).
+- Whether the normal map's flatness is really why `normal_strength` shows nothing (hypothesis, not tested).
+- The root cause of the fresh-cache import segfault.
+
+### Who did what (A5)
+
+| Part | Me | Claude Code (agent) | Claude (chat) |
+|---|---|---|---|
+| CHANGE-BRIEF.md + 5 revisions | every decision and edit | — | drafted wording from my decisions; computed predictions with me |
+| AGENTS.md | kept/removed rules, 2 clarifications | — | adapted my A2 rules |
+| CLAUDE.md | review: 5 corrections, headless facts | draft (session 1) | probe script |
+| `fork_warning`, `table_wood`, `hint_experiment` shaders | **hand-written** | never edited them | explained syntax; reviewed |
+| `standard_generated.gdshader` | converted in the editor, saved unedited | — | scratch scene file |
+| Driver, base material, `test_fork_warning.gd` | approved plan and each fix; read the test | wrote them (2a–2d) | prompts drafted with me |
+| Materials, scenes | made in the editor; fixed my slips | — | hint scene file text |
+| Audit, `test_materials.gd`, MATERIALS.md | review and corrections; decisions | wrote them (session 3) | — |
+| Capture / probe / calibration scripts | ran them; judged results | — | wrote them |
+| Mutations, playtest, sweep, OS screenshot | **did them; my observations** | — | measured pixel differences |
+| LANGUAGE-NOTES.md | **all answers, my words** | — | explained concepts; 2 accuracy fixes I accepted |
+| TEST-REPORT.md, this log | checked every entry | — | organised from the record |
