@@ -4,7 +4,7 @@ Audit of the materials named in CHANGE-BRIEF.md §7 and §8, written by Claude C
 
 The fork shader (`fork_warning.gdshader`, `fork_warning.tres`) is out of scope here. `test_fork_warning.gd` covers it.
 
-**Enum names.** Engine enums (`Environment.ToneMapper`, `Environment.BGMode`, `Image.Format` and others) were looked up at run time from the running engine with `ClassDB.class_get_enum_constants()`, and the test prints them. The `.import` integers (`compress/mode`, `compress/normal_map`, `roughness/mode`, `detect_3d/compress_to`) belong to the editor's texture importer, which `ClassDB` does not expose. In this session I could not look them up: fetching the Godot source and docs was declined, and the Godot binary is outside the directories I may read. They are given below as integers only. The names in brackets come from CHANGE-BRIEF.md Revision 2, which itself says "to be confirmed in the editor's Import dock". **Not confirmed by me.**
+**Enum names.** Engine enums (`Environment.ToneMapper`, `Environment.BGMode`, `Image.Format` and others) were looked up at run time with `ClassDB.class_get_enum_constants()`, and the test prints them. The `.import` integers belong to the editor's texture importer, which `ClassDB` does not expose, and the agent could not look them up. **Confirmed by Kiran by name in the editor's Import dock (2026-10-27):** `compress/mode=0` Lossless, `mipmaps/generate=true` On, `roughness/mode=1` Disabled, `detect_3d/compress_to=0` Disabled. `compress/normal_map` is hidden in the dock while the mode is Lossless. Godot's `ResourceImporterTexture` documentation describes it as choosing RGTC VRAM compression for normal maps (default 0 = Detect), so in Lossless mode it does not change the stored data; a non-Detect value still stops the editor from changing it and reimporting.
 
 **Tolerances (my choice).** Floats: 1e-5. The editor saves float32 values as doubles, for example `uv_scale = 2.000000083125`. Colours: 1/255 per channel, one 8-bit step, because the Inspector snaps colours to 8 bits (`0.85` is saved as `0.8509804` = 217/255).
 
@@ -112,14 +112,14 @@ These are the same values as the Revision 3 calibration.
    - This matches §7 "the A3 Sun as committed", but the hint experiment controls tonemap and exposure while the table scene does not. So the §7 `source_color`-on-`tint` prediction would be judged under different output settings from the §8 experiment.
 
 3. **Three 2K textures are bound uncompressed** (`compress/mode=0` on diff, rough and nor_gl).
-   - My estimate, not measured: about 16–21 MiB of video memory each with mipmaps (12 MiB RGB8 at the top level, more if the driver expands to RGBA), so about 50–65 MiB for one table and one board.
+   - Video memory: not measured. (Corrected by Kiran, 2026-10-27: the agent's estimate was removed because nobody measured it.)
    - This is the brief's choice (§7, Revision 2). I record it as cost, not as an error.
    - The roughness map is grey in all three channels (above), so three channels carry one channel of data.
 
 4. **The source PNGs are larger than 8-bit RGB would need.**
    - `dark_wood_diff_2k.png` is 21 249 991 bytes; raw 2048 × 2048 × 3 bytes is 12 582 912. Both normal maps are about 18.6 MB.
    - That suggests the files are 16 bits per channel. Godot decodes them as `FORMAT_RGB8`, so the extra precision would be dropped on import.
-   - **Not confirmed**: `file` and `xxd` on the headers needed approval and were not run. Kiran can check with `file godot/assets/textures/dark_wood/*.png`.
+   - **Confirmed by Kiran with `file` (2026-10-27):** all four Dark Wood PNGs are 16-bit/colour RGB; the hint strip is 8-bit RGB. Godot decodes the Dark Wood maps to `FORMAT_RGB8` (measured with `get_format()`), so the 8-bit quantization that pulls the curl ratio toward 1 comes from Godot's PNG decode, not from the source files.
    - The diffuse is 4.2 MB under the 25 MB repository limit (AGENTS.md).
 
 5. **`dark_wood_nor_dx_2k.png` is imported but bound by nothing** (`dx_normal_map_not_bound` PASS).
@@ -160,7 +160,7 @@ A headless run uses a dummy renderer and draws nothing. So `test_materials.gd` c
 - **Hint experiment:** the predicted 64/128/192 vs 137/188/225 values, or whether `source_color` decodes at all on Compatibility.
 - **Tint conversion:** whether `tint` arrives linearised (the §7 prediction 0.85 → 0.69).
 - **Normal map on the GPU:** whether the normal map bends light in the right direction. The curl ratio checks the file's convention, not how it is lit.
-- **Import and memory:** whether `compress/normal_map=1` changes the imported data, and how much video memory the textures use.
+- **Import and memory:** how much video memory the textures use (not measured). `compress/normal_map=1` does not change the imported data while the mode is Lossless (the option is hidden in the Import dock; see the enum note above). (Updated by Kiran, 2026-10-27.)
 - **Lighting without an environment:** what Compatibility does with no `Environment` in `a5_materials.tscn`.
 - **UV orientation:** which axis U follows on the `BoxMesh` top face. The test measures extents only.
 
