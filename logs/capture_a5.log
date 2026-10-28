@@ -1,7 +1,19 @@
 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
 
-CAPTURE fork: no fork with P1 and P2 on screen
+CAPTURE fork found after 278 frames
+CAPTURE fork plate=2 warning=0.00 P1 measured=[179, 183, 184] predicted=[179, 183, 184] 5x5min=[178, 183, 183] 5x5max=[180, 184, 184]
+CAPTURE fork plate=2 warning=0.00 P2 measured=[114, 127, 129] predicted=[113, 126, 128] 5x5min=[112, 125, 127] 5x5max=[116, 129, 131]
+CAPTURE fork plate=2 warning=0.00 BG measured=[105, 65, 45] predicted=- 5x5min=[105, 65, 45] 5x5max=[106, 66, 45]
+CAPTURE fork plate=2 warning=0.50 P1 measured=[204, 182, 147] predicted=[204, 182, 147] 5x5min=[203, 182, 147] 5x5max=[204, 183, 147]
+CAPTURE fork plate=2 warning=0.50 P2 measured=[160, 144, 110] predicted=[159, 143, 109] 5x5min=[158, 143, 108] 5x5max=[161, 145, 112]
+CAPTURE fork plate=2 warning=0.50 BG measured=[105, 65, 45] predicted=- 5x5min=[105, 65, 45] 5x5max=[106, 66, 45]
+CAPTURE fork plate=2 warning=1.00 P1 measured=[229, 181, 110] predicted=[228, 180, 111] 5x5min=[228, 181, 110] 5x5max=[229, 181, 110]
+CAPTURE fork plate=2 warning=1.00 P2 measured=[206, 161, 91] predicted=[205, 160, 91] 5x5min=[205, 160, 90] 5x5max=[207, 162, 92]
+CAPTURE fork plate=2 warning=1.00 BG measured=[105, 65, 45] predicted=- 5x5min=[105, 65, 45] 5x5max=[106, 66, 45]
+CAPTURE fork plate=2 warning=2.00 P1 measured=[255, 178, 37] predicted=[255, 178, 37] 5x5min=[255, 178, 37] 5x5max=[255, 178, 37]
+CAPTURE fork plate=2 warning=2.00 P2 measured=[255, 195, 53] predicted=[255, 195, 54] 5x5min=[255, 194, 53] 5x5max=[255, 195, 54]
+CAPTURE fork plate=2 warning=2.00 BG measured=[105, 65, 45] predicted=- 5x5min=[105, 65, 45] 5x5max=[106, 66, 45]
 CAPTURE hint with_source_color band0 (file value 64) measured=[64, 64, 64] predicted=64 5x5min=[64, 64, 64] 5x5max=[64, 64, 64]
 CAPTURE hint with_source_color band1 (file value 128) measured=[128, 128, 128] predicted=128 5x5min=[128, 128, 128] 5x5max=[128, 128, 128]
 CAPTURE hint with_source_color band2 (file value 192) measured=[192, 192, 192] predicted=192 5x5min=[192, 192, 192] 5x5max=[192, 192, 192]

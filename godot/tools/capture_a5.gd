@@ -5,10 +5,10 @@ extends SceneTree
 
 const OUT_REL := "../evidence/a5-captures"
 const PLAYING := 1   # session.gd enum State { INTRO, PLAYING, ... }
-const FORK_PX := {"P1": Vector2(168, 300), "P2": Vector2(298, 850), "BG": Vector2(60, 300)}
+const FORK_PX := {"P1": Vector2(194, 1144), "P2": Vector2(298, 850), "BG": Vector2(-40, 1144)}
 const WARNINGS := [0.0, 0.5, 1.0, 2.0]
 const PRED := {
-    "P1": {0.0: [179, 188, 187], 0.5: [204, 185, 149], 1.0: [228, 182, 112], 2.0: [255, 176, 36]},
+    "P1": {0.0: [179, 183, 184], 0.5: [204, 182, 147], 1.0: [228, 180, 111], 2.0: [255, 178, 37]},   # CHANGE-BRIEF.md Revision 5
     "P2": {0.0: [113, 126, 128], 0.5: [159, 143, 109], 1.0: [205, 160, 91], 2.0: [255, 195, 54]},
 }
 const HINT_PRED := {"with_source_color": [64, 128, 192], "without_source_color": [137, 188, 225]}
@@ -74,14 +74,18 @@ func _fork_captures() -> void:
     while game.state != PLAYING and t < 1200:
         await process_frame
         t += 1
-    await _frames(30)
-    game.set_physics_process(false)   # forks stop advancing, so the driver in fork.gd writes nothing
     var vis := root.get_visible_rect()
     var fork = null
-    for f in game.forks:
-        if f and vis.has_point(_fork_point(f, FORK_PX["P1"])) and vis.has_point(_fork_point(f, FORK_PX["P2"])):
-            fork = f
-            break
+    var waited := 0
+    while fork == null and waited < 1200:   # wait until a fork is down far enough for P1 and P2 to be on screen
+        await process_frame
+        waited += 1
+        for f in game.forks:
+            if f and vis.has_point(_fork_point(f, FORK_PX["P1"])) and vis.has_point(_fork_point(f, FORK_PX["P2"])):
+                fork = f
+                break
+    print("CAPTURE fork found after ", waited, " frames")
+    game.set_physics_process(false)   # forks stop advancing, so the driver in fork.gd writes nothing
     if fork == null:
         print("CAPTURE fork: no fork with P1 and P2 on screen")
         results["fork"] = {"error": "no fork with P1 and P2 on screen"}
