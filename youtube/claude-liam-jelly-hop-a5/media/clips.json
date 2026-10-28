@@ -1,0 +1,125 @@
+{
+ "take": "run-a5",
+ "parts": [
+  {
+   "ticks": [
+    1,
+    600
+   ],
+   "frames_30fps": 300,
+   "label": "excerpt 1 of 2 \u00b7 ticks 1\u2013600 \u00b7 intro pan, then play",
+   "tags_first_last": [
+    [
+     1,
+     5,
+     "SHADOW",
+     0.5139
+    ],
+    [
+     599,
+     4,
+     "SHADOW",
+     0.9231
+    ]
+   ]
+  },
+  {
+   "ticks": [
+    1085,
+    1234
+   ],
+   "frames_30fps": 75,
+   "label": "excerpt 2 of 2 \u00b7 ticks 1085\u20131234 \u00b7 after the win (state WON)",
+   "tags_first_last": [
+    [
+     1085,
+     5,
+     "HOLD",
+     0.0
+    ],
+    [
+     1233,
+     6,
+     "SHADOW",
+     0.1833
+    ]
+   ]
+  }
+ ],
+ "label_regions": [
+  {
+   "label": "capture label",
+   "box": [
+    0.0521,
+    0.0556,
+    0.5971,
+    0.0926
+   ]
+  },
+  {
+   "label": "excerpt label",
+   "box": [
+    0.0521,
+    0.0991,
+    0.3935,
+    0.1361
+   ]
+  },
+  {
+   "label": "fork tags",
+   "box": [
+    0.0307,
+    0.8611,
+    0.9758,
+    0.9009
+   ]
+  }
+ ],
+ "frames_30fps": 375,
+ "duration_s": 12.5,
+ "sha256": "c2afddd923ee2978f6982a2d349104bafe3f5e60b80ba607a0d200111fea48b4",
+ "held": {
+  "held-t455.png": {
+   "tick": 455,
+   "sha256": "017065786f183bb8e842e929b692053e4e8d7bdadd7303b9e696a54a40f08fa6",
+   "forks": [
+    [
+     2,
+     "SHADOW",
+     0.875
+    ],
+    [
+     3,
+     "SAFE",
+     0.0
+    ],
+    [
+     4,
+     "SAFE",
+     0.0
+    ]
+   ]
+  },
+  "held-t60.png": {
+   "tick": 60,
+   "sha256": "dd13358e7d047bbccaacba409cf4e06d7c9b5261ade78a0803dfd5006c8e064b",
+   "forks": [
+    [
+     4,
+     "SAFE",
+     0.0
+    ],
+    [
+     5,
+     "SHADOW",
+     0.5139
+    ],
+    [
+     6,
+     "SHADOW",
+     0.5167
+    ]
+   ]
+  }
+ }
+}

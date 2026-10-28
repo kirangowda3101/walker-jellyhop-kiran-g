@@ -1,0 +1,16 @@
+snapshot: 77a6d10fd6b9548355a194454f3e1d65148d0758 -> /Users/kiran/Documents/jellyhop-a5-film-work/snapshot
+build_id: 7da8a555f6c137f4f660043245ddabe8623730abfdbb39edcec42eccf48f0768 (134 files in godot/)
+import: ok
+-- run-a5 (main route)
+Movie Maker mode enabled, recording movie in 3840×2160 @ 60 FPS...
+CAPTURE OK: route complete: fork splat=true cause=fork wins=1
+1241 frames at 60 FPS (movie length: 00:00:20:41), recorded in 00:01:56 (17% of real-time speed).
+video: mjpeg,3840,2160,60/1   audio: pcm_s16le,48000,2
+0b545b7d9eed2558d7888d90d08016d7cfc84b8d9c4d8564331f574fb58a78be  run-a5.avi
+232c3861bfba75aae31426c948a55c5b1be5ce5d017ff250efb94e61fc163d1d  run-a5-inputs.jsonl
+rev: 77a6d10fd6b9548355a194454f3e1d65148d0758
+build_id: 7da8a555f6c137f4f660043245ddabe8623730abfdbb39edcec42eccf48f0768
+godot: 4.7.2.stable.official.ed1daf0bf
+recorded: 2026-10-28 03:02 EDT
+work_dir: /Users/kiran/Documents/jellyhop-a5-film-work
+CAPTURES OK

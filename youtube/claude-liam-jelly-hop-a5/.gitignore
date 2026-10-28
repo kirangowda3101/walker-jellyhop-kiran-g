@@ -1,0 +1,17 @@
+# Regenerable or large render products: kept out of git (MEDIA.md records the final film's SHA-256).
+*.avi
+*.wav
+*.mp4
+*.mp3
+media/*.mp4
+mp3/
+mp4/
+clips/
+exports/
+_qc/frames/
+build-state.json
+*.verified.json
+qc-sheet.png
+audio/
+_qc/beats/
+_qc/final/

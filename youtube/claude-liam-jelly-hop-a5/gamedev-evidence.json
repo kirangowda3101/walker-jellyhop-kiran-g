@@ -1,0 +1,794 @@
+{
+ "schema_version": 1,
+ "teaching_contract": "code-then-result-v1",
+ "game_revision": "77a6d10",
+ "files": [
+  {
+   "path": "MATERIALS.md",
+   "sha256": "2220fb59c38120c259b6dc5297f1bd3ebb7f23511cf9d353eb85d3dbb522efa5",
+   "role": "source",
+   "component_ids": [
+    "a5-material-checks"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/ATTRIBUTION.md",
+   "sha256": "b1266ffec66344ad8bc4024b76fca96ab00e529042d5e29e567453eb3b465b59",
+   "role": "asset",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_diff_2k.png",
+   "sha256": "50f9851c30a8bf25382c2dab02536672322c4c74aa0b377681724f538d23767e",
+   "role": "asset",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_diff_2k.png.import",
+   "sha256": "a7d9ba3331d8e19ec2736b7955c460b539bc9a7e990f4f4a57aedffbbed796b3",
+   "role": "import settings",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_dx_2k.png",
+   "sha256": "bc196f8ba1f98d8edbec0e06d1dea329433475630b2db908eae976685c0b98cf",
+   "role": "asset",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_dx_2k.png.import",
+   "sha256": "0dc186de54a58450f454dd114938fe2500d8bb5dff20a240e16e1490867af535",
+   "role": "import settings",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_gl_2k.png",
+   "sha256": "5607cf76d8da2844ee285fbabdc79976e18240e13efe6927a368c8cb06bf9148",
+   "role": "asset",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_gl_2k.png.import",
+   "sha256": "f5a4ff434f0b867107be9cab05cf087fc0ae501d48d17b5ddd9e3f1ccf0256ff",
+   "role": "import settings",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_rough_2k.png",
+   "sha256": "48c261df0cb7ad17a2966555057eba54a4b67519b3b7647575f07ac2f3367e4e",
+   "role": "asset",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_rough_2k.png.import",
+   "sha256": "83858abda2cb995e8ab63a3c0af9800c1ed6e2506c7f0c780d7823b6bb6dc90c",
+   "role": "import settings",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "assets/textures/hint_strip/hint_strip_3x1.png",
+   "sha256": "deb9df2a9689dd2297f2d37a3fa2759104f49dbb2eb3e33c00e1fa6292060ca6",
+   "role": "asset",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "assets/textures/hint_strip/hint_strip_3x1.png.import",
+   "sha256": "a17e7d8a99322ab75a3c6e653c3a28c796c439e59558be801e897b078e23e3f9",
+   "role": "import settings",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "features/fork/fork.gd",
+   "sha256": "6dee88b04a5c12f67fdabe4fc7424209dbc2a25dd6b52f8f221d496ed25af81f",
+   "role": "source",
+   "component_ids": [
+    "a5-fork-warning"
+   ]
+  },
+  {
+   "path": "materials/fork_warning.tres",
+   "sha256": "55298cede7ffab818d72f9030ef570c9b4451a550dc7c0026dc1b2e9212b0ff4",
+   "role": "source",
+   "component_ids": [
+    "a5-fork-warning"
+   ]
+  },
+  {
+   "path": "materials/hint_with_source_color.tres",
+   "sha256": "bb2de61156cbf635e2a34999a3233af0bea2880fa1a9ab83d92a02337ebe7c78",
+   "role": "source",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "materials/hint_without_source_color.tres",
+   "sha256": "cf18b4e1c71fd5a3455112ee3eabab82300ba0cc27c9d15b61393846cdabbb07",
+   "role": "source",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "materials/serving_board_polished.tres",
+   "sha256": "aa29618116161a3e80b22c4023d33a0e1c8ed5ad0c977c955531deff604a989f",
+   "role": "source",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "materials/table_wood_worn.tres",
+   "sha256": "9f6798456a2823a274647f777d800518eddb7dbb43b37fa7a0bb5b79b3629c01",
+   "role": "source",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "project.godot",
+   "sha256": "c0be287109e74f3f26655a1e5bc4f1af80366e55941e472196fe06f98b4b87ba",
+   "role": "source",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "scratch/standard_scratch.tscn",
+   "sha256": "88b6852209a014026410d86c8f372256e385dc28cca86231b17514a664cf1ac4",
+   "role": "source",
+   "component_ids": [
+    "a5-generated"
+   ]
+  },
+  {
+   "path": "shaders/fork_warning.gdshader",
+   "sha256": "84a2fe18c7b39b818dfe4dae8b9323f8dcc0c2dfc2d8c32656842df594226bf0",
+   "role": "source",
+   "component_ids": [
+    "a5-fork-warning"
+   ]
+  },
+  {
+   "path": "shaders/hint_experiment.gdshader",
+   "sha256": "fd24a384ad328190e02cdb3d46ab978998df3d0a7c5019ebc095b076fa1ddca2",
+   "role": "source",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "shaders/standard_generated.gdshader",
+   "sha256": "ca1c191c44fb614ae64a258fce3efbc13b77fdc82f480e98ac4582e30805650d",
+   "role": "source",
+   "component_ids": [
+    "a5-generated"
+   ]
+  },
+  {
+   "path": "shaders/table_wood.gdshader",
+   "sha256": "cd779d5577193a92cf8e48ec2e459597eeaa184f708a27d10339530ec57b5156",
+   "role": "source",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "showcase/a5_materials.tscn",
+   "sha256": "b8ea385767fa1272f7b026066f46efb338a50c4ab59b60118fb8d1ac01b39534",
+   "role": "source",
+   "component_ids": [
+    "a5-table-wood"
+   ]
+  },
+  {
+   "path": "showcase/hint_experiment.tscn",
+   "sha256": "0f0347f801ef3807b21c207cbf5018d794666ae0a210ddcbe81ad42c12cf70e0",
+   "role": "source",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  },
+  {
+   "path": "tests/calibrate_normal_check.gd",
+   "sha256": "2964b8590a65eefc7a6dd95218bcff5bf48a1d395cc8b5a8683bc9360545a7f4",
+   "role": "source",
+   "component_ids": [
+    "a5-material-checks"
+   ]
+  },
+  {
+   "path": "tests/normal_map_check.gd",
+   "sha256": "1b694d200c2ab8b9aa6a9fb075f2d2d5c4994752d22fbe84925eee40084560af",
+   "role": "source",
+   "component_ids": [
+    "a5-material-checks"
+   ]
+  },
+  {
+   "path": "tests/probe_headless.gd",
+   "sha256": "2bd7bdac28b687c882c937ee3a913c070160974b5672cb758b97bddeab4dfad8",
+   "role": "source",
+   "component_ids": [
+    "a5-fork-test"
+   ]
+  },
+  {
+   "path": "tests/test_fork_warning.gd",
+   "sha256": "46467f0245f85e570ec75dccfac427c618da43b508ab1c5ba919650740e86d79",
+   "role": "source",
+   "component_ids": [
+    "a5-fork-test"
+   ]
+  },
+  {
+   "path": "tests/test_materials.gd",
+   "sha256": "2f2bad7423075fda6a987a7761c9980d93e7aa8a5a269fa29bd7b88a0c527afc",
+   "role": "source",
+   "component_ids": [
+    "a5-material-checks"
+   ]
+  },
+  {
+   "path": "tools/capture_a5.gd",
+   "sha256": "d4119db85c2731d24099d5e3ea39d7355f349cc60a83b12a37f956590a73f103",
+   "role": "source",
+   "component_ids": [
+    "a5-captures"
+   ]
+  },
+  {
+   "path": "tools/capture_shared.gd",
+   "sha256": "2a3444cae20113a7b83ca203fdcaf8894a89f4fd54b49bce803aa7eab2a3b59f",
+   "role": "source",
+   "component_ids": [
+    "a5-captures"
+   ]
+  },
+  {
+   "path": "tools/make_hint_strip.gd",
+   "sha256": "a7bbe9a7945fdf04742e07f54b6c47b6d362e97490248aa698d5243f612d67af",
+   "role": "source",
+   "component_ids": [
+    "a5-hint-experiment"
+   ]
+  }
+ ],
+ "exclusions": [
+  {
+   "path": ".gitignore",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/models/dome.glb",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/models/dome.glb.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/models/fork.glb",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/models/fork.glb.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/models/platform.glb",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "assets/models/platform.glb.import",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "audio/music_controller.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "audio/sound_events.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "features/player/player.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "features/player/tuning.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "game/main.tscn",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "game/session.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "game/slice_tuning.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "showcase/a3_assets.tscn",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/capture_poses.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/capture_slice.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/route_driver.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/test_a3_assets.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/test_game.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/test_keyboard.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/test_slice.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "tests/trace_audio.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  },
+  {
+   "path": "ui/hud.gd",
+   "reason": "Assignment 2 or 3 file, not changed by A5 and outside this A5 film's scope (explained in the A2 and A3 films, youtube/claude-liam-jelly-hop-gamedev/ and youtube/claude-liam-jelly-hop-a3/)."
+  }
+ ],
+ "components": [
+  {
+   "id": "a5-fork-warning",
+   "explanation": "The fork warning: Kiran's canvas_item shader, the base ShaderMaterial, and the presentation-only driver in fork.gd (warning(), _apply(), one duplicate material per fork).",
+   "beat_ids": [
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07"
+   ],
+   "files": [
+    "features/fork/fork.gd",
+    "materials/fork_warning.tres",
+    "shaders/fork_warning.gdshader"
+   ]
+  },
+  {
+   "id": "a5-fork-test",
+   "explanation": "The headless driver test: the brief's formula per tick at 30/60/144 fps, intro, pause, time scale, splat, distinct materials; and the headless probe behind CLAUDE.md's headless facts.",
+   "beat_ids": [
+    "B08",
+    "B09",
+    "B10"
+   ],
+   "files": [
+    "tests/probe_headless.gd",
+    "tests/test_fork_warning.gd"
+   ]
+  },
+  {
+   "id": "a5-table-wood",
+   "explanation": "Kiran's spatial wood shader, the two materials made from it, the A5 scene, and the Dark Wood textures with their import settings and attribution.",
+   "beat_ids": [
+    "B02",
+    "B11",
+    "B12",
+    "B15",
+    "B16",
+    "B18"
+   ],
+   "files": [
+    "assets/textures/dark_wood/ATTRIBUTION.md",
+    "assets/textures/dark_wood/dark_wood_diff_2k.png",
+    "assets/textures/dark_wood/dark_wood_diff_2k.png.import",
+    "assets/textures/dark_wood/dark_wood_nor_dx_2k.png",
+    "assets/textures/dark_wood/dark_wood_nor_dx_2k.png.import",
+    "assets/textures/dark_wood/dark_wood_nor_gl_2k.png",
+    "assets/textures/dark_wood/dark_wood_nor_gl_2k.png.import",
+    "assets/textures/dark_wood/dark_wood_rough_2k.png",
+    "assets/textures/dark_wood/dark_wood_rough_2k.png.import",
+    "materials/serving_board_polished.tres",
+    "materials/table_wood_worn.tres",
+    "shaders/table_wood.gdshader",
+    "showcase/a5_materials.tscn"
+   ]
+  },
+  {
+   "id": "a5-hint-experiment",
+   "explanation": "The hint experiment: one grey strip read with and without source_color, its two materials and scene, the script that wrote the strip, and the project setting naming the Compatibility renderer.",
+   "beat_ids": [
+    "B13",
+    "B14"
+   ],
+   "files": [
+    "assets/textures/hint_strip/hint_strip_3x1.png",
+    "assets/textures/hint_strip/hint_strip_3x1.png.import",
+    "materials/hint_with_source_color.tres",
+    "materials/hint_without_source_color.tres",
+    "project.godot",
+    "shaders/hint_experiment.gdshader",
+    "showcase/hint_experiment.tscn",
+    "tools/make_hint_strip.gd"
+   ]
+  },
+  {
+   "id": "a5-generated",
+   "explanation": "Godot's generated shader (Convert to ShaderMaterial, saved unedited) and the scratch scene it came from.",
+   "beat_ids": [
+    "B17",
+    "B19"
+   ],
+   "files": [
+    "scratch/standard_scratch.tscn",
+    "shaders/standard_generated.gdshader"
+   ]
+  },
+  {
+   "id": "a5-material-checks",
+   "explanation": "The agent's materials audit and test, and the handout's curl check with its calibration.",
+   "beat_ids": [
+    "B10",
+    "B16"
+   ],
+   "files": [
+    "MATERIALS.md",
+    "tests/calibrate_normal_check.gd",
+    "tests/normal_map_check.gd",
+    "tests/test_materials.gd"
+   ]
+  },
+  {
+   "id": "a5-captures",
+   "explanation": "The scripted in-engine capture scripts (by Claude in chat, run by Kiran) behind every A5 capture shown.",
+   "beat_ids": [
+    "B05",
+    "B12",
+    "B14",
+    "B18"
+   ],
+   "files": [
+    "tools/capture_a5.gd",
+    "tools/capture_shared.gd"
+   ]
+  }
+ ],
+ "excerpts": [
+  {
+   "beat_id": "B04",
+   "path": "shaders/fork_warning.gdshader",
+   "start_line": 1,
+   "end_line": 10,
+   "text": "shader_type canvas_item;\nrender_mode unshaded;\n\nuniform float warning : hint_range(0.0, 1.0) = 0.0;\nuniform vec4 warn_color : source_color = vec4(1.0, 0.702, 0.278, 1.0);\nuniform float strength : hint_range(0.0, 1.0) = 0.65;\n\nvoid fragment() {\n    COLOR.rgb = mix(COLOR.rgb, warn_color.rgb, warning * strength);\n}"
+  },
+  {
+   "beat_id": "B06",
+   "path": "features/fork/fork.gd",
+   "start_line": 221,
+   "end_line": 231,
+   "text": "func warning() -> float:\n\t## Shader `warning` (CHANGE-BRIEF.md §2): the shadow growth during SHADOW; 0 in other phases or when held.\n\tif held or phase() != Phase.SHADOW:\n\t\treturn 0.0\n\treturn shadow_amount()\n\nfunc _apply() -> void:\n\tif head:\n\t\thead.position.y = tip_y()\n\tif sprite:\n\t\tsprite.material.set_shader_parameter(\"warning\", warning())"
+  },
+  {
+   "beat_id": "B08",
+   "path": "tests/test_fork_warning.gd",
+   "start_line": 141,
+   "end_line": 147,
+   "text": "func expected_at(i: int, pos: int) -> float:\n\t## The brief's formula (§2) at cycle position pos: (p - safe + 1) / shadow in SHADOW, else 0.\n\tvar c := cycle_of(i)\n\tvar p := posmod(pos, c.period)\n\tif p >= c.safe and p < c.safe + c.shadow:\n\t\treturn float(p - c.safe + 1) / float(c.shadow)\n\treturn 0.0"
+  },
+  {
+   "beat_id": "B11",
+   "path": "materials/serving_board_polished.tres",
+   "start_line": 8,
+   "end_line": 18,
+   "text": "[resource]\nrender_priority = 0\nshader = ExtResource(\"1_qha44\")\nshader_parameter/albedo_tex = ExtResource(\"2_8gswt\")\nshader_parameter/tint = Color(1, 0.8509804, 0.7019608, 1)\nshader_parameter/brightness = 1.0\nshader_parameter/roughness_tex = ExtResource(\"4_ulmfo\")\nshader_parameter/normal_tex = ExtResource(\"3_gxu06\")\nshader_parameter/roughness_scale = 0.350000016625\nshader_parameter/normal_strength = 0.50000002375\nshader_parameter/uv_scale = 1.0000000356249998"
+  },
+  {
+   "beat_id": "B13",
+   "path": "shaders/hint_experiment.gdshader",
+   "start_line": 4,
+   "end_line": 15,
+   "text": "uniform sampler2D strip_as_colour : source_color, filter_nearest;\nuniform sampler2D strip_as_data : filter_nearest;\n\nuniform bool use_source_color = true;\n\nvoid fragment() {\n    if (use_source_color) {\n        ALBEDO = texture(strip_as_colour, UV).rgb;\n    } else {\n        ALBEDO = texture(strip_as_data, UV).rgb;\n    }\n}"
+  },
+  {
+   "beat_id": "B15",
+   "path": "shaders/table_wood.gdshader",
+   "start_line": 3,
+   "end_line": 14,
+   "text": "group_uniforms colour;\n\nuniform sampler2D albedo_tex : source_color, filter_linear_mipmap, repeat_enable;\nuniform vec4 tint : source_color = vec4(1.0, 1.0, 1.0, 1.0);\nuniform float brightness : hint_range(0.0, 2.0) = 1.0;\n\ngroup_uniforms surface;\n\nuniform sampler2D roughness_tex : hint_default_white, filter_linear_mipmap, repeat_enable;\nuniform sampler2D normal_tex : hint_normal, filter_linear_mipmap, repeat_enable;\nuniform float roughness_scale : hint_range(0.0, 1.0) = 1.0;\nuniform float normal_strength : hint_range(0.0, 2.0) = 1.0;"
+  }
+ ],
+ "code_result_pairs": [
+  {
+   "code_beat": "B04",
+   "result_beat": "B05",
+   "observation": "At warning 0, 0.5, 1 and 2 the plate 2 fork's P1 and P2 pixels measure within one 8-bit step of Kiran's predictions; at 2.0 P1 is (255, 178, 37) (evidence/a5-captures/capture-results.json).",
+   "media": {
+    "path": "images/B05-controlled-values.png",
+    "sha256": "dff4d890030e90222e56602e923a2008c554a5bf98e53b76eeeb56ec99f73a4c"
+   }
+  },
+  {
+   "code_beat": "B06",
+   "result_beat": "B07",
+   "observation": "In the scripted capture the plate 2 fork's warning (from the log) climbs during SHADOW while its tines turn amber, it strikes at tick 476 and reads 0.00 again as the tines return to steel; plates 5 and 6 read 0.51/0.52 in the intro.",
+   "media": {
+    "path": "media/B07.mp4",
+    "sha256": "c2afddd923ee2978f6982a2d349104bafe3f5e60b80ba607a0d200111fea48b4"
+   }
+  },
+  {
+   "code_beat": "B08",
+   "result_beat": "B09",
+   "observation": "test_fork_warning.gd reports 29 checks / 0 failures at 30, 60 and 144 fps with one per-tick MD5 35385bc4a519009a685ec285b3ba7529 (logs/test_fork_warning_*fps.log).",
+   "media": {
+    "path": "images/B09-headless-driver.png",
+    "sha256": "cef4980d176dbabe5f1bef7ec9bebda870e538469051b6867619446063f1aecc"
+   }
+  },
+  {
+   "code_beat": "B11",
+   "result_beat": "B12",
+   "observation": "Editing one shader line changes both table and board; editing the board material changes only the board (evidence/a5-captures/shared/, TEST-REPORT.md A5.8).",
+   "media": {
+    "path": "images/B12-one-shader-two-materials.png",
+    "sha256": "542061f3f98ce30db2a69b1a5693cfff76549723efc822a12ff304119144ed41"
+   }
+  },
+  {
+   "code_beat": "B13",
+   "result_beat": "B14",
+   "observation": "With source_color both renderers show 64/128/192; without it Forward+ shows 137/188/225 and Compatibility 64/128/192 (capture-results.json, both folders).",
+   "media": {
+    "path": "images/B14-hint-experiment.png",
+    "sha256": "8db755640dcb7c8e4f856ad3a936eb1ca2351b015d9152514a757eb702b5039b"
+   }
+  },
+  {
+   "code_beat": "B15",
+   "result_beat": "B16",
+   "observation": "The worn table and board render as dark wood in engine (materials_default.png); test_materials reports 108 checks / 0 failures and the bound GL normal map scores 0.3838.",
+   "media": {
+    "path": "images/B16-wood-and-data.png",
+    "sha256": "6f775de2dd2b75b415f32aaecd70f68e7faf65d160b66b23a4ad9b0ef7bfa2c7"
+   }
+  }
+ ]
+}
