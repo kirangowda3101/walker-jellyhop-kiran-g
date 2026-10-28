@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cvcplx47rbw6o"]
+
+[ext_resource type="PackedScene" path="res://showcase/a3_assets.tscn" id="1_fk0d2"]
+[ext_resource type="Material" uid="uid://cb0ejedrcirsm" path="res://materials/table_wood_worn.tres" id="2_cvhnd"]
+[ext_resource type="Material" uid="uid://djj5pvboyd8il" path="res://materials/serving_board_polished.tres" id="3_8xq74"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1pvn5"]
+size = Vector3(1.6, 0.05, 0.8)
+
+[node name="A5Materials" type="Node3D" unique_id=693722245]
+
+[node name="A3Assets" parent="." unique_id=825044921 instance=ExtResource("1_fk0d2")]
+
+[node name="Floor" parent="A3Assets" index="0"]
+surface_material_override/0 = ExtResource("2_cvhnd")
+
+[node name="ServingBoard" type="MeshInstance3D" parent="." unique_id=797857828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 1.4)
+mesh = SubResource("BoxMesh_1pvn5")
+surface_material_override/0 = ExtResource("3_8xq74")
+
+[editable path="A3Assets"]

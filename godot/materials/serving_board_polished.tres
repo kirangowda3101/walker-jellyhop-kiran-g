@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://djj5pvboyd8il"]
+
+[ext_resource type="Shader" uid="uid://bb3027a5nci04" path="res://shaders/table_wood.gdshader" id="1_qha44"]
+[ext_resource type="Texture2D" uid="uid://mpqw3srfspwh" path="res://assets/textures/dark_wood/dark_wood_diff_2k.png" id="2_8gswt"]
+[ext_resource type="Texture2D" uid="uid://dp4l67lh6uovd" path="res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png" id="3_gxu06"]
+[ext_resource type="Texture2D" uid="uid://d1s2hwoifrj8e" path="res://assets/textures/dark_wood/dark_wood_rough_2k.png" id="4_ulmfo"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_qha44")
+shader_parameter/albedo_tex = ExtResource("2_8gswt")
+shader_parameter/tint = Color(1, 0.8509804, 0.7019608, 1)
+shader_parameter/brightness = 1.0
+shader_parameter/roughness_tex = ExtResource("4_ulmfo")
+shader_parameter/normal_tex = ExtResource("3_gxu06")
+shader_parameter/roughness_scale = 0.350000016625
+shader_parameter/normal_strength = 0.50000002375
+shader_parameter/uv_scale = 1.0000000356249998
