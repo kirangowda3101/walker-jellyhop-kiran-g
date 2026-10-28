@@ -315,3 +315,99 @@ My own words after running the scene and orbiting the editor camera:
 - Box-only shapes: the fork's prong tips are blunt, and the biscuit's plain top could pass for a plank from directly above.
 - Where the fork and dome currently appear in the Assignment 2 game is still to be confirmed (open item in CHANGE-BRIEF.md); the platform placement is planned for future levels and is not implemented.
 - The assets are not in the 2D game and have no colliders; nothing here is a playtest.
+
+## Assignment 5 — Shaders, materials and the Godot shading language
+
+Godot 4.7.2.stable.official.ed1daf0bf, macOS, Apple M4. Project renderer: **Compatibility** (`project.godot` line 32); one comparison run on Forward+ via `--rendering-method forward_plus` (project unchanged). All tests run through `scripts/run-test.sh` (pinned `--fixed-fps`). Drafted with Claude in chat from the committed logs and evidence; every value below was checked against those files by me.
+
+### A5.1 Baseline, before and after (no existing expectation changed)
+
+| Suite | Before A5, 60 fps (2026-10-27) | After the driver, 60 fps |
+|---|---|---|
+| `test_game.gd` | 25 / 0 | 25 / 0 |
+| `test_slice.gd` | 61 / 0 | 61 / 0 |
+| `test_keyboard.gd` | 12 / 0 | 12 / 0 |
+| `test_a3_assets.gd` | 36 / 0 | 36 / 0 |
+
+"Before" logs: `logs/test_*_60fps.log` at commit dda6bd9. "After": sessions 2b (step 2) and 2d (step 8). The `ObjectDB … leaked` warning and `resources still in use` error at exit are pre-existing (CLAUDE.md headless facts).
+
+### A5.2 Shaders parse; uniform names (headless)
+
+- `test_fork_warning.gd` asserts `warning`, `warn_color`, `strength` via `get_shader_uniform_list()` and the defaults from the source text. `test_materials.gd` does the same for `table_wood.gdshader` and `hint_experiment.gdshader`. No `SHADER ERROR` in any final log.
+- **Mutation 1 (semicolon)**, line 4 of `fork_warning.gdshader`: `SHADER ERROR: Expected a ';'`, uniform list empty, exit 1 (`logs/mutation-1-semicolon_60fps.log`).
+- **Mutation 2 (rename `warning` → `warn_level`, shader only)**: no shader error, 4 / 29 checks fail (uniform list and source checks), exit 1. The other 25 value checks still passed, because `set_shader_parameter` stores an undeclared name silently, so only the uniform-list check catches it (`logs/mutation-2-rename_60fps.log`).
+
+### A5.3 Driver: fork warning, through the real game loop
+
+`test_fork_warning.gd`: **29 / 0 at 30, 60 and 144 fps**. Per-tick `warning` sequence identical at all three rates: MD5 `35385bc4a519009a685ec285b3ba7529`. I checked the test does not call `advance()` / `_apply()`, set the uniform, or write `t`, `held` or `state` (grep, commit 2385d6b).
+
+- First SHADOW tick reads `1/n`, rises `1/n` per tick, last tick exactly `1.0`, first DOWN tick `0.0` (rule 1). Per frame at 30 fps the last frame reads `(n−1)/n`, as my per-tick/per-frame split in rule 1 predicted.
+- Each ramp's per-frame duration within one frame period at 30, 60, 144 (rule 2).
+- Intro: plates 5 and 6 read exactly `37/72` and `31/60`, held through the pan (rule 4).
+- Pause (real Esc) and tree pause both hold the value exactly; `Engine.time_scale = 0.5` keeps 96 ticks, 0.8 s scaled and 1.6 s real (rule 5).
+- Sauce splat mid-SHADOW (real keys): 0.375 / 0.385 on the tick before, `0.0` on the splat tick; next SHADOW restarts at exactly `1/96`; the fork-splat (`hold_pending`) path also restarts at `1/96` (rules 3 and 6).
+- Five distinct materials, none the base `.tres`, one shared `Shader` (rule 7).
+
+### A5.4 Controlled values (HUMAN CHECK: scripted in-engine captures, windowed)
+
+`tools/capture_a5.gd` (by Claude in chat, run by me) freezes the session's physics so no fork advances, then sets `warning` on the plate 2 fork. P1 moved to art (194, 1144) in CHANGE-BRIEF Revision 5, because the original P1 is never on screen. Compatibility values (`logs/capture_a5.log`, `evidence/a5-captures/fork_warning_*.png`):
+
+| `warning` | P1 measured | P1 predicted | P2 measured | P2 predicted |
+|---|---|---|---|---|
+| 0.0 | (179, 183, 184) | (179, 183, 184) | (114, 127, 129) | (113, 126, 128) |
+| 0.5 | (204, 182, 147) | (204, 182, 147) | (160, 144, 110) | (159, 143, 109) |
+| 1.0 | (229, 181, 110) | (228, 180, 111) | (206, 161, 91) | (205, 160, 91) |
+| 2.0 | (255, 178, 37) | (255, 178, 37) | (255, 195, 53) | (255, 195, 54) |
+
+Every value is within one 8-bit step (P2's 5 × 5 neighbourhood itself varies by ±2). Forward+ gives the same within one step. **`hint_range` does not clamp a value set from code:** `warning = 2.0` gives exactly the extrapolated (255, 178, 37). The background behind the tines is table wood (105, 65, 45), not the room colour my §6 assumed; against it P1's contrast ratio goes from about 4.3 : 1 to 4.7 : 1 (WCAG relative luminance, computed by Claude from these measured pixels).
+
+### A5.5 In play (HUMAN CHECK, by me)
+
+`evidence/a5-playtest-notes.md`: far forks start partly golden; each fork turns golden gradually before it strikes and returns to silver; the gold is easy to see and the fork still reads as a fork; everything else looks normal; a golden fork stayed golden after the win (the WON hold, the one rule with no headless check).
+
+### A5.6 Hint experiment (HUMAN CHECK, scripted captures + one OS screenshot)
+
+| Band (file value) | With `source_color`: Compatibility | Forward+ | Without: Compatibility | Forward+ | Predicted without (§8) |
+|---|---|---|---|---|---|
+| 64 | 64 | 64 | **64** | **137** | 137 |
+| 128 | 128 | 128 | **128** | **188** | 188 |
+| 192 | 192 | 192 | **192** | **225** | 225 |
+
+Every 5 × 5 neighbourhood is flat. **My §8 predictions hold exactly on Forward+.** On the project's Compatibility renderer both quads show the file's values unchanged, so the difference is the renderer: measured first, explained after, as the brief said I would. A macOS window screenshot gave the same 64/128/192 as the in-engine capture; I trust the in-engine capture for measurement (`evidence/a5-os-screenshot-note.md`). Logs: `logs/capture_a5.log`, `logs/capture_a5_forward_plus.log`.
+
+### A5.7 Interface sweep (HUMAN CHECK, by me)
+
+`evidence/a5-sweep-notes.md` (15 frames of the worn table, each uniform at min / default / max): `brightness`, `uv_scale` and `tint` change as predicted. `roughness_scale` changes the table only gently (largest pixel difference 20 / 255), with **no Sun highlight**, so my §7 prediction did not hold under Sun-only lighting. `normal_strength` has no measurable effect (largest difference 2 / 255); likely reason, not tested: the normal map is very flat. No setting produced a broken look.
+
+### A5.8 One shader, two materials (HUMAN CHECK, scripted captures, in memory only)
+
+`evidence/a5-captures/shared/`: the table and the board share one `Shader` object and have different materials. Editing one shader line changed both (table (92, 45, 29) → (41, 31, 29); board (87, 32, 11) → (33, 17, 11)). Editing only the board material's `brightness` changed only the board (→ (23, 4, 0)); the table stayed (92, 45, 29). No file changed.
+
+### A5.9 Material wiring, texture data, import settings
+
+- `test_materials.gd` (agent audit, reviewed by me): **108 / 0** at 60 fps. From an empty cache (`rm -rf godot/.godot`) the **first headless `--import` segfaults** (exit 139, 2 / 2 attempts; the log ends at `reimport | SFX-WIN.ogg`, an A2 audio file); the **second `--import` completes** and the test passes 108 / 0. Fresh clones need `--import` run twice (`logs/fresh_import_run2–4.log`).
+- **`source_color` mutation** (removed from `albedo_tex`): no shader error, 1 / 108 fails (`sampler_hints albedo_tex`), exit 1 (`logs/mutation-3-source-color_60fps.log`).
+- **Curl ratio** (`normal_map_check.gd`, the handout's check, verbatim; stride 4): `nor_gl` 0.3838 (GL) / 1.6162 (DX); `nor_dx` 1.6163 / 0.3837. The bound GL map passes my texture-specific threshold < 0.70 (Revision 3). The PNGs are 16-bit in the file but Godot decodes them to `FORMAT_RGB8`, which adds quantization noise.
+- **Import settings**: set explicitly (Revisions 2 and 3); confirmed by name in the Import dock. **No `.import` file was rewritten** after the editor drew the textures in 3D (failure 6 did not happen).
+
+### A5.10 Agent sessions and checks after each
+
+| Session | Turns | Denials | Result | `git diff godot/shaders/` |
+|---|---|---|---|---|
+| 1 (CLAUDE.md) | 18 | 1 | success | empty |
+| 2a (plan, read-only) | 12 | 0 | success | empty |
+| 2b (driver + test, steps 1–5) | 37 | 3 | stopped at step 5 as instructed | empty |
+| 2c (step 5 fixes, step 6) | 21 | 0 | stopped at step 6 as instructed | empty |
+| 2d (steps 6–8) | 29 | 0 | success | empty |
+| 3 (audit) | 28 | 8 | success | empty |
+
+In session 1, commands outside the allowlist (`file`, `wc`, `head`, `which`) ran, and only one compound `grep` was denied, so the diff, not the permissions, is what guaranteed the shaders were untouched.
+
+### A5.11 Known limitations
+
+- On Compatibility, `source_color` on a texture makes no visible difference on the unshaded path (A5.6); the Forward+ comparison was a one-run override.
+- `roughness_scale` is subtle and `normal_strength` invisible under Sun-only lighting with this flat map (A5.7).
+- `uv_scale` scales the `BoxMesh`'s own UVs: the top face is a 1/3 × 1/2 UV slice, so about 0.67 × 1 copies show at 2.0 (Revision 4).
+- The fresh-cache first import segfaults on an A2 `.ogg` (A5.9).
+- Whether the table's `tint` (`source_color` on a spatial `vec4`) is converted to linear was not measured.
+- Captures are scripted (labelled as such); `--fixed-fps` hides real-time frame pacing.
