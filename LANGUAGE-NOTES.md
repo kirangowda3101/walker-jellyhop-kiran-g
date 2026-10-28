@@ -22,46 +22,46 @@ The StandardMaterial3D in the scratch scene was already unique (built into that 
 
 My notes on reading it:
 
-> (write here: anything that surprised you, e.g. line 19's hint, line 28's UV transform in vertex(), lines 41–42's channel mask)
+> What stood out was that Godot scales the UVs in `vertex()` on line 28, while my shader does it in `fragment()` on table line 23. Its roughness calculation also uses `dot()` with a channel mask on lines 41–42, whereas mine simply reads `.r` on line 26 because I only need the red channel.
 
 ## Part 2: questions
 
 ### 1. What does `shader_type` decide?
 Pointers: fork line 1 (`canvas_item`), table line 1 (`spatial`), hint line 1 (`spatial`). Which built-ins and processor functions each type gives you (`COLOR`, `TEXTURE` vs `ALBEDO`, `ROUGHNESS`, `NORMAL_MAP`).
 
-> (my answer)
+> `shader_type` tells Godot what kind of object the shader works on and which functions and built-in values it can use. Line 1 of my fork shader uses `canvas_item` for the 2D sprite, where I change its pixel colour through `COLOR`. Line 1 of both my table and hint shaders uses `spatial` for 3D objects, where I write the surface colour through `ALBEDO`.
 
 ### 2. Which processor functions did I write, and when does each run? What if the colour line moved into `vertex()`?
 Pointers: every one of my shaders writes only `fragment()` (fork lines 8–10, table 22–29, hint 9–15); the generated shader also has `vertex()` (lines 27–29). Fork colour line 9.
 
-> (my answer)
+> All three shaders use `fragment()`: fork lines 8–10, table lines 22–29, and hint lines 9–15. It runs for the fragments that form the object's pixels whenever it is drawn. If I moved the fork's colour line from line 9 into `vertex()`, it would mix the corner colours toward amber before Godot multiplies them by the texture, producing a multiply tint instead of blending each texture pixel directly toward amber.
 
 ### 3. Three built-ins I read, two I wrote; which read ones are read-only?
 Pointers: read: `COLOR` (fork 9), `UV` (table 23, hint 11/13), and `TEXTURE` if used. Written: `COLOR` (fork 9), `ALBEDO` (table 25), `ROUGHNESS` (26), `NORMAL_MAP` (27), `NORMAL_MAP_DEPTH` (28).
 
-> (my answer)
+> My shaders read two built-ins: `COLOR` in fork line 9 and `UV` in table line 23 and hint lines 11 and 13. `UV` is read-only inside `fragment()`, while `COLOR` can be both read and written. Two built-ins I write are `ALBEDO` in table line 25 and `ROUGHNESS` in line 26. I haven't used a third built-in as an input, so I can't give a third example from these shaders.
 
 ### 4. For each hint I used: Inspector only, or also the value the shader receives?
 Pointers: `hint_range` (fork 4, 6; table 7, 13, 14, 18), `source_color` (fork 5; table 5, 6; hint 4), `hint_normal` (table 12), `hint_default_white` (table 11), `filter_nearest` / `filter_linear_mipmap` / `repeat_enable`. Cite the hint-experiment capture (CHANGE-BRIEF.md §8 predictions vs TEST-REPORT.md measurements).
 
-> (my answer, to finish after the hint capture)
+> `hint_range` creates an Inspector slider without clamping values set from code: with `warning = 2.0`, P1 measured (255, 178, 37), showing that the mix went beyond its normal range (fork lines 4 and 6). Texture `source_color` affects colour interpretation: the hint experiment showed 64/128/192 with it and 137/188/225 without it in Forward+, while Compatibility showed 64/128/192 on both quads (hint lines 4–5). On colour uniforms it provides a colour picker, and my 2D fork captures matched the amber values as written within one step (fork line 5). The table's `tint` on line 6 also gets a colour picker, but I did not measure whether it is converted. `hint_normal` marks the sampler for normal-map handling, although I did not measure its effect separately (table line 12). `hint_default_white` provides white when no texture is bound, so it had no effect with my roughness texture assigned (table line 11). The filtering and repeat hints affect sampling: nearest filtering kept the experiment's bands flat, while the table uses linear filtering with mipmaps and repeating textures (table lines 5, 11–12; hint lines 4–5).
 
 ### 5. Does `hint_range` clamp a value set from code?
 Pointers: probe result (CLAUDE.md headless facts: stored 2.0 unclamped), and the `warning = 2.0` capture in Use It (predicted P1 (255, 176, 36)).
 
-> (my answer, to finish after the capture)
+> No, `hint_range` does not clamp a value set from code: the headless probe stored `2.0` even though the declared range was 0–1. In the fork capture, `warning = 2.0` produced P1 (255, 178, 37), compared with (229, 181, 110) measured at `1.0`, confirming that the shader used the out-of-range value (fork lines 4 and 9).
 
 ### 6. Which generated line makes the albedo sample as colour and the normal map as data, and my equivalent?
 Pointers: generated 7 and 19; mine: table 5 (`source_color`) and 11–12 (no `source_color`; `hint_normal`). Compare `hint_roughness_normal` with `hint_normal`.
 
-> (my answer)
+> Generated shader line 7 marks the albedo texture as colour with `source_color`, matching line 5 of my table shader. Generated line 19 declares the normal texture without `source_color`, so it is treated as data, matching my table's line 12. The normal hints differ: the generated shader uses `hint_roughness_normal`, while mine uses `hint_normal`. I haven't verified the exact difference between those two hints, so I'm only claiming that both declarations identify normal-map use without colour decoding.
 
 ### 7. Why can't `fragment()` read a neighbouring pixel's result, and how does game state reach it?
 Pointers: fork 4 (`uniform float warning`), `fork.gd` `_apply()` (`set_shader_parameter("warning", ...)`), each fork's own material (rule 7).
 
-> (my answer)
+> Each run of `fragment()` calculates its own output, with no guaranteed order or access to what a neighbouring fragment is currently computing. Game state reaches it through uniforms set from outside the shader. In `fork.gd`, `_apply()` uses `set_shader_parameter("warning", warning())` to update the uniform declared on fork line 4, which the colour calculation reads on line 9. Each fork has its own material, so its warning value stays independent of the others.
 
 ### 8. Two things the Godot shading language provides that plain GLSL does not, or makes you write yourself.
 Pointers: `shader_type` instead of `main()`; uniform hints and `group_uniforms` (table 3, 9, 16, 20); `source_color` decoding; built-ins like `ALBEDO`/`ROUGHNESS` feeding Godot's lighting.
 
-> (my answer)
+> Godot provides `shader_type` and built-in material outputs, so I can declare a spatial shader on table line 1 and set its surface properties on lines 25–28 while Godot handles the lighting. It also provides uniform hints and groups that create Inspector controls: `hint_range` gives me a slider on line 7, `source_color` gives a colour picker on line 6, and `group_uniforms` organises the settings on lines 3, 9 and 16. With plain GLSL, the surrounding application would need to provide that material system and editing interface.
