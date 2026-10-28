@@ -25,5 +25,13 @@ FORK WARNING PER-TICK SEQUENCE MD5 (601 ticks x 5 forks): 35385bc4a519009a685ec2
 {"id":"10-esc-pause-holds-warning-then-resumes-by-1-over-n","observed":{"esc_paused":true,"found_mid_shadow":true,"frozen_frames":64,"frozen_ticks":128,"held_value":0.260416666666667,"max_frame_diff":0.0,"max_tick_diff":0.0,"ok":true,"plate":2,"plates_whose_t_moved":[],"resumed":true,"rise_after_resume":0.0104166666666666,"want_rise":0.0104166666666667},"status":"PASS"}
 {"id":"10b-tree-paused-holds-warning-then-resumes-by-1-over-n","observed":{"found_mid_shadow":true,"frozen_frames":60,"frozen_ticks":120,"held_value":0.25,"max_frame_diff":0.0,"max_tick_diff":0.0,"ok":true,"plate":3,"plates_whose_t_moved":[],"rise_after_resume":0.0119047619047619,"state_stayed_playing":true,"want_rise":0.0119047619047619},"status":"PASS"}
 {"id":"11-time-scale-0.5-same-tick-count","observed":{"plate":2,"ramp_ticks_at_0.5":96,"ramp_ticks_at_1.0":[96,96],"shadow_ticks":96},"status":"PASS"}
-{"id":"11-time-scale-0.5-game-time-half","observed":{"frame_delta_at_0.5":0.0166666666666667,"real_seconds_from_frames":-1.0,"scaled_game_seconds":-1.0,"time_scale_after":1.0,"want_game_seconds":0.8,"want_real_seconds":1.6},"status":"FAIL"}
-FORK WARNING TESTS: 25 checks / 1 failures
+{"id":"11-time-scale-0.5-game-time-half","observed":{"frame_delta_at_0.5":0.0166666666666667,"real_seconds_from_frames":1.6,"scaled_game_seconds":0.799999999999955,"time_scale_after":1.0,"want_game_seconds":0.8,"want_real_seconds":1.6},"status":"PASS"}
+{"id":"12-precondition-hop-to-plate-2","observed":{"checkpoint":1,"fork_2_phase":0,"splats":0,"state":1,"x":573.240234375},"status":"PASS"}
+{"id":"12-sauce-splat-mid-shadow-zero-on-splat-tick","observed":{"cause":"sauce","shadow_started":true,"splat_tick":{"held":true,"t":0,"w":0.0},"splatted":true,"tick_before":{"phase":1,"state":1,"w":0.375}},"status":"PASS"}
+{"id":"13-restart-reads-0-next-shadow-restarts-at-1-over-n","observed":{"interrupted_w":0.375,"next_shadow_first_w":0.0104166666666667,"nonzero_ticks_before_next_shadow":[],"ok":true,"plate":2,"restart_tick_held":false,"restart_tick_t":0,"restart_tick_w":0.0,"ticks_restart_to_next_shadow":132,"want":0.0104166666666667},"status":"PASS"}
+{"id":"14-fork-splat-release-next-shadow-restarts-at-1-over-n","observed":{"cause":"fork","fork_phase_on_hit_tick":3,"next_shadow_first_w":0.0104166666666667,"nonzero_ticks_before_next_shadow":[],"ok":true,"plate":2,"restart_tick_held":false,"restart_tick_t":0,"restart_tick_w":0.0,"ticks_restart_to_next_shadow":132,"want":0.0104166666666667},"status":"PASS"}
+FORK WARNING TESTS: 29 checks / 0 failures
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

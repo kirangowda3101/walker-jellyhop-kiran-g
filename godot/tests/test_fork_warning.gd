@@ -93,6 +93,7 @@ func run() -> void:
 	await pause_checks()
 	await tree_pause_checks()
 	await time_scale_checks()
+	await splat_checks()
 	await finish()
 
 func wait_until(condition: Callable, max_ticks: int) -> bool:
@@ -543,6 +544,7 @@ func time_scale_checks() -> void:
 	Engine.time_scale = 0.5
 	var done: bool = await wait_until(func(): return tick_ramps(i, ticks.rows.slice(tick_mark - 1)).size() >= 1, cycle_of(i).period + 10)
 	Engine.time_scale = 1.0
+	await wait_ticks(5)   # let the frame sampler record the frame on which the ramp ended (see idle_checks)
 	var slow := tick_ramps(i, ticks.rows.slice(tick_mark - 1))
 	var slow_ticks: int = slow[0].ticks if not slow.is_empty() else -1
 	# The same ramp per frame: game time (scaled delta) and real time (frames x frame period).
@@ -561,3 +563,79 @@ func time_scale_checks() -> void:
 	check("11-time-scale-0.5-same-tick-count", done and slow_ticks == n and not at_one.is_empty() and at_one.all(func(x): return x == n), {"plate": i + 1, "ramp_ticks_at_0.5": slow_ticks, "ramp_ticks_at_1.0": at_one, "shadow_ticks": n})
 	# Prediction (CHANGE-BRIEF.md rule 5): about 0.8 s of scaled game time, 1.6 s of real time.
 	check("11-time-scale-0.5-game-time-half", deltas_halved and absf(game_s - 0.5 * n / 60.0) <= 0.5 * frame_period() + 1e-9 and absf(real_s - float(n) / 60.0) <= frame_period() + 1e-9, {"scaled_game_seconds": game_s, "want_game_seconds": 0.5 * n / 60.0, "real_seconds_from_frames": real_s, "want_real_seconds": float(n) / 60.0, "frame_delta_at_0.5": fr[f_start].delta if f_start > 0 else null, "time_scale_after": Engine.time_scale})
+
+# ---------------------------------------------------------------- 12-14: splats through real input
+
+func first_row(from: int, condition: Callable) -> int:
+	for r in range(maxi(from, 0), ticks.rows.size()):
+		if condition.call(ticks.rows[r]):
+			return r
+	return -1
+
+func release_report(i: int, splat_row: int) -> Dictionary:
+	## After a splat at splat_row: 0 on every tick through SPLAT and REFORM, 0 on the restart_at_safe()
+	## tick (first PLAYING tick), and the next SHADOW starts at 1/n.
+	var n: int = cycle_of(i).shadow
+	var restart := first_row(splat_row, func(r): return r.state == Game.State.PLAYING)
+	var shadow := first_row(restart, func(r): return r.forks[i].w > 0.0) if restart >= 0 else -1
+	if restart < 0 or shadow < 0:
+		return {"ok": false, "reason": "no restart or no next SHADOW", "restart_row": restart, "shadow_row": shadow}
+	var nonzero := []
+	for r in range(splat_row, shadow):
+		if ticks.rows[r].forks[i].w != 0.0:
+			nonzero.append({"tick": ticks.rows[r].tick, "w": ticks.rows[r].forks[i].w})
+	var at_restart: Dictionary = ticks.rows[restart].forks[i]
+	var first_w: float = ticks.rows[shadow].forks[i].w
+	var ok: bool = nonzero.is_empty() and at_restart.w == 0.0 and not at_restart.held and absf(first_w - 1.0 / n) < EPS
+	return {"ok": ok, "plate": i + 1, "nonzero_ticks_before_next_shadow": nonzero, "restart_tick_w": at_restart.w, "restart_tick_t": at_restart.t, "restart_tick_held": at_restart.held, "ticks_restart_to_next_shadow": ticks.rows[shadow].tick - ticks.rows[restart].tick, "next_shadow_first_w": first_w, "want": 1.0 / n}
+
+func splat_checks() -> void:
+	var i := 1   # plate 2's fork
+	var p: CharacterBody2D = game.player
+	# 12a: hop to plate 2 at the start of fork 2's safe window (real D and Space).
+	var safe_start: bool = await wait_until(func(): return game.forks[i].phase() == Fork.Phase.SAFE and game.forks[i].t < 10, cycle_of(i).period + 10)
+	await key(KEY_D, true)
+	var at_edge: bool = await wait_until(func(): return p.position.x >= 330.0, 120)
+	await tap(KEY_SPACE)
+	var landed: bool = await wait_until(func(): return p.is_on_floor() and p.position.x > 520.0, 120)
+	await key(KEY_D, false)
+	await wait_ticks(20)
+	check("12-precondition-hop-to-plate-2", safe_start and at_edge and landed and game.checkpoint == 1 and game.state == Game.State.PLAYING, {"checkpoint": game.checkpoint, "x": p.position.x, "state": game.state, "splats": game.splats, "fork_2_phase": game.forks[i].phase()})
+	# 12: when fork 2's SHADOW starts, hold D into the sauce in gap 2; hold_raised() on the splat tick.
+	var shadow_on: bool = await wait_until(func(): return w_of(i) > 0.0, cycle_of(i).period + 10)
+	var mark := ticks.rows.size()
+	await key(KEY_D, true)
+	var splatted: bool = await wait_until(func(): return game.state == Game.State.SPLAT, 120)
+	await key(KEY_D, false)
+	await wait_ticks(3)   # the tick sampler has recorded the splat tick
+	var s := first_row(mark, func(r): return r.state == Game.State.SPLAT)
+	var rep := {"shadow_started": shadow_on, "splatted": splatted, "cause": game.splat_cause}
+	var ok12 := false
+	if s > 0:
+		var before: Dictionary = ticks.rows[s - 1].forks[i]
+		var at: Dictionary = ticks.rows[s].forks[i]
+		rep.merge({"tick_before": {"state": ticks.rows[s - 1].state, "phase": before.phase, "w": before.w}, "splat_tick": {"w": at.w, "t": at.t, "held": at.held}})
+		ok12 = ticks.rows[s - 1].state == Game.State.PLAYING and before.phase == Fork.Phase.SHADOW and before.w > 0.0 and at.w == 0.0 and at.held
+	check("12-sauce-splat-mid-shadow-zero-on-splat-tick", splatted and game.splat_cause == "sauce" and ok12, rep)
+	var interrupted: float = ticks.rows[s - 1].forks[i].w if s > 0 else -1.0
+	# 13: re-form; restart_at_safe() tick reads 0; the next SHADOW restarts at 1/n, not the interrupted value.
+	var restarted: bool = await wait_until(func(): return game.state == Game.State.PLAYING, 200)
+	var next_shadow: bool = await wait_until(func(): return w_of(i) > 0.0, cycle_of(i).safe + 20)
+	await wait_ticks(3)
+	var rel := release_report(i, s) if s > 0 else {"ok": false}
+	rel["interrupted_w"] = interrupted
+	check("13-restart-reads-0-next-shadow-restarts-at-1-over-n", restarted and next_shadow and rel.ok, rel)
+	# 14: the jelly stands still on plate 2; fork 2 strikes it (hold_pending path); after release the
+	# next SHADOW again starts at 1/n.
+	var mark2 := ticks.rows.size()
+	var hit: bool = await wait_until(func(): return game.state == Game.State.SPLAT, cycle_of(i).shadow + 60)
+	await wait_ticks(3)
+	var s2 := first_row(mark2, func(r): return r.state == Game.State.SPLAT)
+	var phase_at_hit: int = ticks.rows[s2].forks[i].phase if s2 >= 0 else -1
+	var restarted2: bool = await wait_until(func(): return game.state == Game.State.PLAYING, 200)
+	var next_shadow2: bool = await wait_until(func(): return w_of(i) > 0.0, cycle_of(i).safe + 20)
+	await wait_ticks(3)
+	var rel2 := release_report(i, s2) if s2 >= 0 else {"ok": false}
+	rel2["cause"] = game.splat_cause
+	rel2["fork_phase_on_hit_tick"] = phase_at_hit
+	check("14-fork-splat-release-next-shadow-restarts-at-1-over-n", hit and game.splat_cause == "fork" and phase_at_hit != Fork.Phase.SAFE and phase_at_hit != Fork.Phase.SHADOW and restarted2 and next_shadow2 and rel2.ok, rel2)

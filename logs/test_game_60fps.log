@@ -26,3 +26,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"complete-real-route","observed":{"hops":[{"plate":1,"tick":78},{"plate":2,"tick":154},{"plate":3,"tick":228},{"plate":4,"tick":310},{"plate":5,"tick":394},{"plate":6,"tick":465}],"jump_marks_used":6,"position":"(2278.132, 441.8797)","splats":0,"state":5,"ticks":499},"status":"PASS"}
 {"id":"replay-idempotent","observed":{"jumps":0,"splats":0,"state":1},"status":"PASS"}
 WALKER TESTS: 25 checks / 0 failures
+WARNING: 22 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 10 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
