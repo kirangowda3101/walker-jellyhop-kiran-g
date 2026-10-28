@@ -192,3 +192,43 @@ A pass is exit code 0, a summary line `A3 ASSET CHECKS: 36 checks / 0 failures`,
 **Known limitations:** with the scene's single light and no environment, faces turned away from the light are pure black and hide colour and detail; the fork tips were not checked close up from below; a fresh run of `build_dome.py` recreates Claude Code's original dome colours, not my hand-edited ones; the assets are not yet in the 2D game. Full list in TEST-REPORT.md, A3.12.
 
 **Final film:** [YouTube, unlisted](https://youtu.be/RBnJpG0Cnjc) · filename `claude-liam-jelly-hop-a3.mp4` · SHA-256 `10adb47d931ffa23d500f409658eee709397dcc48303ae61805a62aadfe599fc` (the SHA-256 is of the uploaded file, which YouTube re-encodes; record in [youtube/claude-liam-jelly-hop-a3/MEDIA.md](youtube/claude-liam-jelly-hop-a3/MEDIA.md))
+
+## Assignment 5 — Shaders, materials and the Godot shading language (tag `a5`)
+
+**Starting point:** tag `a3` (Assignment 4 was the Game Design Document, with no code layer). **Engine:** Godot 4.7.2.stable, **Compatibility** renderer (one Forward+ comparison run by command-line override; the project setting is unchanged).
+
+**What A5 added**
+- **Fork warning glow** (`godot/shaders/fork_warning.gdshader`, hand-written): while a fork is in its SHADOW phase its steel turns gradually toward candle amber, in step with its shadow, and snaps back when it strikes. Driven from `godot/features/fork/fork.gd`; each fork has its own material.
+- **Table wood shader** (`godot/shaders/table_wood.gdshader`, hand-written): Poly Haven Dark Wood colour, roughness and normal maps, five Inspector controls in three groups. Two materials, a worn dinner table and a polished serving board, in `godot/showcase/a5_materials.tscn` (instances the A3 scene without changing it).
+- **Hint experiment** (`godot/shaders/hint_experiment.gdshader`, hand-written; `godot/showcase/hint_experiment.tscn`): the same 3 × 1 grey strip read with and without `source_color`.
+- **Godot's generated shader** (`godot/shaders/standard_generated.gdshader`) and my answers in `LANGUAGE-NOTES.md`.
+
+**Run**
+```bash
+godot --headless --path godot --import   # on a fresh clone, run this TWICE: the first import segfaults (see limitations)
+godot --headless --path godot --import
+godot --path godot                        # play the game
+godot --path godot res://showcase/a5_materials.tscn
+godot --path godot res://showcase/hint_experiment.tscn
+```
+**Controls:** A / D move, Space hop (hold for higher), Esc pause.
+
+**Tests** (always through the wrapper):
+```bash
+./scripts/run-test.sh test_game.gd 60          # 25 checks
+./scripts/run-test.sh test_slice.gd 60         # 61 checks
+./scripts/run-test.sh test_keyboard.gd 60      # 12 checks
+./scripts/run-test.sh test_a3_assets.gd 60     # 36 checks
+./scripts/run-test.sh test_fork_warning.gd 30  # 29 checks (also 60 and 144)
+./scripts/run-test.sh test_materials.gd 60     # 108 checks
+```
+
+**A5 documents:** CHANGE-BRIEF.md (spec + Revisions 1–5), CLAUDE.md, AGENTS.md, godot/MATERIALS.md, LANGUAGE-NOTES.md, TEST-REPORT.md (A5 section), FRICTIONAL.md (A5 section), SOURCES.md (A5 section), `godot/assets/textures/dark_wood/ATTRIBUTION.md`, prompts in `prompts/`, agent transcripts in `sessions/`, evidence in `evidence/` and `logs/`.
+
+**Known limitations** (details in TEST-REPORT.md A5.11)
+- On a fresh clone the first headless `--import` segfaults on an A2 audio file (`SFX-WIN.ogg`); the second completes.
+- On Compatibility, `source_color` on a texture shows no visible difference in the unshaded hint experiment (Forward+ matches my predictions).
+- Under Sun-only lighting `roughness_scale` is subtle and `normal_strength` has no visible effect.
+- `uv_scale` scales the `BoxMesh`'s own UVs, not a fixed number of repeats.
+
+**Film:** link, filename and SHA-256 added after the film is rendered.
