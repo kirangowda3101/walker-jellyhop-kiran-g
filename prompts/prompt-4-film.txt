@@ -1,0 +1,52 @@
+Read CLAUDE.md first. Read the installed course-provided Brutalist
+godot-gamedev skill instructions with the walker modifier and follow them.
+Use the same pipeline and narration approach as my Assignment 3 film
+(youtube/claude-liam-jelly-hop-a3/BUILD-PROMPT.md: run from
+~/Documents/brutalist.art, local Kokoro narration, no paid tools). Put this
+film in youtube/claude-liam-jelly-hop-a5/.
+
+Make ONE landscape film at the skill's native 4K, plain and precise. Game-
+source revision shown: 77a6d10. It must:
+1. Identify Jelly Hop, the state my effect communicates (a fork's SHADOW
+   phase: the fork turns gradually toward candle amber with its shadow), and
+   the 3D object with the textured shader (the A3 Floor as a worn dinner
+   table, plus a polished serving board).
+2. Answer the four questions, each pointing at a line of my code: what a
+   shader does (fork_warning.gdshader line 9), how a material differs from a
+   shader (one table_wood shader, two .tres materials; evidence/a5-captures/
+   shared/), why a texture is information (hint_experiment.gdshader lines 4-5
+   and table_wood.gdshader lines 5, 11-12), and what the Godot shading
+   language is (shader_type on line 1; LANGUAGE-NOTES.md).
+3. Show the colour line in CHANGE-BRIEF.md section 2, the shader and driver
+   lines (fork.gd _apply()), the controlled-value captures beside my
+   predictions (TEST-REPORT.md A5.4, evidence/a5-captures/fork_warning_*.png),
+   and the effect in play. For in-play footage, record real engine frames in
+   a windowed run; label them as scripted captures.
+4. Show the hint experiment predicted and measured on Compatibility and on
+   Forward+ (A5.6), the interface sweep (A5.7, evidence/a5-sweep-notes.md),
+   and two materials from one shader (A5.8).
+5. Show two annotated lines of standard_generated.gdshader beside their
+   equivalents in mine (LANGUAGE-NOTES.md Part 1 and answer 6: generated
+   line 7 vs my table line 5; generated line 19 vs my table line 12).
+6. Show what the tests proved (A5.2, A5.3, A5.9), the three mutations that
+   failed them, and what no headless run can show.
+7. State the agent mistakes I caught, what remains uncertain, one next step,
+   the human and AI contributions (FRICTIONAL.md "Who did what (A5)"), the
+   texture source (Poly Haven Dark Wood, CC0, with authors), and the
+   revision shown.
+
+Use the Walker opening/summary and Verdict -> Your Turn -> regular outro.
+Label every scripted capture, reconstructed editor view and held frame as
+such; never present a reconstruction as a screenshot. Use only facts from my
+committed files (CHANGE-BRIEF.md, TEST-REPORT.md A5, LANGUAGE-NOTES.md,
+FRICTIONAL.md A5, SOURCES.md A5, evidence/, logs/); do not invent results.
+Write the beat sheet, script and prompts as files in the film folder before
+rendering. Then render, run all of the skill's quality checks, and watch
+for problems in the final export.
+
+Rules: do not edit anything in godot/ except new capture scripts under
+godot/tools/ if you need in-play footage; do not edit CHANGE-BRIEF.md,
+CLAUDE.md, AGENTS.md, TEST-REPORT.md, FRICTIONAL.md, SOURCES.md,
+LANGUAGE-NOTES.md or README.md; never commit; keep MP4, MP3 and any file
+over 25 MB out of git. End with the export's file path, duration, size and
+SHA-256, the QC results, and anything you could not do.
