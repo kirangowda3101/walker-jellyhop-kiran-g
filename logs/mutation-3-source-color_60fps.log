@@ -1,0 +1,146 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+INFO engine {"renderer":"gl_compatibility","tolerances":{"colour":0.00392156862745098,"float":0.00001},"version":"4.7.2-stable (official)"}
+PASS shader_source_readable res://shaders/table_wood.gdshader {"chars":912}
+FAIL sampler_hints albedo_tex {"expected":["source_color","filter_linear_mipmap","repeat_enable"],"hints":["filter_linear_mipmap","repeat_enable"],"type":"sampler2D"}
+PASS sampler_hints roughness_tex {"expected":["hint_default_white","filter_linear_mipmap","repeat_enable"],"hints":["hint_default_white","filter_linear_mipmap","repeat_enable"],"type":"sampler2D"}
+PASS sampler_hints normal_tex {"expected":["hint_normal","filter_linear_mipmap","repeat_enable"],"hints":["hint_normal","filter_linear_mipmap","repeat_enable"],"type":"sampler2D"}
+PASS uniform_default_source tint {"expected":"Color(1, 1, 1, 1)","text":"vec4(1.0, 1.0, 1.0, 1.0)"}
+PASS uniform_default_source brightness {"expected":"1.0","text":"1.0"}
+PASS uniform_default_source roughness_scale {"expected":"1.0","text":"1.0"}
+PASS uniform_default_source normal_strength {"expected":"1.0","text":"1.0"}
+PASS uniform_default_source uv_scale {"expected":"1.0","text":"1.0"}
+PASS source_declares_no_other_uniforms res://shaders/table_wood.gdshader {"declared":["albedo_tex","tint","brightness","roughness_tex","normal_tex","roughness_scale","normal_strength","uv_scale"],"unexpected":[]}
+PASS shader_loads res://shaders/table_wood.gdshader {}
+INFO uniform_list res://shaders/table_wood.gdshader {"entries":{"albedo_tex":{"group":"colour","hint":17,"hint_string":"Texture2D","type":24},"brightness":{"group":"colour","hint":1,"hint_string":"0.0,2.0,0.0010000000475","type":3},"normal_strength":{"group":"surface","hint":1,"hint_string":"0.0,2.0,0.0010000000475","type":3},"normal_tex":{"group":"surface","hint":17,"hint_string":"Texture2D","type":24},"roughness_scale":{"group":"surface","hint":1,"hint_string":"0.0,1.0,0.0010000000475","type":3},"roughness_tex":{"group":"surface","hint":17,"hint_string":"Texture2D","type":24},"tint":{"group":"colour","hint":0,"hint_string":"","type":20},"uv_scale":{"group":"mapping","hint":1,"hint_string":"0.25,8.0,0.0010000000475","type":3}},"groups":["colour","surface","mapping"]}
+PASS uniform_list_nonempty res://shaders/table_wood.gdshader {"size":8}
+PASS uniform_list_names res://shaders/table_wood.gdshader {"expected":["albedo_tex","roughness_tex","normal_tex","tint","brightness","roughness_scale","normal_strength","uv_scale"],"got":["albedo_tex","tint","brightness","roughness_tex","normal_tex","roughness_scale","normal_strength","uv_scale"]}
+PASS uniform_list_type albedo_tex {"expected_group":"colour","group":"colour","hint_string":"Texture2D","type":24}
+PASS uniform_list_type roughness_tex {"expected_group":"surface","group":"surface","hint_string":"Texture2D","type":24}
+PASS uniform_list_type normal_tex {"expected_group":"surface","group":"surface","hint_string":"Texture2D","type":24}
+PASS uniform_list_type tint {"expected_group":"colour","expected_range":[],"expected_type":20,"group":"colour","hint":0,"hint_string":"","type":20}
+PASS uniform_list_type brightness {"expected_group":"colour","expected_range":[0.0,2.0],"expected_type":3,"group":"colour","hint":1,"hint_string":"0.0,2.0,0.0010000000475","type":3}
+PASS uniform_list_type roughness_scale {"expected_group":"surface","expected_range":[0.0,1.0],"expected_type":3,"group":"surface","hint":1,"hint_string":"0.0,1.0,0.0010000000475","type":3}
+PASS uniform_list_type normal_strength {"expected_group":"surface","expected_range":[0.0,2.0],"expected_type":3,"group":"surface","hint":1,"hint_string":"0.0,2.0,0.0010000000475","type":3}
+PASS uniform_list_type uv_scale {"expected_group":"mapping","expected_range":[0.25,8.0],"expected_type":3,"group":"mapping","hint":1,"hint_string":"0.25,8.0,0.0010000000475","type":3}
+PASS shader_source_readable res://shaders/hint_experiment.gdshader {"chars":367}
+PASS sampler_hints strip_as_colour {"expected":["source_color","filter_nearest"],"hints":["source_color","filter_nearest"],"type":"sampler2D"}
+PASS sampler_hints strip_as_data {"expected":["filter_nearest"],"hints":["filter_nearest"],"type":"sampler2D"}
+INFO uniform_default_source use_source_color {"note":"no default in the brief","text":"true"}
+PASS source_declares_no_other_uniforms res://shaders/hint_experiment.gdshader {"declared":["strip_as_colour","strip_as_data","use_source_color"],"unexpected":[]}
+PASS shader_loads res://shaders/hint_experiment.gdshader {}
+INFO uniform_list res://shaders/hint_experiment.gdshader {"entries":{"strip_as_colour":{"group":"","hint":17,"hint_string":"Texture2D","type":24},"strip_as_data":{"group":"","hint":17,"hint_string":"Texture2D","type":24},"use_source_color":{"group":"","hint":0,"hint_string":"","type":1}},"groups":[]}
+PASS uniform_list_nonempty res://shaders/hint_experiment.gdshader {"size":3}
+PASS uniform_list_names res://shaders/hint_experiment.gdshader {"expected":["strip_as_colour","strip_as_data","use_source_color"],"got":["strip_as_colour","strip_as_data","use_source_color"]}
+PASS uniform_list_type strip_as_colour {"expected_group":"","group":"","hint_string":"Texture2D","type":24}
+PASS uniform_list_type strip_as_data {"expected_group":"","group":"","hint_string":"Texture2D","type":24}
+PASS uniform_list_type use_source_color {"expected_group":"","expected_range":[],"expected_type":1,"group":"","hint":0,"hint_string":"","type":1}
+PASS material_loads res://materials/table_wood_worn.tres {}
+PASS material_shader res://materials/table_wood_worn.tres {"expected":"res://shaders/table_wood.gdshader","shader":"res://shaders/table_wood.gdshader"}
+PASS material_value table_wood_worn.tres tint {"expected":"Color(1, 1, 1, 1)","got":"Color(1, 1, 1, 1)"}
+PASS material_value table_wood_worn.tres brightness {"expected":"1.0","got":"1.0"}
+PASS material_value table_wood_worn.tres roughness_scale {"expected":"1.0","got":"1.0"}
+PASS material_value table_wood_worn.tres normal_strength {"expected":"1.0","got":"1.0000000475"}
+PASS material_value table_wood_worn.tres uv_scale {"expected":"2.0","got":"2.000000083125"}
+PASS material_texture table_wood_worn.tres albedo_tex {"bound":"res://assets/textures/dark_wood/dark_wood_diff_2k.png","expected":"res://assets/textures/dark_wood/dark_wood_diff_2k.png"}
+INFO bound_texture dark_wood_diff_2k.png {"class":"CompressedTexture2D","size":[2048,2048]}
+PASS material_texture table_wood_worn.tres roughness_tex {"bound":"res://assets/textures/dark_wood/dark_wood_rough_2k.png","expected":"res://assets/textures/dark_wood/dark_wood_rough_2k.png"}
+INFO bound_texture dark_wood_rough_2k.png {"class":"CompressedTexture2D","size":[2048,2048]}
+PASS material_texture table_wood_worn.tres normal_tex {"bound":"res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png","expected":"res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png"}
+INFO bound_texture dark_wood_nor_gl_2k.png {"class":"CompressedTexture2D","size":[2048,2048]}
+PASS material_loads res://materials/serving_board_polished.tres {}
+PASS material_shader res://materials/serving_board_polished.tres {"expected":"res://shaders/table_wood.gdshader","shader":"res://shaders/table_wood.gdshader"}
+PASS material_value serving_board_polished.tres tint {"expected":"Color(1, 0.85, 0.7, 1)","got":"Color(1, 0.8509804, 0.7019608, 1)"}
+PASS material_value serving_board_polished.tres brightness {"expected":"1.0","got":"1.0"}
+PASS material_value serving_board_polished.tres roughness_scale {"expected":"0.35","got":"0.350000016625"}
+PASS material_value serving_board_polished.tres normal_strength {"expected":"0.5","got":"0.50000002375"}
+PASS material_value serving_board_polished.tres uv_scale {"expected":"1.0","got":"1.0000000356249998"}
+PASS material_texture serving_board_polished.tres albedo_tex {"bound":"res://assets/textures/dark_wood/dark_wood_diff_2k.png","expected":"res://assets/textures/dark_wood/dark_wood_diff_2k.png"}
+INFO bound_texture dark_wood_diff_2k.png {"class":"CompressedTexture2D","size":[2048,2048]}
+PASS material_texture serving_board_polished.tres roughness_tex {"bound":"res://assets/textures/dark_wood/dark_wood_rough_2k.png","expected":"res://assets/textures/dark_wood/dark_wood_rough_2k.png"}
+INFO bound_texture dark_wood_rough_2k.png {"class":"CompressedTexture2D","size":[2048,2048]}
+PASS material_texture serving_board_polished.tres normal_tex {"bound":"res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png","expected":"res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png"}
+INFO bound_texture dark_wood_nor_gl_2k.png {"class":"CompressedTexture2D","size":[2048,2048]}
+PASS material_loads res://materials/hint_with_source_color.tres {}
+PASS material_shader res://materials/hint_with_source_color.tres {"expected":"res://shaders/hint_experiment.gdshader","shader":"res://shaders/hint_experiment.gdshader"}
+PASS material_value hint_with_source_color.tres use_source_color {"expected":"true","got":"true"}
+PASS material_texture hint_with_source_color.tres strip_as_colour {"bound":"res://assets/textures/hint_strip/hint_strip_3x1.png","expected":"res://assets/textures/hint_strip/hint_strip_3x1.png"}
+INFO bound_texture hint_strip_3x1.png {"class":"CompressedTexture2D","size":[3,1]}
+PASS material_texture hint_with_source_color.tres strip_as_data {"bound":"res://assets/textures/hint_strip/hint_strip_3x1.png","expected":"res://assets/textures/hint_strip/hint_strip_3x1.png"}
+INFO bound_texture hint_strip_3x1.png {"class":"CompressedTexture2D","size":[3,1]}
+PASS material_loads res://materials/hint_without_source_color.tres {}
+PASS material_shader res://materials/hint_without_source_color.tres {"expected":"res://shaders/hint_experiment.gdshader","shader":"res://shaders/hint_experiment.gdshader"}
+PASS material_value hint_without_source_color.tres use_source_color {"expected":"false","got":"false"}
+PASS material_texture hint_without_source_color.tres strip_as_colour {"bound":"res://assets/textures/hint_strip/hint_strip_3x1.png","expected":"res://assets/textures/hint_strip/hint_strip_3x1.png"}
+INFO bound_texture hint_strip_3x1.png {"class":"CompressedTexture2D","size":[3,1]}
+PASS material_texture hint_without_source_color.tres strip_as_data {"bound":"res://assets/textures/hint_strip/hint_strip_3x1.png","expected":"res://assets/textures/hint_strip/hint_strip_3x1.png"}
+INFO bound_texture hint_strip_3x1.png {"class":"CompressedTexture2D","size":[3,1]}
+PASS table_materials_share_shader {"polished":"res://shaders/table_wood.gdshader","same_object":true,"worn":"res://shaders/table_wood.gdshader"}
+PASS dx_normal_map_not_bound {"bound_paths":["res://assets/textures/dark_wood/dark_wood_diff_2k.png","res://assets/textures/dark_wood/dark_wood_rough_2k.png","res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png","res://assets/textures/dark_wood/dark_wood_diff_2k.png","res://assets/textures/dark_wood/dark_wood_rough_2k.png","res://assets/textures/dark_wood/dark_wood_nor_gl_2k.png","res://assets/textures/hint_strip/hint_strip_3x1.png","res://assets/textures/hint_strip/hint_strip_3x1.png","res://assets/textures/hint_strip/hint_strip_3x1.png","res://assets/textures/hint_strip/hint_strip_3x1.png"]}
+PASS import_file_reads dark_wood_diff_2k.png {"error":0}
+INFO import_settings dark_wood_diff_2k.png {"compress/mode":0,"compress/normal_map":2,"detect_3d/compress_to":0,"mipmaps/generate":true,"roughness/mode":1}
+PASS import dark_wood_diff_2k.png compress/mode {"expected":0,"got":0}
+PASS import dark_wood_diff_2k.png compress/normal_map {"expected":2,"got":2}
+PASS import dark_wood_diff_2k.png mipmaps/generate {"expected":true,"got":true}
+PASS import dark_wood_diff_2k.png detect_3d/compress_to {"expected":0,"got":0}
+PASS import dark_wood_diff_2k.png roughness/mode {"expected":1,"got":1}
+PASS import_file_reads dark_wood_rough_2k.png {"error":0}
+INFO import_settings dark_wood_rough_2k.png {"compress/mode":0,"compress/normal_map":2,"detect_3d/compress_to":0,"mipmaps/generate":true,"roughness/mode":1}
+PASS import dark_wood_rough_2k.png compress/mode {"expected":0,"got":0}
+PASS import dark_wood_rough_2k.png compress/normal_map {"expected":2,"got":2}
+PASS import dark_wood_rough_2k.png mipmaps/generate {"expected":true,"got":true}
+PASS import dark_wood_rough_2k.png detect_3d/compress_to {"expected":0,"got":0}
+PASS import dark_wood_rough_2k.png roughness/mode {"expected":1,"got":1}
+PASS import_file_reads dark_wood_nor_gl_2k.png {"error":0}
+INFO import_settings dark_wood_nor_gl_2k.png {"compress/mode":0,"compress/normal_map":1,"detect_3d/compress_to":0,"mipmaps/generate":true,"roughness/mode":1}
+PASS import dark_wood_nor_gl_2k.png compress/mode {"expected":0,"got":0}
+PASS import dark_wood_nor_gl_2k.png compress/normal_map {"expected":1,"got":1}
+PASS import dark_wood_nor_gl_2k.png mipmaps/generate {"expected":true,"got":true}
+PASS import dark_wood_nor_gl_2k.png detect_3d/compress_to {"expected":0,"got":0}
+PASS import dark_wood_nor_gl_2k.png roughness/mode {"expected":1,"got":1}
+PASS import_file_reads dark_wood_nor_dx_2k.png {"error":0}
+INFO import_settings dark_wood_nor_dx_2k.png {"compress/mode":0,"compress/normal_map":1,"detect_3d/compress_to":0,"mipmaps/generate":true,"roughness/mode":1}
+PASS import dark_wood_nor_dx_2k.png compress/mode {"expected":0,"got":0}
+PASS import dark_wood_nor_dx_2k.png compress/normal_map {"expected":1,"got":1}
+PASS import dark_wood_nor_dx_2k.png mipmaps/generate {"expected":true,"got":true}
+PASS import dark_wood_nor_dx_2k.png detect_3d/compress_to {"expected":0,"got":0}
+PASS import dark_wood_nor_dx_2k.png roughness/mode {"expected":1,"got":1}
+PASS import_file_reads hint_strip_3x1.png {"error":0}
+INFO import_settings hint_strip_3x1.png {"compress/mode":0,"compress/normal_map":2,"detect_3d/compress_to":0,"mipmaps/generate":false,"roughness/mode":1}
+PASS import hint_strip_3x1.png compress/mode {"expected":0,"got":0}
+PASS import hint_strip_3x1.png mipmaps/generate {"expected":false,"got":false}
+PASS scene_loads res://showcase/a5_materials.tscn {}
+PASS a5 Floor surface override {"material_override":false,"override":"res://materials/table_wood_worn.tres"}
+PASS a5 ServingBoard surface override {"material_override":false,"override":"res://materials/serving_board_polished.tres"}
+INFO a5 Floor mesh {"mesh_material":"StandardMaterial3D","note":"the A3 mesh material stays on the mesh; the surface override replaces it at draw time","size":"Vector3(8, 0.1, 4)"}
+INFO a5 Floor top face UV {"face_size_xz":[8.0,4.0],"uv_max":[0.6667,1.0],"uv_min":[0.3333,0.5],"uv_span":[0.3333,0.5]}
+INFO a5 ServingBoard mesh {"position":"Vector3(0, 0.025, 1.4)","size":"Vector3(1.6, 0.05, 0.8)"}
+INFO a5 ServingBoard top face UV {"face_size_xz":[1.6,0.8],"uv_max":[0.6667,1.0],"uv_min":[0.3333,0.5],"uv_span":[0.3333,0.5]}
+INFO a5 lights [{"light":{"class":"DirectionalLight3D","directional_shadow_mode":"SHADOW_PARALLEL_4_SPLITS","forward_in_parent":"Vector3(0, -0.766, -0.6428)","light_color":"Color(1, 1, 1, 1)","light_energy":1.0,"light_indirect_energy":1.0,"shadow_enabled":true},"path":"A3Assets/Sun"}]
+PASS a5 Sun is the only light, shadows on {"lights":1}
+INFO a5 environment {"cameras":[{"attributes":false,"current":true,"environment":false,"path":"A3Assets/Camera3D"}],"project_default_environment":"","world_environments":0}
+PASS a5 has no WorldEnvironment or camera environment {"world_environments":0}
+PASS scene_loads res://showcase/hint_experiment.tscn {}
+PASS hint QuadWithSourceColor surface override {"override":"res://materials/hint_with_source_color.tres"}
+PASS hint QuadWithoutSourceColor surface override {"override":"res://materials/hint_without_source_color.tres"}
+INFO hint lights []
+PASS hint WorldEnvironment has an Environment {}
+INFO hint environment {"adjustment_enabled":false,"ambient_light_source":"0 AMBIENT_SOURCE_BG","background_color":"Color(0, 0, 0, 1)","background_mode":"1 BG_COLOR","fog_enabled":false,"glow_enabled":false,"sdfgi_enabled":false,"ssao_enabled":false,"ssil_enabled":false,"ssr_enabled":false,"tonemap_exposure":1.0,"tonemap_mode":"0 TONE_MAPPER_LINEAR","tonemap_white":1.0,"volumetric_fog_enabled":false}
+PASS hint tonemap Linear {"tonemap_mode":"0 TONE_MAPPER_LINEAR"}
+PASS hint exposure 1.0 {"tonemap_exposure":1.0}
+PASS hint glow off {}
+PASS hint fog off {}
+PASS hint adjustments off {}
+INFO hint camera {"attributes":false,"environment":false,"projection":"PROJECTION_ORTHOGONAL","size":2.0}
+PASS strip source loads {}
+PASS strip texels 64, 128, 192 grey {"format":"FORMAT_RGB8","size":[3,1],"texels":[[64,64,64],[128,128,128],[192,192,192]]}
+INFO roughness source grey {"format":"FORMAT_RGB8","max_channel_difference_8bit":0,"samples":16384}
+INFO source image dark_wood_diff_2k.png {"format":"FORMAT_RGB8","size":[2048,2048]}
+INFO source image dark_wood_rough_2k.png {"format":"FORMAT_RGB8","size":[2048,2048]}
+INFO source image dark_wood_nor_gl_2k.png {"format":"FORMAT_RGB8","size":[2048,2048]}
+INFO source image dark_wood_nor_dx_2k.png {"format":"FORMAT_RGB8","size":[2048,2048]}
+PASS nor_gl source loads {}
+CURL dark_wood_nor_gl_2k.png stride=4  directx=false: 0.3838  directx=true: 1.6162
+PASS nor_gl curl under GL below 0.70 {"directx_false":0.3838,"directx_true":1.6162}
+CURL dark_wood_nor_dx_2k.png stride=4  directx=false: 1.6163  directx=true: 0.3837  (calibration, not checked)
+MATERIAL CHECKS: 108 checks / 1 failures
