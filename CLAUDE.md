@@ -85,10 +85,10 @@ Confirmed on this machine on 2026-10-27 with `godot/tests/probe_headless.gd` (lo
 
 ## Unconfirmed
 
-- **Dark-wood import settings:** none of the four PNGs has a `.import` file yet. The settings in CHANGE-BRIEF.md §7 are not applied yet. The Poly Haven source and licence are not checked here.
-- **Files that do not exist yet:** `godot/shaders/`, `godot/materials/`, `godot/showcase/a5_materials.tscn` and any A5 test file.
-- **Which script sets `warning` (the "driver"):** the brief does not name it. It also does not say whether the per-fork `ShaderMaterial` is created in `fork.gd` `setup()` or elsewhere. Both need Kiran's decision.
-- **How the Floor's material gets replaced in the new scene:** a node `material_override` or a surface override on the instanced `Floor`. The brief does not say which.
+- **Dark-wood import settings:** resolved. `.import` files exist with the CHANGE-BRIEF.md Revision 2 values, confirmed by name in the Import dock (MATERIALS.md). The Poly Haven source and licence are in `godot/assets/textures/dark_wood/ATTRIBUTION.md`.
+- **A5 files:** resolved. `godot/shaders/`, `godot/materials/`, `godot/showcase/a5_materials.tscn`, `godot/showcase/hint_experiment.tscn`, `test_fork_warning.gd` and `test_materials.gd` now exist.
+- **Driver:** resolved in CHANGE-BRIEF.md Revision 1: `fork.gd` `_apply()` sets `warning`; each fork's sprite gets a duplicate of `godot/materials/fork_warning.tres`.
+- **Floor material:** resolved: a surface material override on the instanced `Floor` in `a5_materials.tscn` (`a3_assets.tscn` unchanged).
 - **Existing suites at 30 and 144 fps:** the brief records them passing at 60 fps only. I have not run any test in this session.
 - **Brief statements that are Kiran's predictions:** the `Engine.time_scale` behaviour (rule 5), `source_color` in 2D and spatial shaders (§6, §7), the hint-experiment values on Compatibility (§8) and whether `hint_range` clamps values set from code (§10.7). These are unverified.
 - **Two ways of running checks:** README.md line 33 names `tools/run_slice_checks.sh`. AGENTS.md requires `scripts/run-test.sh` for every Godot test. I did not read `run_slice_checks.sh`.
