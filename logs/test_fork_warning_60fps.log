@@ -31,7 +31,3 @@ FORK WARNING PER-TICK SEQUENCE MD5 (601 ticks x 5 forks): 35385bc4a519009a685ec2
 {"id":"13-restart-reads-0-next-shadow-restarts-at-1-over-n","observed":{"interrupted_w":0.385416666666667,"next_shadow_first_w":0.0104166666666667,"nonzero_ticks_before_next_shadow":[],"ok":true,"plate":2,"restart_tick_held":false,"restart_tick_t":0,"restart_tick_w":0.0,"ticks_restart_to_next_shadow":132,"want":0.0104166666666667},"status":"PASS"}
 {"id":"14-fork-splat-release-next-shadow-restarts-at-1-over-n","observed":{"cause":"fork","fork_phase_on_hit_tick":3,"next_shadow_first_w":0.0104166666666667,"nonzero_ticks_before_next_shadow":[],"ok":true,"plate":2,"restart_tick_held":false,"restart_tick_t":0,"restart_tick_w":0.0,"ticks_restart_to_next_shadow":132,"want":0.0104166666666667},"status":"PASS"}
 FORK WARNING TESTS: 29 checks / 0 failures
-WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
-   at: cleanup (core/object/object.cpp:2536)
-ERROR: 6 resources still in use at exit (run with --verbose for details).
-   at: clear (core/io/resource.cpp:822)
