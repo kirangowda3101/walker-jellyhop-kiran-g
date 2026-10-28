@@ -17,7 +17,13 @@ var out_dir := ""
 var results := {}
 
 func _initialize() -> void:
-    out_dir = ProjectSettings.globalize_path("res://").path_join(OUT_REL).simplify_path()
+    var rel := OUT_REL
+    for a in OS.get_cmdline_user_args():   # optional: -- --out=../evidence/other-folder
+        if a.begins_with("--out="):
+            rel = a.substr(6)
+    out_dir = ProjectSettings.globalize_path("res://").path_join(rel).simplify_path()
+    results["rendering_method"] = RenderingServer.get_current_rendering_method()
+    print("CAPTURE rendering method: ", results["rendering_method"], "; output: ", out_dir)
     DirAccess.make_dir_recursive_absolute(out_dir)
     _run.call_deferred()
 
