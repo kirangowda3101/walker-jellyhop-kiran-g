@@ -204,3 +204,7 @@ Worked example for 128 without `source_color`: x = 128/255 = 0.502; 1.055 × 0.5
 **Base material (replaces the §2 "Material" line).** `godot/materials/fork_warning.tres` is a `ShaderMaterial` using `fork_warning.gdshader`. Each fork's `setup()` gives its sprite a **duplicate** of it, so every fork has its own material and its own `warning` (rule 7), while `strength` and `warn_color` are tuned once in the Inspector on the base `.tres`. Until I tune it, the base material sets no parameters, so the shader defaults apply.
 
 **Uncovered rule.** Rule 5's "WON holds its value" has no headless check in this change. I will observe it by eye in a windowed run when the jelly reaches the dome, and record the result in TEST-REPORT.md.
+
+## Revision 2 — 2026-10-27 (import settings, before committing the textures; decision mine)
+
+The §7 texture table lists `compress/mode`, `compress/normal_map`, `mipmaps/generate` and `detect_3d/compress_to`. Godot's default `.import` files also hold `roughness/mode=0` (Detect). To leave the editor nothing to change later, all four dark-wood textures also set `roughness/mode=1` (Disabled). Values as written in the `.import` files: `compress/mode=0` (Lossless), `compress/normal_map=2` (Disabled) for diff and rough and `1` (Enable) for nor_gl and nor_dx, `mipmaps/generate=true`, `detect_3d/compress_to=0` (Disabled), `roughness/mode=1` (Disabled). The enum names are to be confirmed in the editor's Import dock.
