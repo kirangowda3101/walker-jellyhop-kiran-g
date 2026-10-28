@@ -1,0 +1,64 @@
+Inspect before editing. Always run Godot through ./scripts/run-test.sh
+or godot --headless --path godot --import; never add
+--rendering-driver. A headless run uses a dummy renderer: it draws
+nothing.
+
+Task: audit the materials named in CHANGE-BRIEF.md, then write a
+headless test that pins what you found. Do not change any .gdshader
+file, material, scene or .import file in this task.
+
+1. Read the textured shader, both ShaderMaterial resources that use it,
+   the hint-experiment shader and its two materials, the .import file
+   of every texture they use, and the lights and environment of the
+   scenes they appear in.
+2. Write godot/MATERIALS.md with:
+   - one row per material: resource path, shader path, every uniform
+     value it sets, and every texture it binds;
+   - one row per sampler in each shader: name, hints as written in the
+     source, the texture each material binds to it, and that texture's
+     import settings (compress/mode, compress/normal_map,
+     mipmaps/generate);
+   - the lights and environment settings that change the look,
+     including tonemap and exposure;
+   - findings: anything that looks wrong, wasteful, unused or
+     inconsistent with CHANGE-BRIEF.md, each with the evidence line;
+   - attribution, using exactly the facts in CHANGE-BRIEF.md, which I
+     checked myself.
+3. Write godot/tests/test_materials.gd (extends SceneTree) that loads the
+   scenes headlessly and asserts the tables: both materials for the
+   textured shader reference the same shader path; each sampler's hints,
+   read from the source text; each material's uniform values and texture
+   paths; the import settings read from the .import files with
+   ConfigFile; and the uniform list from get_shader_uniform_list(). For
+   each normal map, preload godot/tests/normal_map_check.gd, decode the
+   source file with Image.load_from_file, and print curl_ratio under
+   both conventions. Print one PASS/FAIL line per check and exit 1 on
+   any failure.
+4. Run it with ./scripts/run-test.sh test_materials.gd 60 and show the
+   real output. Say what the test cannot establish headlessly.
+Do not commit.
+
+Notes for this run (added by Kiran, from what I found while building):
+- Files: textured shader godot/shaders/table_wood.gdshader; its materials
+  godot/materials/table_wood_worn.tres and serving_board_polished.tres,
+  used in godot/showcase/a5_materials.tscn (Floor surface override on the
+  instanced A3 scene, and ServingBoard). Hint shader
+  godot/shaders/hint_experiment.gdshader; its materials
+  godot/materials/hint_with_source_color.tres and
+  hint_without_source_color.tres, used in godot/showcase/hint_experiment.tscn.
+  The fork shader is covered by test_fork_warning.gd; leave it out.
+- Godot does not write default values into saved files. The hint scene's
+  Environment (tonemap, exposure, glow, fog, adjustments) is at defaults,
+  so its .tscn text does not mention them. Assert those values on the
+  loaded Environment resource, not by searching the file text.
+- Float values saved by the editor are not exact (for example uv_scale
+  is stored as 2.000000083125). Compare floats and colours with a small
+  tolerance, and say which tolerance you used.
+- Normal-map threshold (CHANGE-BRIEF.md Revision 3): the bound map passes
+  if its curl ratio under its own convention (GL, directx = false) is
+  below 0.70. Also print both conventions for dark_wood_nor_dx_2k.png as
+  the calibration pair, without a pass/fail on it.
+- Look up every integer enum you report (tonemap mode, compress/mode,
+  compress/normal_map and similar) and give its name; do not guess.
+- Do not edit CLAUDE.md, CHANGE-BRIEF.md, AGENTS.md, any existing test,
+  normal_map_check.gd, any material, scene, texture or .import file.
