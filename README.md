@@ -231,4 +231,4 @@ godot --path godot res://showcase/hint_experiment.tscn
 - Under Sun-only lighting `roughness_scale` is subtle and `normal_strength` has no visible effect.
 - `uv_scale` scales the `BoxMesh`'s own UVs, not a fixed number of repeats.
 
-**Film:** link, filename and SHA-256 added after the film is rendered.
+**Film:** https://youtu.be/CQfNguHdtJI (YouTube, unlisted; reviewer access checked in a private window). File `claude-liam-jelly-hop-a5.mp4`, 518.567 s, 3840 × 2160, SHA-256 `240e7409d3974cd49357e429564657ec6f6743fb5a9ad4daefb4aa547e34b237`. Game-source revision shown: 77a6d10. Film sources and QC: `youtube/claude-liam-jelly-hop-a5/` (MP4 kept out of git).
