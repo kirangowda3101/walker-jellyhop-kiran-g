@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cggwkcxn0kf6k"]
+
+[ext_resource type="Material" uid="uid://rdqmrfxva7dn" path="res://materials/hint_with_source_color.tres" id="1_with"]
+[ext_resource type="Material" uid="uid://d273iscionrw5" path="res://materials/hint_without_source_color.tres" id="2_without"]
+
+[sub_resource type="Environment" id="Environment_linear"]
+background_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_strip"]
+size = Vector2(1.5, 0.5)
+
+[node name="HintExperiment" type="Node3D" unique_id=1933118233]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=600984219]
+environment = SubResource("Environment_linear")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1491667028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+projection = 1
+current = true
+size = 2.0
+
+[node name="QuadWithSourceColor" type="MeshInstance3D" parent="." unique_id=622942590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0)
+mesh = SubResource("QuadMesh_strip")
+surface_material_override/0 = ExtResource("1_with")
+
+[node name="QuadWithoutSourceColor" type="MeshInstance3D" parent="." unique_id=592649788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 0)
+mesh = SubResource("QuadMesh_strip")
+surface_material_override/0 = ExtResource("2_without")
