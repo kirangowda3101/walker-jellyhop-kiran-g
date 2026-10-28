@@ -229,3 +229,22 @@ Calibration with `godot/tests/normal_map_check.gd` (the handout's check, verbati
 **`uv_scale` (corrects the §7 uniform table).** `uv_scale` scales the mesh's existing UV coordinates (`table_wood.gdshader` line 23, `vec2 uv = UV * uv_scale;`); it does not set a fixed number of repeats across each face. The audit measured that a `BoxMesh` packs its six faces into a 3 × 2 UV layout, so the top face covers only U 0.333–0.667 and V 0.5–1.0. With `uv_scale = s`, the top face therefore shows about s/3 copies across U and s/2 along V: at 2.0, about 0.67 × 1. On the 8 m × 4 m Floor that slice is also stretched unevenly (about 0.042 U per metre against 0.125 V per metre). I keep both `BoxMesh`es and the existing test expectations unchanged, and I judge grain size only in the in-engine captures.
 
 **Lighting (replaces "Lighting I judge under" in §7).** `a5_materials.tscn` has no `WorldEnvironment` and the project sets no default environment. At runtime both materials are lit by the A3 `Sun` only (`DirectionalLight3D`, shadows on, `a3_assets.tscn` lines 39–41), with no ambient light, against the project's clear colour (`project.godot` line 34). The editor viewport adds its own preview sun and sky, so I make no material judgment from it: every judgment of either material comes from in-engine captures under this same lighting.
+
+## Revision 5 — 2026-10-28 (P1 replaced after the first capture run; decision mine)
+
+**Why:** the first in-engine capture (`logs/capture_a5.log`, commit 71e1c9b) found no fork with P1 on screen. The fork sprite is about 800 px tall in a 720 px view, so P1 at art (168, 300), near the top of the handle, is above the top of the screen even when the fork is down. It was flat in the art but unreachable in the game.
+
+**New P1:** art pixel (194, 1144) on a tine = (179, 183, 184), every channel within 3 across a 13 × 13 box, about 72 screen px above the tine tips (0.631 × (1258 − 1144)). P2 is unchanged: (298, 850) = (113, 126, 128).
+
+**New P1 predictions** (pixel + amount × (amber − pixel), amount = `warning` × 0.65, rounded to 8 bits):
+
+| `warning` | amount | New P1 |
+|---|---|---|
+| 0.0 | 0.0 | (179, 183, 184) |
+| 0.5 | 0.325 | (204, 182, 147) |
+| 1.0 | 0.65 | (228, 180, 111) |
+| 2.0 | 1.3 | (255, 178, 37), red clipped from 278 |
+
+P2 at `warning = 2.0` (amount 1.3): (297 → 255, 195, 54).
+
+**Capture method:** the capture waits until a fork has both P1 and P2 on screen (in practice, a fork that is down), then stops the session's physics so no fork advances and the driver writes nothing, then sets `warning` directly.
