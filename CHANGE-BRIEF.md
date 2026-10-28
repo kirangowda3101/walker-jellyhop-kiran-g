@@ -208,3 +208,18 @@ Worked example for 128 without `source_color`: x = 128/255 = 0.502; 1.055 × 0.5
 ## Revision 2 — 2026-10-27 (import settings, before committing the textures; decision mine)
 
 The §7 texture table lists `compress/mode`, `compress/normal_map`, `mipmaps/generate` and `detect_3d/compress_to`. Godot's default `.import` files also hold `roughness/mode=0` (Detect). To leave the editor nothing to change later, all four dark-wood textures also set `roughness/mode=1` (Disabled). Values as written in the `.import` files: `compress/mode=0` (Lossless), `compress/normal_map=2` (Disabled) for diff and rough and `1` (Enable) for nor_gl and nor_dx, `mipmaps/generate=true`, `detect_3d/compress_to=0` (Disabled), `roughness/mode=1` (Disabled). The enum names are to be confirmed in the editor's Import dock.
+
+## Revision 3 — 2026-10-27 (normal-map curl check calibrated; threshold mine)
+
+Calibration with `godot/tests/normal_map_check.gd` (the handout's check, verbatim) on the Poly Haven Dark Wood source PNGs, stride 4, run through `./scripts/run-test.sh calibrate_normal_check.gd 60` (log: `logs/calibrate_normal_check_60fps.log`):
+
+| Map | `directx = false` (GL) | `directx = true` (DX) |
+|---|---|---|
+| `dark_wood_nor_gl_2k.png` | 0.3838 | 1.6162 |
+| `dark_wood_nor_dx_2k.png` | 1.6163 | 0.3837 |
+
+- **Direction confirmed, not reversed:** the GL file scores lower under the GL convention and the DX file lower under DX, so `s` is not flipped.
+- **Drift toward 1:** the values sit at about 0.38 and 1.62, not near 0 and 2. This is the handout's flat-map effect: wood grain is a shallow surface and the maps load as 8-bit RGB (`FORMAT_RGB8`), so quantization noise is a large share of the slopes.
+- **The two conventions always sum to 2** (`(t1 − t2)²` and `(t1 + t2)²` add to `2(t1² + t2²)`), so what matters is which convention is lower and how far below 1.0 (no surface) it sits.
+
+**Threshold (mine), for this texture only:** the bound normal map passes if its ratio under its own convention (GL, `directx = false`) is **below 0.70**, halfway between this map's measured 0.38 and the no-surface value 1.0. This is a texture-specific threshold set from this calibration pair, not a universal rule: another normal map, especially a flatter or compressed one, would need its own calibration before a threshold is chosen.
