@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://rdqmrfxva7dn"]
+
+[ext_resource type="Shader" uid="uid://c743jjfwjtt6o" path="res://shaders/hint_experiment.gdshader" id="1_lgsvs"]
+[ext_resource type="Texture2D" uid="uid://b88c3b8fpgk08" path="res://assets/textures/hint_strip/hint_strip_3x1.png" id="2_0gk1w"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lgsvs")
+shader_parameter/strip_as_colour = ExtResource("2_0gk1w")
+shader_parameter/strip_as_data = ExtResource("2_0gk1w")
+shader_parameter/use_source_color = true
