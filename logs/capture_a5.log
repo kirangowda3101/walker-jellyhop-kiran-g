@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+CAPTURE fork: no fork with P1 and P2 on screen
+CAPTURE hint with_source_color band0 (file value 64) measured=[64, 64, 64] predicted=64 5x5min=[64, 64, 64] 5x5max=[64, 64, 64]
+CAPTURE hint with_source_color band1 (file value 128) measured=[128, 128, 128] predicted=128 5x5min=[128, 128, 128] 5x5max=[128, 128, 128]
+CAPTURE hint with_source_color band2 (file value 192) measured=[192, 192, 192] predicted=192 5x5min=[192, 192, 192] 5x5max=[192, 192, 192]
+CAPTURE hint without_source_color band0 (file value 64) measured=[64, 64, 64] predicted=137 5x5min=[64, 64, 64] 5x5max=[64, 64, 64]
+CAPTURE hint without_source_color band1 (file value 128) measured=[128, 128, 128] predicted=188 5x5min=[128, 128, 128] 5x5max=[128, 128, 128]
+CAPTURE hint without_source_color band2 (file value 192) measured=[192, 192, 192] predicted=225 5x5min=[192, 192, 192] 5x5max=[192, 192, 192]
+CAPTURE sweep saved: 15 frames
+CAPTURE done; files in /Users/kiran/Documents/walker-jellyhop-kiran-g/evidence/a5-captures
