@@ -4,13 +4,15 @@
 
 ## Project context
 
-- **Engine:** Godot 4.7.2.stable.official.ed1daf0bf (README.md line 13; CHANGE-BRIEF.md line 5). `godot/project.godot` line 15: `config/features=PackedStringArray("4.7", "GL Compatibility")`. I did not run `godot --version` in this session.
+- **Engine:** Godot 4.7.2.stable.official.ed1daf0bf (README.md line 13; CHANGE-BRIEF.md line 5). `godot/project.godot` line 15: `config/features=PackedStringArray("4.7", "GL Compatibility")`. Confirmed on this machine on 2026-11-07: `godot --version` prints `4.7.2.stable.official.ed1daf0bf`, and the ClassDB probe prints `VERSION 4.7.2-stable (official)` (`sessions/a6/probe/probe-output.log` line 3).
 - **Renderer:** Compatibility: `renderer/rendering_method="gl_compatibility"` and `.mobile` the same (`godot/project.godot` lines 32–33). Viewport 1280 × 720, stretch `canvas_items` (lines 19–21).
 - **Effect nodes:** both effects are `GPUParticles2D` with a `ParticleProcessMaterial`; each texture is a `GradientTexture2D` sub-resource in the scene file, not an image (CHANGE-BRIEF.md lines 7, 42, 164).
   - Effect A, `LandPuff`: `godot/effects/land_puff.tscn` (brief line 42).
   - Effect B, `DomeGlints`: `godot/effects/dome_glints.tscn`, with an additive `CanvasItemMaterial` (brief lines 164, 179).
   - Driver: `godot/effects/effects_driver.gd` (brief line 241). `godot/effects/` and `godot/previews/` do not exist yet. The project has no particle node today (no `GPUParticles`, `CPUParticles` or `ParticleProcessMaterial` in any `.gd`, `.tscn` or `.tres` under `godot/`).
 - **No signals:** no `.gd` file under `godot/` declares a `signal`. Both effects are driven by per-tick state.
+- **Names confirmed (2026-11-07):** every class, property, constant, signal and method the brief names exists in 4.7.2, including `use_fixed_seed`, `seed`, the `finished` signal and `restart()`; `ParticlesMaterial`, `Particles2D` and `scale_random` do not (`sessions/a6/probe/probe-output.log`). `probe.gd` was written by Claude Code in session 1, `probe2.gd` by Claude in chat; Kiran ran both.
+- **GPU timing on this machine (observed 2026-11-07):** editor run of the game, Visual Profiler, Apple M4, Compatibility renderer. CPU timings appeared, but the GPU graph was blank and every visible GPU reading was 0.0 ms (`evidence/a6-visual-profiler-compat-gpu-zero.png`). The GPU budget comparison is open (brief predicted failure 9).
 - **Effect A event: a landing.** The event is the per-tick flag `player.just_landed`.
   - It is declared at `godot/features/player/player.gd` line 26, cleared at the start of every jelly tick (line 95), and set when grounded and not `was_grounded` (lines 136–137).
   - The session reads it in `godot/game/session.gd` `_physics_process()`: `if state == State.PLAYING and player.just_landed:` (line 372), then `sound.play("SFX-LAND")` (line 374).
@@ -28,7 +30,7 @@
 - **The scenes the effects appear in:**
   - The game: `res://game/main.tscn` (`godot/project.godot` line 14) is one `Node2D` `JellyHop` with `session.gd` (`main.tscn` lines 3–6).
   - The level is built in code by `_build_level()` (session.gd lines 86–153). There is no level `.tscn`.
-  - Draw order: room on `CanvasLayer` −10 (lines 89–95); table `z_index` −5 (line 103); plates −2 (line 119); sauce −1 (line 142); jelly 0 (not set in player.gd); dome 5 (line 151); HUD on its own `CanvasLayer` (lines 57–61).
+  - Draw order: room on `CanvasLayer` −10 (lines 89–95); table `z_index` −5 (line 103); plates −2 (line 119); sauce −1 (line 142); each fork's shadow −1, drawn on its plate (`godot/features/fork/fork.gd` line 39); fork head 0 (fork.gd line 41); jelly 0 (not set in player.gd); dome 5 (line 151); HUD on its own `CanvasLayer` (lines 57–61).
   - The dome sprite is at `(T.dome_left() + T.dome_width() / 2, T.TABLE_TOP + 1)` (session.gd line 150). `TABLE_TOP` = 520 (`godot/game/slice_tuning.gd` line 9); `dome_left()` and `dome_width()` are at lines 107–111.
   - Preview fixtures (to be built): `godot/previews/land_puff_preview.tscn` and `dome_glints_preview.tscn` (brief lines 116, 224).
 - **How tests load the game:**
@@ -52,10 +54,11 @@
   ```
   - Baseline before A6 (commit `068ede4` message): 25, 61, 12, 36 at 60; 29 and 108 at 30, 60 and 144; all 0 failures.
   - New A6 tests named by the brief: `test_land_puff_config.gd` and `test_dome_glints_config.gd` (lines 105, 215), plus a state test for A1–A8 and B1–B7 (not yet named).
-- **Headless limits:**
-  - A headless run uses a dummy renderer and draws nothing (course statement; brief Answers 4). Look, contrast, scale and timing are judged by Kiran's eyes in the running game.
-  - `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27).
-  - Existing suites print `ObjectDB instances were leaked` and `resources still in use` at exit. These are pre-existing and are not SCRIPT/SHADER ERRORs.
+
+## Headless facts
+
+- `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27).
+- Existing suites print `ObjectDB instances were leaked` and `resources still in use` at exit. These are pre-existing and are not SCRIPT/SHADER ERRORs (A6 baseline logs, commit `068ede4`).
 
 ## Current change
 
@@ -65,12 +68,14 @@
 
 - Every file in `godot/shaders/` is hand-written by Kiran, except `standard_generated.gdshader` (generated by Godot, saved by Kiran exactly as generated). No agent creates, edits, reformats or "fixes" any file there. If a shader has an error, report the error text and the line, and stop.
 - Effect settings live in the scene files in `godot/effects/` (`land_puff.tscn`, `dome_glints.tscn`), never in code. `effects_driver.gd` only instances scenes, places them, and sets `emitting` or calls `restart()`. It never assigns particle, material or texture properties.
+- A fixed seed (`use_fixed_seed = true`, a `seed` value) is set only on the effect instances inside the preview fixtures in `godot/previews/`, never in `godot/effects/*.tscn` and never in gameplay, where repeats must vary (brief line 120).
 
 ## Godot 4 names
 
-- Use Godot 4 class and property names for 4.7.2: `GPUParticles2D`, `ParticleProcessMaterial`, `GradientTexture2D`, `GradientTexture1D`, `CurveTexture`, `CanvasItemMaterial`. Never use Godot 3 names: `Particles2D`, `ParticlesMaterial`, `initial_velocity` (4 uses `_min`/`_max`), `scale`/`scale_random` on the material (4 uses `scale_min`/`scale_max`).
+- Use Godot 4 class and property names for 4.7.2: `GPUParticles2D`, `ParticleProcessMaterial`, `GradientTexture2D`, `GradientTexture1D`, `CurveTexture`, `CanvasItemMaterial`. Never use the Godot 3 names `Particles2D`, `ParticlesMaterial` or `scale_random`; none exists in 4.7.2 (`sessions/a6/probe/probe-output.log`).
+- In scene files, write each range as its separate stored fields: `initial_velocity_min` and `initial_velocity_max`, `scale_min` and `scale_max`. In 4.7.2, `initial_velocity` and `scale` also exist on `ParticleProcessMaterial`, but only as Vector2 Inspector properties (usage 12: editor + internal, not stored) that set min and max together (`sessions/a6/probe/probe2-output.log`). Whether a scalar `initial_velocity = …` line in a `.tscn` applies, warns or is dropped is what the Step 2 mutation tests.
 - Write property names exactly as in the brief's tables. A misspelled property in a `.tscn` loads silently at its default (brief predicted failure 1), so the config tests must read every property back.
-- If unsure a property, constant or signal exists in 4.7.2, say so and check the class reference or ClassDB before using it. Do not guess. See Unconfirmed for the names not yet checked.
+- If unsure a property, constant or signal exists in 4.7.2, say so and check the class reference or ClassDB before using it. Do not guess. Every name in the brief's tables was checked (Project context, "Names confirmed").
 
 ## Out of scope
 
@@ -84,20 +89,18 @@
 
 ## Unconfirmed
 
-- **Property names in 4.7.2:** I could not confirm them in this session. A ClassDB probe in a scratch project under `/tmp` needed approval and did not run. Unchecked:
-  - every `GPUParticles2D` and `ParticleProcessMaterial` property in the brief's tables;
-  - the constants `EMISSION_SHAPE_RING`, `EMISSION_SHAPE_BOX`, `FILL_RADIAL` and `BLEND_MODE_ADD`;
-  - the `finished` signal, `restart()` and `use_fixed_seed`. The brief itself says "if 4.7 has it" for `use_fixed_seed` (line 120).
-- **Engine version:** taken from README.md and the brief. I did not run `godot --version`.
 - **Kiran's predictions in the brief, not yet tested:**
   - `finished` fires headless (A6);
   - `restart()` re-applies preprocess (B3);
   - glints are present when shown again (B6);
-  - at most 2 bursts alive (A5);
+  - at most 2 bursts alive (A5), and that two puffs' crumbs visibly overlap in play (A4);
   - the hand-set `visibility_rect`s;
-  - Visual Profiler GPU time under Compatibility on macOS (failure 9);
   - the 2D collision/SDF claim (Answers 1).
+- **A6 headless facts, to move into Headless facts only once confirmed on this machine:**
+  - "A headless run uses a dummy renderer: it draws no particles and runs no GPU particle process. Node state (emitting, one_shot, amount_ratio, visibility, instance counts) is observable; the look is not." Check: a headless run reports the dummy rendering driver, and the A6 config and state tests read those node properties back.
+  - "A GPU effect's headless CPU price is near zero by construction." Check: `godot/tests/cost_effects.gd` (Step 7), where each effect's case matches the effects-off case within its spread, against the empty-scene control.
+  - "Frame strips come from a windowed Movie Maker run, which I start." Check: the first capture in Step 2, run by Kiran outside any agent session (no allow list includes a windowed Godot command).
 - **Ring with axis Y collapsing to a line** with `particle_flag_disable_z` (predicted failure 2): unverified.
-- **Draw order of the land puff:** sauce is also `z_index` −1 (session.gd line 142), the same as `LandPuff`. The brief names only plates and the jelly, so puff vs sauce order is undecided.
+- **Draw order of the land puff:** the puff stays at `z_index` −1 for now, the same as the sauce (session.gd line 142) and each fork's shadow (fork.gd line 39). Expected: at equal `z_index`, puffs added later draw on top, but this is unchecked. Kiran checks the puff's visibility near the sauce and under a fork shadow in play before any draw-order change.
 - **Two check runners:** README.md line 33 names `tools/run_slice_checks.sh`, while AGENTS.md requires `scripts/run-test.sh`. I did not read `run_slice_checks.sh`.
 - **Existing suites in realtime mode:** never run. I ran no test in this session.
