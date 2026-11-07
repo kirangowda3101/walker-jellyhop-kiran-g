@@ -477,3 +477,24 @@ Existing suites and the config test after the wiring, rerun by me: all match the
 - **WON:** no puff while WON (A2). Pending for Effect B's real-input run to the dome.
 - **Visual overlap:** whether two puffs' crumbs visibly overlap on screen (A4, A5). A headless run draws nothing; this is my check in play.
 - Also not provable headlessly: that crumbs are drawn at all, timing phases, scale, contrast, variation, the `visibility_rect` at the screen edge, the draw order near the sauce and fork shadows, the game's real A5 peak, and `finished` in the windowed game.
+
+### In play — Effect A (land puff), human checks
+
+2026-11-07, source revision `009e63e`, the running game (`godot --path godot`) at 1280 × 720, Godot 4.7.2, Compatibility renderer, Apple M4. My own observations, in my words.
+
+1. **Normal hops.** I did about 10 normal hops. A puff appeared at the jelly's feet on every landing, and the puffs all looked the same to me. I didn't verify the intro, intro skip, or quick hop chains in play.
+   - Status: puff on every landing, at the feet, seen in play (A1, A3). The intro, the intro skip and quick hop chains were not checked in play (A2 for those is covered headless only). Variation: repeats did not look varied to me.
+2. **Plate-edge drop.** I didn't see two puffs overlap on my attempt. I didn't verify whether another route could produce three puffs at once.
+   - Status: visual overlap (A4) **not observed** in play; the headless test shows two separate instances 10 ticks apart on this route. The game's real A5 peak is not verified in play.
+3. **Sauce and respawn.** I saw no landing puff when the jelly hit the sauce or when it respawned.
+   - Status: verified in play (A2, sauce and respawn).
+4. **Esc pause.** I pressed Esc just after landing, and the puff already on screen faded while the game was paused. I didn't specifically check whether a new puff could appear during pause.
+   - Status: a live puff finishes during Esc pause, verified in play (A8, Esc). No new puff while paused is covered headless only.
+5. **Fork shadow and sauce.** I could see the puff clearly under the fork's shadow and on the plate edge closest to the sauce. I didn't verify a table landing beside the sauce because I couldn't see a safe spot to land there.
+   - Status: visible at `z_index` −1 under a fork shadow and on the plate edge nearest the sauce, verified in play. A table landing beside the sauce was not checked.
+6. **Screen edge.** The puff faded normally without cutting off near the edge of the game window.
+   - Status: no pop at the screen edge seen in play (`visibility_rect`).
+
+**Still unverified in play:**
+- **WON:** no puff while WON (A2). Pending for Effect B's real-input run to the dome.
+- Two puffs visibly overlapping (A4), the game's real peak (A5), and a table landing beside the sauce.
