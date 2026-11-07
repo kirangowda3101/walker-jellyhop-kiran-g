@@ -1,0 +1,131 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://previews/land_puff_preview.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://effects/land_puff.tscn" id="2_puff"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-ROOM.png" id="3_room"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-TABLE.png" id="4_table"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-PLATE.png" id="5_plate"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-SAUCE.png" id="6_sauce"]
+[ext_resource type="Texture2D" path="res://assets/art/CHAR-LAND.png" id="7_land"]
+
+[node name="LandPuffPreview" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="RoomLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Room" type="Sprite2D" parent="RoomLayer"]
+texture_filter = 2
+texture = ExtResource("3_room")
+centered = false
+
+[node name="Table0" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(-464.8128, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Table1" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(0, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Table2" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(464.8128, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Table3" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(929.6256, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Plate1" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 4
+position = Vector2(259.9951, 520)
+scale = Vector2(0.1986, 0.1986)
+texture = ExtResource("5_plate")
+centered = false
+offset = Vector2(-511.5, -145)
+
+[node name="Plate2" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 4
+position = Vector2(579.9853, 520)
+scale = Vector2(0.1986, 0.1986)
+texture = ExtResource("5_plate")
+centered = false
+offset = Vector2(-511.5, -145)
+
+[node name="Plate3" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 4
+position = Vector2(919.9755, 520)
+scale = Vector2(0.1986, 0.1986)
+texture = ExtResource("5_plate")
+centered = false
+offset = Vector2(-511.5, -145)
+
+[node name="Plate4" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 4
+position = Vector2(1269.9657, 520)
+scale = Vector2(0.1986, 0.1986)
+texture = ExtResource("5_plate")
+centered = false
+offset = Vector2(-511.5, -145)
+
+[node name="SauceGap2" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 4
+position = Vector2(749.9804, 522)
+scale = Vector2(0.1299, 0.1299)
+texture = ExtResource("6_sauce")
+centered = false
+offset = Vector2(-470, -151)
+
+[node name="PuffPlate" parent="." instance=ExtResource("2_puff")]
+position = Vector2(259.9951, 497.9554)
+use_fixed_seed = true
+seed = 1001
+
+[node name="PuffTable" parent="." instance=ExtResource("2_puff")]
+position = Vector2(419.9902, 520)
+use_fixed_seed = true
+seed = 1002
+
+[node name="PuffRetrigger" parent="." instance=ExtResource("2_puff")]
+position = Vector2(439.9902, 520)
+use_fixed_seed = true
+seed = 1003
+
+[node name="JellyPlate" type="Sprite2D" parent="."]
+texture_filter = 4
+position = Vector2(259.9951, 497.9554)
+scale = Vector2(0.106, 0.106)
+texture = ExtResource("7_land")
+centered = false
+offset = Vector2(-512, -812)
+
+[node name="JellyTable" type="Sprite2D" parent="."]
+texture_filter = 4
+position = Vector2(419.9902, 520)
+scale = Vector2(0.106, 0.106)
+texture = ExtResource("7_land")
+centered = false
+offset = Vector2(-512, -812)

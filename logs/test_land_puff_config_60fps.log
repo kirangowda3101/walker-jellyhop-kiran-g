@@ -1,0 +1,54 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"scene.loads","observed":{"path":"res://effects/land_puff.tscn"},"status":"PASS"}
+{"id":"root.type","observed":{"expected":"GPUParticles2D","got":"GPUParticles2D"},"status":"PASS"}
+{"id":"root.name","observed":{"expected":"LandPuff","got":"LandPuff"},"status":"PASS"}
+{"id":"root.one_emitter","observed":{"expected_children":0,"got":0},"status":"PASS"}
+{"id":"node.emitting","observed":{"expected":"false","got":"false"},"status":"PASS"}
+{"id":"node.amount","observed":{"expected":"16","got":"16"},"status":"PASS"}
+{"id":"node.one_shot","observed":{"expected":"true","got":"true"},"status":"PASS"}
+{"id":"node.explosiveness","observed":{"expected":"1.0","got":"1.0"},"status":"PASS"}
+{"id":"node.randomness","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"node.lifetime","observed":{"expected":"0.4","got":"0.4"},"status":"PASS"}
+{"id":"node.preprocess","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"node.local_coords","observed":{"expected":"false","got":"false"},"status":"PASS"}
+{"id":"node.z_index","observed":{"expected":"-1","got":"-1"},"status":"PASS"}
+{"id":"node.visibility_rect","observed":{"expected":"Rect2(-120, -40, 240, 70)","got":"Rect2(-120, -40, 240, 70)"},"status":"PASS"}
+{"id":"node.material","observed":{"expected":"none (default mix blend)","got":"<Object#null>"},"status":"PASS"}
+{"id":"node.use_fixed_seed","observed":{"expected":false,"got":false},"status":"PASS"}
+{"id":"texture.type","observed":{"expected":"GradientTexture2D","got":"(res://effects/land_puff.tscn::GradientTexture2D_crumb):<GradientTexture2D#-9223372010313218611>"},"status":"PASS"}
+{"id":"texture.size","observed":{"expected":"Vector2i(16, 16)","got":"Vector2i(16, 16)"},"status":"PASS"}
+{"id":"texture.fill","observed":{"expected":"FILL_RADIAL (1)","got":1},"status":"PASS"}
+{"id":"texture.fill_from","observed":{"expected":"Vector2(0.5, 0.5)","got":"Vector2(0.5, 0.5)"},"status":"PASS"}
+{"id":"texture.fill_to","observed":{"expected":"Vector2(1, 0.5)","got":"Vector2(1, 0.5)"},"status":"PASS"}
+{"id":"texture.gradient.offsets","observed":{"expected":"[0.0, 0.55, 0.8, 1.0]","got":"[0.0, 0.55, 0.8, 1.0]"},"status":"PASS"}
+{"id":"texture.gradient.colors","observed":{"expected":"[Color(1, 0.9647059, 0.91764706, 1), Color(0.9490196, 0.8745098, 0.76862746, 1), Color(0.22745098, 0.16470589, 0.13333334, 1), Color(0.22745098, 0.16470589, 0.13333334, 0)]","got":"[Color(1, 0.9647059, 0.9176471, 1), Color(0.9490196, 0.8745098, 0.7686275, 1), Color(0.227451, 0.1647059, 0.1333333, 1), Color(0.227451, 0.1647059, 0.1333333, 0)]"},"status":"PASS"}
+{"id":"process.type","observed":{"expected":"ParticleProcessMaterial","got":"(res://effects/land_puff.tscn::ParticleProcessMaterial_puff):<ParticleProcessMaterial#-9223372010128669226>"},"status":"PASS"}
+{"id":"process.particle_flag_disable_z","observed":{"expected":"true","got":"true"},"status":"PASS"}
+{"id":"process.emission_shape","observed":{"expected":"6","got":"6"},"status":"PASS"}
+{"id":"process.emission_ring_axis","observed":{"expected":"Vector3(0, 1, 0)","got":"Vector3(0, 1, 0)"},"status":"PASS"}
+{"id":"process.emission_ring_radius","observed":{"expected":"24.0","got":"24.0"},"status":"PASS"}
+{"id":"process.emission_ring_inner_radius","observed":{"expected":"18.0","got":"18.0"},"status":"PASS"}
+{"id":"process.emission_ring_height","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"process.direction","observed":{"expected":"Vector3(0, -1, 0)","got":"Vector3(0, -1, 0)"},"status":"PASS"}
+{"id":"process.spread","observed":{"expected":"30.0","got":"30.0"},"status":"PASS"}
+{"id":"process.initial_velocity_min","observed":{"expected":"30.0","got":"30.0"},"status":"PASS"}
+{"id":"process.initial_velocity_max","observed":{"expected":"60.0","got":"60.0"},"status":"PASS"}
+{"id":"process.radial_accel_min","observed":{"expected":"4000.0","got":"4000.0"},"status":"PASS"}
+{"id":"process.radial_accel_max","observed":{"expected":"6500.0","got":"6500.0"},"status":"PASS"}
+{"id":"process.gravity","observed":{"expected":"Vector3(0, 300, 0)","got":"Vector3(0, 300, 0)"},"status":"PASS"}
+{"id":"process.damping_min","observed":{"expected":"600.0","got":"600.0"},"status":"PASS"}
+{"id":"process.damping_max","observed":{"expected":"600.0","got":"600.0"},"status":"PASS"}
+{"id":"process.lifetime_randomness","observed":{"expected":"0.25","got":"0.25"},"status":"PASS"}
+{"id":"process.scale_min","observed":{"expected":"0.4","got":"0.4"},"status":"PASS"}
+{"id":"process.scale_max","observed":{"expected":"0.75","got":"0.75"},"status":"PASS"}
+{"id":"process.hue_variation_min","observed":{"expected":"-0.03","got":"-0.03"},"status":"PASS"}
+{"id":"process.hue_variation_max","observed":{"expected":"0.03","got":"0.03"},"status":"PASS"}
+{"id":"process.radial_accel_curve.type","observed":{"expected":"CurveTexture with a Curve","got":"(res://effects/land_puff.tscn::CurveTexture_radial):<CurveTexture#-9223372010279664177>"},"status":"PASS"}
+{"id":"process.radial_accel_curve.points","observed":{"expected":"[Vector2(0, 1), Vector2(0.2, 0)]","got":"[Vector2(0, 1), Vector2(0.2, 0)]"},"status":"PASS"}
+{"id":"process.scale_curve.type","observed":{"expected":"CurveTexture with a Curve","got":"(res://effects/land_puff.tscn::CurveTexture_scale):<CurveTexture#-9223372010212555310>"},"status":"PASS"}
+{"id":"process.scale_curve.points","observed":{"expected":"[Vector2(0, 1), Vector2(0.35, 1), Vector2(1, 0)]","got":"[Vector2(0, 1), Vector2(0.35, 1), Vector2(1, 0)]"},"status":"PASS"}
+{"id":"process.color_ramp.type","observed":{"expected":"GradientTexture1D","got":"(res://effects/land_puff.tscn::GradientTexture1D_life):<GradientTexture1D#-9223372010145446443>"},"status":"PASS"}
+{"id":"process.color_ramp.gradient.offsets","observed":{"expected":"[0.0, 0.5, 1.0]","got":"[0.0, 0.5, 1.0]"},"status":"PASS"}
+{"id":"process.color_ramp.gradient.colors","observed":{"expected":"[Color(1, 1, 1, 1), Color(0.95, 0.88, 0.8, 0.9), Color(0.85, 0.72, 0.58, 0)]","got":"[Color(1, 1, 1, 1), Color(0.95, 0.88, 0.8, 0.9), Color(0.85, 0.72, 0.58, 0)]"},"status":"PASS"}
+LAND PUFF CONFIG: 51 checks / 0 failures
