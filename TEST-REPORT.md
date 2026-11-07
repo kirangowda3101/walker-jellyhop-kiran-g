@@ -411,3 +411,42 @@ In session 1, commands outside the allowlist (`file`, `wc`, `head`, `which`) ran
 - The fresh-cache first import segfaults on an A2 `.ogg` (A5.9).
 - Whether the table's `tint` (`source_color` on a spatial `vec4`) is converted to linear was not measured.
 - Captures are scripted (labelled as such); `--fixed-fps` hides real-time frame pacing.
+
+## Assignment 6
+
+Machine: Apple M4, macOS. Godot 4.7.2.stable.official.ed1daf0bf. Renderer: Compatibility (`gl_compatibility`). Every test is run by me through `scripts/run-test.sh`, with the mode stated.
+
+### Baseline (before any A6 change)
+
+Source revision `5259dad` (A6 wrapper committed). Logs committed in `068ede4` and `ab32bbe`.
+
+| Test | Mode | Checks | Failures | Exit |
+|---|---|---|---|---|
+| test_game.gd | 60 fps | 25 | 0 | 0 |
+| test_slice.gd | 60 fps | 61 | 0 | 0 |
+| test_keyboard.gd | 60 fps | 12 | 0 | 0 |
+| test_a3_assets.gd | 60 fps | 36 | 0 | 0 |
+| test_fork_warning.gd | 30 / 60 / 144 fps | 29 each | 0 | 0 |
+| test_materials.gd | 30 / 60 / 144 fps | 108 each | 0 | 0 |
+
+No log contains `SCRIPT ERROR` or `SHADER ERROR`. Pre-existing editor warnings, not errors and out of scope for A6: integer division at `player.gd:158`, and a parameter `position` shadowing a Control property at `hud.gd:13`.
+
+### Configuration — Effect A (land puff)
+
+`test_land_puff_config.gd`, run by me at 60 fps: **51 checks / 0 failures, exit 0** (`logs/test_land_puff_config_60fps.log`). The agent's own earlier run, kept for the record: `sessions/a6/session-2-agent-config-run.log`.
+
+### Mutations — Effect A's configuration test
+
+Each mutation was a one-line edit to `godot/effects/land_puff.tscn`, restored with `git checkout` afterwards.
+
+**Mutation 1, Godot 3 property name.** `initial_velocity_min = 30.0` renamed to `initial_velocity = 30.0`.
+- Config test at 60 fps: **exit 1**, 51 checks / 1 failure: `process.initial_velocity_min` expected `30.0`, read back `0.0` (`logs/mutation1_godot3_name_config_60fps.log`).
+- Godot printed no error or warning about the unknown value (`logs/mutation1_godot3_name_preview.log`).
+- The effect is not wired into gameplay until Step 3, so I ran the preview fixture instead of the game: the puff still appeared under both jellies. This is the silent failure the test exists for.
+- What I found: in 4.7.2, `initial_velocity` exists only as a Vector2 Inspector property that is not stored in scene files (`sessions/a6/probe/probe2-output.log`). A scalar Godot 3 style line is dropped, `initial_velocity_min` stays at its default `0.0`, and nothing is translated.
+
+**Mutation 2, a value changed without changing the brief.** `spread = 30.0` changed to `spread = 45.0`, with CHANGE-BRIEF.md still saying `30.0`.
+- Config test at 60 fps: **exit 1**, exactly one failure (`logs/mutation2_value_drift_config_60fps.log`).
+- The test catches drift between the brief and the scene.
+
+**After each restore:** 51 checks / 0 failures, exit 0. The final `git diff` of `land_puff.tscn` was empty.
