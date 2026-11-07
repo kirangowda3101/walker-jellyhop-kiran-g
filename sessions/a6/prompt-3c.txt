@@ -1,0 +1,17 @@
+I approve Step 3, step 2 only: write and run the landing-puff state
+test, godot/tests/test_land_puff_state.gd, using real game input.
+
+- Aim for the brief's 9-12 tick plate-edge gap and report the actual
+  measured gap.
+- Test Esc pause and tree pause in separate scenarios, each started
+  only after a puff has spawned.
+- Keep the WON check pending for Effect B.
+
+Run the new test with ./scripts/run-test.sh at 60, and the existing
+suites as CLAUDE.md says. Show me the test results and the diff. If
+cleanup fails or the timing differs from the brief, report what
+happened instead of working around it.
+
+Do not change the driver, the effect settings or the existing tests,
+do not add a fallback timer, do not edit any .gdshader file, and do
+not commit.

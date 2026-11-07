@@ -1,0 +1,32 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"A2-none-on-load-and-intro","observed":{"puffs":0,"state":"INTRO"},"status":"PASS"}
+{"id":"A2-none-on-intro-skip-respawn","observed":{"player":"(259.9951, 497.9554)","puffs":0,"state":"PLAYING"},"status":"PASS"}
+{"id":"A1-solo-hop-puff","observed":{"alive_at_spawn":[0],"emitting_at_spawn":true,"exited_frame":140,"finished_after_ticks":24,"finished_frame":140,"index":0,"player_position":"(259.9951, 497.8807)","position":"(259.9951, 497.8807)","spawn_frame":116,"state":"PLAYING"},"status":"PASS"}
+{"id":"A6-solo-finished-and-freed","observed":{"alive_at_spawn":[0],"emitting_at_spawn":true,"exited_frame":140,"finished_after_ticks":24,"finished_frame":140,"index":0,"player_position":"(259.9951, 497.8807)","position":"(259.9951, 497.8807)","spawn_frame":116,"state":"PLAYING"},"status":"PASS"}
+{"id":"A4-route-plate-then-table","observed":{"first_y":497.880432128906,"hop_x":161.861801147461,"plate_landing_y":497.9554,"run_from_x":154.750686645508,"second_y":519.925231933594,"table_top":520.0},"status":"PASS"}
+{"id":"A4-gap-inside-one-lifetime","observed":{"gap_ticks":10,"lifetime_ticks":24},"status":"PASS"}
+{"id":"A4-gap-in-brief-range-9-12","observed":{"brief_ticks":"(9, 12)","gap_s":0.166666666666667,"gap_ticks":10},"status":"PASS"}
+{"id":"A4-two-separate-instances","observed":{"first":1,"second":2},"status":"PASS"}
+{"id":"A4-first-alive-when-second-spawns","observed":{"alive_at_second_spawn":[1,2],"first_finished_frame":-1,"second_spawn_frame":273},"status":"PASS"}
+{"id":"A4-second-emitting-at-spawn","observed":{"alive_at_spawn":[1,2],"emitting_at_spawn":true,"exited_frame":-1,"finished_after_ticks":-1,"finished_frame":-1,"index":2,"player_position":"(435.9957, 519.9252)","position":"(435.9957, 519.9252)","spawn_frame":273,"state":"PLAYING"},"status":"PASS"}
+{"id":"A4-first-not-restarted","observed":{"first_finished_after":24,"gap_ticks":10,"solo_finished_after":24},"status":"PASS"}
+{"id":"A4-second-finishes-on-own-schedule","observed":{"second_finished_after":24,"solo_finished_after":24},"status":"PASS"}
+{"id":"A6-none-left-1s-after-last-landing","observed":{"alive":[],"first":{"alive_at_spawn":[1],"emitting_at_spawn":true,"exited_frame":287,"finished_after_ticks":24,"finished_frame":287,"index":1,"player_position":"(382.6623, 497.8804)","position":"(382.6623, 497.8804)","spawn_frame":263,"state":"PLAYING"},"frames_after_last_landing":60,"second":{"alive_at_spawn":[1,2],"emitting_at_spawn":true,"exited_frame":297,"finished_after_ticks":24,"finished_frame":297,"index":2,"player_position":"(435.9957, 519.9252)","position":"(435.9957, 519.9252)","spawn_frame":273,"state":"PLAYING"}},"status":"PASS"}
+{"id":"A2-none-on-sauce-splat-splat-reform-respawn","observed":{"jelly_just_landed_on_splat_tick":false,"plate2_landings_before_splat":1,"puffs_after_respawn":4,"puffs_at_splat":4,"respawn_at":"(579.9853, 497.9554)","splat_cause":"sauce","splat_frame":393,"states_seen":["SPLAT","REFORM","PLAYING"]},"status":"PASS"}
+{"id":"A8-esc-live-puff-finishes","observed":{"alive_when_paused":true,"finished_after":24,"puff":{"alive_at_spawn":[4],"emitting_at_spawn":true,"exited_frame":567,"finished_after_ticks":24,"finished_frame":567,"index":4,"player_position":"(579.9853, 497.8807)","position":"(579.9853, 497.8807)","spawn_frame":543,"state":"PLAYING"},"solo_finished_after":24,"state_after_esc":"PAUSED"},"status":"PASS"}
+{"id":"A2-none-while-paused","observed":{"puffs_after":5,"puffs_before":5,"state":"PAUSED"},"status":"PASS"}
+{"id":"A8-esc-resumes","observed":{"state":"PLAYING"},"status":"PASS"}
+{"id":"A8-tree-pause-freezes","observed":{"emitting_before":true,"emitting_now":true,"finished_frame":-1,"in_tree":true,"paused_ticks":60},"status":"PASS"}
+{"id":"A8-tree-unpause-finishes","observed":{"finished_after":84,"minus_paused_60":24,"puff":{"alive_at_spawn":[5],"emitting_at_spawn":true,"exited_frame":771,"finished_after_ticks":84,"finished_frame":771,"index":5,"player_position":"(579.9853, 497.8795)","position":"(579.9853, 497.8795)","spawn_frame":687,"state":"PLAYING"},"solo_finished_after":24},"status":"PASS"}
+{"id":"A1-one-puff-per-SFX-LAND-every-tick","observed":{"land_frames":[116,263,273,372,543,687],"mismatch_ticks":[],"puff_frames":[116,263,273,372,543,687],"puffs":6,"sfx_land":6},"status":"PASS"}
+{"id":"A1-A2-spawned-only-while-playing-and-emitting","observed":{"puffs":6},"status":"PASS"}
+{"id":"A3-at-the-jelly-feet","observed":{"max_distance_px":0.0},"status":"PASS"}
+{"id":"A7-parent-is-session-never-jelly","observed":{"puffs":6},"status":"PASS"}
+{"id":"A6-none-left-at-end","observed":{"alive":[]},"status":"PASS"}
+{"observed":{"max_puffs_alive":2,"puffs":[{"alive_at_spawn":[0],"emitting_at_spawn":true,"exited_frame":140,"finished_after_ticks":24,"finished_frame":140,"index":0,"player_position":"(259.9951, 497.8807)","position":"(259.9951, 497.8807)","spawn_frame":116,"state":"PLAYING"},{"alive_at_spawn":[1],"emitting_at_spawn":true,"exited_frame":287,"finished_after_ticks":24,"finished_frame":287,"index":1,"player_position":"(382.6623, 497.8804)","position":"(382.6623, 497.8804)","spawn_frame":263,"state":"PLAYING"},{"alive_at_spawn":[1,2],"emitting_at_spawn":true,"exited_frame":297,"finished_after_ticks":24,"finished_frame":297,"index":2,"player_position":"(435.9957, 519.9252)","position":"(435.9957, 519.9252)","spawn_frame":273,"state":"PLAYING"},{"alive_at_spawn":[3],"emitting_at_spawn":true,"exited_frame":396,"finished_after_ticks":24,"finished_frame":396,"index":3,"player_position":"(637.2398, 497.8806)","position":"(637.2398, 497.8806)","spawn_frame":372,"state":"PLAYING"},{"alive_at_spawn":[4],"emitting_at_spawn":true,"exited_frame":567,"finished_after_ticks":24,"finished_frame":567,"index":4,"player_position":"(579.9853, 497.8807)","position":"(579.9853, 497.8807)","spawn_frame":543,"state":"PLAYING"},{"alive_at_spawn":[5],"emitting_at_spawn":true,"exited_frame":771,"finished_after_ticks":84,"finished_frame":771,"index":5,"player_position":"(579.9853, 497.8795)","position":"(579.9853, 497.8795)","spawn_frame":687,"state":"PLAYING"}]},"pending":["A2 WON: checked in Effect B's real-input run to the dome"]}
+LAND PUFF STATE TESTS: 24 checks / 0 failures
+WARNING: 28 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 10 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
