@@ -1,250 +1,279 @@
-# CHANGE-BRIEF — Assignment 5: Shaders, Materials, and the Godot Shading Language
+# CHANGE-BRIEF — Assignment 6: Particle Effects
 
-Version 1 · 2026-10-27 · written before shader implementation and before any Claude Code session; drafted with Claude in chat from my decisions. Later revisions are added below as dated sections; this version is not rewritten.
+Version 1 · 2026-11-07 · written before any Claude Code session for A6; drafted with Claude in chat from my decisions. Later revisions are added below as dated sections; this version is not rewritten. The Assignment 5 brief is kept unchanged in history at tag `a5`.
 
-Earlier contracts (A2 asset slice, A3 3D assets) are archived at `archive/CHANGE-BRIEF-A2-A3.md`. Code comments and documents written before A5 that cite "CHANGE-BRIEF.md" mean that archived file.
+Engine: Godot 4.7.2.stable.official.ed1daf0bf. Renderer: Compatibility (`godot/project.godot`, `renderer/rendering_method="gl_compatibility"`). Viewport 1280 × 720, stretch mode `canvas_items`. Physics 60 ticks per second. All sizes below are game pixels at 1280 × 720. The jelly's standing box is 52 × 58 px, its landing box 52 × 44 px (`player.gd` `STANDING`, `LOW`).
 
-Renderer: Compatibility (`godot/project.godot` line 32, `renderer/rendering_method="gl_compatibility"`). HDR 2D is off (no `rendering/viewport/hdr_2d` line). Physics: default 60 ticks per second.
+Both effects are 2D. Both use `GPUParticles2D`. Neither uses a texture file: each particle texture is a `GradientTexture2D` defined inside its scene file.
 
-## 1. The state
+---
 
-**What the effect communicates:** a fork is in its SHADOW phase, the window when its shadow grows on the plate before it strikes. During SHADOW the fork's steel gradually turns toward candle amber (#FFB347), in step with the shadow, so the amount of amber tells the player how much time is left before the strike.
+## Effect A — Landing crumb puff
 
-**Why the player needs it:** reading the shadow is the core skill (GDD pillar "Read the shadow, then commit"). The shadow is on the plate; the glow adds the same timing cue on the fork itself, in the colour the GDD palette reserves for warnings, so the warning is readable wherever the player is looking.
+### The job
 
-**Where the state lives:**
-- `godot/features/fork/fork.gd`: `enum Phase { SAFE, SHADOW, DOWN, HOLD, UP }` (line 9); the current phase is `phase()`, computed from the tick counter `t`, `safe_ticks` and `shadow_ticks`.
-- Forks advance one tick per physics tick in `godot/game/session.gd` `_physics_process()` → `_advance_forks()`, only while the session state is PLAYING, SPLAT or REFORM. INTRO, PAUSED and WON freeze them.
-- SHADOW lengths per fork, from `godot/game/slice_tuning.gd` `FORK_CYCLES` (lines 42–48): 1.6, 1.4, 1.3, 1.2 and 1.0 s at `Engine.time_scale = 1.0`. The two forks that start off screen begin halfway through SHADOW.
-- Each fork draws its own `Sprite2D` (`ENV-FORK.png`), created in `fork.gd` `setup()`. That sprite is the object the shader changes.
+**What it tells the player:** the jelly has touched down. Jelly Hop has a fixed hop height, and a landing is when the next hop becomes possible and, on a plate, when the checkpoint moves. The puff marks that moment at the jelly's feet, on both sides, so the player's eye catches the landing even when it is looking ahead at the next fork's shadow.
 
-## 2. Effect specification
+**Event:** there is no signal. The event is the per-tick flag `player.just_landed`:
+- set in `godot/features/player/player.gd` `_physics_process()` when the jelly is grounded and was not grounded on the previous tick (line 137); cleared at the start of the jelly's next tick (line 95);
+- read in `godot/game/session.gd` `_physics_process()`, `State.PLAYING` branch, `if state == State.PLAYING and player.just_landed:` (line 372), the same branch that plays `SFX-LAND` (line 374).
 
-**Shader:** `godot/shaders/fork_warning.gdshader`, to be hand-written by me.
-- `shader_type canvas_item;`
-- `render_mode unshaded;` so 2D lights never change the result, and the colour depends only on the texture, the uniforms and the arithmetic below.
-- No sampler uniforms. The fork's own sprite texture arrives in `COLOR`.
+So Effect A fires exactly when `SFX-LAND` plays. A respawn is not a landing (`reset_at()` sets `was_grounded = true`), and a landing into sauce is a splat, not a landing.
 
-**Material:** each fork gets its own `ShaderMaterial` instance that uses this one shader, so each fork holds its own `warning` value.
+### The intent block
 
-| Uniform | Type | Hint | Default | Set by |
-|---|---|---|---|---|
-| `warning` | `float` | `hint_range(0.0, 1.0)` | `0.0` | The driver, every physics tick, from that fork's phase (Section 3) |
-| `warn_color` | `vec4` | `source_color` | `vec4(1.0, 0.702, 0.278, 1.0)` (#FFB347) | Nobody at runtime; fixed default |
-| `strength` | `float` | `hint_range(0.0, 1.0)` | `0.65` | Nobody at runtime; tuned in the Inspector |
+**Timing phases** (30 fps frame numbers, frame 0 = the landing tick):
+1. **Impact** (frames 0–2, about 0–70 ms): crumbs appear at both edges of the jelly's base at full size and full brightness, while the jelly shows its LAND squash pose. The LAND pose carries frame 0; the crumbs must be visible by frame 2 at the latest.
+2. **Kick** (frames 2–5, about 70–170 ms): the crumbs travel fast outward, sideways, reaching roughly one jelly width beyond each side, staying within about 6 px of the surface.
+3. **Settle** (frames 5–12, about 170–400 ms): they slow almost to a stop, shrink and fade. All are gone by frame 12 (0.40 s), well before the next landing of a chained hop (0.63–0.67 s later).
 
-**The colour line** (inside `fragment()`):
+**Contrast against the real background:** the puff must read on both surfaces it lands on: the **pale plates** (lightest) and the **dark wood table** in the bare gaps (darkest). Value contrast does it, not hue: each crumb has a **light cream core and a dark brown rim**. On the pale plate the dark rim carries the shape; on the dark table the light core does. Judged in the running game over plate 1 and over the bare table in gap 1, never over the editor's grey.
 
-```glsl
-COLOR.rgb = mix(COLOR.rgb, warn_color.rgb, warning * strength);
-```
+**Scale against the character:** each crumb is about 6–12 px across (one eighth to one quarter of the jelly's 52 px width). At its widest (frame 10) the puff spans about 2–3 jelly widths across and is never taller than about a fifth of the jelly (≈ 10 px). Judged in the running game at 1280 × 720.
 
-Only `.rgb` changes. `COLOR.a` is untouched, so the fork's transparent pixels stay transparent and its silhouette never changes.
+**Change over life:** size holds for the first third of life, then shrinks to zero; colour shifts from cream-white toward a warm crumb tan; alpha fades to zero at the end. Not alpha alone.
 
-**What `warning` is:** during SHADOW, `warning` equals the fork's own shadow growth, `(p − safe_ticks + 1) / shadow_ticks`, the same value `fork.gd` `shadow_amount()` returns in SHADOW. In every other phase, and whenever the fork is held, `warning` is `0.0`.
+**Variation:** each crumb gets its own start point along the base, outward push, lift, size, lifetime (± 25 %) and a small hue shift, so two landings in a row never look stamped.
 
-## 3. Observable rules
+**Layering:** one emitter (`LandPuff`), whose job is the whole puff. It is drawn **behind the jelly and in front of the plates** (`z_index = -1`; plates are −2, the jelly is 0), so crumbs born under the jelly appear from behind its edges, and the plate never covers them.
 
-Ticks are physics ticks at 60 per second; `slice_tuning.gd` `ticks(s) = int(round(s * 60.0))` (lines 116–117). SHADOW lengths: 96, 84, 78, 72 and 60 ticks.
+### The settings
 
-1. **Begin and end values.** In SAFE, `warning` is `0.0`. On the first SHADOW tick it is `1 / shadow_ticks` (for example `1/96 = 0.0104` for the 1.6 s fork). It rises by `1 / shadow_ticks` per tick and is exactly `1.0` on the last SHADOW tick. On the first DOWN tick it is `0.0` again: no fade-out. These exact values hold per physics tick. A per-frame sample cannot always see them: at 30 fps each frame spans two ticks, so a frame may never show `1 / shadow_ticks` or exactly `1.0`; at 144 fps some frames contain no tick and repeat the previous value.
-2. **Duration.** The ramp lasts `shadow_ticks` physics ticks: 1.6, 1.4, 1.3, 1.2 or 1.0 s of game time at `Engine.time_scale = 1.0`, with a tolerance of one frame period (33.3 ms at 30 fps, 16.7 ms at 60, 6.9 ms at 144). It takes the same game time at 30, 60 and 144 fps, because it is computed from the fork's tick counter, never from frames rendered.
-3. **Retrigger.** In the normal cycle SHADOW cannot begin again while it is running. A new SHADOW always **restarts** the ramp from `1 / shadow_ticks`; it never continues an earlier partial ramp.
-4. **Starting mid-state.** After `reset_cycle()` the value comes from the fork's starting `t`. The plate 5 and plate 6 forks begin mid-SHADOW at `37/72 = 0.514` and `31/60 = 0.517`, and hold those values while the intro pan freezes them.
-5. **Time scale and pause.** Prediction, to be checked by a test: in Godot 4, `Engine.time_scale` scales `delta` but not the number of physics ticks per second. Since the ramp counts ticks, it lasts the same tick count, and the same real time, under any time scale. Measured in scaled game time it is then shorter: 0.8 s for the 1.6 s fork at `time_scale = 0.5`. While the session is PAUSED, INTRO or WON, or while the tree is paused, forks do not advance, so `warning` holds its last value.
-6. **State ends early.** If a fork is held during SHADOW (`hold_raised()` on respawn sets `t = 0`), `warning` is `0.0` on that same tick. `restart_at_safe()` also gives `0.0`.
-7. **Several instances.** Each of the five forks has its own `ShaderMaterial`, all using the same `Shader` resource. A fork's `warning` depends only on its own phase: while one fork is in SHADOW, a fork in SAFE reads `0.0`.
+Scene: `godot/effects/land_puff.tscn`. Root node `LandPuff`, type **`GPUParticles2D`**.
 
-## 4. Boundaries
+**Why GPU:** the project is on Compatibility, where `GPUParticles2D` runs its process step as a particles shader on the GPU; Step 6 needs a GPU node's `ParticleProcessMaterial` to convert; and this effect needs only features both node types share, so nothing is lost.
 
-These stay unchanged:
-- Collision, movement and input: the jelly, the fork hit areas (traced from `ENV-FORK.png` alpha in `fork.gd` `tine_outlines()`), plates and sauce.
-- The session state machine and the fork cycle: `session.gd`, the phase logic in `fork.gd`, and every timing in `slice_tuning.gd`.
-- Sound and music behaviour.
-- Every other object's look: the jelly, plates, sauce, the code-drawn shadow ellipse, the background and the HUD.
-- The existing tests and their expectations: `test_game.gd` 25, `test_slice.gd` 61, `test_keyboard.gd` 12, `test_a3_assets.gd` 36 checks, all passing at 60 fps before A5.
-- Source art and models: `ENV-FORK.png` and the A3 `.glb` files.
+**Node (emission and draw)**
 
-Presentation code may **read** a fork's phase and tick counter. It never **writes** `t`, `held`, `hold_pending`, `announced` or any session state.
+| Property | Value | Part |
+|---|---|---|
+| `emitting` | `false` in the scene file (the driver sets it on the landing tick) | emission |
+| `amount` | `16` | emission |
+| `one_shot` | `true` | emission |
+| `explosiveness` | `1.0` (all 16 on the landing frame) | emission |
+| `randomness` | `0.0` | emission |
+| `lifetime` | `0.40` s | emission |
+| `preprocess` | `0.0` (a burst must start at the event, not mid-life) | emission |
+| `local_coords` | `false` | emission space |
+| `texture` | `GradientTexture2D` sub-resource, 16 × 16, `fill = FILL_RADIAL`, `fill_from = (0.5, 0.5)`, `fill_to = (1.0, 0.5)`; gradient offsets `[0.0, 0.55, 0.8, 1.0]`, colours `[#FFF6EA α1, #F2DFC4 α1, #3A2A22 α1, #3A2A22 α0]` (light core, dark rim) | draw |
+| `material` | none (default mix blend; no `CanvasItemMaterial`) | draw |
+| `z_index` | `-1` | draw |
+| `visibility_rect` | `Rect2(-120, -40, 240, 70)`, **set by hand; to be verified in play** (edge of screen, predicted failure 6) (the furthest crumb reaches about ±106 px and −6 to +8 px vertically) | draw / culling |
 
-Files in `godot/shaders/` are hand-written by me. No agent edits them.
+**`local_coords` off, why:** each puff is a separate instance added to the session, which never moves. With `local_coords` off, crumbs already emitted stay where they were in the world even if their emitter moved, which is what dust on a surface does.
 
-## 5. Evidence split
+**`ParticleProcessMaterial` (process)**
+
+| Property | Value |
+|---|---|
+| `particle_flag_disable_z` | `true` |
+| `emission_shape` | `EMISSION_SHAPE_RING` |
+| `emission_ring_axis` | `Vector3(0, 1, 0)` (a ring lying flat in X–Z; with Z disabled it collapses onto a horizontal line at the jelly's feet) |
+| `emission_ring_radius` | `24.0` |
+| `emission_ring_inner_radius` | `18.0` |
+| `emission_ring_height` | `0.0` |
+| `direction` | `Vector3(0, -1, 0)` |
+| `spread` | `30.0` |
+| `initial_velocity_min` / `initial_velocity_max` | `30.0` / `60.0` (a small lift only) |
+| `radial_accel_min` / `radial_accel_max` | `4000.0` / `6500.0` (the sideways kick, outward from the emitter's origin) |
+| `radial_accel_curve` | `CurveTexture`: `1.0` at 0.0 → `0.0` at 0.2 of life (the push acts only in the first ~80 ms) |
+| `gravity` | `Vector3(0, 300, 0)` |
+| `damping_min` / `damping_max` | `600.0` / `600.0` |
+| `lifetime_randomness` | `0.25` |
+| `scale_min` / `scale_max` | `0.4` / `0.75` (6.4–12 px with the 16 px texture) |
+| `scale_curve` | `CurveTexture`: `1.0` at 0.0, `1.0` at 0.35, `0.0` at 1.0 |
+| `color_ramp` | `GradientTexture1D`: `(1, 1, 1, 1)` at 0.0; `(0.95, 0.88, 0.80, 0.9)` at 0.5; `(0.85, 0.72, 0.58, 0.0)` at 1.0 |
+| `hue_variation_min` / `hue_variation_max` | `-0.03` / `0.03` |
+
+### Observable rules
+
+Ticks are physics ticks at 60 per second.
+
+- **A1. Fires on every landing.** On every tick where `player.just_landed` is true and the session state is still `PLAYING` after `resolve_contacts()`, exactly one new `LandPuff` instance is added with `emitting = true`. The number of puffs spawned equals `sound.count("SFX-LAND")` at all times.
+- **A2. Never otherwise.** No puff on scene load, during the intro, on respawn (`reset_at()`), on a landing into sauce (that tick is a splat), or while the session is `PAUSED`, `SPLAT`, `REFORM` or `WON`.
+- **A3. At the event's place.** Each puff's `global_position` equals `player.global_position` on its landing tick (within 0.5 px): the bottom centre of the jelly's box, its feet.
+- **A4. Retrigger rule: overlap.** Each landing gets its own new instance. A second landing inside the first puff's lifetime never restarts, cuts off or suppresses the first, whatever the first is doing at that moment: still emitting, or already done emitting (with `explosiveness = 1.0` all 16 crumbs are born on the landing frame, so `emitting` may already be `false`) while its crumbs are still alive. Both puffs' crumbs are alive together, and the second puff emits its full 16.
+- **A5. Most bursts alive at once: 2 (prediction, until I test the plate-edge route in play).** The shortest gap between two landings should be a landing near a plate's edge followed by scooting off it: the plate top is 22 px above the table, a drop of about 0.15 s. A third landing needs a hop, at least 0.63 s later, after the first puff (0.40 s) is gone. Predicted peak: 2 × 16 = **32 particles**. If play shows a shorter route, I revise this rule and the price prediction with a dated revision.
+- **A6. Cleanup.** Each instance frees itself after it finishes (its `finished` signal). One second after the last landing, no `LandPuff` instance is left in the tree. Prediction to check: a headless run uses a dummy renderer that runs no particle process, so `finished` may never fire there. If it doesn't, I record that, and each instance instead frees itself `lifetime + 0.1` s (0.5 s) after it starts, in the running game and headless alike.
+- **A7. A freed follow target.** The puff is never parented to the jelly, and the jelly is never freed on a landing (a respawn teleports it). If the jelly were freed on the same tick, the puff would still finish, because its parent is the session.
+- **A8. Paused.** Esc sets the session to `PAUSED` but does not pause the tree. A puff already alive finishes (at most 0.40 s), and no new one starts because no landing can happen with the jelly disabled. With `get_tree().paused = true` (not used by the game, set by the test), a live puff freezes in place.
+
+### Evidence split
 
 | Rule | Checked by | How |
 |---|---|---|
-| Shader parses; uniform names and types | Headless | `get_shader_uniform_list()` on the shader lists `warning`, `warn_color` and `strength` with their types; defaults read from the shader source text |
-| 1 Begin and end values (exact, per tick) | Headless | A sampler in `_physics_process` with a high `process_physics_priority`, so it runs after the session advances the forks, reads every fork's `warning` every physics tick and compares it with `(p − safe_ticks + 1) / shadow_ticks` in SHADOW and `0.0` elsewhere. The per-tick sequence must be identical at 30, 60 and 144 fps |
-| 2 Duration at 30, 60, 144 fps (per frame) | Headless | A sampler in `_process` with a high `process_priority`, so it reads after every other `_process()`, records `warning` every rendered frame with `--fixed-fps` 30, 60 and 144; game time from the first frame with `warning > 0` to the first frame back at `0.0` equals the SHADOW length within one frame period. Exact first and last values are not expected per frame at 30 or 144 fps |
-| 3 Retrigger restarts | Headless | Drive a splat through the real game loop and real input so a fork is held and released; its next SHADOW starts at `1 / shadow_ticks` |
-| 4 Starting mid-state | Headless | On the first frame after start, the plate 5 and 6 forks read `0.514` and `0.517`, unchanged through the intro pan |
-| 5 Time scale | Headless | Ramp tick count with `Engine.time_scale = 0.5` equals the count at `1.0` |
-| 5 Pause | Headless | Pause mid-SHADOW; `warning` holds the same value for every sampled frame until resume |
-| 6 State ends early | Headless | A fork held mid-SHADOW reads `0.0` on that tick |
-| 7 Several instances | Headless | The five materials are distinct objects with the same `shader`; a SAFE fork reads `0.0` while another is in SHADOW |
-| Colour on screen matches the predicted pixels | **My eyes** | In-engine captures at controlled values, sampled pixels beside the predicted table (Section 6) |
-| Glow readable in play; fork still reads as a fork | **My eyes** | Normal play, several warnings, on the real background |
-| Silhouette and every other object unchanged | **My eyes** | Side-by-side captures, glow on and off |
-| Intro pan shows plate 5 and 6 forks half-amber | **My eyes** | Watch the pan in a windowed run |
+| Every setting above | headless test | `test_land_puff_config.gd` loads the scene and reads each property back against these values |
+| A1, A2 | headless test | drive real landings, a respawn and a sauce splat; compare puffs spawned with `sound.count("SFX-LAND")` |
+| A3 | headless test | puff `global_position` vs `player.global_position` on the landing tick |
+| A4, A5 | headless test + my eyes | test: two real landings 0.15–0.2 s apart (plate-edge scoot-off) create two separate `LandPuff` instances, both in the tree at once, the first not restarted (node state only; a headless run draws no crumbs); eyes: the crumbs of both puffs visibly overlap in play, including rapid repeats |
+| A6 | headless test | count `LandPuff` instances 1 s after the last landing |
+| A8 | headless test | tree pause: the instance stays in the tree, `emitting` unchanged |
+| Timing phases, scale, contrast, change over life | frame strip + my eyes | strip frames below; my verdict in the running game at 1280 × 720 over plate 1 and the bare table in gap 1 |
+| Variation | my eyes | ten or more landings in play, looking for stamped repeats |
 
-## 6. Controlled inputs and predicted values
+### The frame strip
 
-**Controlled values:** `warning` = 0.0, 0.5 and 1.0, with `strength` at its default 0.65, so the mix amount `warning * strength` is 0.0, 0.325 and 0.65. `warn_color` = (255, 179, 71).
+**Preview scene:** `godot/previews/land_puff_preview.tscn`, a **fixture**. Background: the real level art for the first stretch, the room behind, the table front, plate 1 and the bare table gap after it, at in-game camera scale. A still jelly sprite (`CHAR-LAND.png`) stands at each trigger point, so the crumbs are judged next to the real character.
 
-**Named pixels** (fully opaque, in flat areas of `ENV-FORK.png`, 335 × 1267):
-- **P1, light steel:** art pixel (168, 300) = (179, 188, 187). Every channel within 2 across a 13 × 13 box.
-- **P2, mid steel:** art pixel (298, 850) = (113, 126, 128). Every channel within 8 across a 13 × 13 box.
+- Frame 10: two puffs fire together, one on plate 1 (pale) and one on the bare table in gap 1 (dark).
+- With the preview's `retrigger` export on, a third puff fires at frame 15 beside the table one, 5 frames (0.167 s) later, the scoot-off case.
+- `use_fixed_seed` on, on the preview's instances only (never in `land_puff.tscn`), if 4.7 has it.
 
-The sprite is drawn at scale `200 / (326 − 9) = 0.631` (`slice_tuning.gd` lines 24–25, 104–105), so a 13 × 13 art box covers about 8 × 8 screen pixels. Screen position of an art pixel = the fork node's position + (art − (167.5, 1258)) × 0.631 (`fork.gd` sprite offset).
-
-**Predictions** (each channel = pixel + amount × (amber − pixel), rounded to 8 bits):
-
-| Pixel | `warning` 0.0 | 0.5 | 1.0 |
-|---|---|---|---|
-| P1 (179, 188, 187) | (179, 188, 187) | (204, 185, 149) | (228, 182, 112) |
-| P2 (113, 126, 128) | (113, 126, 128) | (159, 143, 109) | (205, 160, 91) |
-
-**Background:** both pixels are opaque and the colour line never changes alpha, so the background does not enter the arithmetic.
-
-**Lighting:** `render_mode unshaded`, so no 2D light changes the result. HDR 2D is off, so the mix happens on the values as written. Prediction: `source_color` on `warn_color` does not convert it in a non-HDR 2D canvas. The captures check this.
-
-**Contrast:** against the palette room colour #1A1420, P1's contrast ratio goes from about 9.3:1 at 0.0 to about 9.6:1 at 1.0. The effect is a hue shift, not a brightness change. I will re-measure against the real room pixel behind the fork in the captures.
-
-## 7. Material plan
-
-**Object:** the A3 `Floor` (a `BoxMesh`, `godot/showcase/a3_assets.tscn` lines 23–25) as the dinner table, plus a second `BoxMesh` serving board beside it. Both live in a new scene, `godot/showcase/a5_materials.tscn`, which instances `a3_assets.tscn` instead of editing it, so `test_a3_assets.gd` (36 checks) stays unchanged. A `BoxMesh` always has clean UVs and tangents; the A3 `.glb` models have UVs but no tangents.
-
-**Lighting I judge under:** the A3 `Sun` (`DirectionalLight3D`, `a3_assets.tscn` line 39) as committed. SSAO, SSR, SDFGI and VoxelGI are not available in the Compatibility renderer, so none of them can be confused with a roughness or normal-map change.
-
-**Textures:** Poly Haven "Dark Wood", https://polyhaven.com/a/dark_wood, CC0. Authors: Dario Barresi (baking), Dimitrios Savva (photography), Rico Cilliers (tiling). Checked 2026-10-27. 2K PNG, 2048 × 2048 RGB, in `godot/assets/textures/dark_wood/`. Normal convention used: **OpenGL (`_nor_gl`)**, which Godot expects. `_nor_dx` is kept only to calibrate the curl check.
-
-| File | Role | What its numbers mean | Sampled as | `compress/mode` | `compress/normal_map` | `mipmaps/generate` |
-|---|---|---|---|---|---|---|
-| `dark_wood_diff_2k.png` | albedo | sRGB-encoded colour | colour, `source_color` | Lossless | Disabled | on |
-| `dark_wood_rough_2k.png` | roughness | 0 = mirror, 1 = fully rough; grey stored in R, G and B; read `.r` | data, no colour hint | Lossless | Disabled | on |
-| `dark_wood_nor_gl_2k.png` | normal map | tangent-space slope, each channel `n * 0.5 + 0.5`, green up (OpenGL) | data, `hint_normal` | Lossless | Enable | on |
-| `dark_wood_nor_dx_2k.png` | calibration only, not bound | same, green down (DirectX) | not sampled | Lossless | Enable | on |
-
-All four also set `detect_3d/compress_to` to Disabled, so the editor has nothing to change when it first draws them in 3D.
-
-Finding: the roughness PNG carries a colour-space tag like the diffuse does. The tag does not decide what the numbers mean; the shader's hint does, so roughness is sampled without `source_color`.
-
-**Shader:** `godot/shaders/table_wood.gdshader`, to be hand-written by me. `shader_type spatial;` with the default lit render mode, so the Sun lights it.
-
-| Group | Sampler | Hints | Bound to |
-|---|---|---|---|
-| colour | `albedo_tex` | `source_color`, `filter_linear_mipmap`, `repeat_enable` | `dark_wood_diff_2k.png` |
-| surface | `roughness_tex` | `hint_default_white`, `filter_linear_mipmap`, `repeat_enable` (no `source_color`) | `dark_wood_rough_2k.png` |
-| surface | `normal_tex` | `hint_normal`, `filter_linear_mipmap`, `repeat_enable` | `dark_wood_nor_gl_2k.png` |
-
-| Group | Uniform | Type | Hint | Default | Expected across its range |
-|---|---|---|---|---|---|
-| colour | `tint` | `vec4` | `source_color` | `vec4(1.0, 1.0, 1.0, 1.0)` | Multiplies the wood colour. White leaves the photo as is; warm tints read as varnish. |
-| colour | `brightness` | `float` | `hint_range(0.0, 2.0)` | `1.0` | 0 = black; above about 1.5 the dark wood looks washed out and plastic. |
-| surface | `roughness_scale` | `float` | `hint_range(0.0, 1.0)` | `1.0` | 1 = matte as photographed; toward 0 a sharp Sun highlight appears. At 0 it looks like dark glass, because the scene has no environment to reflect. |
-| surface | `normal_strength` | `float` | `hint_range(0.0, 2.0)` | `1.0` | 0 = flat, the grain only in colour; 2 = deep, noisy grain. |
-| mapping | `uv_scale` | `float` | `hint_range(0.25, 8.0)` | `1.0` | Repeats of the texture across the surface. At 0.25 the grain is stretched and blurry; at 8 the repeats become obvious. |
-
-**Prediction:** in a spatial shader, `source_color` on `tint` converts the Inspector's sRGB colour to linear before the shader sees it, so `(1.0, 0.85, 0.70)` arrives as about `(1.0, 0.69, 0.45)`. The hint experiment and the Use It captures check this on Compatibility.
-
-**The two materials** (`.tres` files, both using `table_wood.gdshader`):
-
-| Material | Path | `tint` | `roughness_scale` | `normal_strength` | `uv_scale` | Why |
-|---|---|---|---|---|---|---|
-| Dinner table, worn | `godot/materials/table_wood_worn.tres` | white | 1.0 | 1.0 | 2.0 | The long table: matte, used, grain as photographed, small repeats over a large surface. |
-| Serving board, polished | `godot/materials/serving_board_polished.tres` | `(1.0, 0.85, 0.70)` | 0.35 | 0.5 | 1.0 | A varnished board: warmer, catches the Sun, softer grain. |
-
-They differ in four values and share every texture, so any difference on screen comes from the values alone.
-
-## 8. Hint experiment
-
-**Setup:** a 3 × 1 PNG with texels 64, 128 and 192 (grey), written by a committed GDScript, imported Lossless with no mipmaps. One spatial shader, to be hand-written by me, `render_mode unshaded`, with two samplers bound to that same file: one `source_color, filter_nearest`, one `filter_nearest` only. A `bool` uniform picks which one writes `ALBEDO`. Two materials, one per bool value, on two quads facing the camera, in their own scene. A `WorldEnvironment` sets a Linear tonemap at exposure 1.0, with glow, fog and adjustments off.
-
-**Predicted displayed 8-bit values**, using encode(x) = 12.92x for x ≤ 0.0031308, else 1.055·x^(1/2.4) − 0.055:
-
-| Band (file value) | Quad A: with `source_color` | Quad B: without |
+| Frame | After trigger | Should show |
 |---|---|---|
-| 64 | 64 | 137 |
-| 128 | 128 | 188 |
-| 192 | 192 | 225 |
+| 10 | 0 | the trigger frame: crumbs at most just appearing at the jelly's base edges |
+| 12 | +2 | crumbs clearly out from behind both sides of the jelly, full size, bright, low |
+| 15 | +5 | a flat fan about one jelly width beyond each side, within ~6 px of the surface |
+| 20 | +10 | crumbs nearly stopped, shrunk to under half size, mostly faded |
+| 30 | +20 | nothing |
+| 50 | +40 | nothing |
 
-Worked example for 128 without `source_color`: x = 128/255 = 0.502; 1.055 × 0.502^(1/2.4) − 0.055 = 0.737; 0.737 × 255 = 188.
+---
 
-**Which quad shows the file unchanged:** Quad A. `source_color` decodes the stored sRGB value to linear, and the renderer encodes linear back to sRGB for display. The two cancel. Quad B treats the stored number as already linear, so only the display encode is applied, and every band comes out brighter.
+## Effect B — Dome sugar glints (ambience)
 
-**Renderer caveat:** these predictions assume Forward+ or Mobile. This project uses Compatibility, so I measure first and explain after. If Compatibility gives different values, that is a finding, recorded with the capture.
+### The job
 
-## 9. Predicted failure cases
+**What it tells the player:** where the goal is, and that it is the prize. Soft sugar glints rise from the dessert dome for the whole run. The intro pan starts on the dome, so the glints are the first thing the player sees move; later, when the dome comes onto screen at the right edge, the glints mark it before the player reaches it.
 
-| # | Failure | Why it could happen | Check that catches it |
-|---|---|---|---|
-| 1 | One fork's glow appears on every fork | One `ShaderMaterial` shared by all five sprites, so a single `warning` value drives them all | Headless rule 7: the five materials are distinct objects with the same shader; a SAFE fork reads `0.0` while another is in SHADOW |
-| 2 | The ramp takes a different time at 30 or 144 fps | The driver counts frames or adds up `_process` delta instead of reading the fork's tick counter | Headless rule 2 at 30, 60 and 144 fps, and reading the test to confirm it runs the real game loop |
-| 3 | The glow lags one tick behind the shadow | The driver updates before the session advances the forks in the same frame | Headless rule 1, per-tick sampler: on the first SHADOW tick, `warning` equals `1 / shadow_ticks`, not `0.0` |
-| 4 | A held fork keeps its glow | Holding sets `t = 0`, but the driver only updates on phase changes | Headless rule 6: a fork held mid-SHADOW reads `0.0` on that tick |
-| 5 | Roughness sampled with `source_color`, or the DX normal map bound | Copying hints between samplers, or picking the wrong file | `test_materials.gd` asserts each sampler's hints from the source and each bound path; the curl ratio of the bound normal map is near 0; the `source_color` mutation on `albedo_tex` exits 1 |
-| 6 | The editor rewrites an import setting | Detect-on-first-draw changes a texture used in 3D | `git status` after the first editor session; `test_materials.gd` reads every `.import` file with `ConfigFile` |
+**Job:** ambience.
 
-## 10. Answers before building
+**Condition:** the run is not won: `session.state != State.WON` (`godot/game/session.gd`, `enum State` line 12). The glints are on from scene load (state `INTRO`) through `PLAYING`, `PAUSED`, `SPLAT` and `REFORM`. They stop when the state becomes `WON` (`resolve_contacts()`, the jelly reached the dome) and start again when `start_session()` replays from `WON`.
 
-1. **Renderer:** `project.godot` names Compatibility (`gl_compatibility`, lines 32–33). It rules out decals and compute shaders, and VoxelGI, SDFGI and SSIL. SSAO and SSR are unavailable too, so none can be confused with my materials.
-2. **Colour arriving in `fragment()` (fork, `canvas_item`):** `COLOR` already holds the sprite's texture sample multiplied by the vertex colour (the node's modulate, white here), so it is the fork's own pixel. The tempting alternative, replacing it with `texture(TEXTURE, UV)`, gives the texel alone and throws away any modulate, so a future fade or tint on the fork would stop working.
-3. **`canvas_item`, `texture(TEXTURE, UV)` instead of `COLOR`:** the raw texel of `ENV-FORK.png`, without the modulate multiply. With white modulate it looks the same today, which is why the mistake would go unnoticed.
-4. **Spatial (table):** if I never write `ALBEDO`, it stays white, `vec3(1.0)`. `COLOR` holds the interpolated vertex colour; a `BoxMesh` has none, so I predict white. I never use it.
-5. **Frame-counting version:** tuned as 96 frames for the 1.6 s fork at 60 fps, it would last 3.2 s at 30 fps, 1.6 s at 60 and 0.67 s at 144. In general, `shadow_ticks / fps` seconds. Mine counts physics ticks, so at `time_scale = 1.0` it lasts 1.6 s at all three.
-6. **Default vs current value:** the default lives in the `Shader` resource (the source text of `fork_warning.gdshader`). The current value lives in each `ShaderMaterial`, set by `set_shader_parameter`. If two forks shared one material they would share one `warning`, and both would glow whenever either was in SHADOW. That is why each fork gets its own material (rule 7, failure 1).
-7. **Does `hint_range` clamp a value set from code?** Prediction: no. It only limits the Inspector slider. `warning = 2.0` gives a mix amount of 1.3, which overshoots amber; P1 becomes about (278, 176, 36), clipped on output to (255, 176, 36). Checked by a capture in Use It.
+**The feature Effect A doesn't use:** a **box emission shape** (`EMISSION_SHAPE_BOX`) across the dome's glass. Effect B also uses `preprocess` and an additive `CanvasItemMaterial`, which Effect A doesn't, but the box is the named feature.
 
-## Revision 1 — 2026-10-27 (after the Claude Code planning run, `sessions/plan-2a.md`; decisions mine)
+### The intent block
 
-**Driver location and timing (replaces "every physics tick" in the §2 uniform table).** The driver lives in `godot/features/fork/fork.gd`. `warning` is initialized during `setup()` (through `reset_cycle()`), and updated in `_apply()` whenever `t` or `held` changes. While a fork is frozen (held, or the session in INTRO, PAUSED or WON, or the tree paused) nothing is written and `warning` retains its value. When a fork is held during SHADOW, `warning` is `0.0` on that same tick, unchanged from rule 6.
+**Timing phases** (ambience, so phases of the effect's life, not of one burst):
+1. **Start:** on the first frame after the scene loads, the dome is already glinting at its steady-state density (preprocess). No fill-in.
+2. **Steady state:** about 24 glints alive. Each fades in over about 0.5 s, drifts slowly upward 50–80 px over its 2.4 s life, turns from sugar white toward pale gold, and fades out. No pulsing, no bursts.
+3. **Stop:** at `WON`, no new glints are born; the ones alive keep rising and fade out naturally. The dome is empty about 2.4 s after the win.
 
-**Boundary clarification (§4).** The driver adds presentation-only lines to `fork.gd`: the material in `setup()`, a function that reads the phase and returns the `warning` value, and one line in `_apply()` that sets it. The phase logic, the tick counter and every timing stay unchanged, and the driver never writes `t`, `held`, `hold_pending` or `announced`.
+**Contrast against the real background:** the glints rise from the dome's glass into the **dark room** behind it (darkest), and the additive glow reads strongly there. Over the dome's **pale glass highlights** (lightest) an additive glint can wash out; that is acceptable only if each glint clears the glass into the dark room within about a third of its life. Judged in the running game over both.
 
-**Base material (replaces the §2 "Material" line).** `godot/materials/fork_warning.tres` is a `ShaderMaterial` using `fork_warning.gdshader`. Each fork's `setup()` gives its sprite a **duplicate** of it, so every fork has its own material and its own `warning` (rule 7), while `strength` and `warn_color` are tuned once in the Inspector on the base `.tres`. Until I tune it, the base material sets no parameters, so the shader defaults apply.
+**Scale against the character:** each glint is about 4–9 px across, smaller than the landing crumbs and far smaller than the jelly (about a tenth of its width). The whole cloud is about as wide as the dome (≈ 180 px, 3.5 jelly widths) and rises up to about 80 px above it.
 
-**Uncovered rule.** Rule 5's "WON holds its value" has no headless check in this change. I will observe it by eye in a windowed run when the jelly reaches the dome, and record the result in TEST-REPORT.md.
+**Change over life:** size grows from zero over the first fifth of life and shrinks to zero over the last fifth; alpha fades in and out with it; colour shifts from sugar white to pale gold.
 
-## Revision 2 — 2026-10-27 (import settings, before committing the textures; decision mine)
+**Variation:** start position anywhere in the box, rise speed, size, lifetime (± 30 %) and a small hue shift.
 
-The §7 texture table lists `compress/mode`, `compress/normal_map`, `mipmaps/generate` and `detect_3d/compress_to`. Godot's default `.import` files also hold `roughness/mode=0` (Detect). To leave the editor nothing to change later, all four dark-wood textures also set `roughness/mode=1` (Disabled). Values as written in the `.import` files: `compress/mode=0` (Lossless), `compress/normal_map=2` (Disabled) for diff and rough and `1` (Enable) for nor_gl and nor_dx, `mipmaps/generate=true`, `detect_3d/compress_to=0` (Disabled), `roughness/mode=1` (Disabled). The enum names are to be confirmed in the editor's Import dock.
+**Layering:** one emitter (`DomeGlints`) whose job is the whole effect. Drawn in front of the dome glass (`z_index = 6`; the dome is 5).
 
-## Revision 3 — 2026-10-27 (normal-map curl check calibrated; threshold mine)
+### The settings
 
-Calibration with `godot/tests/normal_map_check.gd` (the handout's check, verbatim) on the Poly Haven Dark Wood source PNGs, stride 4, run through `./scripts/run-test.sh calibrate_normal_check.gd 60` (log: `logs/calibrate_normal_check_60fps.log`):
+Scene: `godot/effects/dome_glints.tscn`. Root node `DomeGlints`, type **`GPUParticles2D`**, for the same reasons as Effect A. The driver places it at `(dome centre x, TABLE_TOP − 70)`.
 
-| Map | `directx = false` (GL) | `directx = true` (DX) |
+**Node (emission and draw)**
+
+| Property | Value | Part |
 |---|---|---|
-| `dark_wood_nor_gl_2k.png` | 0.3838 | 1.6162 |
-| `dark_wood_nor_dx_2k.png` | 1.6163 | 0.3837 |
+| `emitting` | `true` in the scene file (on from load) | emission |
+| `amount` | `24` | emission |
+| `one_shot` | `false` | emission |
+| `explosiveness` | `0.0` | emission |
+| `randomness` | `0.0` | emission |
+| `lifetime` | `2.4` s | emission |
+| `preprocess` | `2.4` s (one full lifetime, so the first frame is at steady state) | emission |
+| `local_coords` | `false` (the dome never moves; glints drift in world space) | emission space |
+| `texture` | `GradientTexture2D` sub-resource, 32 × 32, `fill = FILL_RADIAL`, `fill_from = (0.5, 0.5)`, `fill_to = (1.0, 0.5)`; gradient offsets `[0.0, 0.35, 1.0]`, colours `[white α1, white α0.6, white α0]` | draw |
+| `material` | `CanvasItemMaterial`, `blend_mode = BLEND_MODE_ADD` | draw |
+| `z_index` | `6` | draw |
+| `visibility_rect` | `Rect2(-110, -160, 220, 220)`, **set by hand; to be verified in play** (edge of screen, predicted failure 6) (box ±70 × ±45 plus up to 80 px of rise) | draw / culling |
 
-- **Direction confirmed, not reversed:** the GL file scores lower under the GL convention and the DX file lower under DX, so `s` is not flipped.
-- **Drift toward 1:** the values sit at about 0.38 and 1.62, not near 0 and 2. This is the handout's flat-map effect: wood grain is a shallow surface and the maps load as 8-bit RGB (`FORMAT_RGB8`), so quantization noise is a large share of the slopes.
-- **The two conventions always sum to 2** (`(t1 − t2)²` and `(t1 + t2)²` add to `2(t1² + t2²)`), so what matters is which convention is lower and how far below 1.0 (no surface) it sits.
+**`ParticleProcessMaterial` (process)**
 
-**Threshold (mine), for this texture only:** the bound normal map passes if its ratio under its own convention (GL, `directx = false`) is **below 0.70**, halfway between this map's measured 0.38 and the no-surface value 1.0. This is a texture-specific threshold set from this calibration pair, not a universal rule: another normal map, especially a flatter or compressed one, would need its own calibration before a threshold is chosen.
+| Property | Value |
+|---|---|
+| `particle_flag_disable_z` | `true` |
+| `emission_shape` | `EMISSION_SHAPE_BOX` |
+| `emission_box_extents` | `Vector3(70, 45, 0)` |
+| `direction` | `Vector3(0, -1, 0)` |
+| `spread` | `20.0` |
+| `initial_velocity_min` / `initial_velocity_max` | `12.0` / `30.0` |
+| `gravity` | `Vector3(0, -6, 0)` (a slight upward drift) |
+| `damping_min` / `damping_max` | `0.0` / `0.0` |
+| `lifetime_randomness` | `0.3` |
+| `scale_min` / `scale_max` | `0.13` / `0.28` (4–9 px with the 32 px texture) |
+| `scale_curve` | `CurveTexture`: `0.0` at 0.0, `1.0` at 0.2, `1.0` at 0.8, `0.0` at 1.0 |
+| `color_ramp` | `GradientTexture1D`: `(1.0, 0.95, 0.82, 0.0)` at 0.0; `(1.0, 0.95, 0.82, 0.85)` at 0.2; `(1.0, 0.82, 0.55, 0.6)` at 0.75; `(1.0, 0.82, 0.55, 0.0)` at 1.0 |
+| `hue_variation_min` / `hue_variation_max` | `-0.05` / `0.05` |
 
-## Revision 4 — 2026-10-27 (after the materials audit, `sessions/summary-3.md`; decisions mine)
+### Observable rules
 
-**`uv_scale` (corrects the §7 uniform table).** `uv_scale` scales the mesh's existing UV coordinates (`table_wood.gdshader` line 23, `vec2 uv = UV * uv_scale;`); it does not set a fixed number of repeats across each face. The audit measured that a `BoxMesh` packs its six faces into a 3 × 2 UV layout, so the top face covers only U 0.333–0.667 and V 0.5–1.0. With `uv_scale = s`, the top face therefore shows about s/3 copies across U and s/2 along V: at 2.0, about 0.67 × 1. On the 8 m × 4 m Floor that slice is also stretched unevenly (about 0.042 U per metre against 0.125 V per metre). I keep both `BoxMesh`es and the existing test expectations unchanged, and I judge grain size only in the in-engine captures.
+- **B1. On from load.** On the first frame after the session is ready, `DomeGlints` exists, `emitting == true`, and it sits at the dome position above.
+- **B2. Stops at the win.** On the tick the state becomes `WON`, `emitting` becomes `false`. The node stays in the tree so live glints finish.
+- **B3. Starts again on replay.** On the tick `start_session()` moves the state from `WON` to `PLAYING`, `emitting` becomes `true` again (by `restart()`, so preprocess applies again; prediction to check).
+- **B4. Session pause (Esc).** No change: `emitting` stays `true` and the glints keep drifting, like the rest of the room. The game's pause does not pause the tree.
+- **B5. Tree pause.** With `get_tree().paused = true`, the glints freeze in place and `emitting` stays `true`; they continue from the same state when unpaused.
+- **B6. Hidden.** With `visible = false`, nothing is drawn and `emitting` stays `true`; the driver never changes `visible`. Prediction to observe: when shown again, the glints are present rather than refilling from empty.
+- **B7. One instance.** Exactly one `DomeGlints` exists for the whole session, including after replays.
 
-**Lighting (replaces "Lighting I judge under" in §7).** `a5_materials.tscn` has no `WorldEnvironment` and the project sets no default environment. At runtime both materials are lit by the A3 `Sun` only (`DirectionalLight3D`, shadows on, `a3_assets.tscn` lines 39–41), with no ambient light, against the project's clear colour (`project.godot` line 34). The editor viewport adds its own preview sun and sky, so I make no material judgment from it: every judgment of either material comes from in-engine captures under this same lighting.
+### Evidence split
 
-## Revision 5 — 2026-10-28 (P1 replaced after the first capture run; decision mine)
-
-**Why:** the first in-engine capture (`logs/capture_a5.log`, commit 71e1c9b) found no fork with P1 on screen. The fork sprite is about 800 px tall in a 720 px view, so P1 at art (168, 300), near the top of the handle, is above the top of the screen even when the fork is down. It was flat in the art but unreachable in the game.
-
-**New P1:** art pixel (194, 1144) on a tine = (179, 183, 184), every channel within 3 across a 13 × 13 box, about 72 screen px above the tine tips (0.631 × (1258 − 1144)). P2 is unchanged: (298, 850) = (113, 126, 128).
-
-**New P1 predictions** (pixel + amount × (amber − pixel), amount = `warning` × 0.65, rounded to 8 bits):
-
-| `warning` | amount | New P1 |
+| Rule | Checked by | How |
 |---|---|---|
-| 0.0 | 0.0 | (179, 183, 184) |
-| 0.5 | 0.325 | (204, 182, 147) |
-| 1.0 | 0.65 | (228, 180, 111) |
-| 2.0 | 1.3 | (255, 178, 37), red clipped from 278 |
+| Every setting above, including the box | headless test | `test_dome_glints_config.gd` reads each property back |
+| B1, B2, B3, B7 | headless test | drive a real run to the dome with real input, then a replay; read `emitting` and the instance count each tick |
+| B4, B5, B6 | headless test | Esc through the real input path; `get_tree().paused`; `visible = false`; read `emitting` |
+| Start with no fill-in (preprocess) | frame strip + my eyes | strip frame 10; the first frames of the intro in the running game |
+| Look, contrast, scale | frame strip + my eyes | strip frames below; running game over the dark room and the pale glass |
+| B6's "present when shown again" | my eyes | toggle visibility in the running game's remote tree |
 
-P2 at `warning = 2.0` (amount 1.3): (297 → 255, 195, 54).
+### The frame strip
 
-**Capture method:** the capture waits until a fork has both P1 and P2 on screen (in practice, a fork that is down), then stops the session's physics so no fork advances and the driver writes nothing, then sets `warning` directly.
+**Preview scene:** `godot/previews/dome_glints_preview.tscn`, a **fixture**: the room, the table, the dome at in-game camera scale, the jelly sprite beside it for scale. The glints instance has `emitting = false` until frame 10, when the preview calls `restart()`; at frame 70 it sets `emitting = false`. Capture with `--quit-after 150`.
+
+| Frame | Should show |
+|---|---|
+| 10 | start: steady-state density already (preprocess on restart) |
+| 12 | the same density, glints drifting up |
+| 40 | steady state, 1 s in: about 24 glints, mostly above the glass |
+| 70 | the stop frame: still full |
+| 85 | 0.5 s after stop: fewer near the glass, the upper ones still rising |
+| 145 | 2.5 s after stop: empty |
+
+---
+
+## Boundaries (both effects)
+
+These stay unchanged: collision, movement, input, the state machine and its timings in `session.gd`, every value in `slice_tuning.gd` and `features/player/tuning.gd`, `fork.gd`, `godot/audio/`, the HUD, every existing test and its expected counts, my Assignment 5 shaders in `godot/shaders/`, `godot/materials/`, the showcase scenes, and all source art.
+
+**Trigger code:** a new presentation script, `godot/effects/effects_driver.gd`, runs after the session each physics tick (`process_physics_priority` higher than the session's 10). It reads `state`, `player.just_landed` and `player.global_position`, instances `LandPuff` on a landing, owns the one `DomeGlints` and sets its `emitting`. **It never writes game state.** The only change allowed in `session.gd` is one line in `_ready()` that adds the driver as a child; the agent proposes it in the Step 3 plan and I approve or reject it. Effect settings live in the scene files in `godot/effects/`, never in code.
+
+---
+
+## Predicted failures
+
+1. **Godot 3 names.** The agent writes `initial_velocity`, `scale`, `scale_random` or `ParticlesMaterial`; the scene loads, the settings stay at defaults, the puff fires and looks wrong. *Caught by:* the configuration tests, and the Godot 3 name mutation in Step 2.
+2. **The flat ring doesn't flatten.** If Z is not zeroed at spawn, the ring with axis Y does not collapse onto a line and radial acceleration starts with a Z component, so the puff starts as a tall cloud or kicks weakly. *Caught by:* strip frames 12 and 15 (crumbs above ~10 px, or still behind the jelly).
+3. **Crumbs stuck behind the jelly.** The ring radius (18–24 px) is inside the jelly's half-width (26 px); if the push is too weak, frame 12 shows nothing. *Caught by:* strip frame 12, and my eyes in play.
+4. **Additive glints wash out over the pale glass, or vanish.** *Caught by:* strip frame 40 and my eyes over the glass and the room.
+5. **Preprocess not applied on restart.** After a win and a replay, the dome refills from empty instead of starting full. *Caught by:* strip frame 10 (the preview uses `restart()`), and my eyes on a replay.
+6. **Visibility rect too small.** The dome glints pop out when the dome is at the right edge of the screen during the approach. *Caught by:* my eyes, walking the jelly so the dome sits at the screen edge.
+7. **Puffs never freed.** Instances pile up in the tree. *Caught by:* the A6 count in the state test.
+8. **A puff on respawn or on a sauce splat.** *Caught by:* A2 in the state test (puffs vs `sound.count("SFX-LAND")`).
+9. **No GPU time on this renderer.** The Visual Profiler's GPU time may be missing or zero under Compatibility on macOS. *Caught by:* opening the Visual Profiler before building anything heavy; if it fails, I record that and price on what can be measured, saying so.
+
+## Price predictions and budgets
+
+| | Effect A (land puff) | Effect B (dome glints) |
+|---|---|---|
+| Node | `GPUParticles2D` | `GPUParticles2D` |
+| Peak particle count | 32 (2 bursts × 16), predicted (A5) | 24 |
+| Predicted headless CPU price | within the game-with-effects-off case's spread (< 0.02 ms added): the dummy renderer runs no particle process shader; the only CPU work is instancing and freeing a scene per landing | within the effects-off spread (< 0.01 ms added) |
+| Predicted GPU time | < 0.05 ms at peak | < 0.05 ms |
+| **Budget** | **0.25 ms GPU time at peak**, compared on GPU time | **0.25 ms GPU time**, compared on GPU time |
+
+Both are GPU nodes, so both are compared on GPU time: their headless CPU price is near zero by construction.
+
+## Answers
+
+1. **Node types and missing features.** Both effects use `GPUParticles2D`. On Compatibility, 2D particle collision depends on a signed-distance field that this renderer does not provide, and I am not using collision, trails, turbulence, attractors or sub-emitters. Every feature in this brief (ring and box emission, radial acceleration with a curve, gravity, damping, scale and colour curves, hue variation, preprocess, an additive `CanvasItemMaterial`) is expected to exist on `GPUParticles2D` in 4.7; I will confirm each in the 4.7 class reference, and Step 1's CLAUDE.md lists any it cannot confirm.
+2. **`local_coords` off and a moving parent.** Crumbs already emitted stay where they are in the world; only new particles would follow the emitter. The puff's parent is the session, which never moves, so in practice nothing follows anything.
+3. **Bursts alive at once.** Under overlap, at most 2 (A5), so the peak is 32 particles. Both numbers are predictions until I have played the plate-edge route.
+4. **Headless price of a GPU effect, and FPS with vsync.** Near zero: a headless run uses a dummy renderer that never runs the particle process shader or draws anything, so the GPU's work is never done and cannot be timed. With vsync on, FPS reads the display's refresh rate with the effect off and on alike (60, or 120 on a ProMotion display) until a frame misses, so it hides the cost.
+5. **Effect B at scene load, paused and hidden.** With preprocess: steady-state density on the first frame. Without: empty, filling over 2.4 s, on every load. Tree paused: frozen, `emitting` still `true`. Session paused (Esc): keeps drifting. Hidden: not drawn, `emitting` still `true`.
+6. **Emission, process, draw.**
+   - Emission: `emitting`, `amount`, `one_shot`, `explosiveness`, `randomness`, `lifetime`, `preprocess`, `local_coords`, and the emission shape and its parameters (ring, box).
+   - Process: `direction`, `spread`, initial velocity, radial acceleration and its curve, `gravity`, damping, `lifetime_randomness`, scale range and curve, colour ramp, hue variation, `particle_flag_disable_z`.
+   - Draw: `texture`, `material` (blend mode), `z_index`, `visibility_rect`.
