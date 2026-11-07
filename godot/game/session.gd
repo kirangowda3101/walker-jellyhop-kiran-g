@@ -60,6 +60,7 @@ func _ready() -> void:
 	hud.game = self
 	layer.add_child(hud)
 	get_window().focus_exited.connect(_on_focus_lost)
+	add_child(preload("res://effects/effects_driver.gd").new())
 	_start_intro()
 
 func _setup_input() -> void:

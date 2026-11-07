@@ -1,0 +1,20 @@
+I approve only Step 1: add the presentation driver
+(godot/effects/effects_driver.gd), add the single line in session.gd
+_ready() that adds it, and connect each puff's finished signal for
+cleanup. For each puff: add it to the session first, then set its
+global_position, then connect finished, and only then start emission.
+
+Run the existing suites through ./scripts/run-test.sh as CLAUDE.md says
+(test_game, test_slice, test_keyboard and test_a3_assets at 60;
+test_fork_warning and test_materials at 30, 60 and 144), plus
+test_land_puff_config.gd at 60. Show me the diff and the real results,
+then stop.
+
+Do not write the state test, do not add a fallback timer, do not change
+the effect settings, do not edit any .gdshader file, and do not commit.
+
+For later, not now: when I approve the state test, aim for the brief's
+9-12 tick plate-edge gap and report the measured gap. Apply Esc pause
+and tree pause in separate scenarios, each after observing a puff spawn,
+so pausing cannot prevent the landing being tested. Defer the WON check
+to Effect B's real-input run and keep it listed as pending until then.
