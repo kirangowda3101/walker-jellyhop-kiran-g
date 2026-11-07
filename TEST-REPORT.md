@@ -450,3 +450,30 @@ Each mutation was a one-line edit to `godot/effects/land_puff.tscn`, restored wi
 - The test catches drift between the brief and the scene.
 
 **After each restore:** 51 checks / 0 failures, exit 0. The final `git diff` of `land_puff.tscn` was empty.
+
+### State — Effect A (land puff), Step 3
+
+Source revision `1994c53` (driver `852f6b0`, one added line in `session.gd` `_ready()`; state test `1994c53`). `test_land_puff_state.gd`, run by me through `scripts/run-test.sh` at **60 fps** (fixed rate; it waits on no audio): **24 checks / 0 failures, exit 0** (`logs/test_land_puff_state_60fps.log`). The agent's own run is kept as `sessions/a6/session-3c-agent-state-run.log`. It drives the real `main.tscn` with key events through `Input.parse_input_event` only, never calls the driver, and sets only `test_mode` and `get_tree().paused`.
+
+| Rule | Result |
+|---|---|
+| A1 | one puff per `SFX-LAND`, on the same tick, every tick: puff ticks = `SFX-LAND` ticks = 116, 263, 273, 372, 543, 687 |
+| A2 | no puff on scene load, during the intro, on the intro-skip respawn, on a real sauce splat, through SPLAT and REFORM, or while PAUSED |
+| A3 | every puff at the jelly's feet: maximum distance 0.0 px |
+| A4 | plate-edge scoot-off: two landings **10 ticks (0.167 s)** apart, inside the brief's 9–12; two separate instances, the first still alive when the second spawned; each finished 24 ticks after its own spawn, so the first was not restarted |
+| A5 | **peak of 2 puffs alive at once on the tested route** (prediction confirmed for this route only) |
+| A6 | `finished` fires headless, 24 ticks (0.40 s) after spawn, and every puff is freed; none left 1 s after the last landing, so the fallback timer is not needed headless |
+| A7 | every puff's parent is the session, never the jelly (structure only; the jelly is never freed in the test) |
+| A8, Esc | **session pause (Esc), started after a puff spawned**: state PAUSED, the live puff kept running and finished at 24 ticks, no new puff with D and Space held, Esc again resumed PLAYING |
+| A8, tree pause | **tree pause, a separate scenario, started after a puff spawned**: the puff stayed in the tree with `emitting` unchanged and no `finished` for 60 paused ticks; after unpausing it finished at 84 ticks (60 + 24) and was freed |
+
+Other findings:
+- The test's first run failed `A4-gap-in-brief-range-9-12` at 23 ticks because its route ran off plate 1. The agent fixed the route (`RUN_LEFT_TO_X` 120 → 170), not the check or the 9–12 range.
+- On the sauce splat, the splat came mid-fall (`just_landed` false on that tick). A landing tick that becomes a splat is covered only because the driver uses the same condition as `SFX-LAND`.
+
+Existing suites and the config test after the wiring, rerun by me: all match the baseline (25, 61, 12, 36; 29 and 108 at 30, 60 and 144; config 51), all 0 failures, exit 0, no `SCRIPT ERROR` or `SHADER ERROR`.
+
+**Unverified:**
+- **WON:** no puff while WON (A2). Pending for Effect B's real-input run to the dome.
+- **Visual overlap:** whether two puffs' crumbs visibly overlap on screen (A4, A5). A headless run draws nothing; this is my check in play.
+- Also not provable headlessly: that crumbs are drawn at all, timing phases, scale, contrast, variation, the `visibility_rect` at the screen edge, the draw order near the sauce and fork shadows, the game's real A5 peak, and `finished` in the windowed game.
