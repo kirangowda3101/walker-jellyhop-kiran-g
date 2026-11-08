@@ -1,0 +1,26 @@
+Update godot/tests/cost_effects.gd only: the effect_a_lifecycle spawn
+schedule. A separate check found three puffs live in 25 of 300 frames,
+because a new tick-0 puff spawns before the previous tick-0 puff's
+finished fires.
+
+- Keep spawns becoming due at tick 0 and tick 10 of each 24-tick cycle.
+- A due spawn waits until fewer than two lifecycle puffs are live, where
+  live means spawned and its finished signal not yet fired. Spawn on the
+  first frame a slot is open.
+- Use exactly these names: const MAX_LIVE_PUFFS := 2, var pending_spawns
+  := 0 (spawns due but waiting), var live_lifecycle := 0 (spawned puffs
+  whose finished has not fired).
+- In spawn_puff(), keep the driver-mirroring order unchanged (add to the
+  session, set global_position, connect finished to queue_free, set
+  emitting). After that, increment live_lifecycle and decrement it from
+  a second connection to the same puff's finished signal. Do not free or
+  hide any puff early: puffs leave only through finished -> queue_free.
+- Reset pending_spawns and live_lifecycle at the end of each case.
+- Update the header comment for effect_a_lifecycle to describe the slot
+  limit.
+
+Do not change the effect_a_restart case, the other cases, the rounds,
+the frame counts, the reporting, or any other file. Do not run the
+benchmark: I will validate it separately. Show me the diff and stop.
+Run each command on its own: compound commands are denied. Do not
+commit.

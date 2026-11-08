@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+COST display server: headless
+COST rendering method: gl_compatibility
+COST rendering driver: opengl3
+COST physics ticks/s: 60  max_fps: 0
+COST empty     wall 0.0033 ms (sd 0.0005, min 0.0030, p95 0.0040, max 0.0070; round means 0.0031-0.0034) | engine process 107.4364 ms (sd 57.5007) | engine physics 0.7552 ms (sd 0.4660)
+COST game_off  wall 0.2119 ms (sd 0.0729, min 0.0790, p95 0.3530, max 0.5560; round means 0.2102-0.2139) | engine process 85.0139 ms (sd 64.0156) | engine physics 0.5770 ms (sd 0.4816)
+COST effect_a  wall 0.2144 ms (sd 0.0728, min 0.0800, p95 0.3550, max 0.5550; round means 0.2125-0.2165) | engine process 107.4364 ms (sd 57.5007) | engine physics 0.7552 ms (sd 0.4660)
+COST effect_b  wall 0.2142 ms (sd 0.0743, min 0.0870, p95 0.3620, max 0.5280; round means 0.2122-0.2162) | engine process 107.3504 ms (sd 57.4950) | engine physics 0.7566 ms (sd 0.4656)
+COST compare game_off  vs empty    : diff +0.2086 ms, larger round-mean spread 0.0037 ms -> differ
+COST compare effect_a  vs empty    : diff +0.2111 ms, larger round-mean spread 0.0040 ms -> differ
+COST compare effect_b  vs empty    : diff +0.2109 ms, larger round-mean spread 0.0041 ms -> differ
+COST compare effect_a  vs game_off : diff +0.0024 ms, larger round-mean spread 0.0040 ms -> SAME within spread
+COST compare effect_b  vs game_off : diff +0.0023 ms, larger round-mean spread 0.0041 ms -> SAME within spread
+COST compare effect_b  vs effect_a : diff -0.0002 ms, larger round-mean spread 0.0041 ms -> SAME within spread
+COST EFFECTS: 4 cases x 5 rounds x 300 frames; control separates: true
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

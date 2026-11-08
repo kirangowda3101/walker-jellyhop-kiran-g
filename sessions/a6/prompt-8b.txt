@@ -1,0 +1,27 @@
+Update godot/tests/cost_effects.gd only. Do not change any other file.
+
+1. Keep the existing two-burst case, renamed effect_a_restart: two
+   LandPuff instances restarted every 24 ticks, 10 ticks apart.
+2. Add a separate case, effect_a_lifecycle: the effects-off game plus
+   the per-landing lifecycle the effects driver performs, mirrored in
+   this test. On a 24-tick cycle, at tick 0 and at tick 10, instantiate
+   land_puff.tscn, add it to the session, set its global_position to
+   the jelly's, connect its finished signal to queue_free, then set
+   emitting = true, in the same order as effects_driver.gd. Two bursts
+   are alive at once, and every puff is created and then freed. Count
+   the puffs created and the puffs freed during the measured frames and
+   print both counts for this case, so the run shows the frees happened.
+3. Where two cases' difference is within the larger round-mean spread,
+   print "not distinguishable within spread" instead of "SAME within
+   spread", and use the same wording in the JSON.
+4. Update the header comment: the gameplay effects driver is removed
+   from every game case, so its own per-frame work is not in any case;
+   effect_a_lifecycle mirrors the driver's spawn code inside the test
+   instead of running the driver.
+
+Keep the empty control, game_off and effect_b unchanged. Keep 5 rounds,
+60 warm-up frames and 300 measured frames. Do not edit any effect,
+gameplay, preview, shader or other test file. Run
+./scripts/run-test.sh cost_effects.gd 60 300 once to validate, show the
+real output, and stop. Run each command on its own: compound commands
+are denied. Do not commit.
