@@ -812,3 +812,99 @@ Organised with Claude in chat from our session record and the commits; every ent
 | Mutations, playtest, sweep, OS screenshot | **did them; my observations** | — | measured pixel differences |
 | LANGUAGE-NOTES.md | **all answers, my words** | — | explained concepts; 2 accuracy fixes I accepted |
 | TEST-REPORT.md, this log | checked every entry | — | organised from the record |
+
+## Assignment 6
+
+### I corrected the brief before treating it as a checklist
+
+Before committing the brief, I caught two gaps in Claude's draft: the A4/A5 evidence row said the headless test would show both puffs emitting, and the hand-set `visibility_rect` values were described as checked when no one had checked them in play. I also accepted Claude's suggested A6 fallback in case `finished` didn't fire headlessly. I committed the brief before the first agent prompt. Those corrections separated what the brief asked for from what the tests could actually show.
+
+**Evidence:** brief, `8f77e62`.
+
+### The first agent draft had two permission denials, and the property probe changed what I could trust
+
+The first Claude Code session hit two permission denials. The agent reported them, and I committed the draft unedited so the original response stayed visible. In my review, I checked the references and ran the property probe. In Godot 4.7.2, the probe found that `initial_velocity` and `scale` do exist, but only as Vector2 Inspector properties that aren't saved in scene files; the saved settings are the separate `_min` and `_max` fields the test reads.
+
+The mutation checks showed why reading values back mattered. With the Godot 3 name, the minimum read back as `0.0` without a warning, even though the puff still fired in the preview. The second mutation caught value drift. A puff firing was therefore not enough evidence that its settings had loaded correctly.
+
+**Evidence:** original agent draft `2d9c5dd`; reference review and property probe `47ebc6f`; mutation checks `2be72f9`.
+
+### I changed the signal setup, and the first state-test failure was in the route
+
+I changed the agent's plan so the `finished` signal was connected before emission started. That step also hit two compound-command denials, and I reran all 11 test runs myself. The first state-test run failed on a 23-tick gap. Claude Code fixed the scripted route and kept the check in place.
+
+The headless config and state tests could read particle properties and instance counts. In the Effect A state test, `finished` fired after 24 ticks without a pause and after 84 elapsed ticks with a 60-tick tree pause. That gave me evidence about signal timing and node state. I left the dummy renderer claim open: the benchmark log reported `opengl3`, which didn't settle what happened on the GPU.
+
+**Evidence:** signal setup, denials, and reruns `852f6b0`; route fix and Effect A state test `1994c53`; config tests `2bb6ebc` and `f2e5b26`; Effect B state test `4d20645`; `CLAUDE.md` update `3db8637`.
+
+### Effect A's in-play check and tuning answered different questions
+
+In play, I didn't see the two puffs' crumbs visibly overlap on my plate-edge attempt. The puffs all looked the same to me in that check, so I didn't count it as evidence of visible variation.
+
+For tuning, I chose the curve-only alternative over doubling the range. I started the windowed Movie Maker captures. Claude's frame-12 prediction was wrong; Claude attributed the miss to a one-frame timing offset in its own model, and the chat cross-check had used the same timing assumption. I kept the curve change, with the capture and the missed prediction both on record.
+
+**Evidence:** in-play check `38b1d0d`; tuning choice and review `1cde3c2`, `2e2924b`, and `b38f38f`.
+
+### I kept Effect B for its in-game look and narrowed the claims I could make
+
+Claude's Effect B tuning prediction was mostly wrong, and we disagreed on the result. I kept the change for the way it looked in game. I corrected the brief to say the peak alpha was **0.85 at 8%**.
+
+For the wiring tests, I asked for checks that the emitter remained the same object and that the test covered the tick on which the game entered `WON`. I also corrected the B1 and B2 status lines before committing because they overstated what I had checked in play.
+
+In the r0 Movie Maker strip, the glints were already full by frame 10 after the preview's `restart()`. That showed what was visible in the strip; it didn't establish whether `restart()` reapplied preprocess, and I didn't verify that replay in live play. I did verify a separate behavior in play: turning visibility off hid the glints, and turning it back on brought them back right away.
+
+**Evidence:** tuning and brief correction `cd52b40`, `27badda`, and `4feb4da`; added wiring requirements and tests `2ab1d9b` and `4d20645`; in-play corrections and visibility check `84fdb90`; r0 strip `0d96cc5`.
+
+### The generated shader contradicted the explanation I was given
+
+I generated the process shader from a unique copy of LandPuff's particle material in a scratch scene. I saved the generated shader unchanged and didn't use it in the game. I checked the line references against the file. The `first_frame` condition showed that Claude's explanation of the two branches was wrong: one branch applied scale on the first frame, and the other applied it on later frames. I documented the distinction in the report.
+
+**Evidence:** generated shader and Step 6 report, `01048ac`.
+
+### The benchmark schedule briefly allowed a third puff
+
+Claude Code wrote the cost script. At my request, it separated restarting an existing emitter from the lifecycle case that creates and frees emitters. A separate checker written by Claude in chat and run by me found three live puffs in 25 of 300 frames. Claude Code then added a two-puff limit to the benchmark schedule. On rerun, the checker counted two puffs in all 300 sampled frames, with 24 created and 24 leaving the tree.
+
+Session 8c also recorded a permission denial when Claude Code tried to copy a file to `/tmp`. The session still produced the revised benchmark. The separate validation established what the revised schedule did; the agent's completion message alone didn't establish the peak. I kept the result scoped to the controlled schedule.
+
+**Evidence:** cost script, revisions, and `sessions/a6/session-8c.jsonl` in `335f5ba`; separate checker and rerun log in `823dec8`.
+
+### The headless CPU benchmark couldn't resolve either effect's cost
+
+I ran the final cost script myself. The empty-scene control measured 0.0032 ms and the effects-off game baseline measured 0.2135 ms. Each effect case's difference from the effects-off baseline fell within the larger round-to-round spread of that comparison. The spreads used for the three comparisons were 0.0195, 0.0095, and 0.0168 ms. I reported the differences as unresolved. The run didn't verify the brief's CPU bounds, and the small negative differences didn't demonstrate a speedup.
+
+**Evidence:** `logs/cost_effects_60fps_mine_20261108-001211.log` and `TEST-REPORT.md`, `b47871d`.
+
+### The GPU profiler didn't provide usable timing on my Mac
+
+I captured the project's Compatibility renderer on my Apple M4. The profiler showed CPU readings, but the GPU column read 0.0 ms and the GPU graph was blank. My first Forward+ launch failed to attach to the debugger. After enabling **Keep Debug Server Open**, I connected and captured Forward+ as a separate comparison without changing the project's saved renderer. It also showed 0.0 ms and a blank GPU graph. I recorded GPU timing as unavailable and left both 0.25 ms budgets unverified.
+
+**Evidence:** first Compatibility screenshot `47ebc6f`; three additional screenshots, `logs/a6_forward_plus_proxy_run.log`, and `TEST-REPORT.md` in `b47871d`.
+
+### I kept the full transcripts and committed labeled excerpts
+
+Four transcripts were over 1 MB. I ran the excerpt script written by Claude in chat. It kept the original files in place, copied them outside the repository, and verified the backups against the originals by SHA-256. I committed only the four labeled excerpts. They preserve the prompts, selected entries in their original order, and result summaries, with truncation and omitted images marked.
+
+**Evidence:** `sessions/a6/session-4a-excerpt.md`, `session-4d-excerpt.md`, `session-7a-excerpt.md`, and `session-7c-excerpt.md`, `b36662d`.
+
+### Still unresolved
+
+- **Effect A in play:** the real gameplay peak, visible overlap between two puffs, and whether their variation is noticeable. I saw no pop at the screen edges I checked; other edges and positions remain unchecked.
+- **Effect B in play and replay:** whether `restart()` reapplies preprocess, whether the dome is full right after a replay in live play, and the frame-85 thinning the brief intended, which neither r0 nor r1 showed.
+- **Rendering behavior:** whether the Y-axis ring collapses at spawn, the general rule for objects sharing a `z_index`, a table landing beside the sauce, the 2D collision/SDF claim, and whether the headless run uses a dummy renderer.
+- **Performance:** no usable GPU timing on either renderer tested, so both GPU budgets remain unverified. The headless CPU run also didn't establish the predicted bounds.
+- **Test tooling:** the discrepancy between the two named check runners remains open, and no realtime run of the existing suites was recorded for A6.
+
+**Evidence:** `CLAUDE.md`, `3db8637`; in-play results and tuning records cited above; price section of `TEST-REPORT.md`, `b47871d`.
+
+### Who did what (A6)
+
+| Work | Me | Claude Code | Claude (chat) |
+| --- | --- | --- | --- |
+| Brief and CLAUDE.md | Made every design decision in the brief, caught two overstated lines before committing it, committed it before the first prompt, and checked every reference in the CLAUDE.md draft. | Wrote the CLAUDE.md draft (session 1) and reported its two permission denials; wrote the first property probe. | Drafted the brief's wording and starting values from my decisions, drafted my CLAUDE.md review edits, and wrote the follow-up property probe. |
+| Effect scenes, wiring and tests | Ran both mutations. Changed the plan to connect `finished` before emitting. Requested the same-emitter and `WON` entry-tick checks. Ran and reviewed every test. | Built both effect scenes, their config tests and previews; wrote the driver and both state tests; corrected the scripted route after the first state-test failure. | Helped distinguish headless observations from in-play checks. |
+| Tuning and captures | Chose the curve-only change over doubling the range. Started the four captures, checked the effects in play, and decided which changes to keep. | Read the strips, proposed each change with a prediction, made the approved edits, and compared each new strip. | Cross-checked Effect A's prediction with a simulation that used the same timing assumption; drafted TUNING.md entries from my words. |
+| Process shader | Generated and saved the shader unchanged, chose and checked its line references, and corrected the branch explanation. | — | Guided the line search, wrote the read-only reference check, and gave the initial branch explanation, which the file contradicted. |
+| Cost script and lifecycle validation | Requested the separate lifecycle case and the slot limit, ran the independent validation and the final benchmark, and kept the peak claim limited to the controlled test. | Wrote and revised the benchmark, including the two-puff limit. | Wrote the independent peak checker and the run-summary script. |
+| GPU evidence and reports | Ran both profiler captures, recorded the debugger connection failure and retry, and left the budgets unverified. | — | Drafted TEST-REPORT.md sections from my results and helped distinguish unavailable GPU timing from a zero reading. |
+| Transcript excerpts and this log | Ran the excerpt script, verified the output, and committed only the excerpts. Wrote this log and checked it against the record. | Produced the original session transcripts. | Wrote the excerpt script and checked this log against the evidence. |
