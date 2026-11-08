@@ -27,3 +27,13 @@ My verdict (running game, 1280 × 720): **kept**, because the puff was easy to s
 
 Strips: `captures/land_puff/r0/`, `captures/land_puff/r1/` (fixture captures, seeds 1001 and 1002, same preview).
 Commits: the curve change (agent, approved by me), then strip r1, then this verdict with the brief revision, in that order.
+
+## Effect B — Dome sugar glints
+
+### 2026-11-07 — Effect B, r0: my first verdict, before Claude read anything
+Strip: `captures/dome_glints/r0/` (fixture capture; `dome_glints_preview.tscn`; seed 2001 on the preview instance only; `restart()` at frame 10, `emitting = false` at frame 70; Movie Maker at 30 fps, 150 frames; strip frames 10, 12, 40, 70, 85, 145). Effect settings: CHANGE-BRIEF.md Version 1, as built in commit `f2e5b26`.
+Where I looked: the running preview at the project's window size (1280 × 720) and the r0 capture.
+
+What I saw (my words): I ran the live preview and checked the Effect B r0 capture myself. The glints were already visible around the dome at frame 10, and I saw more of them there than at frame 40. I didn't notice them thinning out by frame 85. By frame 145, no glints were visible.
+
+Claude's reading of r0: not yet requested.
