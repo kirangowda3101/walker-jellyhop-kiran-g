@@ -1,0 +1,48 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"scene.loads","observed":{"path":"res://effects/dome_glints.tscn"},"status":"PASS"}
+{"id":"root.type","observed":{"expected":"GPUParticles2D","got":"GPUParticles2D"},"status":"PASS"}
+{"id":"root.name","observed":{"expected":"DomeGlints","got":"DomeGlints"},"status":"PASS"}
+{"id":"root.one_emitter","observed":{"expected_children":0,"got":0},"status":"PASS"}
+{"id":"node.emitting","observed":{"expected":"true","got":"true"},"status":"PASS"}
+{"id":"node.amount","observed":{"expected":"24","got":"24"},"status":"PASS"}
+{"id":"node.one_shot","observed":{"expected":"false","got":"false"},"status":"PASS"}
+{"id":"node.explosiveness","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"node.randomness","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"node.lifetime","observed":{"expected":"2.4","got":"2.4"},"status":"PASS"}
+{"id":"node.preprocess","observed":{"expected":"2.4","got":"2.4"},"status":"PASS"}
+{"id":"node.local_coords","observed":{"expected":"false","got":"false"},"status":"PASS"}
+{"id":"node.z_index","observed":{"expected":"6","got":"6"},"status":"PASS"}
+{"id":"node.visibility_rect","observed":{"expected":"Rect2(-110, -160, 220, 220)","got":"Rect2(-110, -160, 220, 220)"},"status":"PASS"}
+{"id":"node.use_fixed_seed","observed":{"expected":false,"got":false},"status":"PASS"}
+{"id":"material.type","observed":{"expected":"CanvasItemMaterial","got":"(res://effects/dome_glints.tscn::CanvasItemMaterial_add):<CanvasItemMaterial#-9223372010296441394>"},"status":"PASS"}
+{"id":"material.blend_mode","observed":{"expected":"BLEND_MODE_ADD (1)","got":1},"status":"PASS"}
+{"id":"texture.type","observed":{"expected":"GradientTexture2D","got":"(res://effects/dome_glints.tscn::GradientTexture2D_glint):<GradientTexture2D#-9223372010313218611>"},"status":"PASS"}
+{"id":"texture.size","observed":{"expected":"Vector2i(32, 32)","got":"Vector2i(32, 32)"},"status":"PASS"}
+{"id":"texture.fill","observed":{"expected":"FILL_RADIAL (1)","got":1},"status":"PASS"}
+{"id":"texture.fill_from","observed":{"expected":"Vector2(0.5, 0.5)","got":"Vector2(0.5, 0.5)"},"status":"PASS"}
+{"id":"texture.fill_to","observed":{"expected":"Vector2(1, 0.5)","got":"Vector2(1, 0.5)"},"status":"PASS"}
+{"id":"texture.gradient.offsets","observed":{"expected":"[0.0, 0.35, 1.0]","got":"[0.0, 0.35, 1.0]"},"status":"PASS"}
+{"id":"texture.gradient.colors","observed":{"expected":"[Color(1, 1, 1, 1), Color(1, 1, 1, 0.6), Color(1, 1, 1, 0)]","got":"[Color(1, 1, 1, 1), Color(1, 1, 1, 0.6), Color(1, 1, 1, 0)]"},"status":"PASS"}
+{"id":"process.type","observed":{"expected":"ParticleProcessMaterial","got":"(res://effects/dome_glints.tscn::ParticleProcessMaterial_glints):<ParticleProcessMaterial#-9223372010179000876>"},"status":"PASS"}
+{"id":"process.box.emission_shape","observed":{"expected":"3","got":"3"},"status":"PASS"}
+{"id":"process.box.emission_box_extents","observed":{"expected":"Vector3(70, 45, 0)","got":"Vector3(70, 45, 0)"},"status":"PASS"}
+{"id":"process.particle_flag_disable_z","observed":{"expected":"true","got":"true"},"status":"PASS"}
+{"id":"process.direction","observed":{"expected":"Vector3(0, -1, 0)","got":"Vector3(0, -1, 0)"},"status":"PASS"}
+{"id":"process.spread","observed":{"expected":"20.0","got":"20.0"},"status":"PASS"}
+{"id":"process.initial_velocity_min","observed":{"expected":"12.0","got":"12.0"},"status":"PASS"}
+{"id":"process.initial_velocity_max","observed":{"expected":"30.0","got":"30.0"},"status":"PASS"}
+{"id":"process.gravity","observed":{"expected":"Vector3(0, -6, 0)","got":"Vector3(0, -6, 0)"},"status":"PASS"}
+{"id":"process.damping_min","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"process.damping_max","observed":{"expected":"0.0","got":"0.0"},"status":"PASS"}
+{"id":"process.lifetime_randomness","observed":{"expected":"0.3","got":"0.3"},"status":"PASS"}
+{"id":"process.scale_min","observed":{"expected":"0.13","got":"0.13"},"status":"PASS"}
+{"id":"process.scale_max","observed":{"expected":"0.28","got":"0.28"},"status":"PASS"}
+{"id":"process.hue_variation_min","observed":{"expected":"-0.05","got":"-0.05"},"status":"PASS"}
+{"id":"process.hue_variation_max","observed":{"expected":"0.05","got":"0.05"},"status":"PASS"}
+{"id":"process.scale_curve.type","observed":{"expected":"CurveTexture with a Curve","got":"(res://effects/dome_glints.tscn::CurveTexture_scale):<CurveTexture#-9223372010262886960>"},"status":"PASS"}
+{"id":"process.scale_curve.points","observed":{"expected":"[Vector2(0, 0), Vector2(0.2, 1), Vector2(0.8, 1), Vector2(1, 0)]","got":"[Vector2(0, 0), Vector2(0.2, 1), Vector2(0.8, 1), Vector2(1, 0)]"},"status":"PASS"}
+{"id":"process.color_ramp.type","observed":{"expected":"GradientTexture1D","got":"(res://effects/dome_glints.tscn::GradientTexture1D_life):<GradientTexture1D#-9223372010195778093>"},"status":"PASS"}
+{"id":"process.color_ramp.gradient.offsets","observed":{"expected":"[0.0, 0.2, 0.75, 1.0]","got":"[0.0, 0.2, 0.75, 1.0]"},"status":"PASS"}
+{"id":"process.color_ramp.gradient.colors","observed":{"expected":"[Color(1, 0.95, 0.82, 0), Color(1, 0.95, 0.82, 0.85), Color(1, 0.82, 0.55, 0.6), Color(1, 0.82, 0.55, 0)]","got":"[Color(1, 0.95, 0.82, 0), Color(1, 0.95, 0.82, 0.85), Color(1, 0.82, 0.55, 0.6), Color(1, 0.82, 0.55, 0)]"},"status":"PASS"}
+DOME GLINTS CONFIG: 45 checks / 0 failures

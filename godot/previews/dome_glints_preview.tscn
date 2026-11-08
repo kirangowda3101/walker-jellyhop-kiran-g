@@ -1,0 +1,87 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://previews/dome_glints_preview.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://effects/dome_glints.tscn" id="2_glints"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-ROOM.png" id="3_room"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-TABLE.png" id="4_table"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-PLATE.png" id="5_plate"]
+[ext_resource type="Texture2D" path="res://assets/art/ENV-DOME.png" id="6_dome"]
+[ext_resource type="Texture2D" path="res://assets/art/CHAR-IDLE.png" id="7_idle"]
+
+[node name="DomeGlintsPreview" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2013.8412, 360)
+
+[node name="RoomLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Room" type="Sprite2D" parent="RoomLayer"]
+texture_filter = 2
+texture = ExtResource("3_room")
+centered = false
+
+[node name="Table3" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(929.6256, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Table4" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(1394.4384, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Table5" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(1859.2512, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Table6" type="Sprite2D" parent="."]
+z_index = -5
+texture_filter = 4
+position = Vector2(2324.064, 520)
+scale = Vector2(0.3378, 0.3378)
+texture = ExtResource("4_table")
+centered = false
+
+[node name="Plate6" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 4
+position = Vector2(1969.9461, 520)
+scale = Vector2(0.1986, 0.1986)
+texture = ExtResource("5_plate")
+centered = false
+offset = Vector2(-511.5, -145)
+
+[node name="JellyIdle" type="Sprite2D" parent="."]
+texture_filter = 4
+position = Vector2(2144.9412, 520)
+scale = Vector2(0.106, 0.106)
+texture = ExtResource("7_idle")
+centered = false
+offset = Vector2(-512, -812)
+
+[node name="Dome" type="Sprite2D" parent="."]
+z_index = 5
+texture_filter = 4
+position = Vector2(2311.8912, 521)
+scale = Vector2(0.2452, 0.2452)
+texture = ExtResource("6_dome")
+centered = false
+offset = Vector2(-375, -528)
+
+[node name="Glints" parent="." instance=ExtResource("2_glints")]
+position = Vector2(2311.8912, 450)
+emitting = false
+use_fixed_seed = true
+seed = 2001
