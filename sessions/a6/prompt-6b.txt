@@ -1,0 +1,10 @@
+I approve Step 1 only: wire Effect B into godot/effects/effects_driver.gd
+as you planned. Leave the landing-puff block, session.gd, the effect
+scenes, the previews, the shaders and every test unchanged. Show me the
+actual diff and stop. Do not write the state test, do not run anything
+that edits files, and do not commit.
+
+For later, not now: when I approve the state test, check that the same
+emitter instance (the same object, not only one instance) survives both
+replays, and check that no new landing puff starts on the very tick the
+session enters WON, not only on the ticks after it.

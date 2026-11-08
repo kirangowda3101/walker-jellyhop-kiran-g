@@ -1,0 +1,42 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md is the contract for this change.
+Effect B's scene is built and its configuration test passes. Do not
+change the effect's settings in this task, and do not edit any
+.gdshader file.
+
+First propose the smallest plan that meets the brief: the code that
+triggers or instances Effect B on its condition, how that code
+implements the brief's start, stop and restart rules, and a new state
+test in godot/tests/. Say which brief rule each assertion covers, and
+which rules only a human can check. Do not edit yet.
+
+After I approve a step, implement only that step and show the diff.
+Rules:
+- Presentation code may read game state; it never writes it. Do not
+  change collision, movement, input, the state machine or the existing
+  tests.
+- The test drives the condition through the real game loop and real
+  input, never by calling the start or stop function directly.
+- It asserts that the effect starts when the condition begins and
+  stops when it ends, and what it does while the tree is paused and
+  while the node is hidden, as the brief says.
+- For a feedback loop, it sets the game value to at least two values
+  and asserts that the code changes amount_ratio, not amount.
+- Run every test with ./scripts/run-test.sh: the existing ones as
+  CLAUDE.md says, and the new one at 60, or in realtime if it waits on
+  audio. Show the real output and say which mode you used.
+- Say exactly what the test proves and what it cannot prove headlessly.
+- Do not commit.
+
+In the plan, also explain:
+- how the glints are on from scene load (B1), stop emitting on WON
+  while the glints already alive finish and fade (B2), and start again
+  on replay (B3) without ever creating a second DomeGlints (B7);
+- how the test checks Esc pause (B4), tree pause (B5) and hiding the
+  emitter (B6), each as its own scenario;
+- how the test reaches WON through real player input (key events
+  only), and how that same run covers Effect A's pending check that no
+  landing puff spawns while WON (A2);
+- which rules the automated test can verify, and which I must check in
+  the game window.
+Do not change Effect A's scene, its tests or the driver's landing-puff
+code. Run each command on its own: compound commands are denied.
