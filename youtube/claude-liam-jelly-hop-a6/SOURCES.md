@@ -1,0 +1,11 @@
+# SOURCES — A6 film (this film's own record, not the repository's SOURCES.md)
+
+- **Source revision shown:** `8004deac38c5b4ad260f24433e0537b3e94d16e2` (8004dea), read from the git-archive snapshot `/Users/kiran/Documents/jellyhop-a6-film-work/snapshot-8004dea/` (unchanged; manifest before: `snapshot-manifest-before.txt`).
+- **Native engine capture:** `takes/run-a6.avi`, SHA-256 `82b1c53aa26c4b7356349bb07f5529b73cabf07790ab2f422b2cd95a5b01f817`, input log `capture/run-a6-inputs.jsonl` `32682fd9615c30b186fd48e2d32587720f154a54ac077a61bcc73f02c1ba532b`; method in CAPTURE.md. Recorded in the disposable copy `run-copy-8004dea/` (build_id `0e9e9f5d2e905948f7edbc745682f5b8e22747babb702e6cb064a4f76b1cee0a`).
+- **Kiran's committed evidence used on screen:** `captures/land_puff/r0`, `r1`, `captures/dome_glints/r0`, `r1` (fixture strips); `evidence/a6-visual-profiler-compat-gpu-zero.png`, `evidence/a6-visual-profiler-forwardplus-proxy-gpu-zero.png` (screenshots, the second cropped); `logs/test_*_60fps.log`, `logs/mutation1_*`, `logs/mutation2_*`, `logs/cost_effects_60fps_mine_20261108-001211.log`; quotes from CHANGE-BRIEF.md, TUNING.md, TEST-REPORT.md A6, CLAUDE.md, FRICTIONAL.md A6, SOURCES.md A6. Each input's hash: `images/inputs.sha256`.
+- **Code on screen:** `effects/land_puff.tscn` 61–73, 15–20; `effects/dome_glints.tscn` 32–40, 25–30; `effects/effects_driver.gd` 18–26, 27–34 (Godot editor reconstructions); typeset lines land_puff.tscn 16, 45, 46, 64, 65, 69 and particles_generated.gdshader 3, 145, 254, 343.
+- **Runtime-tree probe:** none was needed: the film shows no Remote tree. Node counts and `emitting` come from the capture driver's log.
+- **Textures in the game:** two `GradientTexture2D` resources defined in the scene files (land_puff.tscn line 7, dome_glints.tscn line 7). No third-party textures (SOURCES.md A6).
+- **Tools:** Godot 4.7.2.stable.official.ed1daf0bf (Movie Maker, Compatibility); Brutalist toolkit at `~/Documents/brutalist.art` (commit 6a8380a, not modified by this film); Remotion via `runtime/scripts/remotion_scenes.py`; local Kokoro `am_onyx`; ffmpeg; Python 3 with Pillow. No paid service, no network generation.
+- **Upstream documentation consulted:** none beyond the toolkit's own skill files.
+- **Made by:** Claude Code (claude-opus-5-5), 2026-11-08, from Kiran's committed film prompt. Nothing was committed.

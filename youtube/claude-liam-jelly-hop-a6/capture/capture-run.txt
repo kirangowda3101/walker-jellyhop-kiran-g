@@ -1,0 +1,5 @@
+rev: 8004deac38c5b4ad260f24433e0537b3e94d16e2 (git archive, run copy)
+build_id: 0e9e9f5d2e905948f7edbc745682f5b8e22747babb702e6cb064a4f76b1cee0a
+godot: 4.7.2.stable.official.ed1daf0bf
+recorded: 2026-11-08 03:00 EST
+run_copy: /Users/kiran/Documents/jellyhop-a6-film-work/run-copy-8004dea

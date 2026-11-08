@@ -1,0 +1,760 @@
+{
+ "schema_version": 1,
+ "teaching_contract": "code-then-result-v1",
+ "game_revision": "8004dea",
+ "files": [
+  {
+   "path": "effects/dome_glints.tscn",
+   "sha256": "59c4661e4a03904295701fa31356e1644ffb079f2c999131d8a2cb63c3a870c3",
+   "role": "scene",
+   "component_ids": [
+    "a6-dome-glints"
+   ]
+  },
+  {
+   "path": "effects/effects_driver.gd",
+   "sha256": "e5678a1af2b2000b10c7f287353e6d7fe83a83156189a68c8058667dc2ae296e",
+   "role": "source",
+   "component_ids": [
+    "a6-driver"
+   ]
+  },
+  {
+   "path": "effects/land_puff.tscn",
+   "sha256": "539a76e409d6626a88d844895fccdd7a29b20dc3855418ce17983eccb836d77a",
+   "role": "scene",
+   "component_ids": [
+    "a6-land-puff"
+   ]
+  },
+  {
+   "path": "game/session.gd",
+   "sha256": "c7ac624dda7ee3be59108da2b7d27ee44294d1f75b465bb1468fbac4d6ecbb83",
+   "role": "source",
+   "component_ids": [
+    "a6-driver"
+   ]
+  },
+  {
+   "path": "previews/dome_glints_preview.gd",
+   "sha256": "0eb95ae1529f7e474fa9e497433043ff0c6af3696ef08136b19e22b3e6fb7cb7",
+   "role": "source",
+   "component_ids": [
+    "a6-dome-glints"
+   ]
+  },
+  {
+   "path": "previews/dome_glints_preview.tscn",
+   "sha256": "0f3f8de1ecdc79049618a4164cb873223e9611be39c54128fb2ffa4c3ab42936",
+   "role": "scene",
+   "component_ids": [
+    "a6-dome-glints"
+   ]
+  },
+  {
+   "path": "previews/land_puff_preview.gd",
+   "sha256": "4fd1cd668be6ce2eba03bc7199f5ac2675bddc3da7f965b52693326a32841700",
+   "role": "source",
+   "component_ids": [
+    "a6-land-puff"
+   ]
+  },
+  {
+   "path": "previews/land_puff_preview.tscn",
+   "sha256": "7df623fba821f176881bf5161fa15bc49488009bf3b845b31a0bdfd30e6bcece",
+   "role": "scene",
+   "component_ids": [
+    "a6-land-puff"
+   ]
+  },
+  {
+   "path": "project.godot",
+   "sha256": "c0be287109e74f3f26655a1e5bc4f1af80366e55941e472196fe06f98b4b87ba",
+   "role": "config",
+   "component_ids": [
+    "a6-price"
+   ]
+  },
+  {
+   "path": "shaders/particles_generated.gdshader",
+   "sha256": "e6f0a83e7f65fddf1c6a36b5782bba7cd70c461cb84ad6650c2ea16f7471dc9a",
+   "role": "source",
+   "component_ids": [
+    "a6-process-shader"
+   ]
+  },
+  {
+   "path": "tests/check_lifecycle_peak.gd",
+   "sha256": "618572dcf90ded6cad748fb45d63c8f905111c1d7fd4613e74471b0cc0cbed6f",
+   "role": "source",
+   "component_ids": [
+    "a6-price"
+   ]
+  },
+  {
+   "path": "tests/cost_effects.gd",
+   "sha256": "76b8d26ef52c7ac26b18d17dd64e32dca260318f9c82d5770cfccdffea8c2b3d",
+   "role": "source",
+   "component_ids": [
+    "a6-price"
+   ]
+  },
+  {
+   "path": "tests/route_driver.gd",
+   "sha256": "520f0127e600de22a2973b497329835bf68f0f140de0b4e0065fdbe28d5ed6f1",
+   "role": "source",
+   "component_ids": [
+    "a6-tests"
+   ]
+  },
+  {
+   "path": "tests/test_dome_glints_config.gd",
+   "sha256": "7bdd0bd4015deb1e4de64233145a31d8e0db9ede78c34b143be68f6a9bde5e96",
+   "role": "source",
+   "component_ids": [
+    "a6-tests"
+   ]
+  },
+  {
+   "path": "tests/test_dome_glints_state.gd",
+   "sha256": "f6f91534571000295310a4a413e69c308836d785ae42c97b276ab1c0429ea7b1",
+   "role": "source",
+   "component_ids": [
+    "a6-tests"
+   ]
+  },
+  {
+   "path": "tests/test_land_puff_config.gd",
+   "sha256": "1a48b9bef7c3fd17ddbba6c23bf6acb395a8f16c4ac48e68cc113ae17d27be1a",
+   "role": "source",
+   "component_ids": [
+    "a6-tests"
+   ]
+  },
+  {
+   "path": "tests/test_land_puff_state.gd",
+   "sha256": "c14bc39ffbd3c5fe25c45ceb017e31b809e19699acb11d569daad62d83488198",
+   "role": "source",
+   "component_ids": [
+    "a6-tests"
+   ]
+  }
+ ],
+ "exclusions": [
+  {
+   "path": ".gitignore",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "MATERIALS.md",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/dome.glb",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/dome.glb.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/fork.glb",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/fork.glb.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/platform.glb",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/platform.glb.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/ATTRIBUTION.md",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_diff_2k.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_diff_2k.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_dx_2k.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_dx_2k.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_gl_2k.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_gl_2k.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_rough_2k.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_rough_2k.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/hint_strip/hint_strip_3x1.png",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/hint_strip/hint_strip_3x1.png.import",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "audio/music_controller.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "audio/sound_events.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "features/fork/fork.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "features/player/player.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "features/player/tuning.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "game/main.tscn",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "game/slice_tuning.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/fork_warning.tres",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/hint_with_source_color.tres",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/hint_without_source_color.tres",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/serving_board_polished.tres",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/table_wood_worn.tres",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "scratch/standard_scratch.tscn",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/fork_warning.gdshader",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/hint_experiment.gdshader",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/standard_generated.gdshader",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/table_wood.gdshader",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "showcase/a3_assets.tscn",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "showcase/a5_materials.tscn",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "showcase/hint_experiment.tscn",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/calibrate_normal_check.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/capture_poses.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/capture_slice.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/normal_map_check.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/probe_headless.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_a3_assets.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_fork_warning.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_game.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_keyboard.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_materials.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_slice.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/trace_audio.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tools/capture_a5.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tools/capture_shared.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tools/make_hint_strip.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "ui/hud.gd",
+   "reason": "File from Assignments 2–5, not changed by A6 (git diff a5..8004dea -- godot) and outside this A6 film's scope; explained in the earlier films."
+  }
+ ],
+ "components": [
+  {
+   "id": "a6-land-puff",
+   "explanation": "Effect A: the LandPuff GPUParticles2D scene (emission, process material, gradient texture) and its preview fixture used for the r0 and r1 strips.",
+   "beat_ids": [
+    "B02",
+    "B03",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B11"
+   ],
+   "files": [
+    "effects/land_puff.tscn",
+    "previews/land_puff_preview.gd",
+    "previews/land_puff_preview.tscn"
+   ]
+  },
+  {
+   "id": "a6-dome-glints",
+   "explanation": "Effect B: the DomeGlints GPUParticles2D scene (box emission, preprocess, additive CanvasItemMaterial) and its preview fixture.",
+   "beat_ids": [
+    "B02",
+    "B12",
+    "B13",
+    "B14",
+    "B15",
+    "B16",
+    "B18",
+    "B19"
+   ],
+   "files": [
+    "effects/dome_glints.tscn",
+    "previews/dome_glints_preview.gd",
+    "previews/dome_glints_preview.tscn"
+   ]
+  },
+  {
+   "id": "a6-driver",
+   "explanation": "The presentation-only effects driver (a puff per landing on the SFX-LAND condition; glints off at WON, restart on replay) and the one session.gd line (63) that adds it.",
+   "beat_ids": [
+    "B10",
+    "B11",
+    "B17",
+    "B18"
+   ],
+   "files": [
+    "effects/effects_driver.gd",
+    "game/session.gd"
+   ]
+  },
+  {
+   "id": "a6-process-shader",
+   "explanation": "Godot's Convert to ShaderMaterial output for LandPuff's process material, saved unedited, not used by the game.",
+   "beat_ids": [
+    "B03",
+    "B04",
+    "B20"
+   ],
+   "files": [
+    "shaders/particles_generated.gdshader"
+   ]
+  },
+  {
+   "id": "a6-tests",
+   "explanation": "The two config tests, the two state tests, and the read-only route planner the Effect B state test and the film's capture reuse.",
+   "beat_ids": [
+    "B19",
+    "B21",
+    "B22"
+   ],
+   "files": [
+    "tests/route_driver.gd",
+    "tests/test_dome_glints_config.gd",
+    "tests/test_dome_glints_state.gd",
+    "tests/test_land_puff_config.gd",
+    "tests/test_land_puff_state.gd"
+   ]
+  },
+  {
+   "id": "a6-price",
+   "explanation": "The headless cost script, the separate lifecycle peak checker, and project.godot (the Compatibility renderer).",
+   "beat_ids": [
+    "B04",
+    "B23"
+   ],
+   "files": [
+    "project.godot",
+    "tests/check_lifecycle_peak.gd",
+    "tests/cost_effects.gd"
+   ]
+  }
+ ],
+ "excerpts": [
+  {
+   "beat_id": "B06",
+   "path": "effects/land_puff.tscn",
+   "start_line": 61,
+   "end_line": 73,
+   "text": "[node name=\"LandPuff\" type=\"GPUParticles2D\"]\nz_index = -1\nemitting = false\namount = 16\ntexture = SubResource(\"GradientTexture2D_crumb\")\nlifetime = 0.4\none_shot = true\npreprocess = 0.0\nexplosiveness = 1.0\nrandomness = 0.0\nlocal_coords = false\nvisibility_rect = Rect2(-120, -40, 240, 70)\nprocess_material = SubResource(\"ParticleProcessMaterial_puff\")"
+  },
+  {
+   "beat_id": "B08",
+   "path": "effects/land_puff.tscn",
+   "start_line": 15,
+   "end_line": 20,
+   "text": "[sub_resource type=\"Curve\" id=\"Curve_radial\"]\n_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(0.18, 1), 0.0, -50.0, 1, 1, Vector2(0.2, 0), -50.0, 0.0, 1, 0]\npoint_count = 3\n\n[sub_resource type=\"CurveTexture\" id=\"CurveTexture_radial\"]\ncurve = SubResource(\"Curve_radial\")"
+  },
+  {
+   "beat_id": "B10",
+   "path": "effects/effects_driver.gd",
+   "start_line": 21,
+   "end_line": 26,
+   "text": "\tif session.state == session.State.PLAYING and session.player.just_landed:\n\t\tvar puff: GPUParticles2D = LAND_PUFF.instantiate()\n\t\tsession.add_child(puff)                                  # parent is the session, never the jelly (A7)\n\t\tpuff.global_position = session.player.global_position    # the jelly's feet (A3)\n\t\tpuff.finished.connect(puff.queue_free)                   # A6\n\t\tpuff.emitting = true"
+  },
+  {
+   "beat_id": "B13",
+   "path": "effects/dome_glints.tscn",
+   "start_line": 32,
+   "end_line": 40,
+   "text": "[sub_resource type=\"ParticleProcessMaterial\" id=\"ParticleProcessMaterial_glints\"]\nparticle_flag_disable_z = true\nemission_shape = 3\nemission_box_extents = Vector3(70, 45, 0)\ndirection = Vector3(0, -1, 0)\nspread = 20.0\ninitial_velocity_min = 12.0\ninitial_velocity_max = 30.0\ngravity = Vector3(0, -6, 0)"
+  },
+  {
+   "beat_id": "B15",
+   "path": "effects/dome_glints.tscn",
+   "start_line": 25,
+   "end_line": 30,
+   "text": "[sub_resource type=\"Gradient\" id=\"Gradient_life\"]\noffsets = PackedFloat32Array(0, 0.08, 0.75, 1)\ncolors = PackedColorArray(1, 0.95, 0.82, 0, 1, 0.95, 0.82, 0.85, 1, 0.82, 0.55, 0.6, 1, 0.82, 0.55, 0)\n\n[sub_resource type=\"GradientTexture1D\" id=\"GradientTexture1D_life\"]\ngradient = SubResource(\"Gradient_life\")"
+  },
+  {
+   "beat_id": "B17",
+   "path": "effects/effects_driver.gd",
+   "start_line": 27,
+   "end_line": 34,
+   "text": "\t# Effect B: acts only when the state enters or leaves WON; pause, Esc and hiding never reach it.\n\tvar won: bool = session.state == session.State.WON\n\tif won != was_won:\n\t\tif won:\n\t\t\tglints.emitting = false   # live glints finish and fade; the node stays (B2)\n\t\telse:\n\t\t\tglints.restart()          # replay: same instance, preprocess applies again (B3)\n\t\twas_won = won"
+  }
+ ],
+ "code_result_pairs": [
+  {
+   "code_beat": "B06",
+   "result_beat": "B07",
+   "observation": "Strip r0 (fixture): at frame 12 the crumbs show on plate and table; at frame 15 most are still under the jellies with no wide fan; frames 20, 30 and 50 are empty (Kiran's r0 verdict, TUNING.md).",
+   "media": {
+    "path": "images/B07-strip-a-r0.png",
+    "sha256": "d31ee92e495bd89cc7839441dd29d8156bdaaf465928bcb7f01526c6949da1d3"
+   }
+  },
+  {
+   "code_beat": "B08",
+   "result_beat": "B09",
+   "observation": "Strip r1 against r0 (fixture): at frame 12 crumbs are about 5–15 px past both jelly edges and at frame 15 up to 36–49 px, beyond Claude's predicted 40 px (TUNING.md, session-4d-comparison.md).",
+   "media": {
+    "path": "images/B09-revision-a-r1.png",
+    "sha256": "f092665065021515af5d1757662b6b65205595f757c8e590404dcc3e3f0bb799"
+   }
+  },
+  {
+   "code_beat": "B10",
+   "result_beat": "B11",
+   "observation": "In the scripted capture, a puff appears at the jelly's feet on each landing tick (313, 449, 458, 558, 698, 774, 883, 950, 1027); the scoot-off landings are 9 ticks apart and the log shows 2 LandPuff nodes in the tree at tick 458. Visible overlap of crumbs is not claimed.",
+   "media": {
+    "path": "media/B11.mp4",
+    "sha256": "66162db50d9f43320d5875a0d7decfa50a18ca0401e358c978a7367c3cc9c61c"
+   }
+  },
+  {
+   "code_beat": "B13",
+   "result_beat": "B14",
+   "observation": "Strip r0 (fixture): glints present at frame 10, fewer at 40, no clear thinning 70→85, none at 145 (Kiran's r0 verdict, TUNING.md).",
+   "media": {
+    "path": "images/B14-strip-b-r0.png",
+    "sha256": "c4074c4c613936201f26ed22fc9d3e51387dbb1f3e8bdd2e83f4682020d40b34"
+   }
+  },
+  {
+   "code_beat": "B15",
+   "result_beat": "B16",
+   "observation": "Strips r0 and r1 (fixture) at frames 10, 40 and 85: bytes differ (Kiran's cmp) but no visible difference at full size in Claude's reading; Kiran kept r1 for the in-game intro (TUNING.md).",
+   "media": {
+    "path": "images/B16-revision-b-r1.png",
+    "sha256": "f02594e3fcd778429014d25f8442eab3dfafe9bf95e35d2ae89fb29e443363a8"
+   }
+  },
+  {
+   "code_beat": "B17",
+   "result_beat": "B18",
+   "observation": "In the scripted capture glints are on screen at tick 1; during PAUSED (ticks 1059–1180) they keep drifting; DomeGlints.emitting is false from the WON tick 1233 and the glints thin out; at the replay tick 1384 the log shows emitting true with the dome off screen.",
+   "media": {
+    "path": "media/B18.mp4",
+    "sha256": "fcec2467a633b157ef81b12c07341271f07d671d47108cb533a30dd723efff18"
+   }
+  }
+ ]
+}
