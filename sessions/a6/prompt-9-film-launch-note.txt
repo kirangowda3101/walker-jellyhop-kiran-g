@@ -1,0 +1,17 @@
+Launch note, appended to sessions/a6/prompt-9-film.txt; it overrides that
+prompt's film location and file paths:
+- Read-only snapshot: /Users/kiran/Documents/jellyhop-a6-film-work/snapshot-8004dea/ is a git-archive snapshot of revision 8004dea.
+  Use it only to read my committed evidence (CLAUDE.md, CHANGE-BRIEF.md,
+  TUNING.md, TEST-REPORT.md, FRICTIONAL.md, SOURCES.md, captures/, evidence/,
+  logs/, sessions/a6/) and to verify code excerpts against godot/. Do not run
+  Godot in it and do not change anything inside it.
+- Disposable run copy: /Users/kiran/Documents/jellyhop-a6-film-work/run-copy-8004dea/ is a second git-archive copy of 8004dea. Run
+  every Godot import, launch and scripted capture from its godot/ folder. It
+  may be changed (import cache, capture output); nothing from it is copied
+  back to my repository.
+- Build the whole film in /Users/kiran/Documents/jellyhop-a6-film-work/film/ instead of
+  youtube/claude-liam-jelly-hop-a6/. Keep every WAV, MP3, MP4, AVI, rendered
+  frame, capture script and working file under /Users/kiran/Documents/jellyhop-a6-film-work/.
+- Do not create or change any file in my repository at /Users/kiran/Documents/walker-jellyhop-kiran-g/. I will copy
+  the reviewed deliverables into it myself after I watch the export with
+  sound.
