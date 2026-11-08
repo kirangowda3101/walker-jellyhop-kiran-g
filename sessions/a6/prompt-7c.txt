@@ -1,0 +1,10 @@
+The new strip is in captures/dome_glints/r1/. Compare each frame with
+the prediction you made before the change. Say where it matches, where
+it doesn't, and what you think explains any difference. Do not edit
+anything.
+
+Read all six strip frames (10, 12, 40, 70, 85, 145) from
+captures/dome_glints/r1/ and compare each one with the same frame in
+captures/dome_glints/r0/, naming the full path of every file you read.
+Focus on whether r1 shows clearer thinning from frame 70 to frame 85
+than r0 does.
