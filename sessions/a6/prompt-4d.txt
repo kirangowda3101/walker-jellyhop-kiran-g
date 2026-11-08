@@ -1,0 +1,7 @@
+The new strip is in captures/land_puff/r1/. Compare each frame with the
+prediction you made before the change. Say where it matches, where it
+doesn't, and what you think explains any difference. Do not edit
+anything.
+
+Read all six strip frames (10, 12, 15, 20, 30, 50) in r1, and compare
+each one with the same frame in captures/land_puff/r0/ as well.
