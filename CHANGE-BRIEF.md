@@ -277,3 +277,19 @@ Both are GPU nodes, so both are compared on GPU time: their headless CPU price i
    - Emission: `emitting`, `amount`, `one_shot`, `explosiveness`, `randomness`, `lifetime`, `preprocess`, `local_coords`, and the emission shape and its parameters (ring, box).
    - Process: `direction`, `spread`, initial velocity, radial acceleration and its curve, `gravity`, damping, `lifetime_randomness`, scale range and curve, colour ramp, hue variation, `particle_flag_disable_z`.
    - Draw: `texture`, `material` (blend mode), `z_index`, `visibility_rect`.
+
+---
+
+## Revision 1 — 2026-11-07 (Effect A, tuning r1)
+
+Version 1 above is unchanged. This revision supersedes one Effect A setting.
+
+| Setting | Version 1 | Revision 1 |
+|---|---|---|
+| `radial_accel_curve` (`CurveTexture`) | `1.0` at 0.0 → `0.0` at 0.2 of life | `1.0` at 0.0, `1.0` at 0.18, `0.0` at 0.2 of life, linear |
+
+`radial_accel_min` / `radial_accel_max` stay at `4000.0` / `6500.0`. The push now stays at full strength until 0.18 of life and ends by 0.2, instead of fading from the start.
+
+Why: in strip r0 and the preview, most crumbs were still under the jelly at frame 15, with no sideways fan. Kept after strip r1 and my check in the running game at 1280 × 720 (TUNING.md, Effect A, revision r1). The configuration test's expected curve points match this revision.
+
+This is the last tuning revision for Effect A.
