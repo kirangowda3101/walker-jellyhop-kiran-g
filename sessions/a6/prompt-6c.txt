@@ -1,0 +1,17 @@
+I approve Step 2 only: add godot/tests/test_dome_glints_state.gd and run
+it through ./scripts/run-test.sh at 60.
+
+- Keep the B1-B7 checks from your plan.
+- Reach WON and replay with real key events only (Input.parse_input_event),
+  twice.
+- Check that the same emitter instance (the same object) survives both
+  replays.
+- Check that no landing puff spawns on the tick the session enters WON
+  or on any tick while it stays WON.
+- Keep Esc pause, tree pause and hiding as three separate scenarios.
+
+If the test exposes a gameplay or driver issue, report it and stop; do
+not work around it. Leave the driver, the effect settings, the existing
+tests and the shaders unchanged. Run each command on its own: compound
+commands are denied. Show me the diff and the actual test result. Do
+not commit.
