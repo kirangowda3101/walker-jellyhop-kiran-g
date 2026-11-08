@@ -556,3 +556,48 @@ I copied LandPuff's `ParticleProcessMaterial` into a scratch scene, made the cop
 | Setting tied to my brief | 254 | The shader samples the radial acceleration curve at the particle’s lifetime percentage and uses it to scale radial acceleration. My Effect A Revision 1 curve points are `(0, 1)`, `(0.18, 1)`, and `(0.2, 0)`. |
 
 **Settings split.** Initial velocity, spread, gravity, radial acceleration, damping, and the colour and scale curves are used by the process shader. The particle's visible texture and blend mode belong to drawing. `z_index` controls draw order, and `visibility_rect` sets visibility bounds on the node. Amount, lifetime, one-shot, and explosiveness are emitter settings. The shader uses lifetime information during simulation, but the emitter configures the lifetime.
+
+### Price — headless CPU (Step 7)
+
+**Instrument.** `godot/tests/cost_effects.gd`, written by Claude Code (session 8). The chapter's Example 09 script is not in this repository, so the agent based it on this repo's own tests. At my request it was revised twice: session 8b added a separate per-landing lifecycle case and the wording "not distinguishable within spread"; session 8c added a slot limit to that case. The earlier versions are kept as `sessions/a6/session-8-cost_effects-v1.gd` and `sessions/a6/session-8b-cost_effects-v2.gd`.
+
+**My run.** `./scripts/run-test.sh cost_effects.gd 60 300`, exit 0; raw log `logs/cost_effects_60fps_mine_20261108-001211.log`. Headless (display server `headless`, rendering method `gl_compatibility`), `--fixed-fps 60`, `max_fps` 0. Five rounds of 300 measured frames per case after 60 warm-up frames, with the case order rotated each round. **Wall** is the real time between consecutive processed frames, measured by the script. **Spread** is the largest minus the smallest of the five round means.
+
+| Case | What it contains | Mean ms | sd ms | Round means ms | Spread ms |
+|---|---|---|---|---|---|
+| empty | a bare `Node2D` (control) | 0.0032 | 0.0005 | 0.0031–0.0034 | 0.0003 |
+| game_off | `main.tscn` in PLAYING, effects driver and DomeGlints removed | 0.2135 | 0.0735 | 0.2109–0.2156 | 0.0047 |
+| effect_a_restart | game_off + two LandPuffs reused with `restart()`, 10 ticks apart | 0.2125 | 0.0725 | 0.1976–0.2171 | 0.0195 |
+| effect_a_lifecycle | game_off + the driver's per-landing spawn mirrored in the test: each puff instanced, placed, `finished` → `queue_free`, emitting; at most two live | 0.2153 | 0.0738 | 0.2091–0.2186 | 0.0095 |
+| effect_b | game_off + DomeGlints kept, emitting at its steady 24 | 0.2098 | 0.0745 | 0.2000–0.2168 | 0.0168 |
+
+**The control separates:** game_off is 0.21 ms above empty, far outside both spreads, so the script measures the game and not its own loop.
+
+**Each effect against game_off:**
+- effect_a_restart: −0.0010 ms, larger spread 0.0195 ms. This run could not distinguish it from the effects-off baseline.
+- effect_a_lifecycle: +0.0018 ms, larger spread 0.0095 ms. This run could not distinguish it from the effects-off baseline. 120 puffs were created and 120 left the tree across the five rounds (24 and 24 per round).
+- effect_b: −0.0037 ms, larger spread 0.0168 ms. This run could not distinguish it from the effects-off baseline.
+
+The negative differences are not speedups: they lie inside the round-to-round spread. An unresolved difference is not a zero cost: it means this instrument, on this run, could not separate the effect's CPU work from the run-to-run variation. The brief's predictions were under 0.02 ms of added headless CPU time for Effect A and under 0.01 ms for Effect B. Those are predicted bounds, separate from this run's measured round-to-round spreads (0.0047 ms for game_off; 0.0195, 0.0095 and 0.0168 ms for the three effect cases). This run did not resolve either effect's added time, so it could not verify either bound. As the brief says, both effects are GPU nodes, so their budgets are compared on GPU time, not on this number.
+
+**Not used: the engine-monitor columns.** The script also prints `Performance` monitor values (`engine process`, `engine physics`). In the agent's first run (`sessions/a6/session-8-agent-cost-run.log`), the empty case and the Effect A case reported identical values to four decimals (107.4364 ms, sd 57.5007), which an empty scene and a full game cannot both cost. Those columns do not measure the case, so they are left out of the price.
+
+**Limits.**
+- The gameplay effects driver is removed from every game case, so the driver's own per-frame work is in no number.
+- effect_a_lifecycle mirrors the driver's spawn code inside the test, after `process_frame`, where the driver runs it in `_physics_process`. Its slot limit makes births about one tick later each cycle: 24 per 300 frames instead of 25.
+- effect_a_restart contains no instancing or freeing.
+- These are CPU numbers only. A headless run is not expected to draw or to run the particle process shader (the course's statement, still under CLAUDE.md's Unconfirmed list). The script reports the rendering driver as `opengl3`, so this run does not confirm the "dummy renderer" statement still held under CLAUDE.md's Unconfirmed list.
+
+**Validation of the lifecycle case (separate from the timed run).** `godot/tests/check_lifecycle_peak.gd`, written by Claude in chat and run by me, repeats that case's setup and schedule and counts LandPuff nodes after each frame's spawns, over 300 frames after 60 warm-up frames. Before the slot limit, it found three puffs live in 25 of 300 frames, both counting all nodes in the tree and counting only those not queued for deletion. That log was later overwritten, so this result is recorded here and in the session-8c prompt (`sessions/a6/prompt-8c.txt`). After the slot limit: a peak of 2 in all 300 frames by both counts, with 24 puffs created and 24 leaving the tree during the counted frames, and the state PLAYING at the start and end (`logs/check_lifecycle_peak_60fps.log`).
+
+Godot's exit messages (leaked ObjectDB instances, resources still in use) print after the report is written, so they do not affect the samples.
+
+### Price — GPU (Visual Profiler)
+
+**GPU:** Apple M4. Startup lines: Compatibility `OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4`; Forward+ `Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)`.
+
+**Capture 1, the shipped renderer (Compatibility).** A windowed run from the editor, left in the intro with the dome and its glints on screen; DomeGlints found in the Remote tree and left unchanged. The Visual Profiler recorded CPU timings, but every GPU reading was `0.0 ms` and the GPU graph was blank (`evidence/a6-visual-profiler-compat-gpu-zero.png`, `evidence/a6-visual-profiler-compat-intro-gpu-zero.png`).
+
+**Capture 2, a labelled proxy (Forward+).** A run launched with `godot --path godot --rendering-method forward_plus --remote-debug tcp://127.0.0.1:6007`, so the project's saved renderer stayed Compatibility (`project.godot` unchanged). My first launch could not attach (`Remote Debugger: Unable to connect. Status: 3`) because the editor was not listening; with the editor's Debug → Keep Debug Server Open turned on, the second launch connected with no such error, and the profiler header read `GPU: Apple M4 (Apple9)`. Both launches are visible in `evidence/a6-forwardplus-terminal-two-launches.png`; `logs/a6_forward_plus_proxy_run.log` holds only the second, connected launch's output. The profiler recorded CPU timings, but every GPU reading was again `0.0 ms` and the GPU graph was blank (`evidence/a6-visual-profiler-forwardplus-proxy-gpu-zero.png`). This is not the shipped renderer, and it is not used for any budget claim.
+
+**Result.** GPU timing was unavailable in both captures on this Mac, so no effect-off versus effect-on GPU comparison could be made for either effect. The brief's budgets (0.25 ms of GPU time for each effect at its heaviest) are **unverified**: neither effect is reported as within or over budget.
