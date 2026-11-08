@@ -887,6 +887,25 @@ Four transcripts were over 1 MB. I ran the excerpt script written by Claude in c
 
 **Evidence:** `sessions/a6/session-4a-excerpt.md`, `session-4d-excerpt.md`, `session-7a-excerpt.md`, and `session-7c-excerpt.md`, `b36662d`.
 
+
+### The film was built outside the repository (added 2026-11-08)
+
+I decided the film session should not touch my repository. I committed the film prompt and a launch note before the session. The note gave Claude Code a read-only git-archive snapshot of `8004dea` for evidence and code excerpts, and a separate disposable copy for every Godot import and capture, with all media and the transcript kept in a work folder outside the repo. After the run, the snapshot's SHA-256 manifest matched, and my repo was unchanged. The session ended with four result events (142, 4, 56 and 2 turns), because it waited for background rendering and continued. It had one permission denial: a combined command that would have edited the film's own `SOURCES.md` and `RIFF.md` and copied A5's `.gitignore`. I watched the final export in full with sound before copying anything in. Then I copied 47 named files and left the intermediate QC frames, audio, video and the 29.6 MB transcript out of git.
+
+**Evidence:** film prompt and launch note `6c0d7c5`, `545fb01`; film folder, `FILM-REVIEW.md` and `sessions/a6/session-9-film-excerpt.md` in `d7f407a`; README film line `1c7349f`.
+
+### The chat assistant drafted SUBMISSION.md from the wrong template (added 2026-11-08)
+
+The chat assistant drafted my first A6 `SUBMISSION.md` from memory instead of from the handout. When I gave it the handout and asked it to check my ZIP against the requirements, it found that the title and several field labels were wrong and that Effect A's retrigger rule was missing. I did a last set of in-play checks first, then had `SUBMISSION.md` rewritten in the exact template. I made two wording changes before applying it: Effect A's budget says "at peak", because two simultaneous puffs were only verified in controlled tests, and the fresh-clone note says the recorded run tested `00c3530` and did not verify the final submission revision. Fixing it meant moving the `a6` tag. I required the remote update to use force-with-lease against the old tag's full SHA, and the local tag to move only after the remote update succeeded.
+
+**Evidence:** first `SUBMISSION.md` `00c3530`; template fix and my final in-play checks `764f681`.
+
+### Two checker bugs from the chat assistant (added 2026-11-08)
+
+The first full fresh-clone check labelled 14 test runs FAIL, but its own printed summaries showed every expected count with 0 failures. The checker ran in zsh, which does not split an unquoted variable, so it compared both numbers as one string. I kept the original output and appended a re-evaluation of the same logs instead of re-running or overwriting. Later, the guard before tagging stopped because it compared file names sorted in a different order. No tag was made, and the corrected guard passed. The fresh clone of `764f681` passed all 16 checks; its output, `a6-final-check-764f681.txt`, is saved outside the repository.
+
+**Evidence:** `evidence/fresh-copy-00c3530.txt` and TEST-REPORT.md "Fresh-clone verification (A6)" in `bfd544b`.
+
 ### Still unresolved
 
 - **Effect A in play:** the real gameplay peak, visible overlap between two puffs, and whether their variation is noticeable. I saw no pop at the screen edges I checked; other edges and positions remain unchecked.
