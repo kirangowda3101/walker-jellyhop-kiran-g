@@ -59,6 +59,10 @@
 
 - `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27).
 - Existing suites print `ObjectDB instances were leaked` and `resources still in use` at exit. These are pre-existing and are not SCRIPT/SHADER ERRORs (A6 baseline logs, commit `068ede4`).
+- Particle node state is readable in a headless run: the config tests read back the properties they check (`test_land_puff_config.gd` 51/0, commit `2bb6ebc`; `test_dome_glints_config.gd` 45/0, commit `f2e5b26`), and the state tests read `emitting`, `visible`, `can_process()`, `amount`, `amount_ratio`, parents and instance counts (`test_land_puff_state.gd` 24/0, commit `1994c53`; `test_dome_glints_state.gd` 27/0, commit `4d20645`). What is drawn is not readable.
+- In the Effect A state test, a one-shot `GPUParticles2D`'s `finished` signal fired in the headless run: 24 ticks after spawn in the unpaused case, and 84 elapsed ticks when a 60-tick tree pause came in between (`logs/test_land_puff_state_60fps.log`, commit `1994c53`).
+- Frame strips are visual evidence from windowed Movie Maker runs, not headless runs. I started all four captures (`captures/land_puff/r0` and `r1`, commits `3f08a78` and `2e2924b`; `captures/dome_glints/r0` and `r1`, commits `0d96cc5` and `27badda`).
+- Headless CPU price (Step 7): in my run, none of the three tested effect cases (`effect_a_restart`, `effect_a_lifecycle`, `effect_b`) could be distinguished from the effects-off baseline within the observed spread. That does not establish zero cost or "near zero by construction" (`logs/cost_effects_60fps_mine_20261108-001211.log`, commit `b47871d`).
 
 ## Current change
 
@@ -89,18 +93,17 @@
 
 ## Unconfirmed
 
-- **Kiran's predictions in the brief, not yet tested:**
-  - `finished` fires headless (A6);
-  - `restart()` re-applies preprocess (B3);
-  - glints are present when shown again (B6);
-  - at most 2 bursts alive (A5), and that two puffs' crumbs visibly overlap in play (A4);
-  - the hand-set `visibility_rect`s;
-  - the 2D collision/SDF claim (Answers 1).
+- **Kiran's predictions in the brief, still open or only partly checked:**
+  - `restart()` re-applies preprocess (B3): unverified. Effect B's r0 strip was already full by frame 10, after the preview's `restart()` (`captures/dome_glints/r0`, commit `0d96cc5`), but that does not establish whether `restart()` re-applies preprocess, and the replay was not checked in play.
+  - Glints present when shown again (B6): seen in play; turning Visible off hid the glints, and turning it back on brought them back right away (TEST-REPORT.md, "In play — Effect B", item 6, commit `84fdb90`).
+  - At most 2 bursts alive (A5): a peak of 2 in two controlled tests only, the scripted route of the Effect A state test (commit `1994c53`) and the cost script's lifecycle schedule (`check_lifecycle_peak.gd`, commit `823dec8`). The real gameplay peak is unverified.
+  - Two puffs' crumbs visibly overlap in play (A4): unverified; I did not see it on my plate-edge attempt (TEST-REPORT.md, "In play — Effect A", item 2, commit `38b1d0d`).
+  - The hand-set `visibility_rect`s: no pop seen at the screen edges I checked in play (Effect A: commit `38b1d0d`, item 6; Effect B, walking left with the dome on screen: commit `84fdb90`, item 5). Other edges and positions are unchecked.
+  - The 2D collision/SDF claim (Answers 1): unverified.
 - **A6 headless facts, to move into Headless facts only once confirmed on this machine:**
-  - "A headless run uses a dummy renderer: it draws no particles and runs no GPU particle process. Node state (emitting, one_shot, amount_ratio, visibility, instance counts) is observable; the look is not." Check: a headless run reports the dummy rendering driver, and the A6 config and state tests read those node properties back.
-  - "A GPU effect's headless CPU price is near zero by construction." Check: `godot/tests/cost_effects.gd` (Step 7), where each effect's case matches the effects-off case within its spread, against the empty-scene control.
-  - "Frame strips come from a windowed Movie Maker run, which I start." Check: the first capture in Step 2, run by Kiran outside any agent session (no allow list includes a windowed Godot command).
-- **Ring with axis Y collapsing to a line** with `particle_flag_disable_z` (predicted failure 2): unverified.
-- **Draw order of the land puff:** the puff stays at `z_index` −1 for now, the same as the sauce (session.gd line 142) and each fork's shadow (fork.gd line 39). Expected: at equal `z_index`, puffs added later draw on top, but this is unchecked. Kiran checks the puff's visibility near the sauce and under a fork shadow in play before any draw-order change.
+  - "A headless run uses a dummy renderer: it draws no particles and runs no GPU particle process." Unverified. The cost script's log reported the rendering driver as `opengl3` (`logs/cost_effects_60fps_mine_20261108-001211.log`), which does not settle whether particles were drawn or processed on the GPU. The node-state part of the original statement is in Headless facts.
+  - "A GPU effect's headless CPU price is near zero by construction." Not established: my Step 7 run could not distinguish any of the three tested effect cases from the effects-off baseline within the observed spread (Headless facts).
+- **Ring with axis Y collapsing to a line** with `particle_flag_disable_z` (predicted failure 2): unverified at spawn. Related evidence only: the generated process shader zeroes z for velocity and position while processing (`particles_generated.gdshader` lines 374 and 389), and Claude's reading of strip r1 found the crumbs within a few px of the surface with no stray high crumb (`sessions/a6/session-4d-comparison.md`). Neither directly shows whether the ring collapses when particles spawn.
+- **Draw order of the land puff:** the puff stays at `z_index` −1, the same as the sauce (session.gd line 142) and each fork's shadow (fork.gd line 39). In the situations I tested, it was visible under a fork's shadow and on the plate edge nearest the sauce (TEST-REPORT.md, "In play — Effect A", item 5, commit `38b1d0d`); that does not establish the general rule for equal `z_index`. A table landing beside the sauce is unchecked.
 - **Two check runners:** README.md line 33 names `tools/run_slice_checks.sh`, while AGENTS.md requires `scripts/run-test.sh`. I did not read `run_slice_checks.sh`.
-- **Existing suites in realtime mode:** never run. I ran no test in this session.
+- **Existing suites in realtime mode:** no realtime run of the existing suites was recorded for A6.
