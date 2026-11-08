@@ -1,0 +1,77 @@
+Read CLAUDE.md first. Read the installed course-provided Brutalist
+godot-gamedev skill instructions (~/Documents/brutalist.art/skills/make/
+godot-gamedev/SKILL.md) with the walker modifier and follow them. Use the
+same pipeline and narration approach as my Assignment 5 film
+(youtube/claude-liam-jelly-hop-a5/BUILD-PROMPT.md: run from
+~/Documents/brutalist.art, scripted captures from a git archive snapshot,
+local Kokoro narration, no paid tools). Put this film in
+youtube/claude-liam-jelly-hop-a6/.
+
+Make ONE landscape film at the skill's native 4K, plain and precise. Game-
+source revision shown: 8004dea. It must:
+1. Identify Jelly Hop and both effects: Effect A, the landing crumb puff
+   (event: player.just_landed while PLAYING, the same tick as SFX-LAND), and
+   Effect B, the dome sugar glints (ambience; condition: state is not WON).
+2. Explain the three parts of a particle system with one line each from my
+   committed files: emission (a line of godot/effects/land_puff.tscn such as
+   amount, one_shot or explosiveness), process (a line of
+   godot/shaders/particles_generated.gdshader, for example line 343, gravity
+   entering the force), and draw (the texture or the additive
+   CanvasItemMaterial line of a scene file). Cite exact line numbers.
+   Explain why a low headless CPU cost is expected for a GPU effect: its
+   process step is a particles shader that runs on the GPU, and a headless
+   run measures CPU time only. Then state what I actually measured
+   (TEST-REPORT.md, "Price — headless CPU"): none of the three effect cases
+   could be distinguished from the effects-off baseline within the observed
+   spread. Do not say the benchmark measured a near-zero cost, and do not say
+   it established what ran on the GPU; the dummy-renderer statement is still
+   unconfirmed (CLAUDE.md, Unconfirmed).
+3. Effect A: the intent block (CHANGE-BRIEF.md), strip r0 with my verdict,
+   revision r1 (Claude's prediction, the r0 and r1 strips, Claude's
+   comparison, my verdict) from TUNING.md and captures/land_puff/, and the
+   effect in play, recorded as real engine frames in a windowed run and
+   labelled as scripted capture. If it can be captured, include a quick-
+   repeat attempt (a plate-edge scoot-off). Do not say or imply that it
+   verifies two puffs' crumbs visibly overlapping; that remains unverified
+   (CLAUDE.md, Unconfirmed).
+4. Effect B the same way (TUNING.md, captures/dome_glints/), plus the
+   feature Effect A does not use (box emission, and its additive draw
+   material), and its start, stop and pause behaviour: on from load, stops
+   emitting on WON, restarts on replay, keeps drifting during Esc pause; tree
+   pause and hiding come from the headless state test (TEST-REPORT.md).
+5. Show two annotated lines of particles_generated.gdshader beside the brief
+   settings they implement: line 145 (initial velocity picked between min and
+   max; land_puff initial_velocity_min/max 30/60) and line 254 (the radial
+   curve; my Revision 1 curve (0,1), (0.18,1), (0.2,0)).
+6. Show what the tests proved (config 51 and 45, state 24 and 27; TEST-REPORT
+   A6), the two mutations that failed the config test, both prices against
+   the budgets (headless CPU unresolved; GPU timing unavailable on
+   Compatibility and on a labelled Forward+ comparison, so the 0.25 ms budgets
+   are unverified), and what no headless run can show.
+7. State the agent mistakes I caught, the strip reading of Claude's I
+   overruled (Effect B r1: Claude saw no visible difference; I kept it for
+   the in-game intro), what remains uncertain (CLAUDE.md Unconfirmed;
+   FRICTIONAL.md "Still unresolved"), one next step: "I'd check whether the
+   dome glints are already full immediately after an in-game replay. The
+   preview showed full glints by frame 10, but I haven't checked that in live
+   play.", the human and AI contributions (FRICTIONAL.md "Who did what
+   (A6)"), the texture sources (two GradientTexture2D textures defined in the
+   scene files; no third-party textures; SOURCES.md A6), and the revision
+   shown.
+
+Use the Walker opening/summary and Verdict -> Your Turn -> regular outro.
+Label every preview capture as a fixture, and every scripted capture,
+reconstructed view and held frame as such; never present a reconstruction as
+a screenshot. Use only facts from my committed files (CHANGE-BRIEF.md,
+TUNING.md, TEST-REPORT.md A6, CLAUDE.md, FRICTIONAL.md A6, SOURCES.md A6,
+captures/, evidence/, logs/, sessions/a6/); do not invent results. Write the
+beat sheet, script and prompts as files in the film folder before rendering.
+Then render, run all of the skill's quality checks, and watch for problems
+in the final export.
+
+Rules: do not edit anything in godot/; keep any capture scripts in the film
+folder, as in A5; do not edit CHANGE-BRIEF.md, CLAUDE.md, AGENTS.md,
+TUNING.md, TEST-REPORT.md, FRICTIONAL.md, SOURCES.md or README.md; never
+commit; keep MP4, MP3, WAV and any file over 25 MB out of git. End with the
+export's file path, duration, size and SHA-256, the QC results, and anything
+you could not do.
