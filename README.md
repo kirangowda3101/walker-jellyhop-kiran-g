@@ -280,4 +280,4 @@ The earlier suites run as listed in the A5 section and match their baseline coun
 - Effect A's repeats looked the same to me in play, and Effect B's intended thinning after the stop (strip frame 85) was not seen in either strip.
 - No vsync debug key and no vsync-off FPS comparison.
 
-**Film:** *added after recording* (link, file name and SHA-256 to follow in a separate commit).
+**Film:** https://youtu.be/Ss--gJ2vvqA (YouTube, unlisted; reviewer access checked in a private window on 2026-11-08). File `claude-liam-jelly-hop-a6.mp4`, 647.7 s, 3840 × 2160, 30 fps, SHA-256 `7c094ecaebacabaa84d2c93928b60dc8955f6cde2ef169983c23b8532197b0db`. Game-source revision shown: `8004dea`. Film sources and QC: `youtube/claude-liam-jelly-hop-a6/` (MP4, audio and the full session transcript kept out of git).
