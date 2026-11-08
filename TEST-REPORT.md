@@ -518,3 +518,24 @@ Source revision: driver `2ab1d9b`, state test `4d20645`. `test_dome_glints_state
 Godot's exit messages: after the summary line the log ends with `WARNING: 32 ObjectDB instances were leaked at exit` and `ERROR: 10 resources still in use at exit`. These are Godot's cleanup messages when a headless script quits, not test failures. They are not `SCRIPT ERROR` or `SHADER ERROR`, so the wrapper passes the run, and the same kind of exit messages appeared in the existing suites before A6.
 
 **Not provable headlessly:** that glints are drawn, drift while Esc-paused, fade after the win, or freeze visibly under tree pause; that `restart()` re-applies preprocess on replay (predicted failure 5) or clears glints left from a quick replay; that glints are present when shown again; contrast, scale and the `visibility_rect` at the screen edge. These are my checks in the game window.
+
+### In play — Effect B (dome glints), human checks
+
+2026-11-07, source revision `be64616`, the running game at 1280 × 720, Godot 4.7.2, Compatibility renderer, Apple M4. My own observations, in my words.
+
+1. The glints were already visible when the dome first appeared in the intro.
+   - Status: Glints were visible when the dome first appeared in the intro.
+2. After I won, the glints faded gradually.
+   - Status: I saw the glints fade gradually after the win. The headless test verified that emission stopped on the WON tick.
+3. After I pressed Enter to replay, the jelly returned to the start and the dome was off-screen. I couldn't verify whether the glints returned immediately.
+   - Status: **not verified in play** (B3, and whether `restart()` re-applies preprocess, predicted failure 5). Headless shows `emitting` true on the first tick after each replay.
+4. The glints kept drifting during Esc pause and were easy to see against both the dark wall and the glass.
+   - Status: verified in play (B4: visible drift while Esc-paused); contrast over the dark wall and the glass seen in play.
+5. When I walked left, the glints stayed visible as long as the dome was on-screen. I didn't see a sudden pop.
+   - Status: no pop at the screen edge seen in play (`visibility_rect`, predicted failure 6).
+6. Turning Visible off hid the glints. Turning it back on brought them back right away.
+   - Status: verified in play (B6: hidden while not visible, present again as soon as shown).
+7. I didn't visually check the separate scene-tree pause. Keep the headless result for that check.
+   - Status: **not checked in play** (B5); covered by the headless state test only.
+
+**Still unverified in play:** glints back at full density right after a replay (B3, predicted failure 5), and the visible freeze under a scene-tree pause (B5).
