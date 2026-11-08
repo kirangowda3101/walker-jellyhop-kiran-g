@@ -602,6 +602,33 @@ Godot's exit messages (leaked ObjectDB instances, resources still in use) print 
 
 **Result.** GPU timing was unavailable in both captures on this Mac, so no effect-off versus effect-on GPU comparison could be made for either effect. The brief's budgets (0.25 ms of GPU time for each effect at its heaviest) are **unverified**: neither effect is reported as within or over budget.
 
+### In play — final human checks (A6, 2026-11-08)
+
+2026-11-08, the running game (`godot --path godot`) at 1280 × 720, Godot 4.7.2, Compatibility renderer, Apple M4, from my working copy at `bfd544b`, whose `godot/` and `scripts/` are identical to `8004dea`. My own observations, in my words.
+
+**Effect A (land puff)**
+1. **Rapid landings.** I saw a puff on all five consecutive landings, with no noticeable delay or missed puff.
+   - Status: a puff on every one of five rapid landings, seen in play (A1, A3). This does not show whether two puffs' crumbs visibly overlap; A4 stays unverified.
+2. **Size.** It looked wider than the jelly.
+3. **Contrast.** It was easy to see on the pale plate, on the dark table, and under a fork's shadow.
+4. **Screen edge.** It faded normally at the screen edge.
+   - Status: no pop at the screen edge seen in play (`visibility_rect`).
+5. **Sauce and respawn.** I saw no puff when the jelly hit the sauce or when it respawned.
+   - Status: verified in play (A2, sauce and respawn).
+
+**Effect B (dome glints)**
+6. **Size.** They looked like small sparkles next to the jelly.
+7. **Contrast.** They were easy to see against both the dark wall and the bright glass.
+8. **Screen edge.** They stayed visible until their part of the dome went off-screen.
+   - Status: no pop at the screen edge seen in play (`visibility_rect`).
+9. **Replay.** After replay, the glints were already visible when the dome first came back into view. I couldn't see the dome immediately after replay, so I can't say when the glints returned or whether they were already at full density.
+   - Status: B3 and predicted failure 5 stay **unverified in play**; the glints were present when the dome came back into view.
+
+**Gameplay boundaries**
+10. I noticed nothing different about hop height, controls, forks, sauce timing, winning, or replay. This is a play observation, not a formal comparison.
+
+**Still unverified in play:** two puffs' crumbs visibly overlapping (A4); the game's real peak (A5); a table landing beside the sauce; whether the dome is at full density right after a replay (B3); the visible freeze under a scene-tree pause (B5). GPU timing and the vsync-off FPS comparison remain as documented in "Price — GPU (Visual Profiler)".
+
 ### Fresh-clone verification (A6)
 
 A fresh clone of the GitHub repository at `00c3530` (the SUBMISSION.md commit) into a unique temporary folder, with no `.godot` cache. The first `--import` exited 0, so the first-import crash I recorded in A5 did not occur. Every test then ran through `scripts/run-test.sh` in its stated mode.
@@ -621,4 +648,4 @@ A fresh clone of the GitHub repository at `00c3530` (the SUBMISSION.md commit) i
 | cost_effects @ 60, 300 s | control separates | control separates: true; lifecycle 120 created, 120 freed |
 | check_lifecycle_peak @ 60 | peak 2 | peak 2 |
 
-Every run exited 0, and no log contained SCRIPT ERROR or SHADER ERROR. The checker in that run labelled the 14 test runs FAIL because of a bug in the checker itself: it ran in zsh, which does not split an unquoted variable, so it compared both numbers as one string. I re-parsed the same logs without re-running anything, and all 14 match; the original output and the re-evaluation are both kept in `evidence/fresh-copy-00c3530.txt`. The commit tagged `a6` adds only this section and the fresh-clone evidence files to `00c3530`.
+Every run exited 0, and no log contained SCRIPT ERROR or SHADER ERROR. The checker in that run labelled the 14 test runs FAIL because of a bug in the checker itself: it ran in zsh, which does not split an unquoted variable, so it compared both numbers as one string. I re-parsed the same logs without re-running anything, and all 14 match; the original output and the re-evaluation are both kept in `evidence/fresh-copy-00c3530.txt`. The recorded fresh-clone run tested `00c3530`. This run did not verify the final submission revision.
