@@ -539,3 +539,20 @@ Godot's exit messages: after the summary line the log ends with `WARNING: 32 Obj
    - Status: **not checked in play** (B5); covered by the headless state test only.
 
 **Still unverified in play:** glints back at full density right after a replay (B3, predicted failure 5), and the visible freeze under a scene-tree pause (B5).
+
+### The process shader (Step 6)
+
+I copied LandPuff's `ParticleProcessMaterial` into a scratch scene, made the copy unique, and converted it to a `ShaderMaterial` in the Godot 4.7.2 editor. I saved the generated shader unchanged as `godot/shaders/particles_generated.gdshader` and closed the scratch scene without saving it. The shader is 411 lines and is not used by the game. My Git status check showed only the new shader and its `.uid`.
+
+| Item | Line(s) | What the code does |
+|---|---|---|
+| Shader type | 3 | `shader_type particles;` declares this as a particle shader. |
+| `start()` | 257 | Sets up a particle when it starts or restarts. |
+| `process()` | 309 | Updates the particle during simulation. |
+| Initial velocity | 145, 296 | Line 145 picks a speed between the minimum and maximum using a seeded random value. Line 296 multiplies that speed by a direction picked within the spread and stores the result in `USERDATA1.xyz`. |
+| Gravity | 343, 356, 372, 376 | Line 343 starts the force with gravity. Line 356 adds `force * DELTA` to the stored velocity. Line 372 combines that velocity with `controlled_displacement`, and line 376 assigns the result to `VELOCITY`. |
+| Colour over life | 167, 384 | Line 167 samples the colour ramp using the particle’s age and multiplies the particle colour by the sample. Line 384 writes the resulting colour to `COLOR`. |
+| Scale over life | 166, 396–398, 401–403 | Line 166 samples the scale curve using the particle’s age and multiplies the particle’s scale by the sample. Lines 396–398 apply it to the transform on the first frame, preserving each axis’s sign. Lines 401–403 apply the scale magnitude on later frames. |
+| Setting tied to my brief | 254 | The shader samples the radial acceleration curve at the particle’s lifetime percentage and uses it to scale radial acceleration. My Effect A Revision 1 curve points are `(0, 1)`, `(0.18, 1)`, and `(0.2, 0)`. |
+
+**Settings split.** Initial velocity, spread, gravity, radial acceleration, damping, and the colour and scale curves are used by the process shader. The particle's visible texture and blend mode belong to drawing. `z_index` controls draw order, and `visibility_rect` sets visibility bounds on the node. Amount, lifetime, one-shot, and explosiveness are emitter settings. The shader uses lifetime information during simulation, but the emitter configures the lifetime.
