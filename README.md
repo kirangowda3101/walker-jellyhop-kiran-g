@@ -232,3 +232,52 @@ godot --path godot res://showcase/hint_experiment.tscn
 - `uv_scale` scales the `BoxMesh`'s own UVs, not a fixed number of repeats.
 
 **Film:** https://youtu.be/CQfNguHdtJI (YouTube, unlisted; reviewer access checked in a private window). File `claude-liam-jelly-hop-a5.mp4`, 518.567 s, 3840 × 2160, SHA-256 `240e7409d3974cd49357e429564657ec6f6743fb5a9ad4daefb4aa547e34b237`. Game-source revision shown: 77a6d10. Film sources and QC: `youtube/claude-liam-jelly-hop-a5/` (MP4 kept out of git).
+
+## Assignment 6 — particle effects (tag `a6`)
+
+**Engine:** Godot 4.7.2.stable.official.ed1daf0bf, Compatibility renderer (the project's saved setting). The one Forward+ run in TEST-REPORT.md used a command-line override and changed no project setting.
+
+**What A6 added**
+- **Effect A, landing crumb puff** (`godot/effects/land_puff.tscn`, `GPUParticles2D`): a one-shot burst at the jelly's feet on every landing; one new instance per landing, freed when it finishes.
+- **Effect B, dome sugar glints** (`godot/effects/dome_glints.tscn`, `GPUParticles2D`, box emission, additive): ambience over the dessert dome, on from scene load, stops emitting on a win and restarts on replay.
+- `godot/effects/effects_driver.gd`, added to the session by one line in `godot/game/session.gd` `_ready()`. It reads game state and never writes it.
+- Config and state tests for both effects, preview fixtures for both, four frame strips in `captures/`, the generated process shader `godot/shaders/particles_generated.gdshader` (not used by the game), and the cost script `godot/tests/cost_effects.gd`.
+
+**Run**
+```bash
+godot --headless --path godot --import   # once on a fresh clone; in A5 the first import segfaulted and a second completed
+godot --path godot                        # play the game
+godot --path godot res://previews/land_puff_preview.tscn     # Effect A fixture
+godot --path godot res://previews/dome_glints_preview.tscn   # Effect B fixture
+```
+**Capture a frame strip** (windowed, Movie Maker). `rN` is a placeholder: replace it with a new folder name, for example `r2`, so the committed strips in `r0` and `r1` are not overwritten.
+```bash
+mkdir -p captures/land_puff/rN && godot --path godot res://previews/land_puff_preview.tscn --write-movie "$PWD/captures/land_puff/rN/frame.png" --fixed-fps 30 --quit-after 60
+mkdir -p captures/dome_glints/rN && godot --path godot res://previews/dome_glints_preview.tscn --write-movie "$PWD/captures/dome_glints/rN/frame.png" --fixed-fps 30 --quit-after 150
+```
+
+**Controls:** A / D or ← / → move; Space, ↑ or W hop; Esc pause; M mute all; N mute music; Enter skips the intro and, after a win, starts a replay (any key works once the replay prompt shows).
+
+**Vsync debug key:** none. The assignment asks the README to list "controls (including the vsync debug key)", and the key is for an FPS comparison with vsync off ("FPS, if you compare it"). A6 added no vsync toggle and made no vsync-off FPS comparison (TEST-REPORT.md, "Price — GPU").
+
+**Tests** (always through the wrapper):
+```bash
+./scripts/run-test.sh test_land_puff_config.gd 60     # 51 checks
+./scripts/run-test.sh test_land_puff_state.gd 60      # 24 checks
+./scripts/run-test.sh test_dome_glints_config.gd 60   # 45 checks
+./scripts/run-test.sh test_dome_glints_state.gd 60    # 27 checks
+./scripts/run-test.sh cost_effects.gd 60 300          # headless CPU price, 300 s timeout
+./scripts/run-test.sh check_lifecycle_peak.gd 60      # validation of the cost script's lifecycle case
+```
+The earlier suites run as listed in the A5 section and match their baseline counts (TEST-REPORT.md, Assignment 6).
+
+**A6 documents:** CHANGE-BRIEF.md (Version 1 and Revisions 1–2), CLAUDE.md, TUNING.md, TEST-REPORT.md (Assignment 6 section), FRICTIONAL.md (Assignment 6), SOURCES.md (Assignment 6), prompts and agent transcripts in `sessions/a6/` (four oversized transcripts as labelled excerpts), frame strips in `captures/`, evidence in `evidence/` and `logs/`.
+
+**Known limitations** (details in TEST-REPORT.md and CLAUDE.md, Unconfirmed)
+- GPU timing was unavailable on this Apple M4 in both the Compatibility renderer and a labelled Forward+ comparison, so the 0.25 ms GPU budgets are unverified.
+- The headless CPU benchmark could not distinguish either effect from the effects-off baseline within the observed spread; that is not a zero-cost result.
+- Not verified in play: Effect B's dome right after a replay, the real gameplay peak of landing puffs, and two puffs' crumbs visibly overlapping.
+- Effect A's repeats looked the same to me in play, and Effect B's intended thinning after the stop (strip frame 85) was not seen in either strip.
+- No vsync debug key and no vsync-off FPS comparison.
+
+**Film:** *added after recording* (link, file name and SHA-256 to follow in a separate commit).
