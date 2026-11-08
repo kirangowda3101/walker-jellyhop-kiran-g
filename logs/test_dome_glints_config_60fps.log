@@ -43,6 +43,6 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"process.scale_curve.type","observed":{"expected":"CurveTexture with a Curve","got":"(res://effects/dome_glints.tscn::CurveTexture_scale):<CurveTexture#-9223372010262886960>"},"status":"PASS"}
 {"id":"process.scale_curve.points","observed":{"expected":"[Vector2(0, 0), Vector2(0.2, 1), Vector2(0.8, 1), Vector2(1, 0)]","got":"[Vector2(0, 0), Vector2(0.2, 1), Vector2(0.8, 1), Vector2(1, 0)]"},"status":"PASS"}
 {"id":"process.color_ramp.type","observed":{"expected":"GradientTexture1D","got":"(res://effects/dome_glints.tscn::GradientTexture1D_life):<GradientTexture1D#-9223372010195778093>"},"status":"PASS"}
-{"id":"process.color_ramp.gradient.offsets","observed":{"expected":"[0.0, 0.2, 0.75, 1.0]","got":"[0.0, 0.2, 0.75, 1.0]"},"status":"PASS"}
+{"id":"process.color_ramp.gradient.offsets","observed":{"expected":"[0.0, 0.08, 0.75, 1.0]","got":"[0.0, 0.08, 0.75, 1.0]"},"status":"PASS"}
 {"id":"process.color_ramp.gradient.colors","observed":{"expected":"[Color(1, 0.95, 0.82, 0), Color(1, 0.95, 0.82, 0.85), Color(1, 0.82, 0.55, 0.6), Color(1, 0.82, 0.55, 0)]","got":"[Color(1, 0.95, 0.82, 0), Color(1, 0.95, 0.82, 0.85), Color(1, 0.82, 0.55, 0.6), Color(1, 0.82, 0.55, 0)]"},"status":"PASS"}
 DOME GLINTS CONFIG: 45 checks / 0 failures

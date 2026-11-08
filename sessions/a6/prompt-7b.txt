@@ -1,0 +1,12 @@
+I approve one trial change only: in godot/effects/dome_glints.tscn,
+move the second Gradient_life color_ramp offset from 0.2 to 0.08, so
+the offsets become (0, 0.08, 0.75, 1). The four colours stay the same.
+
+Update only the matching expectation in
+godot/tests/test_dome_glints_config.gd (RAMP_OFFSETS), run
+./scripts/run-test.sh test_dome_glints_config.gd 60, show me the diff
+and the actual result, then stop.
+
+Leave the r0 captures, the preview, gameplay code, the brief and every
+other setting and test untouched. Do not edit any .gdshader file. Run
+each command on its own: compound commands are denied. Do not commit.

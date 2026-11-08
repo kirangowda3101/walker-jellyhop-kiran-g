@@ -1,0 +1,21 @@
+Read CLAUDE.md first. Effect B's intent is in CHANGE-BRIEF.md.
+The current frame strip is in captures/dome_glints/r0/, and the frames
+to read are listed in the brief. What I saw in the running game: In the
+live preview (fixture, 1280 x 720) and the r0 capture, the glints were
+already visible around the dome at frame 10, and I saw more of them
+there than at frame 40. I didn't notice them thinning out by frame 85.
+By frame 145, no glints were visible. In the running game at
+1280 x 720, the glints were visible when the dome first appeared in the
+intro, I saw them fade gradually after I won, and they were easy to see
+against both the dark wall and the glass.
+
+Read those frames and say how they compare to the intent, frame by
+frame. Then propose one change to one setting (a curve or colour ramp
+counts as one setting). Before editing, give the setting, its old and
+new value, and what each frame of the strip should look like
+afterward. Do not edit yet.
+
+After I approve, make only that change in the effect's scene file,
+update the configuration test's expected value to match, run the
+configuration test with ./scripts/run-test.sh at 60, and stop so I can
+recapture. Do not commit.

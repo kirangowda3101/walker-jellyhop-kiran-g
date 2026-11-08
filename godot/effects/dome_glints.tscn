@@ -23,7 +23,7 @@ point_count = 4
 curve = SubResource("Curve_scale")
 
 [sub_resource type="Gradient" id="Gradient_life"]
-offsets = PackedFloat32Array(0, 0.2, 0.75, 1)
+offsets = PackedFloat32Array(0, 0.08, 0.75, 1)
 colors = PackedColorArray(1, 0.95, 0.82, 0, 1, 0.95, 0.82, 0.85, 1, 0.82, 0.55, 0.6, 1, 0.82, 0.55, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_life"]
