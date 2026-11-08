@@ -1,0 +1,11 @@
+I approve the curve-only change: radial_accel_curve from (0, 1), (0.2, 0)
+to (0, 1), (0.18, 1), (0.2, 0), linear, as you described.
+radial_accel_min and radial_accel_max stay at 4000.0 and 6500.0.
+
+Make only that change in godot/effects/land_puff.tscn, update the
+configuration test's expected curve points to match, run
+./scripts/run-test.sh test_land_puff_config.gd 60, show me the diff and
+the real output, and stop so I can recapture.
+
+Do not change any other setting, the brief, the preview, the driver or
+any other test. Do not edit any .gdshader file, and do not commit.

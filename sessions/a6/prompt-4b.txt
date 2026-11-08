@@ -1,0 +1,9 @@
+I choose your curve-only alternative instead: radial_accel_curve from
+(0, 1), (0.2, 0) to (0, 1), (0.18, 1), (0.2, 0). radial_accel_min and
+radial_accel_max stay at 4000.0 and 6500.0.
+
+Before editing, give the setting, its old and new value, and what each
+frame of the strip (10, 12, 15, 20, 30, 50) should look like afterward,
+including how far the crumbs should clear the jelly's visible edges at
+frames 12 and 15. Account for where the flat ring places crumbs along
+the base. Do not edit yet.

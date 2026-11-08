@@ -45,7 +45,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"process.hue_variation_min","observed":{"expected":"-0.03","got":"-0.03"},"status":"PASS"}
 {"id":"process.hue_variation_max","observed":{"expected":"0.03","got":"0.03"},"status":"PASS"}
 {"id":"process.radial_accel_curve.type","observed":{"expected":"CurveTexture with a Curve","got":"(res://effects/land_puff.tscn::CurveTexture_radial):<CurveTexture#-9223372010279664177>"},"status":"PASS"}
-{"id":"process.radial_accel_curve.points","observed":{"expected":"[Vector2(0, 1), Vector2(0.2, 0)]","got":"[Vector2(0, 1), Vector2(0.2, 0)]"},"status":"PASS"}
+{"id":"process.radial_accel_curve.points","observed":{"expected":"[Vector2(0, 1), Vector2(0.18, 1), Vector2(0.2, 0)]","got":"[Vector2(0, 1), Vector2(0.18, 1), Vector2(0.2, 0)]"},"status":"PASS"}
 {"id":"process.scale_curve.type","observed":{"expected":"CurveTexture with a Curve","got":"(res://effects/land_puff.tscn::CurveTexture_scale):<CurveTexture#-9223372010212555310>"},"status":"PASS"}
 {"id":"process.scale_curve.points","observed":{"expected":"[Vector2(0, 1), Vector2(0.35, 1), Vector2(1, 0)]","got":"[Vector2(0, 1), Vector2(0.35, 1), Vector2(1, 0)]"},"status":"PASS"}
 {"id":"process.color_ramp.type","observed":{"expected":"GradientTexture1D","got":"(res://effects/land_puff.tscn::GradientTexture1D_life):<GradientTexture1D#-9223372010145446443>"},"status":"PASS"}

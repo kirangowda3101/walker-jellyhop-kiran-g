@@ -1,0 +1,21 @@
+Read CLAUDE.md first. Effect A's intent is in CHANGE-BRIEF.md.
+The current frame strip is in captures/land_puff/r0/, and the frames
+to read are listed in the brief. What I saw in the running game: In the
+live preview (fixture, 1280 x 720), I saw a quick puff that looked like
+white smoke under both jellies. At frame 12, it was easy to see on both
+the pale plate and the dark table. At frame 15, most of the crumbs were
+still under the jellies, so I didn't see the wide sideways fan I
+expected. The crumbs were gone by frame 20 and stayed gone in frames 30
+and 50. In the running game at 1280 x 720, a puff appeared at the
+jelly's feet on every landing, and the puffs all looked the same to me.
+
+Read those frames and say how they compare to the intent, frame by
+frame. Then propose one change to one setting (a curve or colour ramp
+counts as one setting). Before editing, give the setting, its old and
+new value, and what each frame of the strip should look like
+afterward. Do not edit yet.
+
+After I approve, make only that change in the effect's scene file,
+update the configuration test's expected value to match, run the
+configuration test with ./scripts/run-test.sh at 60, and stop so I can
+recapture. Do not commit.
