@@ -601,3 +601,24 @@ Godot's exit messages (leaked ObjectDB instances, resources still in use) print 
 **Capture 2, a labelled proxy (Forward+).** A run launched with `godot --path godot --rendering-method forward_plus --remote-debug tcp://127.0.0.1:6007`, so the project's saved renderer stayed Compatibility (`project.godot` unchanged). My first launch could not attach (`Remote Debugger: Unable to connect. Status: 3`) because the editor was not listening; with the editor's Debug → Keep Debug Server Open turned on, the second launch connected with no such error, and the profiler header read `GPU: Apple M4 (Apple9)`. Both launches are visible in `evidence/a6-forwardplus-terminal-two-launches.png`; `logs/a6_forward_plus_proxy_run.log` holds only the second, connected launch's output. The profiler recorded CPU timings, but every GPU reading was again `0.0 ms` and the GPU graph was blank (`evidence/a6-visual-profiler-forwardplus-proxy-gpu-zero.png`). This is not the shipped renderer, and it is not used for any budget claim.
 
 **Result.** GPU timing was unavailable in both captures on this Mac, so no effect-off versus effect-on GPU comparison could be made for either effect. The brief's budgets (0.25 ms of GPU time for each effect at its heaviest) are **unverified**: neither effect is reported as within or over budget.
+
+### Fresh-clone verification (A6)
+
+A fresh clone of the GitHub repository at `00c3530` (the SUBMISSION.md commit) into a unique temporary folder, with no `.godot` cache. The first `--import` exited 0, so the first-import crash I recorded in A5 did not occur. Every test then ran through `scripts/run-test.sh` in its stated mode.
+
+| Run | Expected | Result |
+|---|---|---|
+| test_game @ 60 | 25/0 | 25/0 |
+| test_slice @ 60 | 61/0 | 61/0 |
+| test_keyboard @ 60 | 12/0 | 12/0 |
+| test_a3_assets @ 60 | 36/0 | 36/0 |
+| test_fork_warning @ 30, 60, 144 | 29/0 | 29/0 at each rate |
+| test_materials @ 30, 60, 144 | 108/0 | 108/0 at each rate |
+| test_land_puff_config @ 60 | 51/0 | 51/0 |
+| test_land_puff_state @ 60 | 24/0 | 24/0 |
+| test_dome_glints_config @ 60 | 45/0 | 45/0 |
+| test_dome_glints_state @ 60 | 27/0 | 27/0 |
+| cost_effects @ 60, 300 s | control separates | control separates: true; lifecycle 120 created, 120 freed |
+| check_lifecycle_peak @ 60 | peak 2 | peak 2 |
+
+Every run exited 0, and no log contained SCRIPT ERROR or SHADER ERROR. The checker in that run labelled the 14 test runs FAIL because of a bug in the checker itself: it ran in zsh, which does not split an unquoted variable, so it compared both numbers as one string. I re-parsed the same logs without re-running anything, and all 14 match; the original output and the re-evaluation are both kept in `evidence/fresh-copy-00c3530.txt`. The commit tagged `a6` adds only this section and the fresh-clone evidence files to `00c3530`.

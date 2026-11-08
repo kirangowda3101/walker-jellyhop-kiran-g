@@ -1,0 +1,53 @@
+=== fresh clone of https://github.com/kirangowda3101/walker-jellyhop-kiran-g.git, target 00c3530, Sun Nov  8 12:09:49 EST 2026
+temporary directory: /tmp/a6-fresh-00c3530.WzX6jd
+verified HEAD: 00c3530641f33337d257d004529686d729a29fba
+.godot cache before import: absent
+import 1 exit: 0
+=== test runs (expected counts from TEST-REPORT.md)
+FAIL  test_game.gd @ 60 fps: exit 0 | expected 25/0 | summary: WALKER TESTS: 25 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_slice.gd @ 60 fps: exit 0 | expected 61/0 | summary: SLICE TESTS: 61 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_keyboard.gd @ 60 fps: exit 0 | expected 12/0 | summary: KEYBOARD TESTS: 12 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_a3_assets.gd @ 60 fps: exit 0 | expected 36/0 | summary: A3 ASSET CHECKS: 36 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_fork_warning.gd @ 30 fps: exit 0 | expected 29/0 | summary: FORK WARNING TESTS: 29 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_fork_warning.gd @ 60 fps: exit 0 | expected 29/0 | summary: FORK WARNING TESTS: 29 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_fork_warning.gd @ 144 fps: exit 0 | expected 29/0 | summary: FORK WARNING TESTS: 29 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_materials.gd @ 30 fps: exit 0 | expected 108/0 | summary: MATERIAL CHECKS: 108 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_materials.gd @ 60 fps: exit 0 | expected 108/0 | summary: MATERIAL CHECKS: 108 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_materials.gd @ 144 fps: exit 0 | expected 108/0 | summary: MATERIAL CHECKS: 108 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_land_puff_config.gd @ 60 fps: exit 0 | expected 51/0 | summary: LAND PUFF CONFIG: 51 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_land_puff_state.gd @ 60 fps: exit 0 | expected 24/0 | summary: LAND PUFF STATE TESTS: 24 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_dome_glints_config.gd @ 60 fps: exit 0 | expected 45/0 | summary: DOME GLINTS CONFIG: 45 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+FAIL  test_dome_glints_state.gd @ 60 fps: exit 0 | expected 27/0 | summary: DOME GLINTS STATE TESTS: 27 checks / 0 failures | SCRIPT/SHADER ERROR lines: 0
+=== cost script and peak check
+PASS  cost_effects.gd @ 60 fps: exit 0 | control separates: true | SCRIPT/SHADER ERROR lines: 0
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST empty              wall 0.0033 ms (sd 0.0005, min 0.0020, p95 0.0040, max 0.0110; round means 0.0030-0.00
+COST game_off           wall 0.2139 ms (sd 0.0732, min 0.0800, p95 0.3590, max 0.5310; round means 0.2125-0.21
+COST effect_a_restart   wall 0.2129 ms (sd 0.0744, min 0.0760, p95 0.3620, max 0.5490; round means 0.2110-0.21
+COST effect_a_lifecycle wall 0.2149 ms (sd 0.0713, min 0.0860, p95 0.3580, max 0.5130; round means 0.2134-0.21
+COST effect_b           wall 0.2138 ms (sd 0.0726, min 0.0790, p95 0.3560, max 0.5190; round means 0.2126-0.21
+COST effect_a_lifecycle total: puffs created 120, freed 120 during 1500 measured frames (5 rounds)
+PASS  check_lifecycle_peak.gd @ 60 fps: exit 0 | peak not queued deletion: 2 | SCRIPT/SHADER ERROR lines: 0
+=== OVERALL: 14 RUN(S) FAILED — Sun Nov  8 12:10:40 EST 2026; logs kept in /tmp/a6-fresh-00c3530.WzX6jd/repo/logs
+
+=== RE-EVALUATION (appended by Kiran, same logs, no tests re-run)
+The 14 FAIL labels above came from a bug in the checker, not from the tests: the block ran in zsh, which does not split an unquoted variable, so both numbers were compared as one string. Below, the same logs are parsed with the pattern 'N checks / M failures'. The exit codes and error counts are as printed above.
+PASS  test_game.gd @ 60 fps: expected 25/0 | parsed 25/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_slice.gd @ 60 fps: expected 61/0 | parsed 61/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_keyboard.gd @ 60 fps: expected 12/0 | parsed 12/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_a3_assets.gd @ 60 fps: expected 36/0 | parsed 36/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_fork_warning.gd @ 30 fps: expected 29/0 | parsed 29/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_fork_warning.gd @ 60 fps: expected 29/0 | parsed 29/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_fork_warning.gd @ 144 fps: expected 29/0 | parsed 29/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_materials.gd @ 30 fps: expected 108/0 | parsed 108/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_materials.gd @ 60 fps: expected 108/0 | parsed 108/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_materials.gd @ 144 fps: expected 108/0 | parsed 108/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_land_puff_config.gd @ 60 fps: expected 51/0 | parsed 51/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_land_puff_state.gd @ 60 fps: expected 24/0 | parsed 24/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_dome_glints_config.gd @ 60 fps: expected 45/0 | parsed 45/0 | SCRIPT/SHADER ERROR lines: 0
+PASS  test_dome_glints_state.gd @ 60 fps: expected 27/0 | parsed 27/0 | SCRIPT/SHADER ERROR lines: 0
+=== RE-EVALUATED: 14 of 14 test runs PASS; with the cost script and peak check (PASS above): 16 of 16

@@ -1,0 +1,13 @@
+=== fresh clone of https://github.com/kirangowda3101/walker-jellyhop-kiran-g.git, target 8004dea, Sun Nov  8 02:38:37 EST 2026
+temporary directory: /tmp/a6-fresh-8004dea.ZHXwD3
+verified HEAD: 8004deac38c5b4ad260f24433e0537b3e94d16e2 (8004dea README.md: Assignment 6 section appended (earlier se)
+.godot cache before import: absent
+import 1 exit: 0
+=== headless launch, 300 frames:
+exit: 0
+SCRIPT/SHADER ERROR lines: 0  |  crash lines: 0
+=== windowed launch, 120 frames (a game window opens for about 2 s):
+exit: 0
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+SCRIPT/SHADER ERROR lines: 0  |  crash lines: 0
+=== done Sun Nov  8 02:38:50 EST 2026; per-step logs kept in /tmp/a6-fresh-8004dea.ZHXwD3
