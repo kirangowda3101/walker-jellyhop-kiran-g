@@ -37,3 +37,25 @@ Where I looked: the running preview at the project's window size (1280 × 720) a
 What I saw (my words): I ran the live preview and checked the Effect B r0 capture myself. The glints were already visible around the dome at frame 10, and I saw more of them there than at frame 40. I didn't notice them thinning out by frame 85. By frame 145, no glints were visible.
 
 Claude's reading of r0: not yet requested.
+
+### 2026-11-07 — Effect B, revision r1
+What I saw (preview fixture and running game, 1280 × 720): my r0 verdict above. The glints were already visible at frame 10, with more there than at frame 40, and no thinning by frame 85. In the running game they were visible when the dome first appeared in the intro, faded gradually after I won, and were easy to see against both the dark wall and the glass.
+
+Claude's reading of r0 (`sessions/a6/session-7a-reading.md`): frames 10, 12, 70 and 145 match the intent; 40 and 85 miss it. It counted about 14 visible dots at frame 10 and about 9 at 40, mostly over the glass, and no thinning from 70 to 85. Its explanation: alpha and size both climb over the first 0.2 of life (about 0.48 s), so the glints missing after the stop are the ones still fading in, and the brief's "fades in over about 0.5 s" contradicts its frame-85 "fewer near the glass". It also inferred, untested, that `lifetime_randomness = 0.3` only shortens lives (1.68–2.4 s), so fewer than 24 are alive on average. It read the frames unzoomed, because its two image-crop commands were denied.
+
+Change: `color_ramp` (`Gradient_life`) offsets `(0, 0.2, 0.75, 1)` → `(0, 0.08, 0.75, 1)`, colours unchanged, approved by me. `scale_curve` unchanged. The agent made the edit and updated the configuration test's `RAMP_OFFSETS` (`sessions/a6/session-7b-reply.md`). My config run: 45 checks / 0 failures, exit 0.
+
+Claude's prediction for r1 (`sessions/a6/session-7a-reading.md`): same positions as r0; frame 10 a few more small bright dots low in the glass, about 16 to 18 visible; frame 40 about 12 to 14, still well under 24 and mostly over the glass; frame 70 full; frame 85 the lower glass visibly emptier than at 70, 3 to 5 fewer dots; frame 145 empty.
+
+My byte comparison (Terminal, `cmp` on each r0/r1 strip-frame pair): frames 10, 12, 40, 70 and 85 differ between r0 and r1, and frame 145 is identical, so the change took effect in the render.
+
+Claude's comparison of r1 with its prediction (`sessions/a6/session-7c-comparison.md`): its `shasum` command was denied, so it compared file sizes instead. Its visual review found the same positions and motion as r0, but no extra visible dots at 10 or 40 (about 9 at 40), and no clearer thinning from 70 to 85 than in r0 (the file shrinks by 543 bytes in r1 and 539 in r0). Its explanation: young glints are still tiny while `scale_curve` grows them, so size, not alpha, limits how visible they are; it called its count prediction its own mistake.
+
+My own look at the strips: the two frame-40 images looked nearly identical. A pair of screenshots looked slightly less crowded inside the glass at frame 85 than at frame 70, but Preview didn't show which capture folder that pair came from, so I don't count it as a confirmed r1 result.
+
+Where Claude and I disagree: at full frame size Claude saw no visible difference between r0 and r1, while in the running game I found the glints noticeably easier to see in the intro. My verdict in the running game decides.
+
+My verdict (running game, 1280 × 720): **kept**. I watched the intro in the running game, and the glints were noticeably easier to see. I couldn't tell whether they were brighter or whether more were visible. The frame comparison didn't show clearer thinning from frame 70 to 85, so I'm keeping r1 for how it looks in the intro.
+
+Strips: `captures/dome_glints/r0/`, `captures/dome_glints/r1/` (fixture captures, seed 2001, same preview).
+Commits: the ramp change (agent, approved by me), then strip r1 with Claude's comparison, then this verdict with the brief revision, in that order.

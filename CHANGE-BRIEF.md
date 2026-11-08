@@ -293,3 +293,21 @@ Version 1 above is unchanged. This revision supersedes one Effect A setting.
 Why: in strip r0 and the preview, most crumbs were still under the jelly at frame 15, with no sideways fan. Kept after strip r1 and my check in the running game at 1280 × 720 (TUNING.md, Effect A, revision r1). The configuration test's expected curve points match this revision.
 
 This is the last tuning revision for Effect A.
+
+---
+
+## Revision 2 — 2026-11-07 (Effect B, tuning r1)
+
+Version 1 and Revision 1 above are unchanged. This revision supersedes one Effect B setting and the fade-in part of Effect B's intent.
+
+| Setting | Version 1 | Revision 2 |
+|---|---|---|
+| `color_ramp` (`GradientTexture1D`, `Gradient_life`) offsets | `0.0`, `0.2`, `0.75`, `1.0` | `0.0`, `0.08`, `0.75`, `1.0` |
+
+The four ramp colours are unchanged. The scale curve is unchanged.
+
+Intent, revised: each glint now reaches its peak ramp alpha of 0.85 at 8% of its lifetime (about 0.13 to 0.19 s), instead of fading in over about 0.5 s. The scale curve is unchanged, so each glint still grows in size over the first fifth of its life and shrinks over the last fifth; its alpha fades out over the last quarter.
+
+Why: kept after strip r1 and my check in the running game at 1280 × 720, where the glints were noticeably easier to see in the intro (TUNING.md, Effect B, revision r1).
+
+Still not met: the frame-85 row of the strip table ("fewer near the glass"). Neither r0 nor r1 shows clearer thinning from frame 70 to frame 85. The configuration test's expected ramp offsets match this revision.
