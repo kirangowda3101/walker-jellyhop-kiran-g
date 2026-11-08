@@ -498,3 +498,23 @@ Existing suites and the config test after the wiring, rerun by me: all match the
 **Still unverified in play:**
 - **WON:** no puff while WON (A2). Pending for Effect B's real-input run to the dome.
 - Two puffs visibly overlapping (A4), the game's real peak (A5), and a table landing beside the sauce.
+
+### State — Effect B (dome glints), Step 5
+
+Source revision: driver `2ab1d9b`, state test `4d20645`. `test_dome_glints_state.gd`, run by me through `scripts/run-test.sh` at **60 fps** (fixed rate; it waits on no audio): **27 checks / 0 failures, exit 0** (`logs/test_dome_glints_state_60fps.log`). The agent's own run is kept as `sessions/a6/session-6c-agent-state-run.log`. It drives the real `main.tscn` with key events through `Input.parse_input_event` only, and uses `route_driver.gd`'s `plan()` only to read the forks' fixed rhythms. It sets `main.test_mode = true` during setup, as the other game tests do; otherwise it writes only `get_tree().paused` and the emitter's `visible`.
+
+| Rule | Result |
+|---|---|
+| B1 | one `DomeGlints`, parent the session, at the dome point within 0.5 px, `emitting` true from load and through the intro |
+| B2 | two real-key runs to the dome, 0 splats each (762 and 499 ticks): `emitting` true on the tick before WON and false on the WON tick; it stays false and the node stays in the tree on all 66 WON ticks checked in each run, including the entry tick |
+| B3 | `emitting` true on the first tick after each replay (Enter, by key) |
+| B4 | Esc pause, its own scenario: state PAUSED for 60 ticks, `emitting` and `can_process()` stayed true. Visible drift while Esc-paused still needs a windowed check |
+| B5 | tree pause, its own scenario: `emitting` stays true, the node stays in the tree, and it does not process while paused |
+| B6 | hidden, its own scenario: `visible = false` for 60 ticks, `emitting` stays true, and the driver never changes `visible` |
+| B7 | **the same emitter object** across both replays (instance id unchanged, one instance ever) |
+| B1–B3 every tick | `emitting == (state != WON)` on all 1,667 ticks; `amount` stayed 24 and `amount_ratio` 1.0 throughout |
+| **A2, WON (Effect A's pending check)** | **no landing puff on the tick each run entered WON** (puffs, `SFX-LAND` count and `just_landed` checked on that tick), and none on any of the 66 WON ticks checked in each run, including the entry tick, with Space and D pressed before the prompt; closed headless |
+
+Godot's exit messages: after the summary line the log ends with `WARNING: 32 ObjectDB instances were leaked at exit` and `ERROR: 10 resources still in use at exit`. These are Godot's cleanup messages when a headless script quits, not test failures. They are not `SCRIPT ERROR` or `SHADER ERROR`, so the wrapper passes the run, and the same kind of exit messages appeared in the existing suites before A6.
+
+**Not provable headlessly:** that glints are drawn, drift while Esc-paused, fade after the win, or freeze visibly under tree pause; that `restart()` re-applies preprocess on replay (predicted failure 5) or clears glints left from a quick replay; that glints are present when shown again; contrast, scale and the `visibility_rect` at the screen edge. These are my checks in the game window.
