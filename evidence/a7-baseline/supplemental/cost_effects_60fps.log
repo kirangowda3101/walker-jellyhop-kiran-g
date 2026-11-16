@@ -1,0 +1,32 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+COST display server: headless
+COST rendering method: gl_compatibility
+COST rendering driver: opengl3
+COST physics ticks/s: 60  max_fps: 0
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST effect_a_lifecycle round: puffs created 24, freed 24 during 300 measured frames
+COST empty              wall 0.0032 ms (sd 0.0004, min 0.0020, p95 0.0040, max 0.0070; round means 0.0031-0.0033) | engine process 91.7122 ms (sd 46.1431) | engine physics 0.5178 ms (sd 0.2591)
+COST game_off           wall 0.2143 ms (sd 0.0731, min 0.0920, p95 0.3580, max 0.5400; round means 0.2131-0.2164) | engine process 91.7122 ms (sd 46.1431) | engine physics 0.5178 ms (sd 0.2591)
+COST effect_a_restart   wall 0.2151 ms (sd 0.0730, min 0.0860, p95 0.3580, max 0.5200; round means 0.2138-0.2158) | engine process 94.3708 ms (sd 47.5423) | engine physics 0.5116 ms (sd 0.2560)
+COST effect_a_lifecycle wall 0.2124 ms (sd 0.0727, min 0.0880, p95 0.3560, max 0.5440; round means 0.1945-0.2187) | engine process 92.7696 ms (sd 46.7260) | engine physics 0.5158 ms (sd 0.2582)
+COST effect_b           wall 0.2125 ms (sd 0.0725, min 0.0800, p95 0.3550, max 0.5300; round means 0.2021-0.2173) | engine process 91.7122 ms (sd 46.1431) | engine physics 0.5178 ms (sd 0.2591)
+COST effect_a_lifecycle total: puffs created 120, freed 120 during 1500 measured frames (5 rounds)
+COST compare game_off           vs empty             : diff +0.2111 ms, larger round-mean spread 0.0033 ms -> differ
+COST compare effect_a_restart   vs empty             : diff +0.2119 ms, larger round-mean spread 0.0020 ms -> differ
+COST compare effect_a_lifecycle vs empty             : diff +0.2092 ms, larger round-mean spread 0.0243 ms -> differ
+COST compare effect_b           vs empty             : diff +0.2093 ms, larger round-mean spread 0.0151 ms -> differ
+COST compare effect_a_restart   vs game_off          : diff +0.0008 ms, larger round-mean spread 0.0033 ms -> not distinguishable within spread
+COST compare effect_a_lifecycle vs game_off          : diff -0.0020 ms, larger round-mean spread 0.0243 ms -> not distinguishable within spread
+COST compare effect_b           vs game_off          : diff -0.0019 ms, larger round-mean spread 0.0151 ms -> not distinguishable within spread
+COST compare effect_a_lifecycle vs effect_a_restart  : diff -0.0028 ms, larger round-mean spread 0.0243 ms -> not distinguishable within spread
+COST compare effect_b           vs effect_a_restart  : diff -0.0027 ms, larger round-mean spread 0.0151 ms -> not distinguishable within spread
+COST compare effect_b           vs effect_a_lifecycle: diff +0.0001 ms, larger round-mean spread 0.0243 ms -> not distinguishable within spread
+COST EFFECTS: 5 cases x 5 rounds x 300 frames; control separates: true
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,45 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+{"id":"fork.A1_load","observed":{"path":"res://assets/models/fork.glb","type":"PackedScene"},"status":"PASS"}
+{"id":"fork.A1_instance","observed":{"root":"fork"},"status":"PASS"}
+{"id":"fork.A2_node_scale_rotation","observed":{"nodes":[{"class":"Node3D","name":"fork","position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]},{"class":"MeshInstance3D","name":"Fork","position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]}]},"status":"PASS"}
+{"id":"fork.A0_vertex_data","observed":{"mesh_instances":1,"vertices":144},"status":"PASS"}
+{"id":"fork.A3_size","observed":{"expected":[0.5,1.5,0.05],"size":[0.5,1.5,0.05]},"status":"PASS"}
+{"id":"fork.A4_longest_axis","observed":{"height_axis_expected":"Y","longest":"Y","size":[0.5,1.5,0.05]},"status":"INFO"}
+{"id":"fork.A5_lowest_highest_y","observed":{"expected":[0.0,1.5],"highest_y":1.5,"lowest_y":0.0000000298023223876953},"status":"PASS"}
+{"id":"fork.A6_prongs_down_handle_up","observed":{"expected":[0.5,0.1],"width_above_y1.4":0.100000008940697,"width_below_y0.1":0.5},"status":"PASS"}
+{"id":"fork.A7_triangles","observed":{"blender_count":72,"budget":100,"triangles":72},"status":"PASS"}
+{"id":"fork.A8_materials","observed":{"surfaces":["Fork_Silver"]},"status":"INFO"}
+{"id":"dome.A1_load","observed":{"path":"res://assets/models/dome.glb","type":"PackedScene"},"status":"PASS"}
+{"id":"dome.A1_instance","observed":{"root":"dome"},"status":"PASS"}
+{"id":"dome.A2_node_scale_rotation","observed":{"nodes":[{"class":"Node3D","name":"dome","position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]},{"class":"MeshInstance3D","name":"Dome","position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]}]},"status":"PASS"}
+{"id":"dome.A0_vertex_data","observed":{"mesh_instances":1,"vertices":528},"status":"PASS"}
+{"id":"dome.A3_size","observed":{"expected":[1.0,0.75,1.0],"size":[1.0,0.75,1.0]},"status":"PASS"}
+{"id":"dome.A4_longest_axis","observed":{"height_axis_expected":"Y","longest":"X","size":[1.0,0.75,1.0]},"status":"INFO"}
+{"id":"dome.A5_lowest_highest_y","observed":{"expected":[0.0,0.75],"highest_y":0.75,"lowest_y":0.0},"status":"PASS"}
+{"id":"dome.A6_base_down_cherry_up","observed":{"expected":[1.0,"<= 0.24"],"width_above_y0.7":0.120001818984747,"width_below_y0.05":1.0},"status":"PASS"}
+{"id":"dome.A7_triangles","observed":{"blender_count":266,"budget":300,"triangles":266},"status":"PASS"}
+{"id":"dome.A8_materials","observed":{"surfaces":["Dome_Cream","Dome_Pink","Dome_Red"]},"status":"INFO"}
+{"id":"platform.A1_load","observed":{"path":"res://assets/models/platform.glb","type":"PackedScene"},"status":"PASS"}
+{"id":"platform.A1_instance","observed":{"root":"platform"},"status":"PASS"}
+{"id":"platform.A2_node_scale_rotation","observed":{"nodes":[{"class":"Node3D","name":"platform","position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]},{"class":"MeshInstance3D","name":"Platform","position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]}]},"status":"PASS"}
+{"id":"platform.A0_vertex_data","observed":{"mesh_instances":1,"vertices":72},"status":"PASS"}
+{"id":"platform.A3_size","observed":{"expected":[2.0,0.25,1.5],"size":[2.0,0.25,1.5]},"status":"PASS"}
+{"id":"platform.A4_longest_axis","observed":{"height_axis_expected":"Y","longest":"X","size":[2.0,0.25,1.5]},"status":"INFO"}
+{"id":"platform.A5_lowest_highest_y","observed":{"expected":[0.0,0.25],"highest_y":0.25,"lowest_y":0.0},"status":"PASS"}
+{"id":"platform.A6_full_top_surface","observed":{"expected":[2.0,1.5],"top_size_xz":[2.0,1.5],"top_vertices":12},"status":"PASS"}
+{"id":"platform.A7_triangles","observed":{"blender_count":36,"budget":60,"triangles":36},"status":"PASS"}
+{"id":"platform.A8_materials","observed":{"surfaces":["Platform_Biscuit","Platform_Cream"]},"status":"INFO"}
+{"id":"scene.B0_load","observed":{"path":"res://showcase/a3_assets.tscn"},"status":"PASS"}
+{"id":"scene.B1_floor_top_at_zero","observed":{"floor_top_y":0.0},"status":"PASS"}
+{"id":"fork.B2_on_floor","observed":{"asset_lowest_y":0.0000000298023223876953,"difference":0.0000000298023223876953,"floor_top_y":0.0},"status":"PASS"}
+{"id":"fork.B3_instance_scale","observed":{"position":[1.5,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]},"status":"PASS"}
+{"id":"dome.B2_on_floor","observed":{"asset_lowest_y":0.0,"difference":0.0,"floor_top_y":0.0},"status":"PASS"}
+{"id":"dome.B3_instance_scale","observed":{"position":[0.0,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]},"status":"PASS"}
+{"id":"platform.B2_on_floor","observed":{"asset_lowest_y":0.0,"difference":0.0,"floor_top_y":0.0},"status":"PASS"}
+{"id":"platform.B3_instance_scale","observed":{"position":[-2.5,0.0,0.0],"rotation_deg":[0.0,0.0,0.0],"scale":[1.0,1.0,1.0]},"status":"PASS"}
+{"id":"ref.B4_size","observed":{"expected":0.5,"size":[0.5,0.5,0.5]},"status":"PASS"}
+{"id":"ref.B4_on_floor","observed":{"floor_top_y":0.0,"ref_lowest_y":0.0},"status":"PASS"}
+{"id":"ref.B4_separate","observed":{"gap_to_asset_m":{"dome":2.25,"fork":1.0,"platform":4.25},"minimum":0.5},"status":"PASS"}
+{"id":"scene.B5_camera_frames_all","observed":{"camera_forward":[0.0,-0.1669,-0.986],"camera_position":[0.0,1.6,6.5],"outside":[],"viewport_size":[1280.0,720.0]},"status":"PASS"}
+A3 ASSET CHECKS: 36 checks / 0 failures

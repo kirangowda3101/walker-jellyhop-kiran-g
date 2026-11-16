@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PEAK state after Enter: 1
+PEAK counted frames: 300 after 60 warm-up frames
+PEAK puffs in the tree (including queued for deletion): 2 | frames per count: { 2: 300 }
+PEAK puffs not queued for deletion: 2 | frames per count: { 2: 300 }
+PEAK created during counted frames: 24 | left the tree during counted frames: 24
+PEAK spawns still waiting at the end: 1
+PEAK state at end: 1
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 4 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

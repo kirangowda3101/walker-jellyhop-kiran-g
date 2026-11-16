@@ -1,0 +1,14 @@
+test_game.gd                 60   exit 0   WALKER TESTS: 25 checks / 0 failures
+test_slice.gd                60   exit 0   SLICE TESTS: 61 checks / 0 failures
+test_keyboard.gd             60   exit 0   KEYBOARD TESTS: 12 checks / 0 failures
+test_a3_assets.gd            60   exit 0   A3 ASSET CHECKS: 36 checks / 0 failures
+test_fork_warning.gd         30   exit 0   FORK WARNING TESTS: 29 checks / 0 failures
+test_fork_warning.gd         60   exit 0   FORK WARNING TESTS: 29 checks / 0 failures
+test_fork_warning.gd         144  exit 0   FORK WARNING TESTS: 29 checks / 0 failures
+test_materials.gd            30   exit 0   MATERIAL CHECKS: 108 checks / 0 failures
+test_materials.gd            60   exit 0   MATERIAL CHECKS: 108 checks / 0 failures
+test_materials.gd            144  exit 0   MATERIAL CHECKS: 108 checks / 0 failures
+test_land_puff_config.gd     60   exit 0   LAND PUFF CONFIG: 51 checks / 0 failures
+test_land_puff_state.gd      60   exit 0   LAND PUFF STATE TESTS: 24 checks / 0 failures
+test_dome_glints_config.gd   60   exit 0   DOME GLINTS CONFIG: 45 checks / 0 failures
+test_dome_glints_state.gd    60   exit 0   DOME GLINTS STATE TESTS: 27 checks / 0 failures

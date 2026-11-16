@@ -649,3 +649,40 @@ A fresh clone of the GitHub repository at `00c3530` (the SUBMISSION.md commit) i
 | check_lifecycle_peak @ 60 | peak 2 | peak 2 |
 
 Every run exited 0, and no log contained SCRIPT ERROR or SHADER ERROR. The checker in that run labelled the 14 test runs FAIL because of a bug in the checker itself: it ran in zsh, which does not split an unquoted variable, so it compared both numbers as one string. I re-parsed the same logs without re-running anything, and all 14 match; the original output and the re-evaluation are both kept in `evidence/fresh-copy-00c3530.txt`. The recorded fresh-clone run tested `00c3530`. This run did not verify the final submission revision.
+
+## A7 baseline (before the change)
+
+**Source revision `cb0e5e9`** (the A7 wrapper commit, directly on `a6` = `31b9e9e`). Run by me on 2026-11-16 in a temporary detached worktree (`../a7-baseline`), so the committed A6 logs in `logs/` were not overwritten. Commands drafted by the chat assistant, run by me. Godot `4.7.2.stable.official.ed1daf0bf` (`godot --version`, `/opt/homebrew/bin/godot`). Wrapper: `scripts/run-test.sh` at `cb0e5e9`, which now also fails a run whose log contains `Failed loading resource`.
+
+**Evidence.** 18 files, copied by filename from the external baseline evidence folder into `evidence/a7-baseline/`, with nothing overwritten.
+
+**Import.** `godot --headless --path godot --import` from an empty cache (no `godot/.godot` in the worktree): exit 0, and 0 lines matching `SHADER ERROR|SCRIPT ERROR|Failed loading resource` (`evidence/a7-baseline/import.txt`).
+
+### Counted runs (14)
+
+All 14 runs exited 0 with 0 failures, and every count matches the A6 count (Fresh-clone verification (A6), above). Summary: `evidence/a7-baseline/baseline-14.txt`. Logs: `evidence/a7-baseline/logs/`.
+
+| Test @ mode | A6 | A7 baseline at `cb0e5e9` |
+|---|---|---|
+| test_game @ 60 | 25/0 | 25/0, exit 0 |
+| test_slice @ 60 | 61/0 | 61/0, exit 0 |
+| test_keyboard @ 60 | 12/0 | 12/0, exit 0 |
+| test_a3_assets @ 60 | 36/0 | 36/0, exit 0 |
+| test_fork_warning @ 30 | 29/0 | 29/0, exit 0 |
+| test_fork_warning @ 60 | 29/0 | 29/0, exit 0 |
+| test_fork_warning @ 144 | 29/0 | 29/0, exit 0 |
+| test_materials @ 30 | 108/0 | 108/0, exit 0 |
+| test_materials @ 60 | 108/0 | 108/0, exit 0 |
+| test_materials @ 144 | 108/0 | 108/0, exit 0 |
+| test_land_puff_config @ 60 | 51/0 | 51/0, exit 0 |
+| test_land_puff_state @ 60 | 24/0 | 24/0, exit 0 |
+| test_dome_glints_config @ 60 | 45/0 | 45/0, exit 0 |
+| test_dome_glints_state @ 60 | 27/0 | 27/0, exit 0 |
+
+**Shutdown messages.** Eight of the 14 logs contained both shutdown messages, the ObjectDB leak warning and the resources-still-in-use error: test_game, test_slice, test_keyboard, test_fork_warning at 30, 60 and 144, test_land_puff_state, and test_dome_glints_state. The other six contained neither: test_a3_assets, test_materials at 30, 60 and 144, test_land_puff_config, and test_dome_glints_config. Neither message matches the wrapper's patterns, so neither fails a run. I did not compare these 14 logs individually against their `a6` versions.
+
+### Supplemental checks (not counted)
+
+- **`cost_effects.gd`** with `./scripts/run-test.sh cost_effects.gd 60 300`: exit 0. `control separates: true`. The lifecycle case created and freed 120 puffs (24 per round, 5 rounds). `effect_a_restart`, `effect_a_lifecycle` and `effect_b` were each not distinguishable from `game_off` within the spread. The wall times are this run's own and were not compared with A6. Log: `evidence/a7-baseline/supplemental/cost_effects_60fps.log`.
+- **`check_lifecycle_peak.gd`** with `./scripts/run-test.sh check_lifecycle_peak.gd 60`: exit 0. Peak of 2 in all 300 counted frames by both counts (in the tree, and not queued for deletion), with 24 created and 24 leaving the tree. `PEAK state after Enter: 1` and `PEAK state at end: 1`, the same lines as the A6 log. Log: `evidence/a7-baseline/supplemental/check_lifecycle_peak_60fps.log`.
+- **Shutdown messages.** Both supplemental logs end with `WARNING: 8 ObjectDB instances were leaked at exit` and `ERROR: 4 resources still in use at exit`. Both messages were already present in the A6 logs (`logs/check_lifecycle_peak_60fps.log` lines 10 and 12, and `logs/cost_effects_60fps_mine_20261108-001211.log` lines 29 and 31).
