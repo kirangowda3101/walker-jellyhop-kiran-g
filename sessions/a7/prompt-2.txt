@@ -1,0 +1,90 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md is the contract for this change.
+This is Step 2 of the assignment: pin what the game does now, before any
+clip, sheet or visual scene exists.
+
+Files:
+- Create exactly one file: godot/tests/test_a7_pins.gd. Do not create,
+  edit or delete any other file: no game script, scene, resource,
+  existing test, CHANGE-BRIEF.md, CLAUDE.md or scripts/run-test.sh.
+- The test must not write any file. It only prints; the wrapper keeps
+  the log.
+- The only command you may run is ./scripts/run-test.sh with this test,
+  for example: ./scripts/run-test.sh test_a7_pins.gd 60
+
+How the test drives the game:
+- extends SceneTree and loads the real game the way test_slice.gd does
+  (Game.new(), test_mode = true, root.add_child(game)). Say exactly what
+  test_mode changes, with file and line.
+- All input goes through Input.parse_input_event, with the key or action
+  events the game already maps (read project.godot and test_slice.gd;
+  say which event type you use and why). Never use test_control,
+  test_axis, test_jump_*, Input.action_press, or a direct call to any
+  player or session method that moves, hops or changes state. Reading
+  state is fine.
+- Schedule every press and release by physics tick, never by render
+  frame, so the same scenario lands on the same physics ticks at 30, 60
+  and 144 render fps.
+- A jump press must be fresh: the key is released before it is pressed
+  again.
+
+Per-tick evidence: on every physics tick of every run, print one line:
+  PIN <run> tick=<physics frames> frame=<process frames> ptick=<player.tick>
+  pose=<pose> land_ticks=<n> just_landed=<b> box=<w>x<h> facing=<f>
+  flip_h=<b> tex=<texture file name> floor=<b> vx=<velocity.x rounded>
+Print the run's first physics tick and first render frame, so a later
+Movie Maker capture can be lined up with log lines.
+
+Run "baseline": from the starting plate, once the session is PLAYING and
+the jelly is grounded and idle: one stationary hop and landing, settle in
+IDLE, then scoot right, stop, scoot left, stop. Assert:
+1. the pose order through the hop is ANTIC -> RISE -> FALL -> LAND -> IDLE;
+2. just_landed is true on exactly one tick of that landing;
+3. LAND lasts exactly 8 ticks, starting on that just_landed tick;
+4. the box is 52x44 on exactly those 8 ticks and 52x58 around them;
+5. while scooting, SCOOT-A and SCOOT-B alternate every 7 player ticks,
+   with SCOOT-A exactly when (player.tick % 14) < 7;
+6. sprite.flip_h is true exactly when facing < 0.
+
+Interrupt runs: the 12 cases in CHANGE-BRIEF.md, "Jump interrupt
+predictions". Tick 0 is the touchdown tick measured in the baseline run's
+stationary hop, not an assumed number. Use a fresh game for every
+replay with the same stationary hop and no movement or overrides. For a
+case at offset k, the fresh press must be the one the player reads on
+the physics tick at offset k; log the tick on which the hop actually
+fired (just_hopped). Assert each case exactly as the brief predicts it.
+Where two rows share an offset, one replay may serve both, but report it
+under both rows. No override cases (sauce, forks, respawn) in this step.
+
+Summary and exit: print one line "A7 PINS: <checks> checks / <failures>
+failures", like the other suites, and exit non-zero when any check fails,
+the same way the existing tests do.
+
+Diagnose and fix harness problems in this session: wrong event type,
+input read a tick early or late, a replay not starting from the same
+state, and similar. Show the log lines that prove each fix. But if the
+existing game differs from a prediction in the brief, that is a finding,
+not a harness problem: keep the assertion exactly as the brief states it,
+let it fail, and report the case, the expected poses and the observed
+poses tick by tick from the log. Never weaken, skip or delete an
+assertion to get a pass.
+
+When the test is final, run it through the wrapper at 60, then 30, then
+144: ./scripts/run-test.sh test_a7_pins.gd 60 (then 30, then 144).
+Report for each: the summary line, the exit code and the log path. Also
+say whether the PIN lines are identical by physics tick across the three
+rates, and if not, where they first differ.
+
+Movie Maker: do not run it. Write instructions for Kiran to replay the
+baseline run windowed with Movie Maker at --fixed-fps 60 and
+--debug-collisions, writing frames to a folder outside the repository
+(for example ~/Documents/a7-reference/pins-r0/frame.png), and explain how
+capture frame N lines up with a PIN log line. If the test needs a switch
+to run only the baseline, read it from the command-line user arguments
+after "--"; keep it in the same file.
+
+Final report, in this order: the one file you created; the three runs
+(summary, exit code, log path); the baseline facts you observed (touchdown
+tick, LAND ticks, box ticks, scoot phase); a 12-row table of interrupt
+cases with predicted and observed results; harness issues found and
+fixed; anything uncertain; the Movie Maker instructions. Claim nothing
+that a run output does not show. Do not stage or commit.
