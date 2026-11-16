@@ -6,10 +6,11 @@
 
 - **Engine:** Godot 4.7.2.stable.official.ed1daf0bf (README.md line 13; CHANGE-BRIEF.md line 5; `evidence/a7-baseline/import.txt` line 1). `godot/project.godot` line 15: `config/features=PackedStringArray("4.7", "GL Compatibility")`.
 - **Renderer:** Compatibility: `renderer/rendering_method="gl_compatibility"` and `.mobile` the same (`godot/project.godot` lines 32–33). Viewport 1280 × 720, stretch `canvas_items` (lines 19–21).
-- **Clip `scoot`** (looping): Sprite2D cell route. `FacingPivot/Scoot/ScootSprite` (Sprite2D, `hframes = 2`, `vframes = 1`) shows `godot/assets/art/CHAR-SCOOT-SHEET.png`, packed from CHAR-SCOOT-A/B by `godot/tools/make_scoot_sheet.gd`. One discrete track on `:frame`. Resource `godot/animations/scoot.tres` (CHANGE-BRIEF.md lines 11, 25, 27, 45, 64, 68).
-- **Clip `land`** (one-shot): native cutout rig. Two Sprite2D slices of `CHAR-IDLE.png`: `FacingPivot/LandRig/LowerPivot/LowerSprite` and `FacingPivot/LandRig/UpperPivot/UpperSprite`. Three continuous tracks: `LowerPivot:scale`, `UpperPivot:position`, `UpperPivot:scale`. Resource `godot/animations/land.tres` (brief lines 12, 41–49, 64, 69–71).
-- **Both clips play on one `AnimationPlayer`**, a sibling of `FacingPivot` in `godot/features/player/player_visuals.tscn` (root `PlayerVisuals`, Node2D), with `root_node = ".."`, one embedded AnimationLibrary, and `callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS` (brief lines 64, 98).
+- **Clip `scoot`** (planned, looping): Sprite2D cell route. `FacingPivot/Scoot/ScootSprite` (Sprite2D, `hframes = 2`, `vframes = 1`) shows `godot/assets/art/CHAR-SCOOT-SHEET.png`, packed from CHAR-SCOOT-A/B by `godot/tools/make_scoot_sheet.gd`. One discrete track on `:frame`. Resource `godot/animations/scoot.tres` (CHANGE-BRIEF.md lines 11, 25, 27, 45, 64, 68).
+- **Clip `land`** (planned, one-shot): native cutout rig. Two Sprite2D slices of `CHAR-IDLE.png`: `FacingPivot/LandRig/LowerPivot/LowerSprite` and `FacingPivot/LandRig/UpperPivot/UpperSprite`. Three continuous tracks: `LowerPivot:scale`, `UpperPivot:position`, `UpperPivot:scale`. Resource `godot/animations/land.tres` (brief lines 12, 41–49, 64, 69–71).
+- **Both clips will play on one `AnimationPlayer`** (planned), a sibling of `FacingPivot` in `godot/features/player/player_visuals.tscn` (root `PlayerVisuals`, Node2D), with `root_node = ".."`, one embedded AnimationLibrary, and `callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS` (brief lines 64, 98).
 - **Not built yet** (glob, 2026-11-16): `godot/animations/`, `player_visuals.tscn`, the sheet PNG, `make_scoot_sheet.gd` and both A7 previews. No file under `godot/` mentions `AnimationPlayer`, `AnimationLibrary`, `AnimationTree`, `AnimatedSprite` or `SpriteFrames`.
+- **Sheet import settings to match:** `CHAR-SCOOT-A.png.import` and `CHAR-SCOOT-B.png.import` have identical `[params]` (only `uid`, `path`, `source_file` and `dest_files` differ): `compress/mode=0`, `mipmaps/generate=true`, `mipmaps/limit=-1`, `process/fix_alpha_border=true`, `process/premult_alpha=false`, `process/size_limit=0` (`godot/assets/art/CHAR-SCOOT-A.png.import`).
 - **The player's state machine is `godot/features/player/player.gd`:**
   - `choose_pose()` (lines 147–163): override → airborne ANTIC/RISE/FALL → LAND while `land_ticks > 0` → SCOOT-A/B when `absf(velocity.x) > 8.0` → WORRY → BORED → IDLE.
   - `_update_pose()` (lines 165–171) sets `sprite.texture` and `sprite.flip_h`, and swaps the box: LOW 52 × 44 for LAND and BORED, else STANDING 52 × 58 (lines 11–13).
@@ -19,14 +20,15 @@
   - Jump: buffer and coyote are 6 ticks (`godot/features/player/tuning.gd` lines 11–12). Eligibility (player.gd line 124) is checked before `move_and_slide()` and floor detection (lines 134–137).
   - The session writes `worried` and `override_pose` (SPLAT/RESPAWN/CELEBRATE) (`godot/game/session.gd` lines 391–392), and also `enabled`, `velocity`, `position` and `reset_at()` (lines 209, 239–240, 248–252, 267–268, 280–282, 345, 354).
 - **Tick order:** player uses the default physics priority 0 (player.gd sets none); session 10 (session.gd line 40); effects driver 20 (`godot/effects/effects_driver.gd` line 12).
-- **Scenes the clips appear in:**
+- **Scenes the clips will appear in (planned):**
   - The game: `res://game/main.tscn` (project.godot line 14) runs `session.gd`, which builds the level in code (`_build_level()`, session.gd line 87) and the player with `Player.new()` + `add_child` (lines 48–50). `player.gd` will host `player_visuals.tscn`; the original sprite stays outside it (brief lines 73, 102).
-  - Fixtures: `res://previews/land_preview.tscn` (LAND, starting plate, real table and room) and `res://previews/scoot_preview.tscn`. Both reuse the live visual scene (brief line 115). Existing previews in `godot/previews/` are A6 particle fixtures.
-- **How tests load the game:** every test `extends SceneTree`. They use `Game.new()`, `test_mode = true` and `root.add_child(game)` (`godot/tests/test_slice.gd` lines 29–31). Input comes from `player.test_control`/`test_axis`/`test_jump_*` (player.gd lines 39–42) or real events via `Input.parse_input_event` (test_slice.gd line 126).
+  - Fixtures (planned, not built yet): `res://previews/land_preview.tscn` (LAND, starting plate, real table and room) and `res://previews/scoot_preview.tscn`. Both reuse the live visual scene (brief line 115). Existing previews in `godot/previews/` are A6 particle fixtures.
+- **How tests load the game:** every `godot/tests/test_*.gd` extends `SceneTree` (grep, 2026-11-16). `test_slice.gd` sets up the game with `Game.new()`, `test_mode = true` and `root.add_child(game)` (lines 29–31); other suites do not all load the game that way. Existing tests drive input through `player.test_control`/`test_axis`/`test_jump_*` (player.gd lines 39–42) or real events via `Input.parse_input_event` (test_slice.gd line 126).
+- **Input in new A7 tests:** inject input only with `Input.parse_input_event`, through the real game loop (CHANGE-BRIEF.md line 110). Never `Input.action_press`, which never reaches `_input` or `_unhandled_input` (A7 handout, Step 2), never `test_control`, and never a direct call to a transition function.
 - **Tests that read the original sprite:** `p.textures["IDLE"]` (test_slice.gd line 75), `p.sprite.flip_h` (test_slice.gd line 100; `godot/tests/capture_poses.gd` line 64). Pose sequence `["ANTIC","RISE","FALL","LAND","IDLE"]` (test_slice.gd line 109).
-- **The wrapper (`scripts/run-test.sh`, never edited):** `scripts/run-test.sh <test-file.gd> <fps|realtime> [timeout-seconds]` (line 2).
+- **The wrapper (`scripts/run-test.sh`, replaced with the A7 handout version in commit `cb0e5e9`; agents never edit it):** `scripts/run-test.sh <test-file.gd> <fps|realtime> [timeout-seconds]` (line 2).
   - It runs `godot --headless [--fixed-fps <fps>] --path godot --script res://tests/<file>` under `timeout ${3:-120}` (line 11).
-  - `realtime` drops `--fixed-fps` (lines 5–6). The log goes to `logs/<name>_<fps>fps.log` or `logs/<name>_realtime.log` (lines 8, 10).
+  - `realtime` drops `--fixed-fps` (lines 5–6). The log goes to `logs/<name>_<fps>fps.log` or `logs/<name>_realtime.log` (lines 6, 8, 10).
   - It exits 1 if the log contains `SHADER ERROR`, `SCRIPT ERROR` or `Failed loading resource` (line 13). Godot's own exit 0 alone is not a pass.
 - **Test commands** (repository root). These are the 14 counted A7 baseline runs, all exit 0 (`evidence/a7-baseline/baseline-14.txt`); summary `print` lines are in each test file:
   ```sh
@@ -45,7 +47,8 @@
   scripts/run-test.sh <test>.gd realtime 300       # real clock, no --fixed-fps; 3rd arg = timeout s
   ```
   The brief names no A7 test files. Its state and timing checks run at 30, 60 and 144 render fps (brief line 110).
-- **Headless:** `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27, as recorded in the A6 CLAUDE.md). Existing suites print `ObjectDB instances were leaked` and `resources still in use` at exit; these lines are not SCRIPT/SHADER ERRORs.
+- **Headless facts:** `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27, as recorded in the A6 CLAUDE.md). Some suites print `ObjectDB instances were leaked` and `resources still in use` at exit (8 of the 14 A7 baseline logs; `TEST-REPORT.md`, "A7 baseline"); these lines match none of the wrapper's error patterns.
+  - Frame strips come from a windowed Movie Maker run, which Kiran starts (confirmed 2026-11-16 with `landing-r0`, a windowed `--write-movie` run at 60 fps).
 
 ## Current change
 
@@ -53,7 +56,7 @@
 
 ## Ownership
 
-- Every file in `godot/shaders/` is hand-written by Kiran, except `standard_generated.gdshader` and `particles_generated.gdshader` (both generated by Godot and saved by Kiran exactly as generated). No agent creates, edits, reformats or "fixes" any file there. If a shader has an error, report the error text and the line, and stop.
+- Every file in `godot/shaders/` is hand-written by Kiran, except `standard_generated.gdshader` and `particles_generated.gdshader` (both generated by Godot, saved by Kiran exactly as generated; `particles_generated.gdshader` is a copy of LandPuff's process material converted for A6 Step 6 and is not used by the game). No agent creates, edits, reformats or "fixes" any file there. If a shader has an error, report the error text and the line, and stop.
 - Clips live as saved resources in `godot/animations/` (`scoot.tres`, `land.tres`) or in the scene that owns them (`player_visuals.tscn`). Keys, tracks, length, step and loop mode are authored in those files. They are never built, keyed or modified in code at runtime: no `Animation.new()`, `track_insert_key()` or `add_animation_library()` in game or preview scripts. Read-only checks may load and inspect them.
 - Static rig and sprite settings (texture, `hframes`, `region_rect`, `offset`, scale, filter, rest positions) live in `player_visuals.tscn`, not in code.
 - `CHAR-SCOOT-SHEET.png` is produced only by `godot/tools/make_scoot_sheet.gd`, which Kiran reviews and runs (brief line 25). Source PNGs never change (AGENTS.md).
@@ -74,14 +77,14 @@ Exactly one writer per animated node and property. Never add a second writer to 
 | Collision box (`set_box`) | `player.gd`, unchanged |
 | `LowerPivot.position`, sprite offsets and regions | Nobody at runtime; the saved scene value |
 
-Presentation reads gameplay state (`pose`, `land_ticks`, `just_landed`, `tick`, `velocity`, `facing`) and never writes it.
+The new visual layer only reads gameplay state (`pose`, `land_ticks`, `just_landed`, `tick`, `velocity`, `facing`); it never writes it. The existing pose assignment and collision updates in `_update_pose()` stay unchanged (player.gd lines 165–171).
 
 ## Godot 4 names
 
 - Use Godot 4.7.2 names: `AnimationPlayer`, `AnimationMixer`, `AnimationLibrary`, `Animation`, `Sprite2D` (`hframes`, `vframes`, `frame`, `region_enabled`, `region_rect`), `Node2D`.
 - Loop: `Animation.loop_mode` with `Animation.LOOP_NONE` / `LOOP_LINEAR`, never a boolean `loop`. Speed: `speed_scale`, never `playback_speed`. Callback: `callback_mode_process` with `AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS`, never `playback_process_mode`.
 - Update modes: `Animation.UPDATE_DISCRETE` / `UPDATE_CONTINUOUS` via `value_track_set_update_mode()`. Frame sprites are `Sprite2D`; never `AnimatedSprite` (Godot 3), and `AnimatedSprite2D`/`SpriteFrames` are excluded by the brief (line 83).
-- Not probed on this machine for A7. Unlike A6, no ClassDB probe was run, so these names come from the brief and general Godot 4 knowledge (see Unconfirmed). If unsure a property, constant or method exists in 4.7.2, say so and check the 4.7 class reference or ClassDB before using it.
+- Checked against the Godot 4.7 class reference, but not yet probed on the installed 4.7.2 build: no ClassDB probe was run for A7 (see Unconfirmed). If unsure a property, constant or method exists in 4.7.2, say so and check the 4.7 class reference or ClassDB before using it.
 
 ## Out of scope
 
@@ -92,13 +95,13 @@ Presentation reads gameplay state (`pose`, `land_ticks`, `just_landed`, `tick`, 
 
 ## Unconfirmed
 
-- **Animation API names in 4.7.2:** not checked by a probe or the class reference in this session. Includes `loop_mode`, `step`, `value_track_set_update_mode`, the key `transition` argument, `seek()`'s `update` argument, `current_animation_position` and `callback_mode_process`.
+- **Animation API names on the installed 4.7.2 build:** checked against the 4.7 class reference, not yet probed with ClassDB. Includes `loop_mode`, `step`, `value_track_set_update_mode`, the key `transition` argument, `seek()`'s `update` argument, `current_animation_position` and `callback_mode_process`.
 - **Same-tick ordering:** whether the AnimationPlayer's physics-callback update runs before or after `player.gd`'s `_physics_process` in one tick. Also whether a `play()` + `seek()` from player.gd shows the synced frame on that tick or the next. This decides the "no extra advance on entry" check (brief line 100).
-- **`landing-r0`:** I found no file or folder with that name in the repo. It appears only in CHANGE-BRIEF.md and `sessions/a7/session-1b.jsonl`, which I did not read. The 291/292/299/300 frame reading is unverified by me.
+- **`landing-r0`:** Kiran's windowed 60 fps Movie Maker capture of the existing game. The full capture stays outside the repository (`~/Documents/a7-reference/landing-r0/`). The frame reading (last FALL 291, LAND 292–299, upright 300) is Kiran's (CHANGE-BRIEF.md, "Landing reference and phase table"). Any selected frames committed later are labelled as the existing gameplay reference, not as fixtures. The physics timing behind the reading stays unconfirmed until the pins run.
 - **Behaviour pins:** none exist yet. The brief requires them committed before wiring (line 111).
 - **Hosting:** how `player.gd` attaches `player_visuals.tscn`, and how the original sprite is hidden, is not specified. It needs a plan Kiran approves.
 - **Saved library format:** whether an embedded AnimationLibrary that references external `.tres` clips saves and reloads as intended, including from an empty import cache.
-- **Import settings:** I did not read the CHAR-SCOOT-A/B `.import` `[params]` that the sheet must match.
+- **Headless facts pending confirmation:** that a headless run advances clips and reads their structure but draws nothing; that saved key times are 32-bit floats, so they are compared with a tolerance; and that `value_track_get_update_mode` applies only to value tracks (this rig has only 2D value tracks, so the non-value case cannot arise here). Each moves to Headless facts once confirmed on this machine.
 - **Realtime runs:** `baseline-14.txt` lists fixed-fps runs only. No realtime run of the suites is recorded for A7.
 - **Check runners:** README.md line 33 names `tools/run_slice_checks.sh`; AGENTS.md requires `scripts/run-test.sh`. I did not read `run_slice_checks.sh`.
 - **A6 open items:** GPU timing, puff overlap, gameplay peak and others are listed in the A6 version of this file in git history. None was rechecked for A7.
