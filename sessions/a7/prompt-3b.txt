@@ -1,0 +1,110 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md is the contract for this change
+("Sheet and cycle", "Scene, authority and states", "Clocks and
+boundaries"). This is Step 3: set up the scoot clip and its read-back
+test. Do not wire anything: player.gd and every other existing file stay
+unchanged.
+
+Files: create exactly these three, and nothing else:
+1. godot/animations/scoot.tres
+2. godot/features/player/player_visuals.tscn
+3. godot/tests/test_a7_scoot_readback.gd
+Write the .tres and .tscn as resource text; do not build them in code.
+The only command you may run is the wrapper with this test, for example:
+  ./scripts/run-test.sh test_a7_scoot_readback.gd 60
+
+player_visuals.tscn (Step 3 contents only; LandRig is added in Step 4):
+- Root PlayerVisuals (Node2D) -> FacingPivot (Node2D) -> Scoot (Node2D)
+  -> ScootSprite (Sprite2D). AnimationPlayer is a child of PlayerVisuals,
+  beside FacingPivot. No scripts on any node.
+- ScootSprite: texture res://assets/art/CHAR-SCOOT-SHEET.png, hframes 2,
+  vframes 1, frame 0, centered false, offset Vector2(-512, -812),
+  position (0, 0), scale Vector2(0.106, 0.106), texture_filter
+  CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS.
+- AnimationPlayer: root_node NodePath(".."), callback_mode_process set to
+  AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS, autoplay empty,
+  one embedded AnimationLibrary (the default "" library) whose "scoot"
+  entry is the external resource res://animations/scoot.tres. No RESET
+  animation.
+
+scoot.tres (an Animation resource):
+- length 14/60 s, step 1/60 s, loop_mode Animation.LOOP_LINEAR.
+- Exactly one track: a value track on FacingPivot/Scoot/ScootSprite:frame,
+  update mode Animation.UPDATE_DISCRETE.
+- Exactly two keys: value 0 at time 0, value 1 at time 7/60 s. No key at
+  the loop end.
+
+The read-back test (extends SceneTree; load the scene from its file,
+instantiate it, add it under root, inspect it, then quit; exit non-zero
+on any failed check, the way the existing tests do; print one line per
+check and a summary line "A7 SCOOT READBACK: <n> checks / <f> failures"):
+- Every track of every clip resolves, using this function from the
+  assignment handout, unchanged:
+
+static func track_problems(player: AnimationPlayer) -> Array[String]:
+    var problems: Array[String] = []
+    var root := player.get_node_or_null(player.root_node)
+    if root == null:
+        problems.append("root_node %s resolves to nothing" % player.root_node)
+        return problems
+    for clip_name in player.get_animation_list():
+        var clip := player.get_animation(clip_name)
+        for t in clip.get_track_count():
+            var path := clip.track_get_path(t)
+            var node := root.get_node_or_null(NodePath(path.get_concatenated_names()))
+            if node == null:
+                problems.append("%s track %d: no node at %s" % [clip_name, t, path])
+                continue
+            if path.get_subname_count() == 0:
+                continue
+            var sub := path.get_subname(0)
+            match clip.track_get_type(t):
+                Animation.TYPE_POSITION_3D, Animation.TYPE_ROTATION_3D, Animation.TYPE_SCALE_3D:
+                    var skeleton := node as Skeleton3D
+                    if skeleton == null or skeleton.find_bone(sub) == -1:
+                        problems.append("%s track %d: no bone %s on %s" % [clip_name, t, sub, node.name])
+                Animation.TYPE_BLEND_SHAPE:
+                    var mesh := node as MeshInstance3D
+                    if mesh == null or mesh.find_blend_shape_by_name(sub) == -1:
+                        problems.append("%s track %d: no blend shape %s on %s" % [clip_name, t, sub, node.name])
+                _:
+                    if not (sub in node):
+                        problems.append("%s track %d: %s has no property %s" % [clip_name, t, node.name, sub])
+    return problems
+
+- The clip "scoot" must exist. Check that scoot has exactly one track,
+  with exactly the path FacingPivot/Scoot/ScootSprite:frame, of type
+  Animation.TYPE_VALUE, with update mode Animation.UPDATE_DISCRETE.
+  Call value_track_get_update_mode only on a value track.
+- Do not assert anything about other clip names: Step 4 adds "land" to
+  the same library, and this test must still pass then.
+- Key times: compare with a tolerance of 0.5/60 s, never with ==; keys
+  at 0 and 7/60, values 0 and 1. Also print the stored time of the
+  second key next to 7.0/60.0 and their difference, to show whether the
+  saved time is a 32-bit float.
+- Length 14/60 (tolerance 0.5/60), step is_equal_approx 1/60,
+  loop_mode == Animation.LOOP_LINEAR. Seam rule: the gap from the last
+  key to the length equals the key interval 7/60, and no key sits at the
+  length.
+- Every frame key is >= 0 and < ScootSprite.hframes * ScootSprite.vframes.
+- ScootSprite properties exactly as listed above, including the
+  texture's resource path.
+- AnimationPlayer: root_node is "..", callback_mode_process is the
+  physics constant, autoplay is empty, no "RESET" animation, and the
+  "scoot" animation resource's path is res://animations/scoot.tres.
+- API names on this build: check through ClassDB that the properties and
+  the constant you rely on exist in this engine (at least Animation
+  loop_mode and step, AnimationMixer callback_mode_process and
+  ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS), and print the engine
+  version.
+
+Run the test through the wrapper at 60 until it is correct. If a check
+fails because of how you wrote the scene or clip, fix the file and say
+what you changed. Never weaken, skip or delete a check to get a pass. If
+an engine name or behaviour differs from what the brief or this prompt
+expects, report it instead of working around it silently.
+
+Final report, in this order: the three files; the read-back's summary
+line, exit code and log path; each check's result; the stored-versus-
+exact key time; the ClassDB results; anything you changed after a
+failure; and anything uncertain. Claim nothing a run output does not
+show. Do not stage or commit.

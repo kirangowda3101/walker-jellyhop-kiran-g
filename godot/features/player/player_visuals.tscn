@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" uid="uid://cv774nauug675" path="res://assets/art/CHAR-SCOOT-SHEET.png" id="1_sheet"]
+[ext_resource type="Animation" path="res://animations/scoot.tres" id="2_scoot"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_visuals"]
+_data = {
+&"scoot": ExtResource("2_scoot")
+}
+
+[node name="PlayerVisuals" type="Node2D"]
+
+[node name="FacingPivot" type="Node2D" parent="."]
+
+[node name="Scoot" type="Node2D" parent="FacingPivot"]
+
+[node name="ScootSprite" type="Sprite2D" parent="FacingPivot/Scoot"]
+texture_filter = 4
+position = Vector2(0, 0)
+scale = Vector2(0.106, 0.106)
+texture = ExtResource("1_sheet")
+centered = false
+offset = Vector2(-512, -812)
+hframes = 2
+vframes = 1
+frame = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("..")
+libraries = {
+&"": SubResource("AnimationLibrary_visuals")
+}
+callback_mode_process = 0
+autoplay = &""
