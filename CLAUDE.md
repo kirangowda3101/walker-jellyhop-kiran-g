@@ -1,68 +1,51 @@
 @AGENTS.md
 
-# CLAUDE.md — Assignment 6 (particle effects)
+# CLAUDE.md — Assignment 7 (animation)
 
 ## Project context
 
-- **Engine:** Godot 4.7.2.stable.official.ed1daf0bf (README.md line 13; CHANGE-BRIEF.md line 5). `godot/project.godot` line 15: `config/features=PackedStringArray("4.7", "GL Compatibility")`. Confirmed on this machine on 2026-11-07: `godot --version` prints `4.7.2.stable.official.ed1daf0bf`, and the ClassDB probe prints `VERSION 4.7.2-stable (official)` (`sessions/a6/probe/probe-output.log` line 3).
+- **Engine:** Godot 4.7.2.stable.official.ed1daf0bf (README.md line 13; CHANGE-BRIEF.md line 5; `evidence/a7-baseline/import.txt` line 1). `godot/project.godot` line 15: `config/features=PackedStringArray("4.7", "GL Compatibility")`.
 - **Renderer:** Compatibility: `renderer/rendering_method="gl_compatibility"` and `.mobile` the same (`godot/project.godot` lines 32–33). Viewport 1280 × 720, stretch `canvas_items` (lines 19–21).
-- **Effect nodes:** both effects are `GPUParticles2D` with a `ParticleProcessMaterial`; each texture is a `GradientTexture2D` sub-resource in the scene file, not an image (CHANGE-BRIEF.md lines 7, 42, 164).
-  - Effect A, `LandPuff`: `godot/effects/land_puff.tscn` (brief line 42).
-  - Effect B, `DomeGlints`: `godot/effects/dome_glints.tscn`, with an additive `CanvasItemMaterial` (brief lines 164, 179).
-  - Driver: `godot/effects/effects_driver.gd` (brief line 241). `godot/effects/` and `godot/previews/` do not exist yet. The project has no particle node today (no `GPUParticles`, `CPUParticles` or `ParticleProcessMaterial` in any `.gd`, `.tscn` or `.tres` under `godot/`).
-- **No signals:** no `.gd` file under `godot/` declares a `signal`. Both effects are driven by per-tick state.
-- **Names confirmed (2026-11-07):** every class, property, constant, signal and method the brief names exists in 4.7.2, including `use_fixed_seed`, `seed`, the `finished` signal and `restart()`; `ParticlesMaterial`, `Particles2D` and `scale_random` do not (`sessions/a6/probe/probe-output.log`). `probe.gd` was written by Claude Code in session 1, `probe2.gd` by Claude in chat; Kiran ran both.
-- **GPU timing on this machine (observed 2026-11-07):** editor run of the game, Visual Profiler, Apple M4, Compatibility renderer. CPU timings appeared, but the GPU graph was blank and every visible GPU reading was 0.0 ms (`evidence/a6-visual-profiler-compat-gpu-zero.png`). The GPU budget comparison is open (brief predicted failure 9).
-- **Effect A event: a landing.** The event is the per-tick flag `player.just_landed`.
-  - It is declared at `godot/features/player/player.gd` line 26, cleared at the start of every jelly tick (line 95), and set when grounded and not `was_grounded` (lines 136–137).
-  - The session reads it in `godot/game/session.gd` `_physics_process()`: `if state == State.PLAYING and player.just_landed:` (line 372), then `sound.play("SFX-LAND")` (line 374).
-  - That check comes after `resolve_contacts()` (line 371), so a landing into sauce has already become `SPLAT` and plays no LAND sound.
-  - A respawn is not a landing: `reset_at()` sets `was_grounded = true` and `just_landed = false` (player.gd lines 69–81).
-  - `sound.count(id)` counts recorded calls (`godot/audio/sound_events.gd` lines 39–44; every `play()` is logged at line 35).
-  - The jelly's position is its feet, bottom centre: the collider sits above the origin (player.gd lines 64–67) and the sprite is anchored at its bottom centre (lines 55–58).
-- **Effect B condition: `state != State.WON`.**
-  - `enum State { INTRO, PLAYING, PAUSED, SPLAT, REFORM, WON }`, `var state` (session.gd lines 12, 15).
-  - INTRO is set by `_start_intro()` from `_ready()` (lines 63, 204–210).
-  - WON is set in `resolve_contacts()` (lines 275–284).
-  - Replay is `start_session()` from WON (lines 212–218), called by any key once `prompt_shown` (lines 404–406).
-  - PAUSED comes from `set_paused()` (lines 244–251), called by Esc (lines 407–408) and by focus loss unless `test_mode` (lines 253–255). The game never sets `get_tree().paused`.
-- **Tick order:** the session sets `process_physics_priority = 10` (session.gd line 40). `player.gd` does not set one (default 0), so the jelly ticks before the session. The driver must use a priority above 10 (brief line 241).
-- **The scenes the effects appear in:**
-  - The game: `res://game/main.tscn` (`godot/project.godot` line 14) is one `Node2D` `JellyHop` with `session.gd` (`main.tscn` lines 3–6).
-  - The level is built in code by `_build_level()` (session.gd lines 86–153). There is no level `.tscn`.
-  - Draw order: room on `CanvasLayer` −10 (lines 89–95); table `z_index` −5 (line 103); plates −2 (line 119); sauce −1 (line 142); each fork's shadow −1, drawn on its plate (`godot/features/fork/fork.gd` line 39); fork head 0 (fork.gd line 41); jelly 0 (not set in player.gd); dome 5 (line 151); HUD on its own `CanvasLayer` (lines 57–61).
-  - The dome sprite is at `(T.dome_left() + T.dome_width() / 2, T.TABLE_TOP + 1)` (session.gd line 150). `TABLE_TOP` = 520 (`godot/game/slice_tuning.gd` line 9); `dome_left()` and `dome_width()` are at lines 107–111.
-  - Preview fixtures (to be built): `godot/previews/land_puff_preview.tscn` and `dome_glints_preview.tscn` (brief lines 116, 224).
-- **How tests load the game:**
-  - Every test is `extends SceneTree`.
-  - Game tests build the session with `Game.new()`, set `test_mode = true`, then `root.add_child(game)`, not via `main.tscn` (`test_game.gd` lines 30–32; `test_slice.gd` 29–31; `test_keyboard.gd` 53–55; `test_fork_warning.gd` 152–154).
-  - Scripted input comes either through `player.test_control` / `test_axis` / `test_jump_*` (player.gd lines 39–42) or as real key events through `Input.parse_input_event` (`test_keyboard.gd` line 24; `test_slice.gd` line 126). `godot/tests/route_driver.gd` drives routes.
-- **The wrapper (`scripts/run-test.sh`, never edited):** usage is `scripts/run-test.sh <test-file.gd> <fps|realtime> [timeout-seconds]` (line 2).
+- **Clip `scoot`** (looping): Sprite2D cell route. `FacingPivot/Scoot/ScootSprite` (Sprite2D, `hframes = 2`, `vframes = 1`) shows `godot/assets/art/CHAR-SCOOT-SHEET.png`, packed from CHAR-SCOOT-A/B by `godot/tools/make_scoot_sheet.gd`. One discrete track on `:frame`. Resource `godot/animations/scoot.tres` (CHANGE-BRIEF.md lines 11, 25, 27, 45, 64, 68).
+- **Clip `land`** (one-shot): native cutout rig. Two Sprite2D slices of `CHAR-IDLE.png`: `FacingPivot/LandRig/LowerPivot/LowerSprite` and `FacingPivot/LandRig/UpperPivot/UpperSprite`. Three continuous tracks: `LowerPivot:scale`, `UpperPivot:position`, `UpperPivot:scale`. Resource `godot/animations/land.tres` (brief lines 12, 41–49, 64, 69–71).
+- **Both clips play on one `AnimationPlayer`**, a sibling of `FacingPivot` in `godot/features/player/player_visuals.tscn` (root `PlayerVisuals`, Node2D), with `root_node = ".."`, one embedded AnimationLibrary, and `callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS` (brief lines 64, 98).
+- **Not built yet** (glob, 2026-11-16): `godot/animations/`, `player_visuals.tscn`, the sheet PNG, `make_scoot_sheet.gd` and both A7 previews. No file under `godot/` mentions `AnimationPlayer`, `AnimationLibrary`, `AnimationTree`, `AnimatedSprite` or `SpriteFrames`.
+- **The player's state machine is `godot/features/player/player.gd`:**
+  - `choose_pose()` (lines 147–163): override → airborne ANTIC/RISE/FALL → LAND while `land_ticks > 0` → SCOOT-A/B when `absf(velocity.x) > 8.0` → WORRY → BORED → IDLE.
+  - `_update_pose()` (lines 165–171) sets `sprite.texture` and `sprite.flip_h`, and swaps the box: LOW 52 × 44 for LAND and BORED, else STANDING 52 × 58 (lines 11–13).
+  - The original sprite is built in code in `_ready()` (lines 53–61): textures `CHAR-<POSE>.png`, `centered = false`, `offset = -T.JELLY_ANCHOR` (512, 812), scale `T.JELLY_SCALE` 0.106 (`godot/game/slice_tuning.gd` lines 14–15), `TEXTURE_FILTER_LINEAR_WITH_MIPMAPS`. The player has no `.tscn`.
+  - Landing: `just_landed` is cleared at line 95 and set with `land_ticks = T.LAND_TICKS` (8; slice_tuning line 57) at lines 136–138; it counts down at lines 140–141. `tick` advances only while `enabled` (lines 97–100).
+  - Scoot phase: `(tick / T.ticks(T.SCOOT_FRAME)) % 2` (line 158). `SCOOT_FRAME` is 0.12 s (slice_tuning line 58) and `ticks()` is `int(round(s * 60))` (lines 116–117): 7 ticks per cell, 14 per cycle.
+  - Jump: buffer and coyote are 6 ticks (`godot/features/player/tuning.gd` lines 11–12). Eligibility (player.gd line 124) is checked before `move_and_slide()` and floor detection (lines 134–137).
+  - The session writes `worried` and `override_pose` (SPLAT/RESPAWN/CELEBRATE) (`godot/game/session.gd` lines 391–392), and also `enabled`, `velocity`, `position` and `reset_at()` (lines 209, 239–240, 248–252, 267–268, 280–282, 345, 354).
+- **Tick order:** player uses the default physics priority 0 (player.gd sets none); session 10 (session.gd line 40); effects driver 20 (`godot/effects/effects_driver.gd` line 12).
+- **Scenes the clips appear in:**
+  - The game: `res://game/main.tscn` (project.godot line 14) runs `session.gd`, which builds the level in code (`_build_level()`, session.gd line 87) and the player with `Player.new()` + `add_child` (lines 48–50). `player.gd` will host `player_visuals.tscn`; the original sprite stays outside it (brief lines 73, 102).
+  - Fixtures: `res://previews/land_preview.tscn` (LAND, starting plate, real table and room) and `res://previews/scoot_preview.tscn`. Both reuse the live visual scene (brief line 115). Existing previews in `godot/previews/` are A6 particle fixtures.
+- **How tests load the game:** every test `extends SceneTree`. They use `Game.new()`, `test_mode = true` and `root.add_child(game)` (`godot/tests/test_slice.gd` lines 29–31). Input comes from `player.test_control`/`test_axis`/`test_jump_*` (player.gd lines 39–42) or real events via `Input.parse_input_event` (test_slice.gd line 126).
+- **Tests that read the original sprite:** `p.textures["IDLE"]` (test_slice.gd line 75), `p.sprite.flip_h` (test_slice.gd line 100; `godot/tests/capture_poses.gd` line 64). Pose sequence `["ANTIC","RISE","FALL","LAND","IDLE"]` (test_slice.gd line 109).
+- **The wrapper (`scripts/run-test.sh`, never edited):** `scripts/run-test.sh <test-file.gd> <fps|realtime> [timeout-seconds]` (line 2).
   - It runs `godot --headless [--fixed-fps <fps>] --path godot --script res://tests/<file>` under `timeout ${3:-120}` (line 11).
-  - `realtime` drops `--fixed-fps` (lines 5–6).
-  - The log is `logs/<name>_<fps>fps.log` or `logs/<name>_realtime.log` (lines 8, 10).
-  - It forces exit 1 if the log contains `SHADER ERROR` or `SCRIPT ERROR` (line 13). Godot's own exit 0 alone does not mean no errors.
-- **Test commands** (from the repository root; each test exits 1 on any failed check):
+  - `realtime` drops `--fixed-fps` (lines 5–6). The log goes to `logs/<name>_<fps>fps.log` or `logs/<name>_realtime.log` (lines 8, 10).
+  - It exits 1 if the log contains `SHADER ERROR`, `SCRIPT ERROR` or `Failed loading resource` (line 13). Godot's own exit 0 alone is not a pass.
+- **Test commands** (repository root). These are the 14 counted A7 baseline runs, all exit 0 (`evidence/a7-baseline/baseline-14.txt`); summary `print` lines are in each test file:
   ```sh
-  scripts/run-test.sh test_game.gd 60            # "WALKER TESTS: N checks / F failures"   (test_game.gd line 173)
-  scripts/run-test.sh test_slice.gd 60           # "SLICE TESTS: ..."                      (test_slice.gd line 60)
-  scripts/run-test.sh test_keyboard.gd 60        # "KEYBOARD TESTS: ..."                   (test_keyboard.gd line 99)
-  scripts/run-test.sh test_a3_assets.gd 60       # "A3 ASSET CHECKS: ..."                  (test_a3_assets.gd line 125)
-  scripts/run-test.sh test_fork_warning.gd 30    # "FORK WARNING TESTS: ..." (test_fork_warning.gd line 167); also 60, 144
-  scripts/run-test.sh test_materials.gd 60       # "MATERIAL CHECKS: ..."  (test_materials.gd line 456); also 30, 144
-  scripts/run-test.sh <test>.gd realtime         # real-time clock, no --fixed-fps; optional 3rd arg = timeout seconds
+  scripts/run-test.sh test_game.gd 60              # WALKER TESTS: 25 / 0          (test_game.gd line 173)
+  scripts/run-test.sh test_slice.gd 60             # SLICE TESTS: 61 / 0           (test_slice.gd line 60)
+  scripts/run-test.sh test_keyboard.gd 60          # KEYBOARD TESTS: 12 / 0        (test_keyboard.gd line 99)
+  scripts/run-test.sh test_a3_assets.gd 60         # A3 ASSET CHECKS: 36 / 0       (test_a3_assets.gd line 125)
+  scripts/run-test.sh test_fork_warning.gd 30      # FORK WARNING TESTS: 29 / 0; also 60 and 144 (line 167)
+  scripts/run-test.sh test_materials.gd 30         # MATERIAL CHECKS: 108 / 0; also 60 and 144 (line 456)
+  scripts/run-test.sh test_land_puff_config.gd 60  # LAND PUFF CONFIG: 51 / 0      (line 167)
+  scripts/run-test.sh test_land_puff_state.gd 60   # LAND PUFF STATE TESTS: 24 / 0 (line 288)
+  scripts/run-test.sh test_dome_glints_config.gd 60 # DOME GLINTS CONFIG: 45 / 0   (line 170)
+  scripts/run-test.sh test_dome_glints_state.gd 60 # DOME GLINTS STATE TESTS: 27 / 0 (line 257)
+  scripts/run-test.sh cost_effects.gd 60 300       # supplemental, not counted (README.md line 269)
+  scripts/run-test.sh check_lifecycle_peak.gd 60   # supplemental, not counted (README.md line 270)
+  scripts/run-test.sh <test>.gd realtime 300       # real clock, no --fixed-fps; 3rd arg = timeout s
   ```
-  - Baseline before A6 (commit `068ede4` message): 25, 61, 12, 36 at 60; 29 and 108 at 30, 60 and 144; all 0 failures.
-  - New A6 tests named by the brief: `test_land_puff_config.gd` and `test_dome_glints_config.gd` (lines 105, 215), plus a state test for A1–A8 and B1–B7 (not yet named).
-
-## Headless facts
-
-- `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27).
-- Existing suites print `ObjectDB instances were leaked` and `resources still in use` at exit. These are pre-existing and are not SCRIPT/SHADER ERRORs (A6 baseline logs, commit `068ede4`).
-- Particle node state is readable in a headless run: the config tests read back the properties they check (`test_land_puff_config.gd` 51/0, commit `2bb6ebc`; `test_dome_glints_config.gd` 45/0, commit `f2e5b26`), and the state tests read `emitting`, `visible`, `can_process()`, `amount`, `amount_ratio`, parents and instance counts (`test_land_puff_state.gd` 24/0, commit `1994c53`; `test_dome_glints_state.gd` 27/0, commit `4d20645`). What is drawn is not readable.
-- In the Effect A state test, a one-shot `GPUParticles2D`'s `finished` signal fired in the headless run: 24 ticks after spawn in the unpaused case, and 84 elapsed ticks when a 60-tick tree pause came in between (`logs/test_land_puff_state_60fps.log`, commit `1994c53`).
-- Frame strips are visual evidence from windowed Movie Maker runs, not headless runs. I started all four captures (`captures/land_puff/r0` and `r1`, commits `3f08a78` and `2e2924b`; `captures/dome_glints/r0` and `r1`, commits `0d96cc5` and `27badda`).
-- Headless CPU price (Step 7): in my run, none of the three tested effect cases (`effect_a_restart`, `effect_a_lifecycle`, `effect_b`) could be distinguished from the effects-off baseline within the observed spread. That does not establish zero cost or "near zero by construction" (`logs/cost_effects_60fps_mine_20261108-001211.log`, commit `b47871d`).
+  The brief names no A7 test files. Its state and timing checks run at 30, 60 and 144 render fps (brief line 110).
+- **Headless:** `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27, as recorded in the A6 CLAUDE.md). Existing suites print `ObjectDB instances were leaked` and `resources still in use` at exit; these lines are not SCRIPT/SHADER ERRORs.
 
 ## Current change
 
@@ -70,40 +53,52 @@
 
 ## Ownership
 
-- Every file in `godot/shaders/` is hand-written by Kiran, except `standard_generated.gdshader` and `particles_generated.gdshader` (both generated by Godot, saved by Kiran exactly as generated; `particles_generated.gdshader` is a copy of LandPuff's process material converted for A6 Step 6 and is not used by the game). No agent creates, edits, reformats or "fixes" any file there. If a shader has an error, report the error text and the line, and stop.
-- Effect settings live in the scene files in `godot/effects/` (`land_puff.tscn`, `dome_glints.tscn`), never in code. `effects_driver.gd` only instances scenes, places them, connects each land puff's `finished` signal to free it (A6; approved 2026-11-07), and sets `emitting` or calls `restart()`. It never assigns particle, material or texture properties.
-- A fixed seed (`use_fixed_seed = true`, a `seed` value) is set only on the effect instances inside the preview fixtures in `godot/previews/`, never in `godot/effects/*.tscn` and never in gameplay, where repeats must vary (brief line 120).
+- Every file in `godot/shaders/` is hand-written by Kiran, except `standard_generated.gdshader` and `particles_generated.gdshader` (both generated by Godot and saved by Kiran exactly as generated). No agent creates, edits, reformats or "fixes" any file there. If a shader has an error, report the error text and the line, and stop.
+- Clips live as saved resources in `godot/animations/` (`scoot.tres`, `land.tres`) or in the scene that owns them (`player_visuals.tscn`). Keys, tracks, length, step and loop mode are authored in those files. They are never built, keyed or modified in code at runtime: no `Animation.new()`, `track_insert_key()` or `add_animation_library()` in game or preview scripts. Read-only checks may load and inspect them.
+- Static rig and sprite settings (texture, `hframes`, `region_rect`, `offset`, scale, filter, rest positions) live in `player_visuals.tscn`, not in code.
+- `CHAR-SCOOT-SHEET.png` is produced only by `godot/tools/make_scoot_sheet.gd`, which Kiran reviews and runs (brief line 25). Source PNGs never change (AGENTS.md).
+- A6 effect settings stay in `godot/effects/*.tscn`. `effects_driver.gd` stays as it is.
+
+## One authority
+
+Exactly one writer per animated node and property. Never add a second writer to a node that already has one: no script assignment, Tween, second AnimationPlayer, AnimationTree, method track or `RESET` clip on these targets (brief lines 49–51, 73, 83, 141).
+
+| Node and property | The only writer |
+| --- | --- |
+| `ScootSprite.frame` | The AnimationPlayer (`scoot`) |
+| `LowerPivot.scale`, `UpperPivot.position`, `UpperPivot.scale` | The AnimationPlayer (`land`) |
+| `FacingPivot.transform` (mirror ±1 on X) | `player.gd` |
+| `Scoot.visible`, `LandRig.visible` | `player.gd` |
+| AnimationPlayer playback (`play`, `seek`, `stop`) | `player.gd` in the game; in a preview, its own preview script, and nothing else there |
+| Original pose sprite: `texture`, `flip_h`, visibility | `player.gd` |
+| Collision box (`set_box`) | `player.gd`, unchanged |
+| `LowerPivot.position`, sprite offsets and regions | Nobody at runtime; the saved scene value |
+
+Presentation reads gameplay state (`pose`, `land_ticks`, `just_landed`, `tick`, `velocity`, `facing`) and never writes it.
 
 ## Godot 4 names
 
-- Use Godot 4 class and property names for 4.7.2: `GPUParticles2D`, `ParticleProcessMaterial`, `GradientTexture2D`, `GradientTexture1D`, `CurveTexture`, `CanvasItemMaterial`. Never use the Godot 3 names `Particles2D`, `ParticlesMaterial` or `scale_random`; none exists in 4.7.2 (`sessions/a6/probe/probe-output.log`).
-- In scene files, write each range as its separate stored fields: `initial_velocity_min` and `initial_velocity_max`, `scale_min` and `scale_max`. In 4.7.2, `initial_velocity` and `scale` also exist on `ParticleProcessMaterial`, but only as Vector2 Inspector properties (usage 12: editor + internal, not stored) that set min and max together (`sessions/a6/probe/probe2-output.log`). Whether a scalar `initial_velocity = …` line in a `.tscn` applies, warns or is dropped is what the Step 2 mutation tests.
-- Write property names exactly as in the brief's tables. A misspelled property in a `.tscn` loads silently at its default (brief predicted failure 1), so the config tests must read every property back.
-- If unsure a property, constant or signal exists in 4.7.2, say so and check the class reference or ClassDB before using it. Do not guess. Every name in the brief's tables was checked (Project context, "Names confirmed").
+- Use Godot 4.7.2 names: `AnimationPlayer`, `AnimationMixer`, `AnimationLibrary`, `Animation`, `Sprite2D` (`hframes`, `vframes`, `frame`, `region_enabled`, `region_rect`), `Node2D`.
+- Loop: `Animation.loop_mode` with `Animation.LOOP_NONE` / `LOOP_LINEAR`, never a boolean `loop`. Speed: `speed_scale`, never `playback_speed`. Callback: `callback_mode_process` with `AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS`, never `playback_process_mode`.
+- Update modes: `Animation.UPDATE_DISCRETE` / `UPDATE_CONTINUOUS` via `value_track_set_update_mode()`. Frame sprites are `Sprite2D`; never `AnimatedSprite` (Godot 3), and `AnimatedSprite2D`/`SpriteFrames` are excluded by the brief (line 83).
+- Not probed on this machine for A7. Unlike A6, no ClassDB probe was run, so these names come from the brief and general Godot 4 knowledge (see Unconfirmed). If unsure a property, constant or method exists in 4.7.2, say so and check the 4.7 class reference or ClassDB before using it.
 
 ## Out of scope
 
-- Gameplay: movement, input mapping, collision shapes and layers, fork hit areas, plates, sauce and the goal.
-- The session's state machine and timings; the fork cycle and `fork.gd`; every value in `slice_tuning.gd` and `features/player/tuning.gd`.
-- Presentation code may read `state`, `player.just_landed` and `player.global_position`. It never writes any game, player, fork or session state.
-- Changes to `session.gd` beyond the single `_ready()` line that adds the driver. That line is proposed in the Step 3 plan and needs Kiran's approval.
-- Sound and music (`godot/audio/`); the HUD; the look of everything other than the two effects.
-- `godot/shaders/`, `godot/materials/`, the showcase scenes, all source art, every existing test and its expected counts, and `scripts/run-test.sh`.
-- Effects or behaviour the brief does not name: no extra emitters, sub-emitters, trails, collision, turbulence, screen shake or sound.
+- Gameplay: movement, input, jump buffer and coyote, collision boxes and layers, `choose_pose()` (its order, conditions and return values), `LAND_TICKS`, `SCOOT_FRAME` and every other value in `slice_tuning.gd` and `tuning.gd`.
+- In `player.gd`, everything except the visual setup and the pose-to-visual mapping (brief line 102). `session.gd`, `fork.gd`, the HUD, sound and music, other level objects.
+- The A5 shaders and materials, the A6 effects and driver, all source art and `.import` files other than the new sheet's, every existing test and its expected counts, and `scripts/run-test.sh`.
+- Anything the brief does not name: no extra clips, AnimationTree, blend or state machine, bones or Skeleton2D, rotation, lag, overshoot, new gameplay windows, or keys on gameplay values.
 
 ## Unconfirmed
 
-- **Kiran's predictions in the brief, still open or only partly checked:**
-  - `restart()` re-applies preprocess (B3): unverified. Effect B's r0 strip was already full by frame 10, after the preview's `restart()` (`captures/dome_glints/r0`, commit `0d96cc5`), but that does not establish whether `restart()` re-applies preprocess, and the replay was not checked in play.
-  - Glints present when shown again (B6): seen in play; turning Visible off hid the glints, and turning it back on brought them back right away (TEST-REPORT.md, "In play — Effect B", item 6, commit `84fdb90`).
-  - At most 2 bursts alive (A5): a peak of 2 in two controlled tests only, the scripted route of the Effect A state test (commit `1994c53`) and the cost script's lifecycle schedule (`check_lifecycle_peak.gd`, commit `823dec8`). The real gameplay peak is unverified.
-  - Two puffs' crumbs visibly overlap in play (A4): unverified; I did not see it on my plate-edge attempt (TEST-REPORT.md, "In play — Effect A", item 2, commit `38b1d0d`).
-  - The hand-set `visibility_rect`s: no pop seen at the screen edges I checked in play (Effect A: commit `38b1d0d`, item 6; Effect B, walking left with the dome on screen: commit `84fdb90`, item 5). Other edges and positions are unchecked.
-  - The 2D collision/SDF claim (Answers 1): unverified.
-- **A6 headless facts, to move into Headless facts only once confirmed on this machine:**
-  - "A headless run uses a dummy renderer: it draws no particles and runs no GPU particle process." Unverified. The cost script's log reported the rendering driver as `opengl3` (`logs/cost_effects_60fps_mine_20261108-001211.log`), which does not settle whether particles were drawn or processed on the GPU. The node-state part of the original statement is in Headless facts.
-  - "A GPU effect's headless CPU price is near zero by construction." Not established: my Step 7 run could not distinguish any of the three tested effect cases from the effects-off baseline within the observed spread (Headless facts).
-- **Ring with axis Y collapsing to a line** with `particle_flag_disable_z` (predicted failure 2): unverified at spawn. Related evidence only: the generated process shader zeroes z for velocity and position while processing (`particles_generated.gdshader` lines 374 and 389), and Claude's reading of strip r1 found the crumbs within a few px of the surface with no stray high crumb (`sessions/a6/session-4d-comparison.md`). Neither directly shows whether the ring collapses when particles spawn.
-- **Draw order of the land puff:** the puff stays at `z_index` −1, the same as the sauce (session.gd line 142) and each fork's shadow (fork.gd line 39). In the situations I tested, it was visible under a fork's shadow and on the plate edge nearest the sauce (TEST-REPORT.md, "In play — Effect A", item 5, commit `38b1d0d`); that does not establish the general rule for equal `z_index`. A table landing beside the sauce is unchecked.
-- **Two check runners:** README.md line 33 names `tools/run_slice_checks.sh`, while AGENTS.md requires `scripts/run-test.sh`. I did not read `run_slice_checks.sh`.
-- **Existing suites in realtime mode:** no realtime run of the existing suites was recorded for A6.
+- **Animation API names in 4.7.2:** not checked by a probe or the class reference in this session. Includes `loop_mode`, `step`, `value_track_set_update_mode`, the key `transition` argument, `seek()`'s `update` argument, `current_animation_position` and `callback_mode_process`.
+- **Same-tick ordering:** whether the AnimationPlayer's physics-callback update runs before or after `player.gd`'s `_physics_process` in one tick. Also whether a `play()` + `seek()` from player.gd shows the synced frame on that tick or the next. This decides the "no extra advance on entry" check (brief line 100).
+- **`landing-r0`:** I found no file or folder with that name in the repo. It appears only in CHANGE-BRIEF.md and `sessions/a7/session-1b.jsonl`, which I did not read. The 291/292/299/300 frame reading is unverified by me.
+- **Behaviour pins:** none exist yet. The brief requires them committed before wiring (line 111).
+- **Hosting:** how `player.gd` attaches `player_visuals.tscn`, and how the original sprite is hidden, is not specified. It needs a plan Kiran approves.
+- **Saved library format:** whether an embedded AnimationLibrary that references external `.tres` clips saves and reloads as intended, including from an empty import cache.
+- **Import settings:** I did not read the CHAR-SCOOT-A/B `.import` `[params]` that the sheet must match.
+- **Realtime runs:** `baseline-14.txt` lists fixed-fps runs only. No realtime run of the suites is recorded for A7.
+- **Check runners:** README.md line 33 names `tools/run_slice_checks.sh`; AGENTS.md requires `scripts/run-test.sh`. I did not read `run_slice_checks.sh`.
+- **A6 open items:** GPU timing, puff overlap, gameplay peak and others are listed in the A6 version of this file in git history. None was rechecked for A7.
