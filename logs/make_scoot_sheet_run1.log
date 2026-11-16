@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCOOT SHEET: packing res://assets/art/CHAR-SCOOT-A.png + res://assets/art/CHAR-SCOOT-B.png -> res://assets/art/CHAR-SCOOT-SHEET.png
+SOURCE 0: res://assets/art/CHAR-SCOOT-A.png sha256=6aa35cf27aa3ed6202f2d0254f1defe456d0db4a387981cf0104be03af6b916a brief_sha256_match=true
+SOURCE 0: size=1024x1024 format=RGBA8 mipmaps=false
+SOURCE 1: res://assets/art/CHAR-SCOOT-B.png sha256=f95dacdb13614d9ed7d4a5798e3bf6df8902d5dcd5186f368631bcce0a4bb271 brief_sha256_match=true
+SOURCE 1: size=1024x1024 format=RGBA8 mipmaps=false
+PACKED: size=2048x1024 format=RGBA8 mipmaps=false
+PACKED cell 0: mismatched pixels=0
+PACKED cell 1: mismatched pixels=0
+OUTPUT: res://assets/art/CHAR-SCOOT-SHEET.png written
+OUTPUT: size=2048x1024 format=RGBA8 mipmaps=false sha256=30b0ab635693477205cb9611160dcafd735a1f3e67ba7ffdb4fc3556eee04736
+VERIFY cell 0 (res://assets/art/CHAR-SCOOT-A.png): mismatched pixels=0
+VERIFY cell 1 (res://assets/art/CHAR-SCOOT-B.png): mismatched pixels=0
+SCOOT SHEET: OK

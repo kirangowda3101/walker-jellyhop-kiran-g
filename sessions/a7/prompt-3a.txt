@@ -1,0 +1,52 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md is the contract for this change
+("Sheet and cycle"). This task is only the sheet-packing tool. Kiran will
+review it and run it himself; you cannot run anything in this session.
+
+Create exactly one file: godot/tools/make_scoot_sheet.gd. Do not create,
+edit or delete any other file. You may read any project file for
+context, for example the brief, CLAUDE.md, AGENTS.md, the existing
+scripts in godot/tools/ and the tests in godot/tests/.
+
+What the tool does:
+- extends SceneTree, does all its work in _initialize(), then quits with
+  exit code 0 on success and 1 on any failure. Kiran runs it as:
+    godot --headless --path godot --script res://tools/make_scoot_sheet.gd
+- Sources: res://assets/art/CHAR-SCOOT-A.png (cell 0, left) and
+  res://assets/art/CHAR-SCOOT-B.png (cell 1, right). Load each one from
+  the PNG file itself (Image.load_from_file on the globalized path), not
+  with load() or ResourceLoader: the imported texture is re-encoded with
+  mipmaps, so it is not the source pixels.
+- If a source does not load as exactly 1024 x 1024 in RGBA8, stop with
+  exit 1 and say what it loaded as. Do not convert, crop or resize.
+- Pack: a new 2048 x 1024 RGBA8 image with no mipmaps. Copy SCOOT-A to
+  x 0-1023 and SCOOT-B to x 1024-2047, y 0-1023, as an exact pixel copy
+  (blit), with no scaling, filtering, padding or margin.
+- Output: res://assets/art/CHAR-SCOOT-SHEET.png.
+  - If the output does not exist, save it as PNG.
+  - If it exists and is pixel-identical to the freshly packed image,
+    do not write; report "unchanged" and continue to verification.
+  - If it exists and differs, do not write; report that and exit 1.
+- Verify from disk: reload the saved PNG with Image.load_from_file and
+  check that it is 2048 x 1024 RGBA8 and that each cell's raw pixel bytes
+  equal its source's exactly. Report the number of mismatched pixels per
+  cell (0 means identical).
+- Print the SHA-256 of both source files and of the output file
+  (FileAccess.get_sha256), the size and format of each image, and one
+  summary line: "SCOOT SHEET: OK" or "SCOOT SHEET: FAILED (<reason>)".
+- Never write to the source PNGs or to any .import file. Never write
+  any file other than the sheet PNG.
+
+Put a short header comment in the file: what it does, how to run it,
+what it checks, and that the source frames' provenance is in
+CHANGE-BRIEF.md and ASSET-LOG.md.
+
+Use Godot 4.7.2 names (CLAUDE.md, "Godot 4 names"). In your final report
+list every engine method or constant the tool uses that you are not
+certain exists with that exact name and signature in 4.7.2, so Kiran can
+check them before running.
+
+Final report, in this order: the file you created; how to run it; the
+output Kiran should expect on a first run and on a re-run; the names you
+are unsure of; and what the tool cannot check (for example, how the
+sheet looks in game and its import settings). Do not claim it works: it
+has not been run.
