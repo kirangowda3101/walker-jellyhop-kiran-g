@@ -1,0 +1,34 @@
+Read CLAUDE.md first. Write one file, sessions/a7/verify_fresh_clone.sh,
+and nothing else. Do not run it; Kiran runs it after tagging a7.
+
+A bash script (set -euo pipefail) run from the repository root:
+  bash sessions/a7/verify_fresh_clone.sh [ref]   (default ref: a7)
+1. Refuses to start if ../a7-check exists. Clones the repository from
+   "git remote get-url origin" into ../a7-check and checks out the ref.
+   Prints the checked-out commit SHA.
+2. Runs godot --headless --path godot --import once in the clone; records
+   its exit code.
+3. Runs every suite through the clone's ./scripts/run-test.sh in its
+   pinned mode, one at a time, and reads each log's summary line:
+   test_game 60 (25), test_slice 60 (61), test_keyboard 60 (12),
+   test_a3_assets 60 (36), test_fork_warning 30/60/144 (29 each),
+   test_materials 30/60/144 (108 each), test_land_puff_config 60 (51),
+   test_land_puff_state 60 (24), test_dome_glints_config 60 (45),
+   test_dome_glints_state 60 (27), test_a7_pins 30/60/144 (31 each),
+   test_a7_scoot_readback 60 (62), test_a7_land_readback 60 (135),
+   test_a7_visual_structure 60 (29), test_a7_visual_state 30/60/144 (132
+   each), test_a7_edges 30/60/144 (397 each); every one must report
+   "<n> checks / 0 failures" with exit 0. Then probe_a7_entry_order
+   30/60/144 (exit 0 and an H3VERDICT line with pass=yes), and the two
+   supplemental checks: cost_effects 60 with timeout 300 ("control
+   separates: true") and check_lifecycle_peak 60 ("peak" of 2), reported
+   separately and not counted.
+4. Checks every log for "SHADER ERROR", "SCRIPT ERROR" or "Failed loading
+   resource".
+5. Prints a table (suite, mode, expected, observed, exit, PASS/FAIL) and
+   writes it, with the commit SHA, date and Godot version, to
+   ~/Documents/a7-reference/fresh-clone-<sha>.txt, outside the
+   repository. Exits 0 only if everything passed. Leaves ../a7-check in
+   place for inspection and says how to remove it.
+Read the existing test files to get each summary-line format right.
+Final report: the script in full and how to run it. Do not stage or commit.
