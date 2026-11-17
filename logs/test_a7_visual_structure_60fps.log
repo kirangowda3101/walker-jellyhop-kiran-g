@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+A7 VISUAL STRUCTURE: engine=4.7.2-stable (official)
+PASS mapping-keys-are-existing-poses: POSE_CLIPS keys ["LAND", "SCOOT-A", "SCOOT-B"]; POSES ["IDLE", "BORED", "SCOOT-A", "SCOOT-B", "ANTIC", "RISE", "FALL", "LAND", "WORRY", "SPLAT", "RESPAWN", "CELEBRATE"]
+PASS mapping-exactly-land-and-scoot: POSE_CLIPS { "LAND": &"land", "SCOOT-A": &"scoot", "SCOOT-B": &"scoot" }
+PASS mapping-other-9-poses-have-no-clip: poses without a clip ["ANTIC", "BORED", "CELEBRATE", "FALL", "IDLE", "RESPAWN", "RISE", "SPLAT", "WORRY"]
+PASS hosting-one-player-visuals-child: children from res://features/player/player_visuals.tscn: ["PlayerVisuals"]
+PASS hosting-visuals-member-is-that-child: p.visuals=PlayerVisuals:<Node2D#74658614823>
+PASS hosting-scene-nodes-present: missing []; AnimationPlayer beside FacingPivot=true
+PASS hosting-members-point-at-scene-nodes: facing_pivot=FacingPivot:<Node2D#74675392002> scoot_node=Scoot:<Node2D#74692169254> land_rig=LandRig:<Node2D#74725723664> anim=AnimationPlayer:<AnimationPlayer#74809609739>
+PASS original-sprite-outside-facing-pivot: sprite parent=Player
+PASS original-sprite-textures-kept: pose=IDLE sprite.texture=res://assets/art/CHAR-IDLE.png
+PASS rest-state-original-sprite-only: pose=IDLE sprite=true scoot=false land_rig=false current_animation=""
+PASS rest-state-facing-pivot-mirror: facing=1.0 transform=[X: (1.0, 0.0), Y: (0.0, 1.0), O: (0.0, 0.0)]
+PASS route-one-animation-player-in-game: AnimationPlayer nodes: 1
+PASS route-no-animation-tree: AnimationTree nodes: 0
+PASS route-no-animated-sprite-2d: AnimatedSprite2D nodes: 0
+PASS route-root-node-resolves-to-player-visuals: root_node=.. -> PlayerVisuals:<Node2D#74658614823>
+PASS route-callback-physics: callback_mode_process=0
+PASS route-no-reset-clip: animations ["land", "scoot"]
+PASS route-every-requested-clip-exists: requested [&"land", &"scoot", &"scoot"]; library ["land", "scoot"]
+PASS route-no-method-tracks: method tracks []
+PASS route-every-track-resolves-in-hosted-scene: unresolved []
+PASS authority-no-script-in-visuals-scene: nodes with a script []
+PASS authority-player-gd-never-builds-or-writes-animated-nodes: banned tokens found []
+PASS authority-playback-calls-only-play-seek-stop-pause: anim calls ["stop()", "stop()", "is_playing()", "pause()", "stop()", "play(want)", "seek(_clip_time(want), true)"]; unexpected []
+PASS authority-play-only-names-from-pose-clips: assignments to want ["POSE_CLIPS.get(pose, &\"\")"]
+PASS authority-visual-writes-only-facing-and-visibility: writes ["facing_pivot.transform", "scoot_node.visible", "land_rig.visible"]; unexpected []
+PASS authority-facing-mirror-as-brief: full mirror transform written from facing
+PASS authority-original-sprite-visibility-written: sprite.visible follows the no-clip case
+PASS authority-visual-code-never-writes-gameplay-state: _update_visuals at line 193; gameplay writes after it []
+PASS authority-no-other-game-script-touches-visuals: mentions outside player.gd []
+A7 VISUAL STRUCTURE: 29 checks / 0 failures
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

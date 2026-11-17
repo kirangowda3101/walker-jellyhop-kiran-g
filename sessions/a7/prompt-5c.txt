@@ -1,0 +1,72 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1 and Revision 1) is the
+contract. The Step 5 plan (sessions/a7/session-5a.jsonl) was approved by
+Kiran, including pause handling. The probe (godot/tests/probe_a7_entry_order.gd,
+logs/probe_a7_entry_order_*fps.log) settled the entry method: use R1,
+play(clip) then seek(t, true), for every clip entry and every resume, and
+call nothing on steady ticks. This session carries out the rest of the
+approved plan in order, and stops on any stop condition below.
+
+Files you may change: godot/features/player/player.gd (visual code only),
+and create godot/tests/test_a7_visual_structure.gd and
+godot/tests/test_a7_visual_state.gd. Nothing else. You may run any test
+through ./scripts/run-test.sh only.
+
+0. Before running anything, read the PINDIGEST lines in the committed
+   logs logs/test_a7_pins_30fps.log, _60fps.log and _144fps.log and keep
+   them as the before values.
+
+1. Wire player.gd exactly as the plan's Item 2: lines 1-171 stay
+   byte-for-byte the same; add one call, _update_visuals(), at the end of
+   _update_pose(); put all new code after it. _update_visuals() hosts
+   player_visuals.tscn on first call; writes FacingPivot.transform =
+   Transform2D(Vector2(facing, 0), Vector2(0, 1), Vector2.ZERO),
+   Scoot.visible, LandRig.visible and sprite.visible; and makes every
+   play/seek/stop/pause call. Mapping: LAND -> land, SCOOT-A/SCOOT-B ->
+   scoot, every other pose -> no clip and the original sprite. Entry
+   (different clip, or just_landed while LAND is selected, or the first
+   enabled tick after a pause): play then seek(t, true), with LAND t =
+   (T.LAND_TICKS - land_ticks) / 60 and SCOOT t = (tick % 14) / 60
+   (14 = 2 * T.ticks(T.SCOOT_FRAME)). Leaving a clip: stop(). SCOOT-A <->
+   SCOOT-B: no call. Player disabled with a clip selected: pause(). The
+   new code only reads game state. Then run the pins at 30, 60 and 144:
+   each must be 31 / 0 with PINDIGEST lines identical to the before values.
+
+2. Create test_a7_visual_structure.gd as in the plan's Step 3 and run it at 60.
+
+3. Create test_a7_visual_state.gd as in the plan's Step 4, cases (a)-(f),
+   with Revision 1: (e) pause with Escape during LAND and during SCOOT,
+   checking the selected pose stays the same, the clip time stays frozen,
+   and the resume is at the synced time; and the override-resume case
+   reported as "not reachable through real input", never as a pass. Use
+   the pins' harness unchanged: real game loop, Input.parse_input_event
+   plus flush, presses sent at the end of the tick before they are read,
+   never test_control or a direct call. Read the clip with
+   current_animation. After both updates each tick, check: clip time
+   within 1e-6 s of expected; the displayed SCOOT cell equals the pose's
+   letter; rig values within 1e-4 of land.value_track_interpolate at the
+   expected time; the right visual is the only one visible. Run at 30,
+   60 and 144.
+
+4. Full re-run: every command in CLAUDE.md's test list (the 14 counted
+   baseline runs), the pins at 30/60/144 with digests compared to step 0,
+   both read-backs at 60, the structure test at 60 and the state test at
+   30/60/144. Each must match its expected count: the baseline counts in
+   evidence/a7-baseline/baseline-14.txt, pins 31/0, scoot read-back 62/0,
+   land read-back 135/0.
+
+Stop conditions. Stop and report, changing nothing further, if: a pin
+count or PINDIGEST changes; a baseline count changes; a read-back
+changes; a brief rule conflicts with the code; or a state-test check
+fails for a reason you cannot fix inside your own new code. Never change
+clip keys, the scene, the brief, CLAUDE.md, existing tests or pins, and
+never weaken, skip or delete an assertion. Search each log for any
+"ERROR" line, not only the wrapper's three patterns, and fix your own
+formatting errors.
+
+Final report: the player.gd diff (new lines only, plus confirmation that
+lines 1-171 are unchanged); the structure and state tests' check lists,
+with the brief rule each covers; a table of every run (test, rate,
+summary line, exit code, log path); the PINDIGEST before and after;
+cases (a)-(f) with observed results; anything that stopped you; and
+what no headless run can show. Claim nothing a run output does not
+show. Do not stage or commit.

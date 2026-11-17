@@ -169,3 +169,68 @@ func _update_pose() -> void:
 	var wanted := LOW if pose in LOW_POSES else STANDING
 	if wanted != box:
 		set_box(wanted)
+	_update_visuals()
+
+# ---------------------------------------------------------------- A7 visual layer
+## CHANGE-BRIEF.md (A7), "Scene, authority and states" and Revision 1. Everything below only reads
+## gameplay state (pose, facing, tick, land_ticks, just_landed, enabled); it never writes it.
+## The AnimationPlayer alone writes ScootSprite.frame and the rig pivots; this code writes only the
+## facing mirror, the three visibility flags and the playback calls.
+
+const VISUALS_SCENE = preload("res://features/player/player_visuals.tscn")
+## Pose -> clip. Every other pose shows the original sprite with no clip.
+const POSE_CLIPS := {"LAND": &"land", "SCOOT-A": &"scoot", "SCOOT-B": &"scoot"}
+const CLIP_FPS := 60.0   # both clips: step 1/60 s, one physics tick per timeline frame
+
+var visuals: Node2D
+var facing_pivot: Node2D
+var scoot_node: Node2D
+var land_rig: Node2D
+var anim: AnimationPlayer
+var clip: StringName = &""        # the clip this code last entered, or "" for the original sprite
+var clip_held: bool = false       # the player was disabled with a clip selected: re-enter when enabled
+
+func _update_visuals() -> void:
+	if visuals == null:
+		visuals = VISUALS_SCENE.instantiate()
+		add_child(visuals)
+		facing_pivot = visuals.get_node("FacingPivot")
+		scoot_node = visuals.get_node("FacingPivot/Scoot")
+		land_rig = visuals.get_node("FacingPivot/LandRig")
+		anim = visuals.get_node("AnimationPlayer")
+	facing_pivot.transform = Transform2D(Vector2(facing, 0), Vector2(0, 1), Vector2.ZERO)
+	var want: StringName = POSE_CLIPS.get(pose, &"")
+	scoot_node.visible = want == &"scoot"
+	land_rig.visible = want == &"land"
+	sprite.visible = want == &""
+	if want == &"":
+		# Leaving a clip (hop, walk-off, override, tick-8 hand-off, reset): stop it.
+		if clip != &"":
+			anim.stop()
+		clip = &""
+		clip_held = false
+		return
+	if not enabled:
+		# Paused or locked with a clip selected: freeze it; it re-enters on the first enabled tick.
+		if clip != want and clip != &"":
+			anim.stop()
+		clip = want
+		if anim.is_playing():
+			anim.pause()
+		clip_held = true
+		return
+	var entry := want != clip or clip_held or (want == &"land" and just_landed)
+	if not entry:
+		return   # steady tick, including SCOOT-A <-> SCOOT-B: no call
+	if clip != &"" and clip != want:
+		anim.stop()
+	anim.play(want)
+	anim.seek(_clip_time(want), true)
+	clip = want
+	clip_held = false
+
+func _clip_time(c: StringName) -> float:
+	## The synced entry time: LAND (8 - land_ticks) / 60, SCOOT (tick % 14) / 60.
+	if c == &"land":
+		return float(T.LAND_TICKS - land_ticks) / CLIP_FPS
+	return float(tick % (2 * T.ticks(T.SCOOT_FRAME))) / CLIP_FPS
