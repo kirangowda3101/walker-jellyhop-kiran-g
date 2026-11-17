@@ -236,4 +236,4 @@ Claude in chat (claude.ai) drafted the shell commands, guarded patches, Claude C
 prompt-1 is the handout's Step 1 prompt verbatim; prompt-5a starts with the handout's Step 5 prompt verbatim plus my planning items; all other prompts were drafted in chat from my decisions, and I approved each before it ran.
 
 **Collaborators**
-- [Kiran: confirm "None. A7 is individual work."]
+- None. A7 is individual work. Claude assisted with implementation, testing, and documentation as recorded in `SOURCES.md`.

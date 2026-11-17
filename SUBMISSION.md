@@ -32,6 +32,6 @@ The one authority over each animated node: one AnimationPlayer in godot/features
 Sprite sheet source and licence (or model, version, and terms): CHAR-SCOOT-SHEET.png packs my A2 CHAR-SCOOT-A/B art, made with Stable Diffusion XL Base 1.0 under the CreativeML Open RAIL++-M terms dated 2023-07-26 (checked 2026-11-16); packed by godot/tools/make_scoot_sheet.gd with 0 mismatched pixels per cell. Details in godot/assets/art/CHAR-SCOOT-SHEET.ATTRIBUTION.md.
 Final film URL and filename: [to fill]
 Final film SHA-256: [to fill]
-Summary of my work: [to fill by Kiran]
+Summary of my work: I set the animation goals for Jelly’s looping SCOOT and one-shot LAND, then used behavior pins, tests, and live play to check how the clips worked with the existing game. I captured and compared both landing versions and kept r1 because the slightly deeper squash was clearer in the stills while the landing still looked smooth in play.
 Known limitations: a pause during LAND followed by SCOOT on the first enabled tick is untested; the LAND resume after an override cannot be reached through real input; the 14 earlier runs were not re-run after the r1 key change (9ada865); capture_poses.gd has not been run since wiring; Claude's strip readings are from unzoomed stills; the frame strips are fixtures, not gameplay captures.
 Changed games since Assignment 2 (yes/no; if yes, FRICTIONAL.md entry): no

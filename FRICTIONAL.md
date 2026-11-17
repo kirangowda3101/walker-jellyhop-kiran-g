@@ -990,31 +990,31 @@ I made and approved the design decisions, reviewed and revised the brief, inspec
 
 The agent wired the visuals as approved (`sessions/a7/session-5c.jsonl`). `player.gd` lines 1–171 stayed unchanged, and `_update_visuals()` was appended. Pins: 31/0 at 30, 60 and 144, with all PINDIGESTs identical to `fe9a1f0`. Structure test: 29/0. State test: **132 checks / 5 failures at all three rates**. When LAND handed off to SCOOT in a single tick (stop, then play + seek), SCOOT showed one tick ahead. The agent's report quotes the 60 fps log: at tick 8100, `exp_t=0.083333333333 pos=0.100000000000 diff_ticks=1.000000`; at tick 8101, cell 1 shown during SCOOT-A. The splat case showed the same lead. Everything else was exact. The agent stopped as instructed.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** The LAND → SCOOT switch showed me that setting the right pose and clip wasn’t enough. I also had to check when the animation advanced, because it could show the next frame one tick too early.
 
 ### 13. Hand-off probe, first round (5d, fd4d855)
 
 The agent tested three hand-off variants in the supplemental probe (`sessions/a7/session-5d.jsonl`): H0 `stop()`, H1 `stop(true)` and H2 no stop. All three failed the selection rule at 30, 60 and 144 on a LAND → SCOOT switch in one tick. The commit records the finding: whenever the AnimationPlayer was already playing a clip, it added 1/60 s in its own update that tick. Fresh entries (R1) were still exact. `player.gd` was unchanged, and the agent stopped as instructed.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** I wanted to see whether `stop(true)` or skipping `stop()` would fix the timing. All three versions still ran one tick ahead, so changing the stop call alone wasn’t enough.
 
 ### 14. Hand-off fix (5e, 5c0fb9a)
 
 Probe variant H3 (`sessions/a7/session-5e.jsonl`): stop, `play(&"scoot")`, then seek `fposmod(t − 1/60, length)`. It passed the rule at 30, 60 and 144 for all 14 phases, including phase 0 at the wrap and cell 1 at 7/60. The agent applied it only to the direct LAND → SCOOT entry, not to a resume after a pause. Afterwards: state test 132/0 at 30, 60 and 144 (was 132/5). The 14 baseline counts matched. Pins 31/0 with PINDIGESTs identical to `fe9a1f0`. Read-backs 62/0 and 135/0. Structure 29/0, with its pattern widened for the new seek argument.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** Starting one tick earlier made sense because the animation advanced once on that same tick and ended up on the frame I wanted. What convinced me was that the probe passed at every SCOOT phase, including the wrap, and the state test passed at 30, 60, and 144 fps with the pins unchanged.
 
 ### 15. CHANGE-BRIEF.md Revision 2 (ed4f64d)
 
 Revision 2 was appended, with Version 1 and Revision 1 unchanged. The direct LAND → SCOOT switch seeks one tick earlier because the AnimationPlayer adds 1/60 when it is already playing (`fd4d855`). The evidence is H3 and the green regression in `5c0fb9a`. A resume after a pause keeps the plain seek. The commit records this as the agent's call, accepted, and as an untested edge.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** I accepted the pause exclusion because the extra tick was reproduced during a direct LAND → SCOOT switch. I kept the fix scoped to that case and left pausing during LAND and resuming into SCOOT as a separate case to test.
 
 ### 16. Edges and re-pin (167f3ab)
 
 The agent wrote `test_a7_edges.gd` (`sessions/a7/session-6.jsonl`): 397 checks / 0 failures at 30, 60 and 144. All 12 interrupt cases matched the brief in pose, clip, clip time and visibility on every tick. The pins were re-run: 31/0 at 30, 60 and 144, all 11 PINDIGESTs unchanged; the 60 fps log differed only in the exit-time shutdown lines. The agent also wrote `sessions/a7/mutations.sh` but did not run it; the commit says it passed `bash -n` and was checked by Kiran.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** Yes, all 12 interrupt cases matched the behavior I expected from the pins. The edge checks passed at all three frame rates, and the pin digests stayed the same.
 
 ### 17. Mutations and fresh cache (c19f966)
 
@@ -1027,13 +1027,13 @@ Kiran ran `sessions/a7/mutations.sh` at `167f3ab` (`evidence/a7-mutations/summar
 
 Each mutation imported with exit 0 and left its intended FAIL line in the log.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** M1–M3 each failed on the problem I meant to introduce: a bad property name, the wrong loop setting, and an invalid sprite cell. M4 passed after a clean import, which showed the saved clips carried the settings the tests expected.
 
 ### 18. Preview fixtures and the capture script (7a, in c19f966)
 
 The agent wrote `land_preview` and `scoot_preview` (`sessions/a7/session-7a.jsonl`). Both drive the real game with real input. Headless results: the land trigger frame 146 shows rig 0, then 2, 4 and 6, then IDLE at tick 8; the scoot preview shows 2 swaps and 2 wraps per direction. The agent also wrote `sessions/a7/capture_strips.sh`, which passed `bash -n` and had not yet been run at that commit.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** I checked that the frame numbers in the logs matched the PNGs and that each landing frame showed the expected pose. For SCOOT, I checked the frames around the A/B swap and the loop wrap in both directions.
 
 ### 19. Strips r0 and my first verdict (76a158c)
 
@@ -1044,7 +1044,7 @@ Kiran ran `capture_strips.sh`, and all of its checks passed. It kept 36 fixture 
 
 The logs sit beside the frames, and the full sequences are outside the repo. Kiran's r0 verdict is in TUNING.md, written before any Claude reading.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** The first thing I noticed was that the landing looked smooth at normal speed. The hold was easier to see frame by frame, and at quarter speed I could see Jelly’s bottom edge stay planted on the plate.
 
 ### 20. r1 change (7b, 9ada865)
 
@@ -1055,10 +1055,10 @@ Chosen by Kiran from his r0 verdict, edited by the agent (`sessions/a7/session-7
 - Claude's reading of r0 and its r1 prediction were appended to TUNING.md, labelled agent.
 - Runs: land read-back 135/0; state 132/0 and edges 397/0 at 30, 60 and 144; pins 31/0 with PINDIGESTs unchanged; scoot 62/0; structure 29/0. The 14 baseline runs are not listed as re-run.
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** I chose `0.55` because r0 already looked smooth and I wanted to try a small change. I expected the deeper squash to make the hold easier to see while keeping the same timing.
 
 ### 21. r1 kept and CHANGE-BRIEF.md Revision 3 (09ee716)
 
 Kiran's r1 captures: 36 fixture frames, all checks passed. His r1 verdict in TUNING.md says the two were barely distinguishable at normal speed, and that in stills r1 looks slightly flatter and holds at rig 2 and 4, with feet planted, no seam and the same IDLE spot. He kept r1. Revision 3 records lower height 0.55 at frames 2 and 4, UpperPivot y −11.077, and a deepest squash of about 43 px, with the timing unchanged. Claude's comparison of r1 was written afterwards, in this session (TUNING.md).
 
-[Kiran: what I expected / checked / learned]
+**Kiran:** I could barely tell the versions apart at normal speed, but r1 looked slightly flatter at frames 2 and 4 in Preview. I kept it because the squash was a little clearer in those frames, the seam stayed clean, and Jelly returned to IDLE in the same spot.
