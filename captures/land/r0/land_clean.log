@@ -1,0 +1,159 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4
+
+Movie Maker mode enabled, recording movie in 1280×720 @ 30 FPS...
+LAND PREVIEW (A7 fixture): engine=4.7.2-stable (official) physics_ticks_per_second=60
+FRAME 0 ticks=1 tick=1 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 1 ticks=2 tick=3 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 2 ticks=2 tick=5 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 3 ticks=2 tick=7 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 4 ticks=2 tick=9 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 5 ticks=2 tick=11 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 6 ticks=2 tick=13 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 7 ticks=2 tick=15 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 8 ticks=2 tick=17 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 9 ticks=2 tick=19 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 10 ticks=2 tick=21 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 11 ticks=2 tick=23 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 12 ticks=2 tick=25 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 13 ticks=2 tick=27 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 14 ticks=2 tick=29 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 15 ticks=2 tick=31 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 16 ticks=2 tick=33 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 17 ticks=2 tick=35 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 18 ticks=2 tick=37 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 19 ticks=2 tick=39 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 20 ticks=2 tick=41 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 21 ticks=2 tick=43 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 22 ticks=2 tick=45 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 23 ticks=2 tick=47 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 24 ticks=2 tick=49 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 25 ticks=2 tick=51 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 26 ticks=2 tick=53 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 27 ticks=2 tick=55 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 28 ticks=2 tick=57 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 29 ticks=2 tick=59 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 30 ticks=2 tick=61 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 31 ticks=2 tick=63 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 32 ticks=2 tick=65 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 33 ticks=2 tick=67 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 34 ticks=2 tick=69 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 35 ticks=2 tick=71 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 36 ticks=2 tick=73 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 37 ticks=2 tick=75 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 38 ticks=2 tick=77 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 39 ticks=2 tick=79 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 40 ticks=2 tick=81 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 41 ticks=2 tick=83 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 42 ticks=2 tick=85 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 43 ticks=2 tick=87 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 44 ticks=2 tick=89 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 45 ticks=2 tick=91 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 46 ticks=2 tick=93 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 47 ticks=2 tick=95 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 48 ticks=2 tick=97 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 49 ticks=2 tick=99 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 50 ticks=2 tick=101 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 51 ticks=2 tick=103 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 52 ticks=2 tick=105 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 53 ticks=2 tick=107 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 54 ticks=2 tick=109 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 55 ticks=2 tick=111 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 56 ticks=2 tick=113 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 57 ticks=2 tick=115 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 58 ticks=2 tick=117 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 59 ticks=2 tick=119 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 60 ticks=2 tick=121 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 61 ticks=2 tick=123 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 62 ticks=2 tick=125 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 63 ticks=2 tick=127 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 64 ticks=2 tick=129 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 65 ticks=2 tick=131 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 66 ticks=2 tick=133 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 67 ticks=2 tick=135 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 68 ticks=2 tick=137 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 69 ticks=2 tick=139 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 70 ticks=2 tick=141 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 71 ticks=2 tick=143 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 72 ticks=2 tick=145 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 73 ticks=2 tick=147 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 74 ticks=2 tick=149 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 75 ticks=2 tick=151 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 76 ticks=2 tick=153 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 77 ticks=2 tick=155 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 78 ticks=2 tick=157 ptick=0 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 79 ticks=2 tick=159 ptick=2 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 80 ticks=2 tick=161 ptick=4 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 81 ticks=2 tick=163 ptick=6 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 82 ticks=2 tick=165 ptick=8 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+PLAN ready_tick=167 ticks_per_frame=2 last_frame_end_tick=165 press_tick=170 predicted_touchdown=211 (last tick of a frame)
+FRAME 83 ticks=2 tick=167 ptick=10 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+INPUT tick=169 frame=84 key=Space pressed=true read_tick=170
+FRAME 84 ticks=2 tick=169 ptick=12 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+INPUT tick=171 frame=85 key=Space pressed=false read_tick=172
+FRAME 85 ticks=2 tick=171 ptick=14 pose=ANTIC land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 86 ticks=2 tick=173 ptick=16 pose=ANTIC land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 87 ticks=2 tick=175 ptick=18 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 88 ticks=2 tick=177 ptick=20 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 89 ticks=2 tick=179 ptick=22 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 90 ticks=2 tick=181 ptick=24 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 91 ticks=2 tick=183 ptick=26 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 92 ticks=2 tick=185 ptick=28 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 93 ticks=2 tick=187 ptick=30 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 94 ticks=2 tick=189 ptick=32 pose=RISE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 95 ticks=2 tick=191 ptick=34 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 96 ticks=2 tick=193 ptick=36 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 97 ticks=2 tick=195 ptick=38 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 98 ticks=2 tick=197 ptick=40 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 99 ticks=2 tick=199 ptick=42 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 100 ticks=2 tick=201 ptick=44 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 101 ticks=2 tick=203 ptick=46 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 102 ticks=2 tick=205 ptick=48 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 103 ticks=2 tick=207 ptick=50 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 104 ticks=2 tick=209 ptick=52 pose=FALL land_ticks=0 clip=- t=- cell=0 facing=+1
+TOUCHDOWN tick=211 predicted=211 press_tick=170
+FRAME 105 ticks=2 tick=211 ptick=54 pose=LAND land_ticks=8 clip=land t=0.000000 cell=0 facing=+1
+TRIGGER frame=105 touchdown_tick=211 last_tick_of_frame=211 ticks=2 aligned=true
+FRAME 106 ticks=2 tick=213 ptick=56 pose=LAND land_ticks=6 clip=land t=0.033333 cell=0 facing=+1
+FRAME 107 ticks=2 tick=215 ptick=58 pose=LAND land_ticks=4 clip=land t=0.066667 cell=0 facing=+1
+FRAME 108 ticks=2 tick=217 ptick=60 pose=LAND land_ticks=2 clip=land t=0.100000 cell=0 facing=+1
+FRAME 109 ticks=2 tick=219 ptick=62 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+STRIP rel=-1 frame=104 tick=209 rel_tick=-2 pose=FALL land_ticks=0 clip=- t=- rig_frame=- ok=true expect="airborne FALL before contact"
+STRIP rel=+0 frame=105 tick=211 rel_tick=0 pose=LAND land_ticks=8 clip=land t=0.000000 rig_frame=0 ok=true expect="rig frame 0, impact: partial squash, planted feet"
+STRIP rel=+1 frame=106 tick=213 rel_tick=2 pose=LAND land_ticks=6 clip=land t=0.033333 rig_frame=2 ok=true expect="rig frame 2, deepest squash (about the low box)"
+STRIP rel=+2 frame=107 tick=215 rel_tick=4 pose=LAND land_ticks=4 clip=land t=0.066667 rig_frame=4 ok=true expect="rig frame 4, same squash, recovery begins"
+STRIP rel=+3 frame=108 tick=217 rel_tick=6 pose=LAND land_ticks=2 clip=land t=0.100000 rig_frame=6 ok=true expect="rig frame 6, eased rise, joined cut, fixed feet"
+STRIP rel=+4 frame=109 tick=219 rel_tick=8 pose=IDLE land_ticks=0 clip=- t=- rig_frame=- ok=true expect="tick 8, IDLE hand-off: no pop, seam or anchor shift"
+STRIP rel_ticks=[0, 2, 4, 6, 8] layout_30fps=true
+FRAME 110 ticks=2 tick=221 ptick=64 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 111 ticks=2 tick=223 ptick=66 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 112 ticks=2 tick=225 ptick=68 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 113 ticks=2 tick=227 ptick=70 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 114 ticks=2 tick=229 ptick=72 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 115 ticks=2 tick=231 ptick=74 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 116 ticks=2 tick=233 ptick=76 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 117 ticks=2 tick=235 ptick=78 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 118 ticks=2 tick=237 ptick=80 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 119 ticks=2 tick=239 ptick=82 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 120 ticks=2 tick=241 ptick=84 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 121 ticks=2 tick=243 ptick=86 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 122 ticks=2 tick=245 ptick=88 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 123 ticks=2 tick=247 ptick=90 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 124 ticks=2 tick=249 ptick=92 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 125 ticks=2 tick=251 ptick=94 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 126 ticks=2 tick=253 ptick=96 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 127 ticks=2 tick=255 ptick=98 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 128 ticks=2 tick=257 ptick=100 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+FRAME 129 ticks=2 tick=259 ptick=102 pose=IDLE land_ticks=0 clip=- t=- cell=0 facing=+1
+LAND PREVIEW: trigger_frame=105 touchdown_tick=211 problems=0
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+--------------------------------------------------------------------------------
+Done recording movie at path: /Users/kiran/Documents/walker-jellyhop-kiran-g/captures/land/r0/clean/frame.png
+130 frames at 30 FPS (movie length: 00:00:04:10), recorded in 00:00:23 (17% of real-time speed).
+CPU render time: 0.03 seconds (average: 0.21 ms/frame)
+GPU render time: 0.00 seconds (average: 0.00 ms/frame)
+Encoding time: 21.17 seconds (average: 162.86 ms/frame)
+--------------------------------------------------------------------------------

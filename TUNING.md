@@ -59,3 +59,14 @@ My verdict (running game, 1280 × 720): **kept**. I watched the intro in the run
 
 Strips: `captures/dome_glints/r0/`, `captures/dome_glints/r1/` (fixture captures, seed 2001, same preview).
 Commits: the ramp change (agent, approved by me), then strip r1 with Claude's comparison, then this verdict with the brief revision, in that order.
+
+---
+
+## A7 — landing, r0 (first verdict, mine, written before any Claude reading)
+
+Capture: `captures/land/r0/clean/` and `captures/land/r0/overlay/` (fixture frames from `res://previews/land_preview.tscn`, Movie Maker at 30 fps, run by me with `sessions/a7/capture_strips.sh`; full sequences outside the repo). I also played the preview windowed at normal speed and at `--time-scale 0.25`.
+
+- **Impact, hold, and rise:** Yes. The landing looked smooth at normal speed. In the clean frames, Jelly compresses on contact in 105, reaches its deepest squash in 106, holds it in 107, then rises in 108. The hold was easier to see frame by frame.
+- **Seam:** I didn't see an obvious gap, overlap, or line where the two pieces meet during the squash or rise.
+- **Feet:** Yes. At quarter speed, Jelly's bottom edge stayed planted on the plate as it squashed and rose.
+- **Return to IDLE:** I didn't notice a pop. Between frames 108 and 109, Jelly gets a little taller while its bottom edge stays in the same spot relative to the plate.
