@@ -23,10 +23,10 @@ PASS classdb-method Animation.value_track_get_update_mode:
 PASS classdb-method Animation.track_get_key_time: 
 PASS scene-loads: res://features/player/player_visuals.tscn
 PASS root PlayerVisuals Node2D: PlayerVisuals (Node2D)
-PASS FacingPivot Node2D child of root: FacingPivot:<Node2D#27145536971>
-PASS Scoot Node2D under FacingPivot: Scoot:<Node2D#27162314188>
-PASS ScootSprite Sprite2D under Scoot: ScootSprite:<Sprite2D#27179091420>
-PASS AnimationPlayer child of root, beside FacingPivot: AnimationPlayer:<AnimationPlayer#27195868632>
+PASS FacingPivot Node2D child of root: FacingPivot:<Node2D#27648853451>
+PASS Scoot Node2D under FacingPivot: Scoot:<Node2D#27665630668>
+PASS ScootSprite Sprite2D under Scoot: ScootSprite:<Sprite2D#27682407900>
+PASS AnimationPlayer child of root, beside FacingPivot: AnimationPlayer:<AnimationPlayer#27783071187>
 PASS no scripts on any node: []
 PASS ScootSprite texture path: res://assets/art/CHAR-SCOOT-SHEET.png
 PASS ScootSprite texture size 2048x1024: (2048.0, 1024.0)
@@ -41,11 +41,11 @@ PASS ScootSprite texture_filter LINEAR_WITH_MIPMAPS: 4 (constant 4)
 PASS AnimationPlayer root_node ..: ..
 PASS AnimationPlayer callback_mode_process PHYSICS: 0 (constant 0)
 PASS AnimationPlayer autoplay empty: ''
-PASS no RESET animation: ["scoot"]
+PASS no RESET animation: ["land", "scoot"]
 PASS exactly one library, the default "": [&""]
 PASS library is embedded in the scene: 'res://features/player/player_visuals.tscn::AnimationLibrary_visuals'
-PASS every track of every clip resolves (track_problems): 0 problems over clips ["scoot"]
-PASS clip scoot exists: ["scoot"]
+PASS every track of every clip resolves (track_problems): 0 problems over clips ["land", "scoot"]
+PASS clip scoot exists: ["land", "scoot"]
 PASS scoot resource path: res://animations/scoot.tres
 PASS scoot has exactly one track: 1
 PASS track 0 path: FacingPivot/Scoot/ScootSprite:frame

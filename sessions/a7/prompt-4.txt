@@ -1,0 +1,99 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md is the contract for this change
+("Rig design", "Scene, authority and states", "Clocks and boundaries").
+This is Step 4: set up the land clip and its read-back test. Do not wire
+anything: player.gd and every other existing file stay unchanged, except
+the one scene edit below.
+
+Files, and nothing else:
+1. Create godot/animations/land.tres
+2. Create godot/tests/test_a7_land_readback.gd
+3. Edit godot/features/player/player_visuals.tscn: add the rig nodes and
+   the library entry below. Keep every existing node, property and
+   resource in it exactly as it is.
+Do not touch godot/animations/scoot.tres or godot/tests/test_a7_scoot_readback.gd.
+Write the .tres and the .tscn edit as resource text; do not build them in
+code. The only commands you may run are the wrapper with these two tests:
+  ./scripts/run-test.sh test_a7_land_readback.gd 60
+  ./scripts/run-test.sh test_a7_scoot_readback.gd 60
+
+Scene additions (all positions in game pixels; pivots unscaled at rest):
+- FacingPivot/LandRig (Node2D)
+- FacingPivot/LandRig/LowerPivot (Node2D), position (0, 0), scale (1, 1)
+- FacingPivot/LandRig/LowerPivot/LowerSprite (Sprite2D):
+  texture res://assets/art/CHAR-IDLE.png, region_enabled true,
+  region_rect Rect2(0, 622, 1024, 402), offset Vector2(-512, -190)
+- FacingPivot/LandRig/UpperPivot (Node2D), position (0, -20.14), scale (1, 1)
+- FacingPivot/LandRig/UpperPivot/UpperSprite (Sprite2D):
+  texture res://assets/art/CHAR-IDLE.png, region_enabled true,
+  region_rect Rect2(0, 0, 1024, 622), offset Vector2(-512, -622)
+- Both sprites: centered false, position (0, 0), scale Vector2(0.106, 0.106),
+  texture_filter CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS. No scripts.
+- The embedded AnimationLibrary (the default "" library) gains "land" ->
+  external resource res://animations/land.tres, beside "scoot". No RESET.
+
+land.tres (an Animation resource):
+- length 8/60 s, step 1/60 s, loop_mode Animation.LOOP_NONE.
+- Exactly three value tracks, each Animation.UPDATE_CONTINUOUS with
+  Animation.INTERPOLATION_LINEAR, with these full paths from PlayerVisuals:
+    FacingPivot/LandRig/LowerPivot:scale
+    FacingPivot/LandRig/UpperPivot:position
+    FacingPivot/LandRig/UpperPivot:scale
+  No track on FacingPivot/LandRig/LowerPivot:position.
+- Every track has four keys, at 0, 2/60, 4/60 and 8/60 s, with the same
+  per-key transitions on every track: 2.0, 1.0, 0.5, 1.0 (the last key's
+  transition is unused).
+- Key values (Vector2):
+    time   LowerPivot:scale   UpperPivot:position   UpperPivot:scale
+    0      (1.05, 0.85)       (0, -17.119)          (1.05, 0.90)
+    2/60   (1.15, 0.60)       (0, -12.084)          (1.15, 0.73)
+    4/60   (1.15, 0.60)       (0, -12.084)          (1.15, 0.73)
+    8/60   (1.0, 1.0)         (0, -20.14)           (1.0, 1.0)
+
+The read-back test (extends SceneTree; load the scene from its file,
+instantiate it, add it under root, inspect it, then quit; exit non-zero
+on any failed check, the way the existing tests do; print one line per
+check and a summary line "A7 LAND READBACK: <n> checks / <f> failures"):
+- Every track of every clip resolves, using the handout's track_problems
+  function exactly as it appears in godot/tests/test_a7_scoot_readback.gd.
+- Both clips "scoot" and "land" exist; land's resource path is
+  res://animations/land.tres; there is still one library and no RESET.
+- land has exactly three tracks, with exactly the three paths above, and
+  no track targets FacingPivot/LandRig/LowerPivot:position. Each is
+  Animation.TYPE_VALUE; call value_track_get_update_mode only on a value
+  track; each is UPDATE_CONTINUOUS and INTERPOLATION_LINEAR.
+- Length 8/60 (tolerance 0.5/60), step is_equal_approx 1/60, loop_mode
+  == Animation.LOOP_NONE.
+- Each track has four keys; times within 0.5/60 s of 0, 2/60, 4/60 and
+  8/60, never compared with ==; values within 1e-4 of the table;
+  transitions within 1e-4 of 2.0, 1.0, 0.5, 1.0.
+- At every key: LowerPivot:scale.x equals UpperPivot:scale.x (1e-4),
+  UpperPivot:position.x is 0, and the seam rule holds:
+  UpperPivot:position.y == -20.14 * LowerPivot:scale.y within 1e-3.
+- The frame-8 key values equal the scene's rest values (LowerPivot scale,
+  UpperPivot position and scale).
+- Between keys, using Animation.value_track_interpolate (first check
+  through ClassDB that it exists on this build; if it does not, fail that
+  check and report it, do not work around it):
+  - at 6/60 s: width 1.0375, LowerPivot scale.y 0.90, UpperPivot scale.y
+    0.9325 and UpperPivot position.y -18.126 (= -20.14 * 0.90), each
+    within 1e-3. Print -18.13 only as a rounded display value.
+  - at 1/60, 3/60, 5/60, 6/60 and 7/60 s: the seam rule and equal widths
+    hold within 1e-3. Print the sampled values at each time.
+- Rig node checks: LandRig, LowerPivot, UpperPivot are Node2D; the
+  pivots' rest positions and scales as above; LowerSprite and UpperSprite
+  are Sprite2D with exactly the texture path, region settings, offsets
+  and shared properties listed above.
+
+Run the land read-back through the wrapper at 60 until it is correct,
+then run the scoot read-back at 60; it must still pass unchanged. If a
+check fails because of how you wrote the clip or the scene, fix that file
+and say what you changed. Never weaken, skip or delete a check to get a
+pass. If an engine name or behaviour differs from what the brief or this
+prompt expects, report it instead of working around it silently.
+
+Final report, in this order: the files created and the scene edit (show
+the added .tscn lines); both read-backs' summary lines, exit codes and
+log paths; each check's result; the sampled values at 1, 3, 5, 6 and 7
+frames; the ClassDB results; anything you changed after a failure; and
+anything uncertain. Claim nothing a run output does not show. Do not
+stage or commit.
