@@ -142,3 +142,33 @@ Capture SCOOT at 60 fps to see each seven-tick swap. Keep `landing-r0` labelled 
 5. **Clocks.** Both clips and gameplay use physics ticks. Gameplay reads ground contact and the existing countdown, not a window in a clip. Expect zero logical disagreement; an extra advance on entry would show a 1/60 s error.
 6. **Cycle seam.** The last key is at 7/60 s and the length is 14/60 s, one key interval apart. An extra hold on a duplicated cell at the wrap would make the shuffle hesitate.
 7. **Fresh import.** This is a native rig. An imported clip's loop mode would belong in its per-animation import settings. Here it belongs in the saved clip. Verify both clips and the sheet from an empty import cache in a worktree.
+
+---
+
+## Revision 1 — 2026-11-16 (before wiring, after the Step 5 plan)
+
+Version 1 above is unchanged. This revision adds one rule, records one Version 1 case as unreachable through real input, and adds one predicted failure. It follows the read-only Step 5 plan (`sessions/a7/session-5a.jsonl`).
+
+### Pause: clips freeze with the game
+
+Escape sets the session to PAUSED and disables the player (`session.gd` lines 248–252) without pausing the tree. While the player is disabled, `tick` and `land_ticks` stop changing (`player.gd` lines 97–99) and no override is set (`session.gd` line 392). So if the player pauses during LAND or SCOOT, the selected pose stays the same: LAND stays LAND and SCOOT stays SCOOT for the whole pause. An AnimationPlayer on the physics callback would keep advancing: the rig would finish its squash, or the scoot keep shuffling, while the game is frozen.
+
+Rule: while the player is disabled and a clip is selected, `player.gd` pauses the AnimationPlayer. On the first enabled tick, the clip re-enters through the same synced entry as Version 1, with no extra advance: LAND at `(8 − land_ticks) / 60`, SCOOT at `(tick % 14) / 60`. Movement, input, collision and pose selection are unchanged; only what the visual layer shows during a pause changes.
+
+Checked by: the per-tick state test pauses with Escape during LAND and during SCOOT, and checks that the selected pose stays the same, the clip time stays frozen while paused, and it resumes at the synced time. My eyes: the pause hold in play.
+
+### LAND resume after an override: kept, but not reachable through real input
+
+Version 1 says that if LAND returns after an override while its countdown is still active, the clip seeks to `(8 − land_ticks) / 60`. Every override (SPLAT, REFORM, WON) ends through `reset_at()`, which sets `land_ticks = 0` (`player.gd` line 78; `session.gd` lines 239 and 354). So LAND never returns after an override with ticks remaining. The rule stays in the code as a safeguard, but no real-input test can reach it. The same synced resume is exercised through pause, above. In the edge tests, the override-resume case is reported as "not reachable through real input", not as a pass.
+
+### Predicted failure 6: the SCOOT swap tick and the float32 key
+
+The second SCOOT key is stored as a 32-bit float: 0.116666667163 s, slightly above the exact 7/60 = 0.116666666667 s (`logs/test_a7_scoot_readback_60fps.log`, `KEYTIME`). A playback position that reaches exactly 7/60, whether by seeking to `(tick % 14) / 60` or by adding 1/60 seven times, sits about 5 × 10⁻¹⁰ s below the key. Unless the engine's discrete-key lookup tolerates that, the first SCOOT-B tick of every cycle would still show cell 0: a swap one tick late, with A held for 8 ticks and B for 6.
+
+Checked by: the timing probe (supplemental) logs the displayed cell on the swap tick at 30, 60 and 144 fps, and the per-tick state test then checks the cell against the pose on every tick. If it happens, the agent stops and reports. The keys, the step and the cycle spec do not change without a further dated revision.
+
+### Evidence split: one addition
+
+| Rule | How to check it |
+| --- | --- |
+| Entry order and the swap tick (engine assumptions A1–A4 in the Step 5 plan) | `godot/tests/probe_a7_entry_order.gd`, supplemental and not counted. It plays its own instance of `player_visuals.tscn`, never the game's, at 30, 60 and 144 fps, before `player.gd` changes. |

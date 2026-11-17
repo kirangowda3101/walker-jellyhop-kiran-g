@@ -72,7 +72,7 @@ Exactly one writer per animated node and property. Never add a second writer to 
 | `LowerPivot.scale`, `UpperPivot.position`, `UpperPivot.scale` | The AnimationPlayer (`land`) |
 | `FacingPivot.transform` (mirror ±1 on X) | `player.gd` |
 | `Scoot.visible`, `LandRig.visible` | `player.gd` |
-| AnimationPlayer playback (`play`, `seek`, `stop`) | `player.gd` in the game; in a preview, its own preview script, and nothing else there |
+| AnimationPlayer playback (`play`, `seek`, `stop`, `pause`) | `player.gd` in the game; in a preview, its own preview script, and nothing else there. The supplemental timing probe `godot/tests/probe_a7_entry_order.gd` plays only its own instance of `player_visuals.tscn`, never the game's (CHANGE-BRIEF.md, Revision 1) |
 | Original pose sprite: `texture`, `flip_h`, visibility | `player.gd` |
 | Collision box (`set_box`) | `player.gd`, unchanged |
 | `LowerPivot.position`, sprite offsets and regions | Nobody at runtime; the saved scene value |
