@@ -15,20 +15,20 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 {"id":"B2-run1-stays-off-node-stays-while-WON","observed":{"bad_ticks":[],"keys_before_prompt_ignored":true,"won_ticks_checked":66},"status":"PASS"}
 {"id":"A2-run1-no-puff-any-WON-tick-with-keys","observed":{"puffs_at_entry":5,"puffs_now":5,"sfx_land_now":5,"won_ticks_checked":66},"status":"PASS"}
 {"id":"B3-run1-emitting-on-replay-tick","observed":{"first_tick_after_WON":{"amount":24,"amount_ratio":1.0,"emitting":true,"frame":1099,"in_tree":true,"instances":1,"lands":5,"puffs":5,"same":true,"state":"PLAYING","tree_paused":false},"state_now":"PLAYING"},"status":"PASS"}
-{"id":"B7-run1-same-emitter-object-after-replay","observed":{"first_id":74440510978,"instances_ever":1,"now_id":74440510978,"same_object":true},"status":"PASS"}
+{"id":"B7-run1-same-emitter-object-after-replay","observed":{"first_id":75463921195,"instances_ever":1,"now_id":75463921195,"same_object":true},"status":"PASS"}
 {"id":"route-run2-reaches-WON-by-keys-no-splat","observed":{"hops":[{"plate":1,"tick":78},{"plate":2,"tick":154},{"plate":3,"tick":228},{"plate":4,"tick":310},{"plate":5,"tick":394},{"plate":6,"tick":465}],"position":"(2278.132, 441.8797)","splats":0,"state":"WON","ticks":499},"status":"PASS"}
 {"id":"B2-run2-stops-on-WON-tick-node-stays","observed":{"tick_before":{"amount":24,"amount_ratio":1.0,"emitting":true,"frame":1599,"in_tree":true,"instances":1,"lands":10,"puffs":10,"same":true,"state":"PLAYING","tree_paused":false},"won_tick":{"amount":24,"amount_ratio":1.0,"emitting":false,"frame":1600,"in_tree":true,"instances":1,"lands":10,"puffs":10,"same":true,"state":"WON","tree_paused":false}},"status":"PASS"}
 {"id":"A2-run2-no-puff-on-WON-entry-tick","observed":{"jelly_just_landed_on_won_tick":false,"puffs_before":10,"puffs_on_won_tick":10,"sfx_land_before":10,"sfx_land_on_won_tick":10},"status":"PASS"}
 {"id":"B2-run2-stays-off-node-stays-while-WON","observed":{"bad_ticks":[],"keys_before_prompt_ignored":true,"won_ticks_checked":66},"status":"PASS"}
 {"id":"A2-run2-no-puff-any-WON-tick-with-keys","observed":{"puffs_at_entry":10,"puffs_now":10,"sfx_land_now":10,"won_ticks_checked":66},"status":"PASS"}
 {"id":"B3-run2-emitting-on-replay-tick","observed":{"first_tick_after_WON":{"amount":24,"amount_ratio":1.0,"emitting":true,"frame":1666,"in_tree":true,"instances":1,"lands":10,"puffs":10,"same":true,"state":"PLAYING","tree_paused":false},"state_now":"PLAYING"},"status":"PASS"}
-{"id":"B7-run2-same-emitter-object-after-replay","observed":{"first_id":74440510978,"instances_ever":1,"now_id":74440510978,"same_object":true},"status":"PASS"}
+{"id":"B7-run2-same-emitter-object-after-replay","observed":{"first_id":75463921195,"instances_ever":1,"now_id":75463921195,"same_object":true},"status":"PASS"}
 {"id":"B1-B3-emitting-equals-not-WON-every-tick","observed":{"mismatch_ticks":[],"replays":2,"ticks":1667,"won_ticks":132},"status":"PASS"}
 {"id":"B7-one-same-emitter-object-every-tick","observed":{"bad_ticks":[],"instances_ever":1},"status":"PASS"}
 {"id":"B-amount-24-amount-ratio-1-unchanged","observed":{"bad_ticks":[]},"status":"PASS"}
 {"id":"A2-puff-frames-equal-SFX-LAND-frames","observed":{"land_frames":[640,716,825,892,969,1220,1296,1370,1452,1536],"puff_frames":[640,716,825,892,969,1220,1296,1370,1452,1536]},"status":"PASS"}
 DOME GLINTS STATE TESTS: 27 checks / 0 failures
-WARNING: 32 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 44 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 10 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)

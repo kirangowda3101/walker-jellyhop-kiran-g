@@ -225,7 +225,13 @@ func _update_visuals() -> void:
 	if clip != &"" and clip != want:
 		anim.stop()
 	anim.play(want)
-	anim.seek(_clip_time(want), true)
+	if clip == &"land" and want == &"scoot" and not clip_held:
+		# Direct LAND -> SCOOT switch: the AnimationPlayer was already playing land, and its own update
+		# later this tick adds 1/60 (fd4d855). Seek one tick earlier on the loop so it lands on the synced time
+		# (probe H3, prompt-5e).
+		anim.seek(fposmod(_clip_time(want) - 1.0 / CLIP_FPS, anim.get_animation(&"scoot").length), true)
+	else:
+		anim.seek(_clip_time(want), true)
 	clip = want
 	clip_held = false
 

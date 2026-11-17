@@ -171,7 +171,10 @@ func run() -> void:
 			bad_calls.append(calls.back())
 		elif fn == "play" and m.get_string(2) != "want":
 			bad_calls.append(calls.back())
-		elif fn == "seek" and m.get_string(2) != "_clip_time(want), true":
+		# Exact argument texts only: the synced time, or (direct LAND -> SCOOT switch, prompt-5e fix A) the same
+		# synced time one tick earlier on the scoot loop. Any other seek argument is rejected.
+		elif fn == "seek" and not (m.get_string(2) in ["_clip_time(want), true",
+				"fposmod(_clip_time(want) - 1.0 / CLIP_FPS, anim.get_animation(&\"scoot\").length), true"]):
 			bad_calls.append(calls.back())
 	# Declarations and assignments of `want` only (`var want: T = x`, `want = x`, `want := x`), not comparisons.
 	var want_src := RegEx.create_from_string("\\bwant\\s*(:\\s*\\w+\\s*)?:?=(?!=)\\s*([^\\n]+)")

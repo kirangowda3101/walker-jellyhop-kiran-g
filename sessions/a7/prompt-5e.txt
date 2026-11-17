@@ -1,0 +1,66 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1 and Revision 1) is the
+contract. Commit fd4d855 showed that when play(new) is called while the
+AnimationPlayer is already playing a clip, its own update later in the
+same tick adds 1/60, so a direct LAND -> SCOOT switch leaves SCOOT one
+tick ahead. Kiran chose fix A: on a direct LAND -> SCOOT switch only,
+seek to the wrapped time one tick earlier, so the player's own update
+lands exactly on the synced time. Every other entry stays as it is.
+
+1. Probe first. Extend godot/tests/probe_a7_entry_order.gd with variant
+   H3: land playing, then in one stand-in tick switch to scoot exactly as
+   player.gd does now (stop(), then play(&"scoot")), but seek(s, true)
+   with s = fposmod(t - 1.0/60.0, scoot.length) and t = k/60, for every
+   phase k = 0..13. Run the probe at 30, 60 and 144.
+   H3 passes only if, at all three rates, on the switch tick and on each
+   of the 31 ticks after it, for every k:
+   (a) the end-of-tick (LATE) clip time equals the expected time within
+       1e-6 s, measured as a circular distance on the scoot loop, so
+       phase 0 at the wrap counts (k = 0 must read 0, not one tick
+       ahead);
+   (b) ScootSprite.frame equals the expected cell exactly, including cell
+       1 on every tick whose expected time is 7/60, and cell 0 at phase 0.
+   If H3 fails at any rate, stop: change nothing else and report the
+   first failing tick per rate with its log line.
+
+2. Only if H3 passes: in player.gd, change only the clip-to-clip entry,
+   and only when the old clip is land and the new one is scoot: seek to
+   fposmod(_clip_time(want) - 1.0/60.0, the scoot clip's length) instead
+   of _clip_time(want). Keep the stop() and play() calls as they are.
+   Every other entry (fresh entries, touchdowns, resumes) is unchanged.
+   Change nothing else in player.gd.
+
+3. Run the state test at 30, 60 and 144 with its existing assertions: it
+   must report 0 failures and the same 132 checks. Run the structure test
+   at 60; if its player.gd source scan rejects the new seek argument only
+   because of its pattern, fix the pattern without weakening what it
+   checks.
+
+4. Full regression with the existing assertions: before running any
+   pins, read the PINDIGEST lines in the current logs/test_a7_pins_*fps.log
+   files (unchanged since fd4d855 and identical to fe9a1f0). Then run the
+   14 baseline runs in CLAUDE.md (counts must match
+   evidence/a7-baseline/baseline-14.txt), the pins at 30/60/144 (31/0,
+   PINDIGEST identical to what you read), both read-backs at 60 (62/0 and
+   135/0), the structure test at 60, and the state test and the probe at
+   30/60/144.
+
+In the final report, include a draft "Revision 2 — 2026-11-16" section
+for CHANGE-BRIEF.md: the direct LAND -> SCOOT switch seeks to the wrapped
+time one tick earlier, because the AnimationPlayer adds 1/60 in its own
+update whenever it was already playing a clip (cite fd4d855 and this
+session's probe logs and H3 results); all other entries unchanged. Do not
+edit CHANGE-BRIEF.md yourself.
+
+Files you may change: the probe, player.gd (that one entry), and the two
+visual tests only for harness or pattern bugs. Never change clips, the
+scene, the brief, CLAUDE.md, the pins or existing tests, and never
+weaken, skip or delete an assertion. Stop and report if a pin count or
+PINDIGEST, a baseline count or a read-back changes. Search every log for
+any "ERROR" line and fix your own formatting errors. Run tests only
+through ./scripts/run-test.sh, one command per call.
+
+Final report: H3 results per rate (and first failing tick if any); the
+player.gd diff; a table of every run (test, rate, summary line, exit,
+log); PINDIGEST before and after; the Revision 2 draft; anything that
+stopped you. Claim nothing a run output does not show. Do not stage or
+commit.

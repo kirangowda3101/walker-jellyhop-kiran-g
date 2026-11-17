@@ -75,6 +75,7 @@ var call_name := "-"
 var rows: Array[Dictionary] = []
 var pre_cur := ""         # hand-off runs: current_animation at LATE on n = -1
 var pre_late := NAN       # hand-off runs: current_animation_position at LATE on n = -1
+var seek_s := NAN         # H3 runs: the seek target used on the hand-off tick
 
 # Totals
 var runs_done := 0
@@ -168,6 +169,13 @@ func enter(t: float) -> void:
 		"H2":
 			ap.play(clip)
 			ap.seek(t, true)
+		# Fix A (prompt-5e): same calls as player.gd's hand-off (H0), but the seek target is one tick
+		# earlier on the scoot loop, so the AnimationPlayer's own update this tick lands on t.
+		"H3":
+			ap.stop()
+			ap.play(clip)
+			seek_s = fposmod(t - 1.0 / 60.0, scoot_len)
+			ap.seek(seek_s, true)
 
 func _stand_tick(s: int) -> void:
 	if not active:
@@ -219,6 +227,13 @@ func _late_tick() -> void:
 	var up := upper.position
 	var us := upper.scale
 	var ok_a := absf(late - exp_t) <= TOL_T   # false for NAN
+	var circ_str := ""
+	if spec["method"] == "H3":
+		# H3 (prompt-5e, criterion a): circular distance on the scoot loop, so phase 0 read at the wrap
+		# counts; a reading one tick ahead (k = 0 at 1/60) is still 1/60 away. false for NAN.
+		var cd := absf(circ(late - exp_t))
+		ok_a = cd <= TOL_T
+		circ_str = " circ_diff=%.12f" % cd
 	var ok_b := false
 	var exp_str := ""
 	var exp_cell := -1
@@ -236,10 +251,10 @@ func _late_tick() -> void:
 		exp_str = "exp_frame=%d exp_lower=%s exp_upos=%s exp_uscale=%s rig_maxdiff=%.9f" % [mini(ph, 8), v2s(el), v2s(eu), v2s(es), rig_diff]
 	var paused := tick_paused(n)
 	var cnt := counted(n)
-	var line := "TICK run=%s n=%d phys=%d c=%d call=%s paused=%s counted=%s early=%.12f mid=%.12f late=%.12f cur=\"%s\" assigned=\"%s\" playing=%s frame=%d lower_scale=%s upper_pos=%s upper_scale=%s exp_t=%.12f %s ok_a=%s ok_b=%s" % [
+	var line := "TICK run=%s n=%d phys=%d c=%d call=%s paused=%s counted=%s early=%.12f mid=%.12f late=%.12f cur=\"%s\" assigned=\"%s\" playing=%s frame=%d lower_scale=%s upper_pos=%s upper_scale=%s exp_t=%.12f %s%s ok_a=%s ok_b=%s" % [
 		run_id, n, tick, logical_c(n), call_name, paused, cnt, early, mid, late,
 		String(ap.current_animation), String(ap.assigned_animation), ap.is_playing(), frame,
-		v2s(lo), v2s(up), v2s(us), exp_t, exp_str, ok_a, ok_b]
+		v2s(lo), v2s(up), v2s(us), exp_t, exp_str, circ_str, ok_a, ok_b]
 	print(line)
 	ticks_logged += 1
 	rows.append({"n": n, "early": early, "early_playing": early_playing, "mid": mid, "mid_frame": mid_frame,
@@ -268,7 +283,7 @@ func make_specs() -> Array[Dictionary]:
 		out.append({"clip": "scoot", "method": m, "k": 0, "pause": 20})   # after a wrap: frozen at 5/60, resume at 6/60
 		out.append({"clip": "land", "method": m, "k": 0, "pause": 3})     # frozen at 2/60, resume at 3/60
 	# Hand-off: land playing (7/60 at n = -1), then on n = 0 switch to scoot at k/60 in one stand-in tick.
-	for m in ["H0", "H1", "H2"]:
+	for m in ["H0", "H1", "H2", "H3"]:
 		for k in range(14):
 			out.append({"clip": "scoot", "method": m, "k": k, "pause": -1, "handoff": true})
 	return out
@@ -279,6 +294,7 @@ func do_run(sp: Dictionary) -> bool:
 	rows.clear()
 	pre_cur = ""
 	pre_late = NAN
+	seek_s = NAN
 	done = false
 	active = false
 	cur_n = -999
@@ -465,7 +481,7 @@ func evaluate() -> void:
 			if not handoff_fail_k.has(m):
 				handoff_fail_k[m] = []
 			handoff_fail_k[m].append("k=%d first_n=%d" % [int(spec["k"]), first_n])
-		print("HANDOFF run=%s method=%s k=%d pre_cur=\"%s\" pre_late=%.12f entry_late=%.12f entry_frame=%d first_failing_n=%d" % [run_id, m, int(spec["k"]), pre_cur, pre_late, e["late"], e["frame"], first_n])
+		print("HANDOFF run=%s method=%s k=%d pre_cur=\"%s\" pre_late=%.12f seek_s=%.12f entry_late=%.12f entry_frame=%d first_failing_n=%d" % [run_id, m, int(spec["k"]), pre_cur, pre_late, seek_s, e["late"], e["frame"], first_n])
 	print("RUNRESULT run=%s entry_ok_a=%s entry_ok_b=%s ticks_failing_a=%d ticks_failing_b=%d" % [run_id, e["ok_a"], e["ok_b"], run_fail_a, run_fail_b])
 
 func run() -> void:
@@ -498,12 +514,18 @@ func run() -> void:
 		print("SELECT %s runs=%d entries=%d resumes=%d ticks_checked=%d ticks_failing_a=%d ticks_failing_b=%d meets_rule_at_this_rate=%s" % [m, a["runs"], a["entries"], a["resumes"], a["ticks"], a["fail_a"], a["fail_b"], "yes" if meets else "no"])
 		if a["first_fail"] != "":
 			print("FIRSTFAIL %s %s" % [m, a["first_fail"]])
-	for m in ["H0", "H1", "H2"]:
+	for m in ["H0", "H1", "H2", "H3"]:
 		if method_agg.has(m):
 			var fk: Array = handoff_fail_k.get(m, [])
 			print("HANDOFFSUM %s failing_runs=%d of 14 [%s]" % [m, fk.size(), ", ".join(PackedStringArray(fk))])
+	if method_agg.has("H3"):
+		# prompt-5e pass rule at this rate: 14 runs (k = 0..13), 32 ticks each (hand-off tick + 31), all ok.
+		var h3: Dictionary = method_agg["H3"]
+		var h3_pass: bool = h3["runs"] == 14 and h3["ticks"] == 14 * SCOOT_TICKS and h3["fail_a"] == 0 and h3["fail_b"] == 0
+		print("H3VERDICT runs=%d ticks_checked=%d (required %d) ticks_failing_a=%d ticks_failing_b=%d pass=%s" % [h3["runs"], h3["ticks"], 14 * SCOOT_TICKS, h3["fail_a"], h3["fail_b"], "yes" if h3_pass else "NO"])
 	print("NOTE R3 (play alone) was run at t = 0 only and on no resume: it cannot seek to a synced time.")
 	print("NOTE H0/H1/H2 are hand-off runs: land playing at 7/60, then stop()/stop(true)/no stop, play(scoot), seek(k/60, true) in one stand-in tick.")
+	print("NOTE H3 is a hand-off run: land playing at 7/60, then stop(), play(scoot), seek(fposmod(k/60 - 1/60, scoot length), true); ok_a uses circular distance on the loop.")
 	print("A7 PROBE: %d runs, %d ticks logged" % [runs_done, ticks_logged])
 	hook.queue_free()
 	for i in range(10):

@@ -23,7 +23,7 @@ PASS route-no-method-tracks: method tracks []
 PASS route-every-track-resolves-in-hosted-scene: unresolved []
 PASS authority-no-script-in-visuals-scene: nodes with a script []
 PASS authority-player-gd-never-builds-or-writes-animated-nodes: banned tokens found []
-PASS authority-playback-calls-only-play-seek-stop-pause: anim calls ["stop()", "stop()", "is_playing()", "pause()", "stop()", "play(want)", "seek(_clip_time(want), true)"]; unexpected []
+PASS authority-playback-calls-only-play-seek-stop-pause: anim calls ["stop()", "stop()", "is_playing()", "pause()", "stop()", "play(want)", "seek(fposmod(_clip_time(want) - 1.0 / CLIP_FPS, anim.get_animation(&\"scoot\").length), true)", "seek(_clip_time(want), true)"]; unexpected []
 PASS authority-play-only-names-from-pose-clips: assignments to want ["POSE_CLIPS.get(pose, &\"\")"]
 PASS authority-visual-writes-only-facing-and-visibility: writes ["facing_pivot.transform", "scoot_node.visible", "land_rig.visible"]; unexpected []
 PASS authority-facing-mirror-as-brief: full mirror transform written from facing
