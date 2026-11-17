@@ -172,3 +172,19 @@ Checked by: the timing probe (supplemental) logs the displayed cell on the swap 
 | Rule | How to check it |
 | --- | --- |
 | Entry order and the swap tick (engine assumptions A1–A4 in the Step 5 plan) | `godot/tests/probe_a7_entry_order.gd`, supplemental and not counted. It plays its own instance of `player_visuals.tscn`, never the game's, at 30, 60 and 144 fps, before `player.gd` changes. |
+
+---
+
+## Revision 2 — 2026-11-16 (after wiring, after the hand-off probe)
+
+Version 1 and Revision 1 are unchanged. This revision changes one entry: the direct LAND → SCOOT switch.
+
+### Direct LAND → SCOOT switch seeks one tick earlier
+
+The wired state test failed 132/5 at 30, 60 and 144 fps (74fe4b5): when LAND hands off to SCOOT in one tick, SCOOT showed one tick ahead. The hand-off probe (fd4d855; variants H0 `stop()`, H1 `stop(true)`, H2 no stop) showed the cause: when `play()` is called on an AnimationPlayer that is already playing a clip, its own physics update later in the same tick adds 1/60 s. Fresh entries (R1) do not get this extra advance.
+
+Rule: on a direct LAND → SCOOT switch only (old clip `land`, new clip `scoot`, not a resume after a pause), `player.gd` keeps `stop()` and `play(&"scoot")` and seeks to `fposmod((tick % 14) / 60 − 1/60, scoot length)`. The AnimationPlayer's own update then lands exactly on `(tick % 14) / 60`. All other entries are unchanged: fresh entries, touchdowns (LAND from 0) and resumes (LAND at `(8 − land_ticks) / 60`, SCOOT at `(tick % 14) / 60`).
+
+The resume exclusion was the agent's call, which I accepted: a paused AnimationPlayer is not playing, and fd4d855 measured the extra 1/60 only when it was. A pause during LAND followed by SCOOT on the first enabled tick therefore keeps the plain seek. No test covers that case; it is recorded as an untested edge.
+
+Checked by: probe variant H3 (`godot/tests/probe_a7_entry_order.gd`; `logs/probe_a7_entry_order_{30,60,144}fps.log`; 5c0fb9a). For each phase k = 0..13, the switch tick and the 31 ticks after it, 448 ticks per rate: 0 time failures (circular distance within 1e-6 s) and 0 cell failures at all three rates. k = 0 reads 0 on the switch tick, and all 32 ticks expected at 7/60 per rate show cell 1. After the change: the state test reports 132/0 at 30, 60 and 144; pins 31/0 with PINDIGESTs identical to fe9a1f0; the 14 baseline runs and both read-backs are unchanged.
