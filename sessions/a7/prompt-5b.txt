@@ -1,0 +1,91 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1 and Revision 1) is the
+contract. This is step 1 of the approved Step 5 plan: a supplemental
+timing probe, run before player.gd changes. It answers the plan's
+engine assumptions with evidence instead of guesses.
+
+Files: create exactly one file, godot/tests/probe_a7_entry_order.gd.
+Do not create, edit or delete any other file. Do not change
+player_visuals.tscn, scoot.tres, land.tres or any existing script or
+test. The only command you may run is the wrapper with this probe:
+  ./scripts/run-test.sh probe_a7_entry_order.gd 30   (then 60, then 144)
+
+What the probe does:
+- extends SceneTree. It never loads or instantiates the game. It
+  instantiates its own copy of res://features/player/player_visuals.tscn
+  under a stand-in parent, an inner-class Node2D at physics priority 0
+  (the way Player sits above PlayerVisuals), and adds a late logging
+  hook, an inner-class Node at physics priority 1000, so the hook's line
+  is taken after both the stand-in and the AnimationPlayer have updated
+  in that tick. Use the pins test's TickHook as the pattern.
+- The stand-in's _physics_process performs the scheduled entry calls on
+  the AnimationPlayer, mimicking where player.gd will call them.
+- Update order (assumption A1) must be observable. On every tick, the
+  stand-in records current_animation_position inside its own
+  _physics_process, before making any call (EARLY), and the late hook
+  records it again (LATE). On steady playback ticks, with no call that
+  tick, report EARLY and LATE side by side. If LATE minus EARLY is 1/60
+  and EARLY equals the previous tick's LATE, the AnimationPlayer updates
+  after its parent in the same tick. Show those lines.
+- Every tick, the late hook logs one line with: physics tick, EARLY and
+  LATE positions, current_animation, assigned_animation, is_playing(),
+  ScootSprite.frame, LowerPivot.scale, UpperPivot.position,
+  UpperPivot.scale, the expected clip time, and the expected visual
+  values for that tick.
+- Entry methods, each in its own run on a fresh instance:
+    R1: play(clip) then seek(t, true)
+    R2: play(clip) then seek(t, false)
+    R3: play(clip) alone (t = 0 only)
+- SCOOT: enter at every phase t = k/60 for k = 0..13, and for each, log
+  at least 30 ticks (two full cycles). Expected time on tick n after
+  entry (n = 0 is the entry tick) is ((k + n) % 14) / 60, and the
+  expected cell is 0 when (k + n) % 14 < 7, else 1. Report, per method
+  and k, the LATE position on the entry tick, the per-tick increments
+  after it, and every tick where the displayed cell differs from the
+  expected cell. In particular, for every tick where the expected time
+  is exactly 7/60, say whether the displayed cell is 1 (CHANGE-BRIEF.md
+  Revision 1, predicted failure 6).
+- LAND: enter at t = 0 and at t = 3/60, and log until the clip ends. The
+  expected rig values on each tick are land.value_track_interpolate at
+  the expected time for each of the three tracks. Report every tick
+  where a displayed rig value differs from its expected value by more
+  than 1e-4.
+- Pause: during SCOOT and during LAND, call pause(), hold for 10 ticks,
+  then re-enter with the method under test at the synced time. Report
+  whether the position froze, what current_animation and
+  assigned_animation read while paused, and the LATE position and the
+  displayed visual values on the resume tick.
+- Print a summary line "A7 PROBE: <runs> runs, <ticks> ticks logged".
+  Exit 0 unless the probe itself fails to run (a missing node or scene
+  is a failure). Engine behaviour that differs from the plan's
+  assumptions is a finding, not a failure: report it.
+
+Run it through the wrapper at 30, 60 and 144. Fix harness problems in
+the probe and say what you changed; never change the scene or clips.
+
+Selection rule. Recommend an entry method only if, at all three rates
+(30, 60 and 144), every entry and every resume it was tested on meets
+both conditions on the entry tick itself, and every later tick meets
+them too:
+  (a) the LATE clip position equals the expected time within 1e-6 s;
+  (b) the expected visual value is applied on that same tick: for SCOOT,
+      ScootSprite.frame equals the expected cell exactly on every tick,
+      including cell 1 on every tick whose expected time is 7/60; for
+      LAND, all three rig values are within 1e-4 of
+      value_track_interpolate at the expected time.
+If no method meets both at all three rates, say so plainly, name the
+first failing tick for each method with its log line, and stop. Do not
+propose changing the keys, the step, the scene or the brief, and do not
+propose time offsets as a fix.
+
+Final report, in this order: the one file created; the three runs
+(summary line, exit code, log path); assumptions A1-A4 from the plan
+(A1 the AnimationPlayer updates after its parent's _physics_process in
+the same tick, shown with EARLY and LATE lines; A2 play + seek(t, true)
+applies t at once and then advances 1/60 in the same tick; A3 play +
+seek(t, false), or play alone, does not advance on its first update; A4
+while paused, current_animation reads "" and assigned_animation keeps
+the name), each marked held, not held or unclear, with the log lines
+that show it at each rate; the swap-tick result for predicted failure 6
+at each rate; the pause results; and the selection-rule result per
+method and rate. Claim nothing a run output does not show. Do not stage
+or commit.
