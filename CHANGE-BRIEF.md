@@ -188,3 +188,22 @@ Rule: on a direct LAND → SCOOT switch only (old clip `land`, new clip `scoot`,
 The resume exclusion was the agent's call, which I accepted: a paused AnimationPlayer is not playing, and fd4d855 measured the extra 1/60 only when it was. A pause during LAND followed by SCOOT on the first enabled tick therefore keeps the plain seek. No test covers that case; it is recorded as an untested edge.
 
 Checked by: probe variant H3 (`godot/tests/probe_a7_entry_order.gd`; `logs/probe_a7_entry_order_{30,60,144}fps.log`; 5c0fb9a). For each phase k = 0..13, the switch tick and the 31 ticks after it, 448 ticks per rate: 0 time failures (circular distance within 1e-6 s) and 0 cell failures at all three rates. k = 0 reads 0 on the switch tick, and all 32 ticks expected at 7/60 per rate show cell 1. After the change: the state test reports 132/0 at 30, 60 and 144; pins 31/0 with PINDIGESTs identical to fe9a1f0; the 14 baseline runs and both read-backs are unchanged.
+
+---
+
+## Revision 3 — 2026-11-17 (Step 7, landing r1, kept)
+
+Version 1 and Revisions 1 and 2 are unchanged. This revision changes the depth of the landing squash. It is a tuning change I chose after my r0 verdict in TUNING.md ("A7 — landing, r0"): the landing looked smooth, but the hold was easier to see frame by frame than at normal speed. I kept it after my r1 verdict ("A7 — landing, r1: my verdict").
+
+### Deeper squash at frames 2 and 4
+
+Lower height scale 0.60 → 0.55 at the keys at 2/60 and 4/60 s. Upper pivot y follows the seam rule: −20.14 × 0.55 = −11.077 game px. Key times (0, 2/60, 4/60, 8/60 s), transitions (2.0, 1.0, 0.5), widths (1.05, 1.15, 1.15, 1.00), upper height scales (0.90, 0.73, 0.73, 1.00) and the keys at 0 and 8/60 are unchanged. The 2/2/4 timing and the eight-tick window are unchanged.
+
+| Frame | Time (s) | Width scale, both pieces | Lower height scale | Upper height scale | Upper pivot y (game px) | Outgoing transition |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| 2, deepest squash | 2/60 | 1.15 | 0.55 | 0.73 | −11.077 | 1.0, hold with identical endpoints |
+| 4, start recovery | 4/60 | 1.15 | 0.55 | 0.73 | −11.077 | 0.5, ease out |
+
+At frame 6 I now expect width 1.0375, lower height scale 0.8875, upper height scale 0.9325 and upper pivot y about −17.874 game px. The deepest squash is about 43 game px tall (Version 1: about 44).
+
+Checked by: `test_a7_land_readback.gd` at 60 (135/0; frame-6 sample 0.8875 and −17.874); state 132/0 and edges 397/0 at 30, 60 and 144; pins 31/0 with all PINDIGEST lines unchanged; scoot read-back 62/0; structure 29/0 (9ada865). My eyes: the r1 strip (`captures/land/r1/`) and the r0/r1 comparison at normal speed.

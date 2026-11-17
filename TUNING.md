@@ -113,3 +113,11 @@ How I get the sizes: the lower piece's part above the feet is 190 source rows ×
 The A6 crumbs may differ between r0 and r1 in any frame; I have not checked whether this preview seeds the puff.
 
 What I expect Kiran to see: the r1 strip will look almost the same as r0. The only difference should be about 1 screen px at the top of the jelly in the two squash frames, close to the limit of what an unzoomed full frame shows. The off-strip ticks change by similar small amounts: about 0.25 px at tick 1 and about 0.57 px at tick 5. The hold still lasts ticks 2–4 (50 ms), so I predict the hold will not be noticeably easier to see at normal speed than in r0. A deeper squash makes the squash a little stronger; it does not make the hold longer.
+
+## A7 — landing, r1: my verdict (mine, after playing r0 and r1)
+
+Capture: `captures/land/r1/` (fixture frames, Movie Maker at 30 fps, run by me with `bash sessions/a7/capture_strips.sh r1`). I played r0 (from a worktree at 76a158c) and r1 one after the other at normal speed, then compared the clean frames in Preview. Written before reading Claude's comparison of r1.
+
+At normal speed, I could barely tell r0 and r1 apart. The difference was easier to see in Preview, especially at rig frames 2 and 4. Jelly looks slightly flatter in r1 and holds that shape across both frames. Its bottom edge stays planted on the plate, and I didn't see a visible seam. By frame 6, both versions are close to upright, and Jelly returns to IDLE in the same spot on the plate. I'd keep r1 because the squash is a little more pronounced and the landing still looks clean.
+
+**Kept: r1.** Brief updated in Revision 3.
