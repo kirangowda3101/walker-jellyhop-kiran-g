@@ -121,3 +121,28 @@ Capture: `captures/land/r1/` (fixture frames, Movie Maker at 30 fps, run by me w
 At normal speed, I could barely tell r0 and r1 apart. The difference was easier to see in Preview, especially at rig frames 2 and 4. Jelly looks slightly flatter in r1 and holds that shape across both frames. Its bottom edge stays planted on the plate, and I didn't see a visible seam. By frame 6, both versions are close to upright, and Jelly returns to IDLE in the same spot on the plate. I'd keep r1 because the squash is a little more pronounced and the landing still looks clean.
 
 **Kept: r1.** Brief updated in Revision 3.
+
+## A7 — landing, r1: Claude's comparison (agent)
+
+Written by the agent (Claude Code, documentation session `sessions/a7/session-8.jsonl`) on 2026-11-17. **Kiran's r1 verdict above was written first, before this comparison, and is his own reading. This entry is not his verdict.** It compares the r1 frames with my r1 prediction (above) and with r0.
+
+Frames read, full size only (1280 × 720, unzoomed; this session had no shell, so no crop, zoom, byte comparison or checksum): the six clean frames of each run, `captures/land/r0/clean/` (process frames 104–109) and `captures/land/r1/clean/` (145–150), and one r1 overlay frame, `captures/land/r1/overlay/land_overlay_trig+1_rig2_deepest-squash_png00000147.png`. As in my r0 reading, every size is my estimate from the full frame, about ±2 px, not a measurement.
+
+Logs: `captures/land/r1/land_clean.log` and `land_overlay.log` both report `TRIGGER frame=146 touchdown_tick=293 ... aligned=true`, `STRIP rel_ticks=[0, 2, 4, 6, 8] layout_30fps=true`, every `STRIP` line `ok=true`, and `LAND PREVIEW: trigger_frame=146 touchdown_tick=293 problems=0`. So r1 shows the same rig frames as r0 (0, 2, 4, 6, then IDLE at tick 8). The r1 clean run's trigger is frame 146, while the r0 clean run's was frame 105 (touchdown tick 211). In the r0 clean log the player's `ptick` starts counting at frame 79; in the r1 logs it starts at frame 120. I did not look into why. The strip positions relative to the trigger are the same.
+
+| Kept frame (r0 → r1) | My prediction | What I see in r1 next to r0 | Matched? |
+| --- | --- | --- | --- |
+| trigger − 1, FALL (104 → 145) | Same as r0; the clip is not playing | The same FALL drawing (dot eyes, flat mouth), about the same height above the plate rim. | Matched, as far as an unzoomed still shows |
+| rig 0, impact (105 → 146) | Same as r0; frame-0 key unchanged | To my eye the jelly is the same: same top, width and bottom edge on the rim. (Background difference: in r0 there is a dark smudge on the third plate that is absent in r1 146; it is not on the jelly.) | Matched |
+| rig 2, deepest squash (106 → 147) | About 1 game px flatter (≈ 43 px, r0 ≈ 44), same width, feet in the same place | Same width and the same bottom edge on the rim. The top edge looks at most about 1 px lower than in r0. That is inside my ±2 px estimate error, so I cannot confirm the 1.007 px difference from these stills. I see nothing that contradicts it. | Not contradicted; not confirmable at this resolution |
+| rig 4, same squash (107 → 148) | Identical to r1's rig 2 | The jelly looks the same as in r1 147. The visible differences between the two are only in the crumbs. As at rig 2, any change from r0 is at most about 1 px. | Matched on "same as rig 2"; the r0 difference is not confirmable, as at rig 2 |
+| rig 6, eased rise (108 → 149) | About 0.25 px lower than r0; not expected to be visible | I see no difference from r0 in the jelly. | Matched (no visible change, as predicted) |
+| tick 8, IDLE hand-off (109 → 150) | Same as r0 (original IDLE sprite) | The original IDLE sprite, bottom edge in the same place on the plate as r0. | Matched |
+
+**Crumbs.** The A6 crumbs differ between r0 and r1 in every frame where they appear (positions, and some look greener or pinker in r1). My prediction said they might; I still have not checked whether the preview seeds the puff.
+
+**Overlay.** In the one r1 overlay frame I opened (147), the plates, table and forks carry their collision tint, and the jelly silhouette matches the clean frame. As in r0, I could not make out the player's own collision-box outline at full-frame size. So the "about the low box" comparison still rests on height estimates, not on the overlay.
+
+**Against Kiran's verdict.** My prediction said the r1 strip would look almost the same as r0, with about 1 screen px of difference at the top in the two squash frames, close to the limit of an unzoomed full frame. Kiran wrote that he could barely tell r0 and r1 apart at normal speed, and that in Preview the difference was easier to see at rig frames 2 and 4, where r1 looks slightly flatter. He also saw the shape held across both frames, the feet planted, no visible seam, and the return to IDLE in the same spot. Those points agree with the prediction. Kiran saw the frame 2 and 4 difference in Preview, and I could not confirm it in the unzoomed stills; his reading had a tool I did not use here. My prediction also said the hold would not be noticeably easier to see at normal speed than in r0. Kiran's verdict does not say whether the hold was easier to see, so I make no claim about that part.
+
+What this comparison cannot show: pixel-level differences (no zoom, no byte comparison in this session), the odd ticks (1, 3, 5, 7) that a 30 fps strip does not capture, and anything about feel at normal speed.

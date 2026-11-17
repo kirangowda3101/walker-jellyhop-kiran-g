@@ -686,3 +686,155 @@ All 14 runs exited 0 with 0 failures, and every count matches the A6 count (Fres
 - **`cost_effects.gd`** with `./scripts/run-test.sh cost_effects.gd 60 300`: exit 0. `control separates: true`. The lifecycle case created and freed 120 puffs (24 per round, 5 rounds). `effect_a_restart`, `effect_a_lifecycle` and `effect_b` were each not distinguishable from `game_off` within the spread. The wall times are this run's own and were not compared with A6. Log: `evidence/a7-baseline/supplemental/cost_effects_60fps.log`.
 - **`check_lifecycle_peak.gd`** with `./scripts/run-test.sh check_lifecycle_peak.gd 60`: exit 0. Peak of 2 in all 300 counted frames by both counts (in the tree, and not queued for deletion), with 24 created and 24 leaving the tree. `PEAK state after Enter: 1` and `PEAK state at end: 1`, the same lines as the A6 log. Log: `evidence/a7-baseline/supplemental/check_lifecycle_peak_60fps.log`.
 - **Shutdown messages.** Both supplemental logs end with `WARNING: 8 ObjectDB instances were leaked at exit` and `ERROR: 4 resources still in use at exit`. Both messages were already present in the A6 logs (`logs/check_lifecycle_peak_60fps.log` lines 10 and 12, and `logs/cost_effects_60fps_mine_20261108-001211.log` lines 29 and 31).
+
+## A7
+
+Drafted by the agent (Claude Code, `sessions/a7/session-8.jsonl`, 2026-11-17) from the committed logs, evidence and commit messages, for Kiran to check. The agent had no shell in that session, so it read files and the reflog's commit subjects only. It ran no test, and it could not open older versions of logs that later runs overwrote. Where a result exists only in a commit message or a transcript, that is stated. The four HUMAN CHECK rows are placeholders for Kiran.
+
+**Common to every row unless stated:** Godot `4.7.2.stable.official.ed1daf0bf`. The project renderer is Compatibility (`godot/project.godot` lines 32–33). The tests run headless through `scripts/run-test.sh`; their logs print `engine=4.7.2-stable (official)` and, for the per-tick suites, `physics_ticks_per_second=60`. The frame strips are windowed Movie Maker runs; their logs print `OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4`.
+
+### Baseline (before and after)
+
+- **Before.** Source revision `cb0e5e9`; evidence `evidence/a7-baseline/` (`baseline-14.txt`, `logs/`, `import.txt`); commit `735b200`. Kiran ran all 14 counted runs from an empty import cache: every run exited 0 with 0 failures (section "A7 baseline (before the change)" above).
+- **After.** The agent ran the full regression in session 5e on the working tree committed as `5c0fb9a`. The commit message records "14 baseline counts match". The current `logs/` files at HEAD show the same 14 counts with 0 failures: `test_game` 25, `test_slice` 61, `test_keyboard` 12, `test_a3_assets` 36, `test_fork_warning` 29 at 30, 60 and 144, `test_materials` 108 at 30, 60 and 144, `test_land_puff_config` 51, `test_land_puff_state` 24, `test_dome_glints_config` 45 and `test_dome_glints_state` 27. This session could not check which commit last wrote each of those log files.
+- **Not re-run after r1.** The r1 key change (`9ada865`) re-ran the A7 suites (below) but not the 14 baseline runs. No baseline run after `9ada865` is recorded.
+
+### Pins (before and after; PINDIGEST unchanged)
+
+- **Test:** `godot/tests/test_a7_pins.gd`, written by the agent in session 2 before any clip or wiring.
+- **Before.** Source revision `fe9a1f0`; commit `fe9a1f0`. Kiran's runs: 31 checks / 0 failures, exit 0, at 60, 30 and 144 fps, with the PINDIGEST lines identical across rates. Baseline facts: press read 851, touchdown 892, LAND and low box on 892–899, IDLE 900, SCOOT-A exactly when `ptick % 14 < 7`, `flip_h` exactly when facing < 0. All 12 brief interrupt predictions passed as written. Kiran's Movie Maker capture of the pin replay (`~/Documents/a7-reference/pins-r0`, outside the repo) showed ANTIC, LAND and IDLE first at PNG 850, 891 and 899, equal to the log's `frame=` values.
+- **After.** Re-run after wiring in `74fe4b5` and `5c0fb9a`, after the edges in `167f3ab` and after r1 in `9ada865`. Each commit message records 31/0 at 30, 60 and 144 with every PINDIGEST identical to `fe9a1f0`. The `167f3ab` message adds that the 60 fps log differs only in the exit-time shutdown lines.
+- **Current logs.** `logs/test_a7_pins_{30,60,144}fps.log` each end `A7 PINS: 31 checks / 0 failures` and hold 11 PINDIGEST lines. I compared those lines across the three files and they are identical (for example `PINDIGEST baseline lines=429 sha256_without_frame=728442c11f246e53671db8dc611d1ac3443c68f8f8975c1e1f12b6f8ae434fcd`). The comparison with `fe9a1f0`'s digests rests on the commit messages; I could not open the `fe9a1f0` logs.
+
+### Read-back (both clips)
+
+- **Scoot.** `godot/tests/test_a7_scoot_readback.gd` (agent, session 3b); first run `73eba42`; current log `logs/test_a7_scoot_readback_60fps.log`: **62 checks / 0 failures**. It checks:
+  - ClassDB: the properties, constants and methods it uses exist on 4.7.2.
+  - Scene structure: `PlayerVisuals/FacingPivot/Scoot/ScootSprite`, with the AnimationPlayer beside `FacingPivot` and no scripts.
+  - Sprite: the sheet texture at 2048 × 1024, `hframes` 2, `vframes` 1, `frame` 0, `centered` false, offset (−512, −812), position (0, 0), scale 0.106, filter LINEAR_WITH_MIPMAPS.
+  - AnimationPlayer: `root_node ..`, physics callback, empty autoplay, no RESET clip, exactly one embedded library, every track of every clip resolving.
+  - The clip: `scoot.tres` with one value track on `FacingPivot/Scoot/ScootSprite:frame` in DISCRETE mode. Length 14/60, step 1/60 and LOOP_LINEAR. Exactly two keys: 0 at 0 and 1 at 7/60. The key interval is 7/60, the seam (last key to length) equals one interval, and there is no key at the length. Every frame key is in 0..1.
+  - It logs `KEYTIME stored 0.116666667163 exact 0.116666666667 diff 0.000000000497`.
+- **Land.** `godot/tests/test_a7_land_readback.gd` (agent, session 4); first run `1bf1133` (135/0); expectations updated for r1 in `9ada865`; current log `logs/test_a7_land_readback_60fps.log`: **135 checks / 0 failures**. It checks:
+  - ClassDB names.
+  - The rig nodes and their rest values: LowerPivot (0, 0) at scale 1, UpperPivot (0, −20.14) at scale 1.
+  - Both IDLE slices: texture, `region_rect` (0, 622, 1024, 402) and (0, 0, 1024, 622), offsets (−512, −190) and (−512, −622), `centered` false, position, scale 0.106 and filter.
+  - One library, no RESET clip, every track resolving.
+  - The clip: `land.tres` with length 8/60, step 1/60 and LOOP_NONE. Exactly the three rig paths, and no `LowerPivot:position` track. Each track is a value track, CONTINUOUS and LINEAR.
+  - Keys: four per track, with key times within tolerance, the r1 values and transitions 2.0/1.0/0.5/1.0.
+  - Shape rules: equal widths and the seam equation `UpperPivot.y = −20.14 × LowerPivot.scale.y` at every key and at sampled frames 1, 3, 5, 6 and 7. The frame-8 key equals the scene rest.
+  - The frame-6 sample: width 1.0375, lower 0.8875, upper 0.9325, UpperPivot y −17.874.
+
+### Mutations
+
+Source revision `167f3ab`; Kiran ran `sessions/a7/mutations.sh` (written by the agent in session 6), each mutation in a detached worktree at `/Users/kiran/Documents/a7-mutate`; evidence `evidence/a7-mutations/` (`summary.txt`, `M*_diff.txt`, `M*_import.txt`, the test logs and `fail_lines.txt`); commit `c19f966`. From `summary.txt`:
+
+| Mutation | File | Import exit | Test | Exit | Summary line | Verdict |
+| --- | --- | --- | --- | --- | --- | --- |
+| M1: track subname broken (`positon`) | `land.tres` | 0 | land read-back | 1 | 94 checks / 3 failures; `track problem: land track 1: UpperPivot has no property positon` | CONFIRMED |
+| M2: SCOOT looping disabled | `scoot.tres` | 0 | scoot read-back | 1 | 62 checks / 1 failures; `FAIL loop_mode LOOP_LINEAR` | CONFIRMED |
+| M3: a key on cell 2 | `scoot.tres` | 0 | scoot read-back | 1 | 62 checks / 2 failures; `FAIL every frame key in 0..hframes*vframes-1` | CONFIRMED |
+
+### Fresh cache (M4)
+
+Same run and evidence as the mutations (`167f3ab`, `evidence/a7-mutations/M4_*`, `c19f966`). The import cache was absent before the import and present after it, and the import exited 0. Land read-back 135/0 and scoot read-back 62/0, both exit 0: PASSED AS EXPECTED. As `summary.txt` puts it: "native rig: the loop modes are saved in the clip resources (land.tres LOOP_NONE; scoot.tres LOOP_LINEAR, the loop) and survive a fresh-cache import". The sheet's 2048 × 1024 size and `hframes`/`vframes` are among the scoot read-back's passing checks in that run.
+
+### State machine
+
+- **Structure.** `godot/tests/test_a7_visual_structure.gd` (agent, session 5c); first run `74fe4b5` (29/0). The pattern was widened for the new seek argument in `5c0fb9a`. Current log `logs/test_a7_visual_structure_60fps.log`: **29 checks / 0 failures**. It checks:
+  - The mapping: LAND → `land`; SCOOT-A and SCOOT-B → `scoot`; the other 9 poses have no clip.
+  - Hosting: one `player_visuals.tscn` child, with the original sprite outside `FacingPivot` and its textures kept.
+  - The route: one AnimationPlayer, no AnimationTree or AnimatedSprite2D, `root_node` resolving to `PlayerVisuals`, the physics callback, no RESET clip and no method tracks.
+  - Authority (a source scan of `player.gd`): only `play`/`seek`/`stop`/`pause`. Visual writes only to `facing_pivot.transform`, `scoot_node.visible` and `land_rig.visible`. No gameplay writes after `_update_visuals`. No other game script touches the visuals.
+- **State, per tick.** `godot/tests/test_a7_visual_state.gd` (agent, session 5c), real game loop, input only through `Input.parse_input_event`. Current logs `logs/test_a7_visual_state_{30,60,144}fps.log`: **132 checks / 0 failures at 30, 60 and 144**. It covers:
+  - a: touchdown → LAND from 0 for 8 ticks, then IDLE.
+  - b: SCOOT both ways, 13 wraps, re-entries at phases 12, 13, 2, 11 and 12, 24 A/B changes with no restart.
+  - c: ten interrupt replays.
+  - d: LAND → SCOOT.
+  - e: pause during LAND and during SCOOT.
+  - f: walk-off and a fork splat.
+  - On every tick it checks the clip, clip time, cell, rig, visibility and facing.
+- **The 132/5 failure.** At `74fe4b5` (agent, session 5c) the state test reported 132 checks / 5 failures at all three rates. The commit message: "a LAND->SCOOT hand-off in one tick (stop then play+seek) leaves SCOOT one tick ahead; everything else exact". The agent's report in `sessions/a7/session-5c.jsonl` quotes the 60 fps log lines 4467–4469 as they were then:
+  ```
+  tick=8099 pose=LAND    land_ticks=1 exp_t=0.116666666667 pos=0.116666666667 diff_ticks=-0.000000
+  tick=8100 pose=SCOOT-A ptick=61     exp_t=0.083333333333 pos=0.100000000000 diff_ticks=1.000000 cell=0
+  tick=8101 pose=SCOOT-A ptick=62     exp_t=0.100000000000 pos=0.116666666667 diff_ticks=1.000000 cell=1   <- B shown during A
+  ```
+  The same report says the splat case showed the same one-tick lead (tick 10518). Pins and structure were green at that commit.
+- **Cause, `fd4d855`.** The hand-off probe (agent, session 5d) tried three variants: H0 `stop()`, H1 `stop(true)` and H2 no stop. All three failed the rule at 30, 60 and 144. When `play()` is called while the AnimationPlayer is already playing a clip, its own physics update later in the same tick adds 1/60 s. Fresh entries (R1) stayed exact.
+- **Fix, `5c0fb9a`.** Probe variant H3 (agent, session 5e): stop, `play(&"scoot")`, then seek to `fposmod((tick % 14)/60 − 1/60, length)`. It passed at 30, 60 and 144 for all 14 phases: 448 ticks per rate, 0 time failures and 0 cell failures (CHANGE-BRIEF.md Revision 2, `ed4f64d`). The fix applies only to the direct LAND → SCOOT entry. After it, the state test passed 132/0 at all three rates. It was re-run after r1 in `9ada865`: 132/0 at 30, 60 and 144.
+
+### Edges
+
+`godot/tests/test_a7_edges.gd` (agent, session 6); first run `167f3ab`; re-run after r1 in `9ada865`. Current logs `logs/test_a7_edges_{30,60,144}fps.log`: **397 checks / 0 failures at 30, 60 and 144**. The 12 interrupt cases (Version 1 table), each a separate replay with a stationary hop onto the starting plate. The jump press is sent through `Input.parse_input_event`, and `k` is the tick of the press relative to touchdown. The observed values below are from the `CASE ... observed` lines of the 60 fps log (pose/clip/visual/clip time):
+
+| Case | Brief prediction | Observed (rel tick: pose / clip / visual / time) | Match |
+| --- | --- | --- | --- |
+| boundary 0, before (k −1) | buffer; LAND at 0, ANTIC at 1 | −1 FALL/–/sprite; 0 LAND/land/rig/0; 1 ANTIC/–/sprite | yes |
+| boundary 0, on (k 0) | buffer; LAND at 0, ANTIC at 1 | −1 FALL; 0 LAND/land/rig/0; 1 ANTIC | yes |
+| boundary 0, after (k +1) | ANTIC at 1 | 0 LAND/land/rig/0; 1 ANTIC | yes |
+| boundary 2, before (k +1) | ANTIC at 1 | 0 LAND/0; 1 ANTIC | yes |
+| boundary 2, on (k +2) | ANTIC at 2 | 0 LAND/0; 1 LAND/1/60; 2 ANTIC | yes |
+| boundary 2, after (k +3) | ANTIC at 3 | 0–2 LAND/0, 1/60, 2/60; 3 ANTIC | yes |
+| boundary 4, before (k +3) | ANTIC at 3 | 0–2 LAND; 3 ANTIC | yes |
+| boundary 4, on (k +4) | ANTIC at 4 | 0–3 LAND/0…3/60; 4 ANTIC | yes |
+| boundary 4, after (k +5) | ANTIC at 5 | 0–4 LAND/0…4/60; 5 ANTIC | yes |
+| boundary 8, before (k +7) | ANTIC at 7 | 0–6 LAND/0…6/60; 7 ANTIC | yes |
+| boundary 8, on (k +8) | ANTIC at 8 instead of IDLE | 0–7 LAND/0…7/60; 8 ANTIC | yes |
+| boundary 8, after (k +9) | IDLE at 8, then ANTIC at 9 | 0–7 LAND/0…7/60; 8 IDLE/–/sprite; 9 ANTIC | yes |
+
+In every LAND tick listed, the clip time equals `rel/60`. Every non-LAND tick listed shows the original sprite with no clip.
+
+### Frame strips (fixtures)
+
+All frames are **fixture** frames from `res://previews/land_preview.tscn` and `res://previews/scoot_preview.tscn`. Both previews run the real game with real key events; they are not gameplay evidence. Kiran ran each capture windowed with `sessions/a7/capture_strips.sh` (written by the agent in session 7a). The script checks every frame against the log before it keeps anything. The full sequences are outside the repository, in `~/Documents/a7-reference/captures-full/`.
+
+The capture logs do not print the source revision. The revisions below follow the commit order: each capture was committed directly after the commit that holds its game files.
+
+- **r0**, source revision `c19f966` (game files unchanged in `76a158c`; land keys at 0.60): `captures/land/r0/clean/`, `captures/land/r0/overlay/` (30 fps, `--debug-collisions` for the overlay) and `captures/scoot/r0/` (60 fps, one frame before, on and after two swaps and two wraps in each direction); logs beside them; commit `76a158c` (36 kept frames). Clean trigger frame 105, overlay 146, each `aligned=true`, `problems=0`.
+- **r1**, source revision `9ada865` (lower height 0.55): `captures/land/r1/`, `captures/scoot/r1/`; commit `09ee716` (36 kept frames). Clean and overlay trigger frame 146, `aligned=true`, `problems=0`.
+- `landing-r0` is Kiran's earlier windowed 60 fps capture of the existing game. It stays outside the repository as the gameplay reference, separate from these fixtures.
+
+### Two clocks
+
+- **AnimationPlayer:** `callback_mode_process` = 0 = `ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS`, read back in the saved scene (scoot read-back) and in the hosted game (structure check `route-callback-physics`).
+- **Gameplay:** `player.gd` and `session.gd` run in `_physics_process`, and every A7 per-tick log reports `physics_ticks_per_second=60`. Neither clip keys a gameplay value (the land read-back requires exactly the three rig paths; scoot has exactly one track, on `ScootSprite:frame`).
+- **Measured difference.** The state test logs `exp_t`, `pos` and `diff_ticks` after both updates on every tick:
+  - Before the fix (`74fe4b5`): **one tick** (`diff_ticks=1.000000`) from the LAND → SCOOT switch onward, quoted above. That is the 1/60 s error the brief predicted for an extra advance on entry.
+  - After the fix (current logs, 30, 60 and 144): **0 ticks**. Every `*-time-every-tick` and `*-cell-every-tick` check reports `mismatches: 0`, and none of the three state logs contains a FAIL status or a `diff_ticks` of ±1. The same lines 4467–4469 of the current 60 fps log show `diff_ticks=-0.000000`, `0.000000` and `-0.000000`, with cell 0 on both SCOOT-A ticks.
+
+### Predicted failure 6 (the float32 SCOOT key): did not occur
+
+The second key is stored as 0.116666667163 s (scoot read-back `KEYTIME`). The entry-order probe (`fc175e1`, agent session 5b, `logs/probe_a7_entry_order_{30,60,144}fps.log`) found no late swap. In H3, all 32 ticks per rate expected at 7/60 show cell 1 (Revision 2). The state test's `all-runs-scoot-swap-tick-shows-cell-1` passes at all three rates; at 60 fps it reports `swap_ticks: 29, mismatches: []`. After pause, SCOOT resumed exactly on the swap tick at 7/60 with cell 1 (case e).
+
+### Untested: pause during LAND, then SCOOT on the first enabled tick
+
+Revision 2 keeps the plain seek, not the −1/60 seek, when SCOOT starts on a resume after a pause. That is the agent's call, accepted by Kiran: `fd4d855` measured the extra 1/60 only when the AnimationPlayer was playing, and a paused AnimationPlayer is not playing. No test covers this case. It is recorded as an untested edge, not a pass.
+
+### Not reachable through real input: LAND resume after an override
+
+The state log prints `CASE f-override-resume: NOT REACHABLE THROUGH REAL INPUT. Every override (SPLAT, REFORM, WON) ends through reset_at(), which sets land_ticks = 0 ... not counted as a pass (CHANGE-BRIEF.md Revision 1). The same synced resume is checked through pause (case e).` The safeguard stays in `player.gd`. The pause cases passed: LAND froze at 2/60 for 17 ticks and resumed at 3/60, and SCOOT froze for 15 ticks and resumed at 7/60 on the swap tick with cell 1 (`e-*` checks).
+
+### `capture_poses.gd` output change
+
+The Step 5 plan (`14b9b5e`, `sessions/a7/session-5a.jsonl`) flagged that `godot/tests/capture_poses.gd` (supplemental, not counted) forces LAND and SCOOT through `override_pose` while the player is disabled (its lines 53–57). After wiring, its LAND and SCOOT screenshots would therefore show the new visuals held paused instead of the old drawings. The A7 sessions did not edit it. The repository records no run of `capture_poses.gd` after wiring, so the actual output change is unobserved.
+
+[Kiran: if you run capture_poses.gd after wiring, record what its LAND and SCOOT images show]
+
+### Claude against Kiran (strip readings)
+
+Kiran wrote each verdict before the Claude reading it is paired with, except the prediction, which Claude wrote before the r1 capture existed. All entries are in TUNING.md.
+
+| Strip | Claude (agent) | Kiran |
+| --- | --- | --- |
+| land r0 | "Claude's reading of r0" (session 7b, `9ada865`): every kept frame agrees with the phase table. The hold shows as two identical stills (106, 107), but at normal speed it lasts about 50 ms and "can blend into the rise". Claude could not judge smoothness, odd ticks, a one-pixel seam line or feel, and could not see the player box in the overlay. | r0 verdict (`76a158c`, written first): impact, hold and rise read in order; no obvious seam; feet planted at quarter speed; no pop at IDLE; "the hold was easier to see frame by frame". |
+| land r1, before capture | "Claude's prediction" (`9ada865`): about 1 game px flatter at rig 2 and 4 (deepest about 43 px), no visible change at 0, 6 and IDLE; "the r1 strip will look almost the same as r0"; the hold will not be noticeably easier to see at normal speed. | — |
+| land r1 | "Claude's comparison" (this session): FALL, rig 0, rig 6 and IDLE look the same as r0. At rig 2 and 4, any change is at most about 1 px, inside the ±2 px estimate error, so the prediction is not contradicted but cannot be confirmed from unzoomed stills. Crumbs differ. | r1 verdict (`09ee716`, written first): "I could barely tell r0 and r1 apart" at normal speed; easier to see in Preview at rig 2 and 4, slightly flatter and held; feet planted, no visible seam, same IDLE spot; kept r1. |
+| scoot r0, r1 | No Claude reading of the scoot strips is recorded. | [HUMAN CHECK — Kiran to fill in his own words] |
+
+### HUMAN CHECK rows
+
+- **Cycle seam over at least five normal-speed SCOOT wraps:** [HUMAN CHECK — Kiran to fill in his own words]
+- **The action in play, with an interrupt in each phase (startup, active, recovery, end):** [HUMAN CHECK — Kiran to fill in his own words]
+- **Registration (feet at the A/B swap and the wrap, both facings; the IDLE hand-off):** [HUMAN CHECK — Kiran to fill in his own words]
+- **Against the darkest and lightest backgrounds:** [HUMAN CHECK — Kiran to fill in his own words]

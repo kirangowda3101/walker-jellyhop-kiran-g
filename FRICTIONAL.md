@@ -927,3 +927,138 @@ The first full fresh-clone check labelled 14 test runs FAIL, but its own printed
 | Cost script and lifecycle validation | Requested the separate lifecycle case and the slot limit, ran the independent validation and the final benchmark, and kept the peak claim limited to the controlled test. | Wrote and revised the benchmark, including the two-puff limit. | Wrote the independent peak checker and the run-summary script. |
 | GPU evidence and reports | Ran both profiler captures, recorded the debugger connection failure and retry, and left the budgets unverified. | — | Drafted TEST-REPORT.md sections from my results and helped distinguish unavailable GPU timing from a zero reading. |
 | Transcript excerpts and this log | Ran the excerpt script, verified the output, and committed only the excerpts. Wrote this log and checked it against the record. | Produced the original session transcripts. | Wrote the excerpt script and checked this log against the evidence. |
+
+## A7
+
+Kiran's notes below are copied verbatim from `~/Documents/a7-reference/frictional-notes-filled.md` by the agent (Claude Code, `sessions/a7/session-8.jsonl`, 2026-11-17). Nothing in them was changed. The entries after them (12–21) were drafted by the agent from commit messages, logs and transcripts only. Each ends with a placeholder for Kiran's own account.
+
+# A7 FRICTIONAL notes
+
+Working draft organized with AI assistance from my commits, logs, transcripts, and visual checks.
+
+## 1. Baseline in a worktree
+
+I expected the 14 counted runs to match A6. I ran them in a detached worktree at cb0e5e9 so the wrapper could generate new logs without overwriting the A6 evidence in my main folder. All 14 matched. My first log copy used cp without -p, so the destination timestamps reflected the copy. I recorded the run date and used the logs for the actual results. Baseline commit: 735b200.
+
+## 2. Measuring the original landing
+
+The landing-r0 capture ran at about 6% of real time and I closed the window after the run. The folder had 516 PNGs while Godot reported 356. That count difference remains unexplained. In Preview, I saw the last FALL pose at frame 291, LAND at 292–299, and upright at 300. Those eight LAND frames gave me the timing budget for the new rig. I chose two ticks into the squash, two holding it, and four recovering.
+
+## 3. Choosing the cut at y = 622
+
+The first pixel scan reported row 601 as the start of a clear band. I checked the image and saw that row 601 caught the edge of the smile. The face ends around rows 607–608, and the clear body band starts at 609. Row 622 is inside that band and below the face. I used it as the shared cut line for both pieces.
+
+## 4. Reviewing the brief before implementation
+
+My draft mixed game pixels with canvas pixels under a scaled parent. I clarified the units and specified centered = false and the texture filter for the slices. That made the offsets and alignment specific enough to check against the saved scene. Brief commit: 393292f.
+
+## 5. Reviewing CLAUDE.md
+
+The first Claude Code session failed with an expired OAuth login. I kept the failed transcript, signed in again, and retried in a fresh session. I committed the agent’s draft as 290bc8d and my review as ffac0d8. I checked the references against the repo, corrected the statement that the wrapper had never been edited, and restored the A6 shader clause. The shader clause mattered because A7 still needed to protect the existing A6 work.
+
+## 6. Checking the behavior pins
+
+The harness showed that an input press needed to be sent at the end of the tick before the game read it. I expected the buffered cases at −1 and 0 to show LAND on touchdown and ANTIC on the following tick. All 12 interrupt predictions passed. The agent expected 10 baseline-only checks. My run showed 9, and comparing it with the full run accounted for all 31: nine baseline checks, ten replay harness checks, and twelve interrupt checks. In Preview I checked PNG 850 for ANTIC, 891 for LAND, and 899 for IDLE. All three matched the log’s frame numbers exactly. Commit: fe9a1f0.
+
+## 7. Importing the SCOOT sheet
+
+I predicted the new sheet would import with mipmaps disabled. The first import confirmed the difference against SCOOT-A. I changed that setting to true, ran the import again, and confirmed that the parameters matched and the PNG hash stayed the same. Commit: f42a67f.
+
+## 8. Checking agent scope and test output
+
+Read-only cat, ls, head, and grep commands appeared in the transcripts despite the wrapper-only scope. A chained wrapper command was denied. The SCOOT and LAND tests also logged formatting errors from %.3e that the wrapper’s error scan missed. After the agent fixed the formatting, I reran the tests myself and searched the logs for ERROR and FAIL. The read-back commits are 73eba42 and 1bf1133.
+
+## 9. Revising the brief for pause and resume
+
+The planning agent found that Escape freezes the gameplay counters while the animation could continue. I approved pausing the clip and resuming at the phase calculated from the gameplay counters. The plan also found that the real-input override paths reset land_ticks, so I recorded override-resume as unreachable through those routes. The agent flagged the float32 SCOOT boundary, and I approved testing it as predicted failure 6. Plan and revision commits: 14b9b5e and 128145c.
+
+## 10. Testing animation entry order
+
+I asked the probe to check both the clip time and the visible value on the same tick, especially SCOOT cell 1 at 7/60. In the isolated scene, the AnimationPlayer advanced after the parent callback. At 30, 60, and 144 FPS, play followed by seek(t, true) applied the expected visual on entry and resume without an extra advance. The tested alternatives failed on entry. The predicted late SCOOT swap did not occur in the probe. The integrated Step 5c run is still pending review.
+
+## 11. Moving the launch commands into a script
+
+After long pasted blocks stopped returning to the prompt, I checked from the first tab whether anything was still running before closing the second tab. I moved the launch into sessions/a7/launch.sh. That gave me a repeatable command and kept the prompt, transcript, tool calls, and Git diff available for review.
+
+## Human and AI contributions
+
+I made and approved the design decisions, reviewed and revised the brief, inspected the generated code and resources, repeated the tests, read the capture frames, and made the commits. Claude Code wrote the scoped tools, tests, clips, and scene changes and ran the timing probe. Chat assistants helped draft commands and organize the evidence. I used the output to correct the reported check count, verify the import prediction, and decide which animation entry method to carry forward.
+
+## A7 entries after the notes (facts drafted by the agent; Kiran to add his own account)
+
+### 12. Step 5c wiring and the 132/5 failure (74fe4b5)
+
+The agent wired the visuals as approved (`sessions/a7/session-5c.jsonl`). `player.gd` lines 1–171 stayed unchanged, and `_update_visuals()` was appended. Pins: 31/0 at 30, 60 and 144, with all PINDIGESTs identical to `fe9a1f0`. Structure test: 29/0. State test: **132 checks / 5 failures at all three rates**. When LAND handed off to SCOOT in a single tick (stop, then play + seek), SCOOT showed one tick ahead. The agent's report quotes the 60 fps log: at tick 8100, `exp_t=0.083333333333 pos=0.100000000000 diff_ticks=1.000000`; at tick 8101, cell 1 shown during SCOOT-A. The splat case showed the same lead. Everything else was exact. The agent stopped as instructed.
+
+[Kiran: what I expected / checked / learned]
+
+### 13. Hand-off probe, first round (5d, fd4d855)
+
+The agent tested three hand-off variants in the supplemental probe (`sessions/a7/session-5d.jsonl`): H0 `stop()`, H1 `stop(true)` and H2 no stop. All three failed the selection rule at 30, 60 and 144 on a LAND → SCOOT switch in one tick. The commit records the finding: whenever the AnimationPlayer was already playing a clip, it added 1/60 s in its own update that tick. Fresh entries (R1) were still exact. `player.gd` was unchanged, and the agent stopped as instructed.
+
+[Kiran: what I expected / checked / learned]
+
+### 14. Hand-off fix (5e, 5c0fb9a)
+
+Probe variant H3 (`sessions/a7/session-5e.jsonl`): stop, `play(&"scoot")`, then seek `fposmod(t − 1/60, length)`. It passed the rule at 30, 60 and 144 for all 14 phases, including phase 0 at the wrap and cell 1 at 7/60. The agent applied it only to the direct LAND → SCOOT entry, not to a resume after a pause. Afterwards: state test 132/0 at 30, 60 and 144 (was 132/5). The 14 baseline counts matched. Pins 31/0 with PINDIGESTs identical to `fe9a1f0`. Read-backs 62/0 and 135/0. Structure 29/0, with its pattern widened for the new seek argument.
+
+[Kiran: what I expected / checked / learned]
+
+### 15. CHANGE-BRIEF.md Revision 2 (ed4f64d)
+
+Revision 2 was appended, with Version 1 and Revision 1 unchanged. The direct LAND → SCOOT switch seeks one tick earlier because the AnimationPlayer adds 1/60 when it is already playing (`fd4d855`). The evidence is H3 and the green regression in `5c0fb9a`. A resume after a pause keeps the plain seek. The commit records this as the agent's call, accepted, and as an untested edge.
+
+[Kiran: what I expected / checked / learned]
+
+### 16. Edges and re-pin (167f3ab)
+
+The agent wrote `test_a7_edges.gd` (`sessions/a7/session-6.jsonl`): 397 checks / 0 failures at 30, 60 and 144. All 12 interrupt cases matched the brief in pose, clip, clip time and visibility on every tick. The pins were re-run: 31/0 at 30, 60 and 144, all 11 PINDIGESTs unchanged; the 60 fps log differed only in the exit-time shutdown lines. The agent also wrote `sessions/a7/mutations.sh` but did not run it; the commit says it passed `bash -n` and was checked by Kiran.
+
+[Kiran: what I expected / checked / learned]
+
+### 17. Mutations and fresh cache (c19f966)
+
+Kiran ran `sessions/a7/mutations.sh` at `167f3ab` (`evidence/a7-mutations/summary.txt`, run 2026-11-17T17:43:42Z). Results:
+
+- M1, a broken track subname in `land.tres`: CONFIRMED, land read-back 94 checks / 3 failures.
+- M2, LOOP_LINEAR removed from `scoot.tres`: CONFIRMED, scoot read-back 62 checks / 1 failure.
+- M3, a key on cell 2: CONFIRMED, scoot read-back 62 checks / 2 failures.
+- M4, a fresh-cache import: PASSED AS EXPECTED, land 135/0 and scoot 62/0.
+
+Each mutation imported with exit 0 and left its intended FAIL line in the log.
+
+[Kiran: what I expected / checked / learned]
+
+### 18. Preview fixtures and the capture script (7a, in c19f966)
+
+The agent wrote `land_preview` and `scoot_preview` (`sessions/a7/session-7a.jsonl`). Both drive the real game with real input. Headless results: the land trigger frame 146 shows rig 0, then 2, 4 and 6, then IDLE at tick 8; the scoot preview shows 2 swaps and 2 wraps per direction. The agent also wrote `sessions/a7/capture_strips.sh`, which passed `bash -n` and had not yet been run at that commit.
+
+[Kiran: what I expected / checked / learned]
+
+### 19. Strips r0 and my first verdict (76a158c)
+
+Kiran ran `capture_strips.sh`, and all of its checks passed. It kept 36 fixture frames:
+
+- land clean and overlay at 30 fps: FALL, rig 0/2/4/6 and the IDLE hand-off;
+- scoot at 60 fps: around every swap and wrap, in both directions.
+
+The logs sit beside the frames, and the full sequences are outside the repo. Kiran's r0 verdict is in TUNING.md, written before any Claude reading.
+
+[Kiran: what I expected / checked / learned]
+
+### 20. r1 change (7b, 9ada865)
+
+Chosen by Kiran from his r0 verdict, edited by the agent (`sessions/a7/session-7b.jsonl`):
+
+- In the land keys at 2 and 4, lower height went from 0.60 to 0.55, and UpperPivot y from −12.084 to −11.077 (the seam rule). The 2/2/4 timing is unchanged.
+- The read-back expectations were updated: frame-6 lower 0.8875, upper y −17.874.
+- Claude's reading of r0 and its r1 prediction were appended to TUNING.md, labelled agent.
+- Runs: land read-back 135/0; state 132/0 and edges 397/0 at 30, 60 and 144; pins 31/0 with PINDIGESTs unchanged; scoot 62/0; structure 29/0. The 14 baseline runs are not listed as re-run.
+
+[Kiran: what I expected / checked / learned]
+
+### 21. r1 kept and CHANGE-BRIEF.md Revision 3 (09ee716)
+
+Kiran's r1 captures: 36 fixture frames, all checks passed. His r1 verdict in TUNING.md says the two were barely distinguishable at normal speed, and that in stills r1 looks slightly flatter and holds at rig 2 and 4, with feet planted, no seam and the same IDLE spot. He kept r1. Revision 3 records lower height 0.55 at frames 2 and 4, UpperPivot y −11.077, and a deepest squash of about 43 px, with the timing unchanged. Claude's comparison of r1 was written afterwards, in this session (TUNING.md).
+
+[Kiran: what I expected / checked / learned]

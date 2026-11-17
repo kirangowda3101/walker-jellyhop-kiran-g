@@ -183,3 +183,57 @@ None.
 
 **Collaborators**
 - None. A6 is individual work.
+
+## Assignment 7 — animation: sources, tools and AI contributions
+
+Drafted by the agent (Claude Code, `sessions/a7/session-8.jsonl`) from the commits, CHANGE-BRIEF.md and Kiran's notes, for Kiran to check.
+
+**Starting point**
+- The same game, Jelly Hop: Fork From Above, continued from tag `a6` (`31b9e9e`). No change of game.
+
+**Art**
+- **Scoot sheet**, `godot/assets/art/CHAR-SCOOT-SHEET.png` (2048 × 1024 RGBA, SHA-256 `30b0ab635693477205cb9611160dcafd735a1f3e67ba7ffdb4fc3556eee04736`). It packs Kiran Gowda's A2 artwork `CHAR-SCOOT-A.png` (cell 0) and `CHAR-SCOOT-B.png` (cell 1) side by side, with no cropping, resizing or padding. That art was generated locally with Stable Diffusion XL Base 1.0, image to image, then cleaned and cut out (ASSET-LOG.md). The sheet was packed by `godot/tools/make_scoot_sheet.gd`, which reported 0 mismatched pixels per cell against its source. Credits, terms ([CreativeML Open RAIL++-M](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md), dated 2023-07-26, checked 2026-11-16) and import settings are in `godot/assets/art/CHAR-SCOOT-SHEET.ATTRIBUTION.md`. The source PNGs are unchanged.
+- **IDLE slices for the landing rig:** two `region_rect` views of the existing `godot/assets/art/CHAR-IDLE.png` (SHA-256 `2b5ef1aad00cddb51ca6b155bd9a14c343f0b923e0a00c356107c3d56fc08099`), rows 0–621 and 622–1023, set in `player_visuals.tscn`. No new image file was made, and the PNG is unchanged. CHAR-IDLE is Kiran's A2 CHAR-REF (commit `136721b`), from the same SDXL record and terms.
+- No new generative-model output and no third-party art in A7.
+
+**Tools**
+- Godot 4.7.2.stable.official.ed1daf0bf (Compatibility renderer), headless for tests and windowed Movie Maker for the frame strips.
+- Claude Code, run with `claude -p` and scoped tools. Every A7 prompt and transcript is in `sessions/a7/` (`prompt-*.txt`, `session-*.jsonl`). The transcripts record `claude_code_version` `2.1.325` in sessions 1b, 2, 3a, 3b, 4, 5a–5e, 6, 7a, 7b and 8. The failed first attempt, `session-1.jsonl` (expired login, no tool calls), records `2.1.309`.
+- Claude (claude.ai chat), used as a guide during A7.
+- `sessions/a7/launch.sh`, Kiran's launcher for the Claude Code sessions (`fc175e1`).
+
+**Specified, measured, judged, approved, changed or rejected by Kiran**
+- **Specified:** CHANGE-BRIEF.md Version 1 (`393292f`, written before any Claude Code session) and Revisions 1–3 (`128145c`, `ed4f64d`, `09ee716`): both clips, the 7-tick cells, the 2/2/4 landing timing, the cut at row 622, the keys and transitions, one writer per animated node, and the evidence plan.
+- **Measured:** the existing landing in his `landing-r0` capture (last FALL 291, LAND 292–299, upright 300). The cut row: he rejected row 601 from the first scan because it caught the smile, and chose 622 inside the clear band (FRICTIONAL.md, A7 notes 2–3). The A7 baseline at `cb0e5e9` (`735b200`). The pin runs at 30, 60 and 144 and the pins Movie Maker check (`fe9a1f0`).
+- **Reviewed and changed:** the CLAUDE.md draft (agent `290bc8d`, his review `ffac0d8`). The sheet's first import, where he changed `mipmaps/generate` to `true` (`f42a67f`). The agent's baseline-only check count, which he corrected from 10 to 9.
+- **Approved:** the Step 5 plan and its pause rule. Testing predicted failure 6. R1 (`play` + `seek(t, true)`) as the entry method; R2 and R3 failed his rule on entry ticks (`fc175e1`). The H3 hand-off fix and the agent's resume exclusion (Revision 2).
+- **Ran:** the sheet tool, both read-backs, the mutations and fresh-cache import (`c19f966`), and the r0 and r1 captures (`76a158c`, `09ee716`).
+- **Judged:** his r0 and r1 verdicts in TUNING.md, each written before Claude's reading. He chose the deeper r1 squash from his r0 verdict and kept r1.
+
+**Written by Claude Code (agent), reviewed by Kiran** (session in brackets)
+- CLAUDE.md draft (1b).
+- `godot/tests/test_a7_pins.gd` (2).
+- `godot/tools/make_scoot_sheet.gd` (3a).
+- `godot/animations/scoot.tres`, `godot/features/player/player_visuals.tscn` and `godot/tests/test_a7_scoot_readback.gd` (3b).
+- `godot/animations/land.tres`, the rig additions to `player_visuals.tscn` and `godot/tests/test_a7_land_readback.gd` (4).
+- The read-only Step 5 plan (5a).
+- `godot/tests/probe_a7_entry_order.gd` (5b; hand-off variants in 5d and 5e).
+- `_update_visuals()` appended to `godot/features/player/player.gd`, `godot/tests/test_a7_visual_structure.gd` and `godot/tests/test_a7_visual_state.gd` (5c). The direct LAND → SCOOT seek fix (5e).
+- `godot/tests/test_a7_edges.gd` and `sessions/a7/mutations.sh` (6).
+- `godot/previews/land_preview.tscn`/`.gd`, `godot/previews/scoot_preview.tscn`/`.gd` and `sessions/a7/capture_strips.sh` (7a).
+- The r1 key edit to `land.tres` (Kiran's choice), the read-back expectations, Claude's r0 reading and r1 prediction in TUNING.md, and the run-name argument for `capture_strips.sh` (7b).
+- These A7 sections of TUNING.md, TEST-REPORT.md, README.md, SOURCES.md, FRICTIONAL.md and SUBMISSION.md (8).
+
+**Claude (chat)**
+- The record shows that it drafted the A7 baseline commands, which Kiran ran (TEST-REPORT.md, "A7 baseline"). Kiran's notes say chat assistants "helped draft commands and organize the evidence", and that his FRICTIONAL notes were "organized with AI assistance". Any other chat contribution is not recorded in the repository.
+
+[Kiran: add or correct what Claude in chat contributed to A7, in your words]
+
+**From the course handout**
+- `scripts/run-test.sh` (the A7 wrapper, `cb0e5e9`), used as provided.
+- `sessions/a7/prompt-1.txt` is the handout's CLAUDE.md prompt, verbatim (`290bc8d`).
+
+[Kiran: state which other A7 prompts are course prompts, adapted course prompts or yours]
+
+**Collaborators**
+- [Kiran: confirm "None. A7 is individual work."]

@@ -281,3 +281,55 @@ The earlier suites run as listed in the A5 section and match their baseline coun
 - No vsync debug key and no vsync-off FPS comparison.
 
 **Film:** https://youtu.be/Ss--gJ2vvqA (YouTube, unlisted; reviewer access checked in a private window on 2026-11-08). File `claude-liam-jelly-hop-a6.mp4`, 647.7 s, 3840 × 2160, 30 fps, SHA-256 `7c094ecaebacabaa84d2c93928b60dc8955f6cde2ef169983c23b8532197b0db`. Game-source revision shown: `8004dea`. Film sources and QC: `youtube/claude-liam-jelly-hop-a6/` (MP4, audio and the full session transcript kept out of git).
+
+## Assignment 7 — animation (tag `a7`)
+
+**Engine:** Godot 4.7.2.stable.official.ed1daf0bf, Compatibility renderer. Starting point: tag `a6` (`31b9e9e`).
+
+**What A7 added**
+- **`scoot`, a looping cycle:** two cells on a `Sprite2D` (`hframes = 2`) from `godot/assets/art/CHAR-SCOOT-SHEET.png`, held by one discrete `frame` track. 7 ticks per cell, 14 per cycle, synced to the player's `tick % 14`. Clip: `godot/animations/scoot.tres`. The sheet is packed from the A2 CHAR-SCOOT-A/B art by `godot/tools/make_scoot_sheet.gd`.
+- **`land`, a one-shot cutout rig:** two `Sprite2D` slices of `CHAR-IDLE.png`, cut at row 622, under `LowerPivot` and `UpperPivot`, with three continuous tracks (`LowerPivot:scale`, `UpperPivot:position`, `UpperPivot:scale`). The keys are at frames 0, 2, 4 and 8 within the existing eight-tick LAND window. Clip: `godot/animations/land.tres` (r1 squash depth, CHANGE-BRIEF.md Revision 3).
+- `godot/features/player/player_visuals.tscn`: both clips on one `AnimationPlayer` on the physics callback, hosted by `player.gd`. `player.gd` keeps its original pose selection, movement, input and collision code. It adds only the pose-to-visual mapping: which visual shows, the facing mirror, and play, seek, stop or pause.
+- Behaviour pins, clip read-backs, structure, per-tick state and edge tests, an entry-order probe, mutation and capture scripts, two preview fixtures and frame strips in `captures/land/` and `captures/scoot/` (r0 and r1).
+
+**Run**
+```bash
+godot --headless --path godot --import   # once on a fresh clone
+godot --path godot                        # play the game
+godot --path godot res://previews/land_preview.tscn    # LAND fixture: one hop on the starting plate, real game, scripted key events
+godot --path godot res://previews/scoot_preview.tscn   # SCOOT fixture: scoot right, then left, on the starting plate
+```
+The previews send their own key events and quit when they finish. Do not press keys in their window, because real key events reach the game. To check them headless: `godot --headless --fixed-fps 30 --path godot res://previews/land_preview.tscn` and `godot --headless --fixed-fps 60 --path godot res://previews/scoot_preview.tscn`.
+
+**Capture the frame strips** (windowed Movie Maker, from the repository root). `rN` is a placeholder: use a new name so that `r0` and `r1` stay intact. The script refuses to overwrite an existing capture.
+```bash
+bash sessions/a7/capture_strips.sh rN
+```
+
+**Controls:** unchanged from A6. A / D or ← / → move; Space, ↑ or W hop; Esc pause (both clips freeze with the game); M mute all; N mute music; Enter skips the intro and, after a win, starts a replay.
+
+**Tests** (always through the wrapper; counts from the current logs):
+```bash
+./scripts/run-test.sh test_a7_pins.gd 60              # 31 checks; also 30 and 144 (PINDIGEST lines identical)
+./scripts/run-test.sh test_a7_scoot_readback.gd 60    # 62 checks
+./scripts/run-test.sh test_a7_land_readback.gd 60     # 135 checks
+./scripts/run-test.sh test_a7_visual_structure.gd 60  # 29 checks
+./scripts/run-test.sh test_a7_visual_state.gd 60      # 132 checks; also 30 and 144
+./scripts/run-test.sh test_a7_edges.gd 60             # 397 checks; also 30 and 144
+./scripts/run-test.sh probe_a7_entry_order.gd 60      # supplemental timing probe, not counted; also 30 and 144
+bash sessions/a7/mutations.sh                         # M1-M3 mutations and the M4 fresh-cache import, in a temporary worktree
+```
+The 14 earlier counted runs are listed in CLAUDE.md, "Test commands". Their counts matched the A7 baseline after wiring (TEST-REPORT.md, A7).
+
+**A7 documents:** CHANGE-BRIEF.md (Version 1 and Revisions 1–3), CLAUDE.md, TUNING.md (A7 entries), TEST-REPORT.md ("A7 baseline" and "A7"), FRICTIONAL.md (A7), SOURCES.md (Assignment 7), SUBMISSION.md, prompts and Claude Code transcripts in `sessions/a7/`, evidence in `evidence/a7-baseline/` and `evidence/a7-mutations/`, logs in `logs/`.
+
+**Known limitations** (details in TEST-REPORT.md, A7)
+- A pause during LAND followed by SCOOT on the first enabled tick is untested.
+- The LAND resume after an override is kept in code but cannot be reached through real input, so it is not tested as a pass.
+- The 14 earlier runs were not re-run after the r1 key change (`9ada865`); the A7 suites were.
+- `capture_poses.gd` (supplemental) has not been run since wiring, so its changed LAND and SCOOT output is unobserved.
+- Claude's strip readings are from unzoomed stills; the r1 change of about 1 px could not be confirmed that way. The 30 fps land strips do not capture the odd ticks.
+- The frame strips are fixtures from the preview scenes, not gameplay captures.
+- No vsync debug key was added in A7.
+
+**Film:** [link to be added]
