@@ -1,0 +1,32 @@
+Read CLAUDE.md first. Change only CLAUDE.md. Keep it under 120 lines;
+the first line stays exactly @AGENTS.md and the line @CHANGE-BRIEF.md
+stays exactly as it is. Give a file or commit reference for every fact.
+
+1. "Headless facts": add each of the handout's four lines only where the
+   repository now shows it, with its evidence:
+   - key times are 32-bit floats (the KEYTIME line in
+     logs/test_a7_scoot_readback_60fps.log; PackedFloat32Array in
+     godot/animations/*.tres);
+   - frame strips come from a windowed Movie Maker run I start (already
+     there; keep it);
+   - value_track_get_update_mode applies only to value tracks: say this
+     project has only 2D value tracks, so the non-value case did not
+     arise, and the read-backs call it only after a TYPE_VALUE check;
+   - "a headless run draws nothing": keep it unconfirmed unless a file
+     in the repository shows it.
+2. "Unconfirmed": move each item that is now settled into the right
+   section with its evidence: the Animation API names (the ClassDB
+   checks in the read-back logs), the same-tick order (the probe's A1
+   result, logs/probe_a7_entry_order_*fps.log, and fd4d855/5c0fb9a),
+   hosting (player.gd's _update_visuals), import settings, behaviour
+   pins (fe9a1f0), and the "planned" labels on the A7 clips and scenes
+   (they now exist). Keep as unconfirmed only what still is: a headless
+   run drawing nothing, the pause-then-SCOOT entry (untested,
+   CHANGE-BRIEF.md Revision 2), the 356/516 frame-count mismatch in
+   landing-r0, realtime runs, the check runners, and the A6 open items.
+3. Update the test-command list with the A7 suites in their modes (pins
+   30/60/144, both read-backs 60, structure 60, state 30/60/144, edges
+   30/60/144, the probe 30/60/144 as supplemental).
+Change no rule in "Ownership", "One authority", "Godot 4 names" or "Out
+of scope" except to remove a "planned" label. Final report: the diff in
+full and the final line count. Do not stage or commit.
