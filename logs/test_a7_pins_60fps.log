@@ -3725,3 +3725,7 @@ CASE boundary=8 after k=+9 predicted="9: IDLE at 8, then ANTIC at 9" observed: r
 CHECK {"id":"interrupt-boundary-8-after-k+9","observed":{"hop_rel":9,"pose_at_0":"LAND","pose_at_8":"IDLE","pose_at_hop_prediction":"ANTIC","predicted":"9: IDLE at 8, then ANTIC at 9","press_read_rel":9,"timeline":["-2:FALL/0/-","-1:FALL/0/-","0:LAND/8/landed","1:LAND/7/-","2:LAND/6/-","3:LAND/5/-","4:LAND/4/-","5:LAND/3/-","6:LAND/2/-","7:LAND/1/-","8:IDLE/0/-","9:ANTIC/0/hop","10:ANTIC/0/-","11:ANTIC/0/-","12:ANTIC/0/-"]},"status":"PASS"}
 PINDIGEST interrupt_k+9 lines=313 sha256_without_frame=550c5bbefaac69f7aaa3a3e1a778c4abbea48469a17d8aca112ceb483e4a4f02
 A7 PINS: 31 checks / 0 failures
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

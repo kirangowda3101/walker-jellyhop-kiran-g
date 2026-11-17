@@ -4,14 +4,16 @@
 # frame from res://previews/*_preview.tscn, not gameplay evidence; landing-r0 stays the separate gameplay reference.
 #
 # Usage, from the repository root (needs a window; do not press keys in the Godot window while it records):
-#   bash sessions/a7/capture_strips.sh
+#   bash sessions/a7/capture_strips.sh [RUN]
+# RUN is the revision name, default r0 (for example: bash sessions/a7/capture_strips.sh r1). It must be letters,
+# digits, '.', '_' or '-' only. Below, <RUN> stands for it.
 #
-# 1. Refuses to start if captures/land/r0, captures/scoot/r0 or any ~/Documents/a7-reference/captures-full/<run>
-#    directory already exists.
+# 1. Refuses to start if captures/land/<RUN>, captures/scoot/<RUN> or any
+#    ~/Documents/a7-reference/captures-full/{land-<RUN>-clean,land-<RUN>-overlay,scoot-<RUN>} directory already exists.
 # 2. Runs windowed Movie Maker three times, each run's output teed to a log:
-#      land  --fixed-fps 30                     -> captures/land/r0/clean/    log captures/land/r0/land_clean.log
-#      land  --fixed-fps 30 --debug-collisions  -> captures/land/r0/overlay/  log captures/land/r0/land_overlay.log
-#      scoot --fixed-fps 60                     -> captures/scoot/r0/         log captures/scoot/r0/scoot.log
+#      land  --fixed-fps 30                     -> captures/land/<RUN>/clean/    log captures/land/<RUN>/land_clean.log
+#      land  --fixed-fps 30 --debug-collisions  -> captures/land/<RUN>/overlay/  log captures/land/<RUN>/land_overlay.log
+#      scoot --fixed-fps 60                     -> captures/scoot/<RUN>/         log captures/scoot/<RUN>/scoot.log
 #    Movie Maker writes frame<NNNNNNNN>.png, one per rendered frame counted from 0 (and frame.wav).
 # 3. Checks every run before anything is moved: Godot exit 0, the preview's own result line with problems=0, no
 #    SCRIPT ERROR / Failed loading resource, contiguous FRAME lines, contiguous PNG numbers from 0, and
@@ -39,17 +41,25 @@ REPO="$(git rev-parse --show-toplevel)"
 if [ "$(pwd -P)" != "$(cd "$REPO" && pwd -P)" ]; then
 	stop "run this from the repository root: $REPO"
 fi
-LAND_DIR="captures/land/r0"
-SCOOT_DIR="captures/scoot/r0"
+if [ "$#" -gt 1 ]; then
+	stop "usage: bash sessions/a7/capture_strips.sh [RUN]  (one optional argument, default r0; got $#)"
+fi
+RUN="${1:-r0}"
+if ! [[ "$RUN" =~ ^[A-Za-z0-9._-]+$ ]]; then
+	stop "run name '$RUN' must be letters, digits, '.', '_' or '-' only"
+fi
+echo "capture_strips.sh: run name $RUN"
+LAND_DIR="captures/land/$RUN"
+SCOOT_DIR="captures/scoot/$RUN"
 CLEAN_DIR="$LAND_DIR/clean"
 OVERLAY_DIR="$LAND_DIR/overlay"
 CLEAN_LOG="$LAND_DIR/land_clean.log"
 OVERLAY_LOG="$LAND_DIR/land_overlay.log"
 SCOOT_LOG="$SCOOT_DIR/scoot.log"
 EXT="$HOME/Documents/a7-reference/captures-full"
-EXT_CLEAN="$EXT/land-r0-clean"
-EXT_OVERLAY="$EXT/land-r0-overlay"
-EXT_SCOOT="$EXT/scoot-r0"
+EXT_CLEAN="$EXT/land-$RUN-clean"
+EXT_OVERLAY="$EXT/land-$RUN-overlay"
+EXT_SCOOT="$EXT/scoot-$RUN"
 WANT_SIZE="1280 x 720"
 
 for d in "$LAND_DIR" "$SCOOT_DIR"; do

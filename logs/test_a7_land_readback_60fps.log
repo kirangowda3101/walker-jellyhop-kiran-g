@@ -73,10 +73,10 @@ PASS FacingPivot/LandRig/LowerPivot:scale key 0 time 0.000000: 0.0000000000 (dif
 PASS FacingPivot/LandRig/LowerPivot:scale key 0 value (1.05, 0.85): (1.050000, 0.850000) (type Vector2)
 PASS FacingPivot/LandRig/LowerPivot:scale key 0 transition 2.0: 2.000000
 PASS FacingPivot/LandRig/LowerPivot:scale key 1 time 0.033333: 0.0333333351 (diff 0.0000000017)
-PASS FacingPivot/LandRig/LowerPivot:scale key 1 value (1.15, 0.6): (1.150000, 0.600000) (type Vector2)
+PASS FacingPivot/LandRig/LowerPivot:scale key 1 value (1.15, 0.55): (1.150000, 0.550000) (type Vector2)
 PASS FacingPivot/LandRig/LowerPivot:scale key 1 transition 1.0: 1.000000
 PASS FacingPivot/LandRig/LowerPivot:scale key 2 time 0.066667: 0.0666666701 (diff 0.0000000035)
-PASS FacingPivot/LandRig/LowerPivot:scale key 2 value (1.15, 0.6): (1.150000, 0.600000) (type Vector2)
+PASS FacingPivot/LandRig/LowerPivot:scale key 2 value (1.15, 0.55): (1.150000, 0.550000) (type Vector2)
 PASS FacingPivot/LandRig/LowerPivot:scale key 2 transition 0.5: 0.500000
 PASS FacingPivot/LandRig/LowerPivot:scale key 3 time 0.133333: 0.1333333403 (diff 0.0000000070)
 PASS FacingPivot/LandRig/LowerPivot:scale key 3 value (1.0, 1.0): (1.000000, 1.000000) (type Vector2)
@@ -86,10 +86,10 @@ PASS FacingPivot/LandRig/UpperPivot:position key 0 time 0.000000: 0.0000000000 (
 PASS FacingPivot/LandRig/UpperPivot:position key 0 value (0.0, -17.119): (0.000000, -17.118999) (type Vector2)
 PASS FacingPivot/LandRig/UpperPivot:position key 0 transition 2.0: 2.000000
 PASS FacingPivot/LandRig/UpperPivot:position key 1 time 0.033333: 0.0333333351 (diff 0.0000000017)
-PASS FacingPivot/LandRig/UpperPivot:position key 1 value (0.0, -12.084): (0.000000, -12.084000) (type Vector2)
+PASS FacingPivot/LandRig/UpperPivot:position key 1 value (0.0, -11.077): (0.000000, -11.077000) (type Vector2)
 PASS FacingPivot/LandRig/UpperPivot:position key 1 transition 1.0: 1.000000
 PASS FacingPivot/LandRig/UpperPivot:position key 2 time 0.066667: 0.0666666701 (diff 0.0000000035)
-PASS FacingPivot/LandRig/UpperPivot:position key 2 value (0.0, -12.084): (0.000000, -12.084000) (type Vector2)
+PASS FacingPivot/LandRig/UpperPivot:position key 2 value (0.0, -11.077): (0.000000, -11.077000) (type Vector2)
 PASS FacingPivot/LandRig/UpperPivot:position key 2 transition 0.5: 0.500000
 PASS FacingPivot/LandRig/UpperPivot:position key 3 time 0.133333: 0.1333333403 (diff 0.0000000070)
 PASS FacingPivot/LandRig/UpperPivot:position key 3 value (0.0, -20.14): (0.000000, -20.139999) (type Vector2)
@@ -112,33 +112,33 @@ PASS key 0 UpperPivot.position.x == 0: 0.000000
 PASS key 0 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -17.118999 vs -17.119000 (diff 0.00000100)
 PASS key 1 equal widths (LowerPivot.scale.x == UpperPivot.scale.x): 1.150000 vs 1.150000
 PASS key 1 UpperPivot.position.x == 0: 0.000000
-PASS key 1 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -12.084000 vs -12.084000 (diff 0.00000085)
+PASS key 1 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -11.077000 vs -11.077000 (diff 0.00000058)
 PASS key 2 equal widths (LowerPivot.scale.x == UpperPivot.scale.x): 1.150000 vs 1.150000
 PASS key 2 UpperPivot.position.x == 0: 0.000000
-PASS key 2 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -12.084000 vs -12.084000 (diff 0.00000085)
+PASS key 2 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -11.077000 vs -11.077000 (diff 0.00000058)
 PASS key 3 equal widths (LowerPivot.scale.x == UpperPivot.scale.x): 1.000000 vs 1.000000
 PASS key 3 UpperPivot.position.x == 0: 0.000000
 PASS key 3 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -20.139999 vs -20.140000 (diff 0.00000061)
 PASS frame-8 LowerPivot:scale equals scene rest: (1.000000, 1.000000) vs (1.000000, 1.000000)
 PASS frame-8 UpperPivot:position equals scene rest: (0.000000, -20.139999) vs (0.000000, -20.139999)
 PASS frame-8 UpperPivot:scale equals scene rest: (1.000000, 1.000000) vs (1.000000, 1.000000)
-SAMPLE frame 1 t=0.016667 LowerPivot:scale (1.075000, 0.787500) UpperPivot:position (0.000000, -15.860250) UpperPivot:scale (1.075000, 0.857500)
-PASS frame 1 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -15.860250 vs -15.860250 (diff 0.00000096)
+SAMPLE frame 1 t=0.016667 LowerPivot:scale (1.075000, 0.775000) UpperPivot:position (0.000000, -15.608500) UpperPivot:scale (1.075000, 0.857500)
+PASS frame 1 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -15.608500 vs -15.608501 (diff 0.00000119)
 PASS frame 1 equal widths: 1.075000 vs 1.075000
-SAMPLE frame 3 t=0.050000 LowerPivot:scale (1.150000, 0.600000) UpperPivot:position (0.000000, -12.084000) UpperPivot:scale (1.150000, 0.730000)
-PASS frame 3 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -12.084000 vs -12.084000 (diff 0.00000085)
+SAMPLE frame 3 t=0.050000 LowerPivot:scale (1.150000, 0.550000) UpperPivot:position (0.000000, -11.077000) UpperPivot:scale (1.150000, 0.730000)
+PASS frame 3 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -11.077000 vs -11.077000 (diff 0.00000058)
 PASS frame 3 equal widths: 1.150000 vs 1.150000
-SAMPLE frame 5 t=0.083333 LowerPivot:scale (1.084375, 0.775000) UpperPivot:position (0.000000, -15.608499) UpperPivot:scale (1.084375, 0.848125)
-PASS frame 5 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -15.608499 vs -15.608500 (diff 0.00000095)
+SAMPLE frame 5 t=0.083333 LowerPivot:scale (1.084375, 0.746875) UpperPivot:position (0.000000, -15.042061) UpperPivot:scale (1.084375, 0.848125)
+PASS frame 5 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -15.042061 vs -15.042062 (diff 0.00000141)
 PASS frame 5 equal widths: 1.084375 vs 1.084375
-SAMPLE frame 6 t=0.100000 LowerPivot:scale (1.037500, 0.900000) UpperPivot:position (0.000000, -18.125999) UpperPivot:scale (1.037500, 0.932500)
-PASS frame 6 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -18.125999 vs -18.126000 (diff 0.00000007)
+SAMPLE frame 6 t=0.100000 LowerPivot:scale (1.037500, 0.887500) UpperPivot:position (0.000000, -17.874249) UpperPivot:scale (1.037500, 0.932500)
+PASS frame 6 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -17.874249 vs -17.874250 (diff 0.00000126)
 PASS frame 6 equal widths: 1.037500 vs 1.037500
 PASS frame 6 width 1.0375: 1.037500
-PASS frame 6 LowerPivot scale.y 0.90: 0.900000
+PASS frame 6 LowerPivot scale.y 0.8875: 0.887500
 PASS frame 6 UpperPivot scale.y 0.9325: 0.932500
-PASS frame 6 UpperPivot position.y -18.126: -18.125999 (display -18.13)
-SAMPLE frame 7 t=0.116667 LowerPivot:scale (1.009375, 0.975000) UpperPivot:position (0.000000, -19.636499) UpperPivot:scale (1.009375, 0.983125)
-PASS frame 7 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -19.636499 vs -19.636499 (diff -0.00000013)
+PASS frame 6 UpperPivot position.y -17.874: -17.874249 (display -17.87)
+SAMPLE frame 7 t=0.116667 LowerPivot:scale (1.009375, 0.971875) UpperPivot:position (0.000000, -19.573563) UpperPivot:scale (1.009375, 0.983125)
+PASS frame 7 seam UpperPivot.position.y == -20.14 * LowerPivot.scale.y: -19.573563 vs -19.573562 (diff -0.00000108)
 PASS frame 7 equal widths: 1.009375 vs 1.009375
 A7 LAND READBACK: 135 checks / 0 failures

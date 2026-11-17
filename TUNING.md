@@ -70,3 +70,46 @@ Capture: `captures/land/r0/clean/` and `captures/land/r0/overlay/` (fixture fram
 - **Seam:** I didn't see an obvious gap, overlap, or line where the two pieces meet during the squash or rise.
 - **Feet:** Yes. At quarter speed, Jelly's bottom edge stayed planted on the plate as it squashed and rose.
 - **Return to IDLE:** I didn't notice a pop. Between frames 108 and 109, Jelly gets a little taller while its bottom edge stays in the same spot relative to the plate.
+
+## A7 — landing, r1: Claude's reading of r0 (agent)
+
+Written by the agent (Claude Code, Step 7 r1 session) after Kiran's r0 verdict above. Frames read: the six clean frames in `captures/land/r0/clean/` (process frames 104–109) and the six overlay frames in `captures/land/r0/overlay/` (145–150), with their `STRIP` and `FRAME` lines in `land_clean.log` and `land_overlay.log`. The logs match the strip plan: `TRIGGER aligned=true`, 2 ticks per frame, rel ticks 0/2/4/6/8, every `STRIP` line `ok=true`, `problems=0` in both runs. I read the frames at full size only (1280 × 720, unzoomed), because my crop-and-enlarge command was denied. Every size below is my estimate from the full frame, about ±2 px, not a measurement. The jelly is about 64 px tall on screen, so 1 game px looks like about 1 screen px here.
+
+| Kept frame | Phase table / strip plan | What the frame shows | Agree? |
+| --- | --- | --- | --- |
+| 104 / 145, trigger − 1, FALL | Airborne FALL before contact | The FALL drawing (dot eyes, flat mouth), upright, about 70 × 60 px, its bottom edge a few px above the plate rim. | Agrees |
+| 105 / 146, rig 0, impact | Partial squash, planted feet | The drawing has changed to the IDLE face (smile). The bottom edge now sits on the rim. The top is about 14 px lower than in 104: roughly 55 px tall and slightly wider. Small feet show at the base. | Agrees |
+| 106 / 147, rig 2, deepest squash | About the height of the low box (44 px) | The flattest silhouette: roughly 43–44 px tall and about 75 px wide, a slab with the whole face near the top. The bottom edge is in the same place on the rim. The A6 crumbs appear on both sides of the feet. | Agrees |
+| 107 / 148, rig 4, same squash | Same squash, recovery begins | To my eye the jelly is the same as in 106: same top, same width, same bottom. The only visible change is the crumbs, which have moved further out. | Agrees on the shape. "Recovery begins" can't be seen in this frame: frame 4 is the start key of the rise, so the first recovered pose is tick 5, which a 30 fps strip does not capture. |
+| 108 / 149, rig 6, eased rise | Eased rise, joined cut, fixed feet | Nearly upright again: about 57 px tall, width back near IDLE. The bottom edge is unchanged. I see no line, gap or overlap across the body where the two pieces meet. | Agrees. The 0.5 ease-out puts frame 6 three quarters of the way back (lower height 0.90), so most of the rise (about 14 px) happens between 107 and 108. |
+| 109 / 150, tick 8, IDLE hand-off | No pop, seam or anchor shift | The original IDLE sprite, about 63 px tall, roughly 6 px taller than 108, with the bottom edge in the same place. The step continues the direction of the rise. | Agrees, as far as an unzoomed still can show |
+
+Overlay frames: in all six, the plates, table and forks carry their collision tint, and the jelly silhouettes match the clean frames at the same strip positions. At full-frame size I could not make out the player's own collision box outline. So I could not compare the 52 × 44 box with the frame-2 silhouette from these stills; the "about the low box" agreement rests on my height estimate, not on the overlay.
+
+Where the motion and the phase table differ, in visual terms: the table puts Active at 2–3 and Recovery at 4–7. On screen the squash is held at ticks 2, 3 and 4, because keys 2 and 4 are identical, so the hold lasts about 3 ticks (50 ms). Then the rise is front-loaded: about three quarters of it is done by tick 6. In the strip, the hold appears as two identical stills in a row (106 and 107), each shown for 1/30 s, so it is easy to see. At normal speed the same hold lasts only 50 ms and can blend into the rise. That fits Kiran's note that the hold was easier to see frame by frame.
+
+What I cannot judge from stills:
+- Smoothness and the feel of the easing. The 2.0 ease-in into frame 2 and the 0.5 ease-out after frame 4 act on ticks 1, 3, 5 and 7, and none of those ticks is in a 30 fps strip.
+- Whether the feet stay planted and the cut stays joined on those odd ticks.
+- Any one-pixel filtering line at the cut, which needs a zoomed view.
+- Whether the rig's frame-8 rest is pixel-identical to the original IDLE sprite. The strip shows the original sprite at tick 8, not the rig at rest.
+- How long the hold feels at normal speed. Only Kiran's playtest can decide that.
+
+## A7 — landing, r1: Claude's prediction (agent)
+
+Written by the agent before any r1 capture exists. The change is Kiran's choice: lower height scale 0.60 → 0.55 at keys 2 and 4, with UpperPivot y −12.084 → −11.077 (= −20.14 × 0.55). Timing (2/2/4), transitions, widths, UpperPivot scale and the keys at 0 and 8 are unchanged. The land read-back of the edited clip passes 135/0, with the frame-6 sample at lower 0.8875 and upper y −17.874. The headless land preview at 30 fps still shows TRIGGER frame 146, then rig 0, 2, 4, 6 and IDLE at tick 8.
+
+How I get the sizes: the lower piece's part above the feet is 190 source rows × 0.106 = 20.14 game px at rest. Only that part changes height, and the upper piece keeps its shape and sits on top of it. So the whole jelly above the cut moves down by 20.14 × (old − new lower height scale). The brief's "about 44 game px" for r0's deepest squash is my starting point, not a new measurement.
+
+| Kept frame | r1 compared with r0 |
+| --- | --- |
+| trigger − 1, FALL | Same as r0. The jelly pixels should be identical; the clip is not playing. |
+| rig 0, impact | Same as r0, because the frame-0 key is unchanged. |
+| rig 2, deepest squash | About 1 game px flatter: 20.14 × 0.05 = 1.007 px. The **deepest height is about 43 game px** (r0: about 44), now about 1 px under the 44 px low box. Same width (1.15). The face and top piece have the same shape as r0, sitting about 1 px lower; the band between the cut and the feet is about 11.1 px instead of 12.1 px. Feet in the same place. |
+| rig 4, same squash | Identical to r1's rig 2, as in r0: the same ~43 px slab. |
+| rig 6, eased rise | About 0.25 px lower than r0 (20.14 × 0.0125). I don't expect this to be visible. |
+| tick 8, IDLE hand-off | Same as r0 (the original IDLE sprite). The step from rig 6 to IDLE grows by about 0.25 px, which I don't expect to see. |
+
+The A6 crumbs may differ between r0 and r1 in any frame; I have not checked whether this preview seeds the puff.
+
+What I expect Kiran to see: the r1 strip will look almost the same as r0. The only difference should be about 1 screen px at the top of the jelly in the two squash frames, close to the limit of what an unzoomed full frame shows. The off-strip ticks change by similar small amounts: about 0.25 px at tick 1 and about 0.57 px at tick 5. The hold still lasts ticks 2–4 (50 ms), so I predict the hold will not be noticeably easier to see at normal speed than in r0. A deeper squash makes the squash a little stronger; it does not make the hold longer.

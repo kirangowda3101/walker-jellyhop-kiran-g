@@ -20,8 +20,8 @@ const REST_Y := -20.14
 const KEY_TIMES := [0.0, 2.0 / 60.0, 4.0 / 60.0, 8.0 / 60.0]
 const KEY_TRANSITIONS := [2.0, 1.0, 0.5, 1.0]
 const KEY_VALUES := {
-	P_LOWER_SCALE: [Vector2(1.05, 0.85), Vector2(1.15, 0.60), Vector2(1.15, 0.60), Vector2(1.0, 1.0)],
-	P_UPPER_POS: [Vector2(0, -17.119), Vector2(0, -12.084), Vector2(0, -12.084), Vector2(0, -20.14)],
+	P_LOWER_SCALE: [Vector2(1.05, 0.85), Vector2(1.15, 0.55), Vector2(1.15, 0.55), Vector2(1.0, 1.0)],
+	P_UPPER_POS: [Vector2(0, -17.119), Vector2(0, -11.077), Vector2(0, -11.077), Vector2(0, -20.14)],
 	P_UPPER_SCALE: [Vector2(1.05, 0.90), Vector2(1.15, 0.73), Vector2(1.15, 0.73), Vector2(1.0, 1.0)],
 }
 
@@ -268,9 +268,9 @@ func run() -> void:
 				check("frame %d equal widths" % frame, near(s_ls.x, s_us.x, SEAM_TOL), "%.6f vs %.6f" % [s_ls.x, s_us.x])
 				if frame == 6:
 					check("frame 6 width 1.0375", near(s_ls.x, 1.0375, SEAM_TOL), "%.6f" % s_ls.x)
-					check("frame 6 LowerPivot scale.y 0.90", near(s_ls.y, 0.90, SEAM_TOL), "%.6f" % s_ls.y)
+					check("frame 6 LowerPivot scale.y 0.8875", near(s_ls.y, 0.8875, SEAM_TOL), "%.6f" % s_ls.y)
 					check("frame 6 UpperPivot scale.y 0.9325", near(s_us.y, 0.9325, SEAM_TOL), "%.6f" % s_us.y)
-					check("frame 6 UpperPivot position.y -18.126", near(s_up.y, -18.126, SEAM_TOL), "%.6f (display %.2f)" % [s_up.y, s_up.y])
+					check("frame 6 UpperPivot position.y -17.874", near(s_up.y, -17.874, SEAM_TOL), "%.6f (display %.2f)" % [s_up.y, s_up.y])
 
 	finish()
 

@@ -1,0 +1,54 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1, Revisions 1 and 2) is
+the contract. This is Step 7, revision r1. Kiran's first verdict for r0
+is in TUNING.md ("A7 — landing, r0"): the landing looked smooth, but the
+hold was easier to see frame by frame than at normal speed. He chose
+this change for r1: lower height 0.60 -> 0.55 at keys 2 and 4, keeping
+the 2/2/4 timing and the seam rule.
+
+Files you may change: godot/animations/land.tres,
+godot/tests/test_a7_land_readback.gd, sessions/a7/capture_strips.sh and
+TUNING.md (append only). Nothing else. Run tests only through
+./scripts/run-test.sh, one command per call; you may also run the
+previews headless with godot --headless.
+
+1. Read the six clean r0 frames and the six overlay frames in
+   captures/land/r0/, with their log lines in the logs beside them. Append
+   to TUNING.md, under a heading "A7 — landing, r1: Claude's reading of
+   r0 (agent)", where the motion and the phase table agree or disagree,
+   frame by frame, in visual terms, and what you cannot judge from stills.
+2. In land.tres change only these values: at the keys at 2/60 and 4/60,
+   LowerPivot:scale becomes Vector2(1.15, 0.55) and UpperPivot:position
+   becomes Vector2(0, -11.077) (= -20.14 * 0.55). Times, transitions,
+   widths, UpperPivot:scale and the keys at 0 and 8/60 stay unchanged.
+3. In test_a7_land_readback.gd, update only the expected values that
+   follow from this: the key values at 2/60 and 4/60, and the frame-6
+   targets (LowerPivot scale.y 0.8875, UpperPivot position.y -17.874,
+   width 1.0375 and UpperPivot scale.y 0.9325 unchanged). Do not weaken
+   or remove any check.
+4. Let sessions/a7/capture_strips.sh take the run name as an optional
+   first argument (default r0), so "bash sessions/a7/capture_strips.sh r1"
+   writes captures/land/r1 and captures/scoot/r1 and their full sequences
+   under ~/Documents/a7-reference/captures-full/*-r1-*. Change nothing
+   else in how it checks or keeps frames.
+5. Run: the land read-back at 60; the state test, the edge test and the
+   pins at 30, 60 and 144 (pins: 31/0 with PINDIGEST lines identical to
+   the current logs, which you read first); the scoot read-back and the
+   structure test at 60; and the land preview headless at 30, showing
+   the TRIGGER frame and the five strip frames.
+6. Append to TUNING.md, under "A7 — landing, r1: Claude's prediction
+   (agent)", what the r1 strip should show at each kept frame compared
+   with r0, in visual terms, including the expected deepest height in
+   game px.
+
+Never change player.gd, the scene, scoot.tres, the brief, CLAUDE.md, the
+pins or other tests, and never weaken an assertion. Stop and report if a
+pin count or PINDIGEST, a baseline count or the scoot read-back changes.
+Search logs for any "ERROR" line and fix your own formatting errors.
+
+Final report: your reading of r0; the land.tres diff; the read-back
+diff; every run (test, rate, summary, exit, log); the headless preview's
+strip frames; your r1 prediction; a draft "Revision 3 — 2026-11-17"
+section for CHANGE-BRIEF.md recording the new key values at frames 2 and
+4, the new frame-6 values and the new deepest height, as a tuning change
+driven by Kiran's r0 observation (do not edit the brief yourself); and
+the exact command Kiran runs to capture r1. Do not stage or commit.
