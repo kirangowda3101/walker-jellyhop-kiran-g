@@ -1,0 +1,13 @@
+diff --git a/godot/animations/scoot.tres b/godot/animations/scoot.tres
+index 5b93c8c..16f0eb0 100644
+--- a/godot/animations/scoot.tres
++++ b/godot/animations/scoot.tres
+@@ -3,7 +3,7 @@
+ [resource]
+ resource_name = "scoot"
+ length = 0.23333333
+-loop_mode = 1
++loop_mode = 0
+ step = 0.016666668
+ tracks/0/type = "value"
+ tracks/0/imported = false

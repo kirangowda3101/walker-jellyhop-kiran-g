@@ -1,0 +1,99 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ENGINE 4.7.2-stable (official)
+PASS classdb-property Animation.loop_mode: declared on Animation (no_inheritance)
+PASS classdb-property Animation.step: declared on Animation (no_inheritance)
+PASS classdb-property Animation.length: declared on Animation (no_inheritance)
+PASS classdb-property Sprite2D.region_enabled: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.region_rect: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.offset: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.centered: declared on Sprite2D (no_inheritance)
+PASS classdb-property CanvasItem.texture_filter: declared on CanvasItem (no_inheritance)
+PASS classdb-constant Animation.LOOP_NONE: value 0
+PASS classdb-constant Animation.UPDATE_CONTINUOUS: value 0
+PASS classdb-constant Animation.INTERPOLATION_LINEAR: value 1
+PASS classdb-constant Animation.TYPE_VALUE: value 0
+PASS classdb-constant CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS: value 4
+PASS classdb-method Animation.value_track_get_update_mode: 
+PASS classdb-method Animation.track_get_interpolation_type: 
+PASS classdb-method Animation.track_get_key_transition: 
+PASS classdb-method Animation.track_get_key_time: 
+PASS classdb-method Animation.value_track_interpolate: present
+PASS scene-loads: res://features/player/player_visuals.tscn
+PASS LandRig Node2D under FacingPivot: LandRig:<Node2D#27699185102>
+PASS LowerPivot Node2D under LandRig: LowerPivot:<Node2D#27715962336>
+PASS UpperPivot Node2D under LandRig: UpperPivot:<Node2D#27749516753>
+PASS LowerSprite Sprite2D under LowerPivot: LowerSprite:<Sprite2D#27732739536>
+PASS UpperSprite Sprite2D under UpperPivot: UpperSprite:<Sprite2D#27766293970>
+PASS no scripts on any node: []
+PASS LowerPivot rest position (0, 0): (0.000000, 0.000000)
+PASS LowerPivot rest scale (1, 1): (1.000000, 1.000000)
+PASS UpperPivot rest position (0, -20.14): (0.000000, -20.139999)
+PASS UpperPivot rest scale (1, 1): (1.000000, 1.000000)
+PASS LowerSprite texture path: res://assets/art/CHAR-IDLE.png
+PASS LowerSprite region_enabled true: true
+PASS LowerSprite region_rect [P: (0.0, 622.0), S: (1024.0, 402.0)]: [P: (0.0, 622.0), S: (1024.0, 402.0)]
+PASS LowerSprite offset (-512.0, -190.0): (-512.0, -190.0)
+PASS LowerSprite centered false: false
+PASS LowerSprite position (0, 0): (0.000000, 0.000000)
+PASS LowerSprite scale (0.106, 0.106): (0.106000, 0.106000)
+PASS LowerSprite texture_filter LINEAR_WITH_MIPMAPS: 4 (constant 4)
+PASS UpperSprite texture path: res://assets/art/CHAR-IDLE.png
+PASS UpperSprite region_enabled true: true
+PASS UpperSprite region_rect [P: (0.0, 0.0), S: (1024.0, 622.0)]: [P: (0.0, 0.0), S: (1024.0, 622.0)]
+PASS UpperSprite offset (-512.0, -622.0): (-512.0, -622.0)
+PASS UpperSprite centered false: false
+PASS UpperSprite position (0, 0): (0.000000, 0.000000)
+PASS UpperSprite scale (0.106, 0.106): (0.106000, 0.106000)
+PASS UpperSprite texture_filter LINEAR_WITH_MIPMAPS: 4 (constant 4)
+PASS AnimationPlayer present: AnimationPlayer:<AnimationPlayer#27783071187>
+PASS exactly one library, the default "": [&""]
+PASS no RESET animation: ["land", "scoot"]
+PASS clip scoot exists: ["land", "scoot"]
+PASS clip land exists: ["land", "scoot"]
+  track problem: land track 1: UpperPivot has no property positon
+FAIL every track of every clip resolves (track_problems): 1 problems over clips ["land", "scoot"]
+PASS land resource path: res://animations/land.tres
+PASS length 8/60: 0.1333333400 vs 0.1333333333
+PASS step 1/60: 0.0166666675 vs 0.0166666667
+PASS loop_mode LOOP_NONE: 0 (constant 0)
+PASS land has exactly three tracks: 3
+FAIL track paths are exactly the three rig paths: ["FacingPivot/LandRig/LowerPivot:scale", "FacingPivot/LandRig/UpperPivot:positon", "FacingPivot/LandRig/UpperPivot:scale"]
+PASS no track on FacingPivot/LandRig/LowerPivot:position: ["FacingPivot/LandRig/LowerPivot:scale", "FacingPivot/LandRig/UpperPivot:positon", "FacingPivot/LandRig/UpperPivot:scale"]
+PASS track 0 (FacingPivot/LandRig/LowerPivot:scale) type TYPE_VALUE: 0 (constant 0)
+PASS track 0 (FacingPivot/LandRig/LowerPivot:scale) update mode CONTINUOUS: 0 (constant 0)
+PASS track 0 (FacingPivot/LandRig/LowerPivot:scale) interpolation LINEAR: 1 (constant 1)
+PASS track 1 (FacingPivot/LandRig/UpperPivot:positon) type TYPE_VALUE: 0 (constant 0)
+PASS track 1 (FacingPivot/LandRig/UpperPivot:positon) update mode CONTINUOUS: 0 (constant 0)
+PASS track 1 (FacingPivot/LandRig/UpperPivot:positon) interpolation LINEAR: 1 (constant 1)
+PASS track 2 (FacingPivot/LandRig/UpperPivot:scale) type TYPE_VALUE: 0 (constant 0)
+PASS track 2 (FacingPivot/LandRig/UpperPivot:scale) update mode CONTINUOUS: 0 (constant 0)
+PASS track 2 (FacingPivot/LandRig/UpperPivot:scale) interpolation LINEAR: 1 (constant 1)
+PASS FacingPivot/LandRig/LowerPivot:scale has four keys: 4
+PASS FacingPivot/LandRig/LowerPivot:scale key 0 time 0.000000: 0.0000000000 (diff 0.0000000000)
+PASS FacingPivot/LandRig/LowerPivot:scale key 0 value (1.05, 0.85): (1.050000, 0.850000) (type Vector2)
+PASS FacingPivot/LandRig/LowerPivot:scale key 0 transition 2.0: 2.000000
+PASS FacingPivot/LandRig/LowerPivot:scale key 1 time 0.033333: 0.0333333351 (diff 0.0000000017)
+PASS FacingPivot/LandRig/LowerPivot:scale key 1 value (1.15, 0.6): (1.150000, 0.600000) (type Vector2)
+PASS FacingPivot/LandRig/LowerPivot:scale key 1 transition 1.0: 1.000000
+PASS FacingPivot/LandRig/LowerPivot:scale key 2 time 0.066667: 0.0666666701 (diff 0.0000000035)
+PASS FacingPivot/LandRig/LowerPivot:scale key 2 value (1.15, 0.6): (1.150000, 0.600000) (type Vector2)
+PASS FacingPivot/LandRig/LowerPivot:scale key 2 transition 0.5: 0.500000
+PASS FacingPivot/LandRig/LowerPivot:scale key 3 time 0.133333: 0.1333333403 (diff 0.0000000070)
+PASS FacingPivot/LandRig/LowerPivot:scale key 3 value (1.0, 1.0): (1.000000, 1.000000) (type Vector2)
+PASS FacingPivot/LandRig/LowerPivot:scale key 3 transition 1.0: 1.000000
+FAIL FacingPivot/LandRig/UpperPivot:position present for key checks: missing
+PASS FacingPivot/LandRig/UpperPivot:scale has four keys: 4
+PASS FacingPivot/LandRig/UpperPivot:scale key 0 time 0.000000: 0.0000000000 (diff 0.0000000000)
+PASS FacingPivot/LandRig/UpperPivot:scale key 0 value (1.05, 0.9): (1.050000, 0.900000) (type Vector2)
+PASS FacingPivot/LandRig/UpperPivot:scale key 0 transition 2.0: 2.000000
+PASS FacingPivot/LandRig/UpperPivot:scale key 1 time 0.033333: 0.0333333351 (diff 0.0000000017)
+PASS FacingPivot/LandRig/UpperPivot:scale key 1 value (1.15, 0.73): (1.150000, 0.730000) (type Vector2)
+PASS FacingPivot/LandRig/UpperPivot:scale key 1 transition 1.0: 1.000000
+PASS FacingPivot/LandRig/UpperPivot:scale key 2 time 0.066667: 0.0666666701 (diff 0.0000000035)
+PASS FacingPivot/LandRig/UpperPivot:scale key 2 value (1.15, 0.73): (1.150000, 0.730000) (type Vector2)
+PASS FacingPivot/LandRig/UpperPivot:scale key 2 transition 0.5: 0.500000
+PASS FacingPivot/LandRig/UpperPivot:scale key 3 time 0.133333: 0.1333333403 (diff 0.0000000070)
+PASS FacingPivot/LandRig/UpperPivot:scale key 3 value (1.0, 1.0): (1.000000, 1.000000) (type Vector2)
+PASS FacingPivot/LandRig/UpperPivot:scale key 3 transition 1.0: 1.000000
+A7 LAND READBACK: 94 checks / 3 failures

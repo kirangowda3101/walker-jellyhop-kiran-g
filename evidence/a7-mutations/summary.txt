@@ -1,0 +1,10 @@
+# A7 mutations and fresh import (sessions/a7/mutations.sh)
+# run: 2026-11-17T17:43:42Z  HEAD: 167f3abfc7d6cd871c2531c6dedfd3d4ca7fdcc9  godot: 4.7.2.stable.official.ed1daf0bf
+# worktree: /Users/kiran/Documents/a7-mutate (detached, from HEAD; removed after each mutation)
+# Each test: ./scripts/run-test.sh <test> 60 inside the worktree. Import: godot --headless --path godot --import.
+# CONFIRMED = import succeeded, test exit 1, and its log contains the intended FAIL line.
+name	file	applied	import_exit	test	expected_exit	actual_exit	intended_fail_line_found	summary_line	verdict	note
+M1	godot/animations/land.tres	yes	0	test_a7_land_readback.gd	1	1	yes	A7 LAND READBACK: 94 checks / 3 failures	CONFIRMED	intended: 'FAIL every track of every clip resolves (track_problems): ...' and '  track problem: land track 1: UpperPivot has no property positon'
+M2	godot/animations/scoot.tres	yes	0	test_a7_scoot_readback.gd	1	1	yes	A7 SCOOT READBACK: 62 checks / 1 failures	CONFIRMED	intended: 'FAIL loop_mode LOOP_LINEAR: ...'
+M3	godot/animations/scoot.tres	yes	0	test_a7_scoot_readback.gd	1	1	yes	A7 SCOOT READBACK: 62 checks / 2 failures	CONFIRMED	intended: 'FAIL every frame key in 0..hframes*vframes-1: ...'
+M4	none (fresh cache)	n.a. (no change)	0	test_a7_land_readback.gd + test_a7_scoot_readback.gd	0, 0	0, 0	n.a.	A7 LAND READBACK: 135 checks / 0 failures | A7 SCOOT READBACK: 62 checks / 0 failures	PASSED AS EXPECTED	cache before import: absent, after: present; native rig: the loop modes are saved in the clip resources (land.tres LOOP_NONE; scoot.tres LOOP_LINEAR, the loop) and survive a fresh-cache import, unlike an imported clip edited in a scene

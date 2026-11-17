@@ -1,0 +1,11 @@
+diff --git a/godot/animations/scoot.tres b/godot/animations/scoot.tres
+index 5b93c8c..f1094b0 100644
+--- a/godot/animations/scoot.tres
++++ b/godot/animations/scoot.tres
+@@ -15,5 +15,5 @@ tracks/0/keys = {
+ "times": PackedFloat32Array(0, 0.11666667),
+ "transitions": PackedFloat32Array(1, 1),
+ "update": 1,
+-"values": [0, 1]
++"values": [0, 2]
+ }

@@ -1,0 +1,13 @@
+diff --git a/godot/animations/land.tres b/godot/animations/land.tres
+index b82e64a..1cc0fc4 100644
+--- a/godot/animations/land.tres
++++ b/godot/animations/land.tres
+@@ -20,7 +20,7 @@ tracks/0/keys = {
+ tracks/1/type = "value"
+ tracks/1/imported = false
+ tracks/1/enabled = true
+-tracks/1/path = NodePath("FacingPivot/LandRig/UpperPivot:position")
++tracks/1/path = NodePath("FacingPivot/LandRig/UpperPivot:positon")
+ tracks/1/interp = 1
+ tracks/1/loop_wrap = true
+ tracks/1/keys = {

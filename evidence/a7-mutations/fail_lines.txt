@@ -1,0 +1,19 @@
+## M1 test_a7_land_readback.gd (wrapper exit 1)
+  track problem: land track 1: UpperPivot has no property positon
+FAIL every track of every clip resolves (track_problems): 1 problems over clips ["land", "scoot"]
+FAIL track paths are exactly the three rig paths: ["FacingPivot/LandRig/LowerPivot:scale", "FacingPivot/LandRig/UpperPivot:positon", "FacingPivot/LandRig/UpperPivot:scale"]
+FAIL FacingPivot/LandRig/UpperPivot:position present for key checks: missing
+
+## M2 test_a7_scoot_readback.gd (wrapper exit 1)
+FAIL loop_mode LOOP_LINEAR: 0 (constant 1)
+
+## M3 test_a7_scoot_readback.gd (wrapper exit 1)
+FAIL key 1 value 1: 2 (type int)
+FAIL every frame key in 0..hframes*vframes-1: cells 2, bad [2]
+
+## M4 test_a7_land_readback.gd (wrapper exit 0)
+(no FAIL lines)
+
+## M4 test_a7_scoot_readback.gd (wrapper exit 0)
+(no FAIL lines)
+

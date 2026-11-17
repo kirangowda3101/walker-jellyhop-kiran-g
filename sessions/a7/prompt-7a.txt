@@ -1,0 +1,62 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1, Revisions 1 and 2),
+"Evidence and frame strips", is the contract. This is Step 7a: build the
+two preview fixtures and the capture script. Do not run Movie Maker; it
+needs a window, and Kiran runs every capture.
+
+Create only: godot/previews/land_preview.tscn, godot/previews/land_preview.gd,
+godot/previews/scoot_preview.tscn, godot/previews/scoot_preview.gd and
+sessions/a7/capture_strips.sh. Change nothing else.
+
+Previews (labelled fixtures): each instantiates the real game
+(res://game/main.tscn's session, as test_slice.gd does, test_mode true),
+waits for PLAYING with the jelly grounded and idle on the starting plate,
+and drives it only with Input.parse_input_event plus flush, each press
+sent at the end of the physics tick before it is read (copy the pins'
+harness). No direct calls that change game state. The real table, room
+and plate are the background at 1280 x 720.
+- land_preview: one stationary hop. Arrange the start so that at
+  --fixed-fps 30 (two physics ticks per rendered frame) the touchdown
+  tick is the last physics tick of a rendered frame, so that frame shows
+  rig frame 0, and the next four frames show rig frames 2, 4, 6 and the
+  IDLE hand-off at tick 8. Then idle a little and quit.
+- scoot_preview: scoot right for at least two full 14-tick cycles, stop,
+  then scoot left for at least two cycles, stop, then quit. Meant for
+  --fixed-fps 60.
+- Each prints one line per rendered frame: FRAME <process frame index>
+  ticks=<physics ticks this frame> tick=<last physics tick> pose=<pose>
+  land_ticks=<n> clip=<current_animation> t=<clip position>
+  cell=<ScootSprite.frame> facing=<facing>, plus a line TRIGGER
+  frame=<index> for the touchdown frame (land) and SWAP/WRAP lines for
+  every A/B swap and loop wrap frame (scoot). It quits by itself.
+Validate each preview headless (godot --headless --fixed-fps 30 or 60
+--path godot res://previews/<name>.tscn) and show that land's TRIGGER
+frame shows tick 8-relative frame 0 with the next four frames at 2, 4, 6
+and 8.
+
+sessions/a7/capture_strips.sh (bash, run by Kiran from the repo root):
+- refuses to start if captures/land/r0 or captures/scoot/r0 exists;
+- runs windowed Movie Maker three times, teeing each run's output to a
+  log: land at --fixed-fps 30 (clean) -> captures/land/r0/clean/,
+  land at --fixed-fps 30 with --debug-collisions ->
+  captures/land/r0/overlay/, scoot at --fixed-fps 60 ->
+  captures/scoot/r0/;
+- uses the logs (TRIGGER, SWAP, WRAP lines and FRAME indices) to keep
+  only the frames to read: for land, trigger-1, trigger and trigger+1..+4
+  for both clean and overlay, renamed so the rig frame is in the name;
+  for scoot, the frames one before, on and one after every swap and wrap
+  in both directions; it moves every other PNG and the full sequences
+  out of the repo to ~/Documents/a7-reference/captures-full/<run>/;
+- verifies that the PNG index of the TRIGGER frame matches the log
+  (Movie Maker numbers files by rendered frame; check the offset with
+  the first FRAME line and report it), and prints a table of the kept
+  frames with what each should show (brief table: FALL, frame 0 impact,
+  frame 2 deepest squash, frame 4 same squash, frame 6 eased rise,
+  tick 8 IDLE hand-off).
+Check it with bash -n is not available to you; keep it simple and
+explicit, with set -euo pipefail and clear STOPPED messages.
+
+Never change game code, scenes outside godot/previews/, clips, the brief,
+CLAUDE.md or tests. Final report: the files, the headless validation
+output for both previews (TRIGGER line and the five land frames; the
+swap and wrap lines for scoot), how the capture script works, and the
+exact command Kiran runs. Do not stage or commit.

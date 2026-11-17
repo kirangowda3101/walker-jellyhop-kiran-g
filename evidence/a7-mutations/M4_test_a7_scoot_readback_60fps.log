@@ -1,0 +1,67 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ENGINE 4.7.2-stable (official)
+PASS classdb-property Animation.loop_mode: declared on Animation (no_inheritance)
+PASS classdb-property Animation.step: declared on Animation (no_inheritance)
+PASS classdb-property Animation.length: declared on Animation (no_inheritance)
+PASS classdb-property AnimationMixer.callback_mode_process: declared on AnimationMixer (no_inheritance)
+PASS classdb-property AnimationMixer.root_node: declared on AnimationMixer (no_inheritance)
+PASS classdb-property AnimationPlayer.autoplay: declared on AnimationPlayer (no_inheritance)
+PASS classdb-property Sprite2D.hframes: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.vframes: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.frame: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.offset: declared on Sprite2D (no_inheritance)
+PASS classdb-property Sprite2D.centered: declared on Sprite2D (no_inheritance)
+PASS classdb-property CanvasItem.texture_filter: declared on CanvasItem (no_inheritance)
+PASS classdb-inherits AnimationPlayer < AnimationMixer: 
+PASS classdb-constant AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS: value 0
+PASS classdb-constant Animation.LOOP_LINEAR: value 1
+PASS classdb-constant Animation.UPDATE_DISCRETE: value 1
+PASS classdb-constant Animation.TYPE_VALUE: value 0
+PASS classdb-constant CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS: value 4
+PASS classdb-method Animation.value_track_get_update_mode: 
+PASS classdb-method Animation.track_get_key_time: 
+PASS scene-loads: res://features/player/player_visuals.tscn
+PASS root PlayerVisuals Node2D: PlayerVisuals (Node2D)
+PASS FacingPivot Node2D child of root: FacingPivot:<Node2D#27648853451>
+PASS Scoot Node2D under FacingPivot: Scoot:<Node2D#27665630668>
+PASS ScootSprite Sprite2D under Scoot: ScootSprite:<Sprite2D#27682407900>
+PASS AnimationPlayer child of root, beside FacingPivot: AnimationPlayer:<AnimationPlayer#27783071187>
+PASS no scripts on any node: []
+PASS ScootSprite texture path: res://assets/art/CHAR-SCOOT-SHEET.png
+PASS ScootSprite texture size 2048x1024: (2048.0, 1024.0)
+PASS ScootSprite hframes 2: 2
+PASS ScootSprite vframes 1: 1
+PASS ScootSprite frame 0: 0
+PASS ScootSprite centered false: false
+PASS ScootSprite offset (-512, -812): (-512.0, -812.0)
+PASS ScootSprite position (0, 0): (0.0, 0.0)
+PASS ScootSprite scale (0.106, 0.106): (0.106, 0.106)
+PASS ScootSprite texture_filter LINEAR_WITH_MIPMAPS: 4 (constant 4)
+PASS AnimationPlayer root_node ..: ..
+PASS AnimationPlayer callback_mode_process PHYSICS: 0 (constant 0)
+PASS AnimationPlayer autoplay empty: ''
+PASS no RESET animation: ["land", "scoot"]
+PASS exactly one library, the default "": [&""]
+PASS library is embedded in the scene: 'res://features/player/player_visuals.tscn::AnimationLibrary_visuals'
+PASS every track of every clip resolves (track_problems): 0 problems over clips ["land", "scoot"]
+PASS clip scoot exists: ["land", "scoot"]
+PASS scoot resource path: res://animations/scoot.tres
+PASS scoot has exactly one track: 1
+PASS track 0 path: FacingPivot/Scoot/ScootSprite:frame
+PASS track 0 type TYPE_VALUE: 0 (constant 0)
+PASS track 0 update mode DISCRETE: 1 (constant 1)
+PASS length 14/60: 0.2333333300 vs 0.2333333333
+PASS step 1/60: 0.0166666675 vs 0.0166666667
+PASS loop_mode LOOP_LINEAR: 1 (constant 1)
+PASS exactly two keys: 2
+PASS key 0 time 0: 0.0000000000
+PASS key 1 time 7/60: 0.1166666672
+KEYTIME stored 0.116666667163 exact 7.0/60.0 0.116666666667 diff 0.000000000497
+PASS key 0 value 0: 0 (type int)
+PASS key 1 value 1: 1 (type int)
+PASS key interval 7/60: 0.1166666672
+PASS seam: last key to length equals key interval 7/60: 0.1166666628
+PASS seam: no key at the length: keys 2, length 0.2333333300
+PASS every frame key in 0..hframes*vframes-1: cells 2, bad []
+A7 SCOOT READBACK: 62 checks / 0 failures
