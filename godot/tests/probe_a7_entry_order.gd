@@ -20,6 +20,11 @@ const UPPER_POS_PATH := "FacingPivot/LandRig/UpperPivot:position"
 const UPPER_SCALE_PATH := "FacingPivot/LandRig/UpperPivot:scale"
 const F := 1.0 / 60.0
 const PRE := 3            # stand-in ticks before entry (n = 0 is the entry tick)
+## Hand-off runs (prompt-5d): land is entered at n = LAND_ENTRY_N with play + seek(0, true), the way
+## player.gd enters it on touchdown, so at n = -1 it shows 7/60 (land_ticks = 1), the tick before the
+## game's tick-8 LAND -> SCOOT hand-off. On n = 0 the stand-in switches to scoot at k/60 with H0, H1 or H2.
+const HANDOFF_PRE := 10   # stand-in ticks before the hand-off tick in hand-off runs
+const LAND_ENTRY_N := -8
 const PAUSE_LEN := 10     # paused ticks: n = p .. p + PAUSE_LEN - 1; resume on n = p + PAUSE_LEN
 const SCOOT_TICKS := 32   # SCOOT ticks logged from entry (and again from a resume): more than two cycles
 const POST := 2           # LAND ticks logged after the expected time reaches 8/60 (informational)
@@ -68,6 +73,8 @@ var mid_frame := -1
 var mid_lower := Vector2(NAN, NAN)
 var call_name := "-"
 var rows: Array[Dictionary] = []
+var pre_cur := ""         # hand-off runs: current_animation at LATE on n = -1
+var pre_late := NAN       # hand-off runs: current_animation_position at LATE on n = -1
 
 # Totals
 var runs_done := 0
@@ -77,6 +84,7 @@ var a1_counts: Dictionary = {}
 var entry_adv: Dictionary = {}
 var resume_adv: Dictionary = {}
 var pf6: Dictionary = {}
+var handoff_fail_k: Dictionary = {}   # method -> ["k=<k> first_n=<n>", ...] for failing hand-off runs
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -97,6 +105,12 @@ func pos_now() -> float:
 
 func pause_at() -> int:
 	return int(spec["pause"])
+
+func is_handoff() -> bool:
+	return bool(spec.get("handoff", false))
+
+func pre_ticks() -> int:
+	return HANDOFF_PRE if is_handoff() else PRE
 
 func logical_c(n: int) -> int:
 	## Active ticks since entry. Frozen at the last active tick while paused.
@@ -142,16 +156,31 @@ func enter(t: float) -> void:
 			ap.seek(t, false)
 		"R3":
 			ap.play(clip)
+		# Hand-off from a playing land clip to scoot in one tick (prompt-5d).
+		"H0":
+			ap.stop()
+			ap.play(clip)
+			ap.seek(t, true)
+		"H1":
+			ap.stop(true)
+			ap.play(clip)
+			ap.seek(t, true)
+		"H2":
+			ap.play(clip)
+			ap.seek(t, true)
 
 func _stand_tick(s: int) -> void:
 	if not active:
 		return
-	cur_n = s - PRE
+	cur_n = s - pre_ticks()
 	early_stamp = Engine.get_physics_frames()
 	early = pos_now()
 	early_playing = ap.is_playing()
 	call_name = "-"
 	var p := pause_at()
+	if is_handoff() and cur_n == LAND_ENTRY_N:
+		ap.play(&"land")
+		ap.seek(0.0, true)
 	if cur_n == 0:
 		enter(float(spec["k"]) * F)
 		call_name = "entry"
@@ -171,6 +200,9 @@ func _stand_tick(s: int) -> void:
 		mid_lower = Vector2(NAN, NAN)
 
 func _late_tick() -> void:
+	if active and not done and is_handoff() and cur_n == -1:
+		pre_cur = String(ap.current_animation)
+		pre_late = pos_now()
 	if not active or done or cur_n < 0:
 		return
 	var tick := Engine.get_physics_frames()
@@ -235,12 +267,18 @@ func make_specs() -> Array[Dictionary]:
 		out.append({"clip": "scoot", "method": m, "k": 0, "pause": 7})    # frozen at 6/60, resume at 7/60
 		out.append({"clip": "scoot", "method": m, "k": 0, "pause": 20})   # after a wrap: frozen at 5/60, resume at 6/60
 		out.append({"clip": "land", "method": m, "k": 0, "pause": 3})     # frozen at 2/60, resume at 3/60
+	# Hand-off: land playing (7/60 at n = -1), then on n = 0 switch to scoot at k/60 in one stand-in tick.
+	for m in ["H0", "H1", "H2"]:
+		for k in range(14):
+			out.append({"clip": "scoot", "method": m, "k": k, "pause": -1, "handoff": true})
 	return out
 
 func do_run(sp: Dictionary) -> bool:
 	spec = sp
-	run_id = "%s-%s-k%02d%s" % [sp["clip"], sp["method"], int(sp["k"]), ("-pause%d" % int(sp["pause"])) if int(sp["pause"]) >= 0 else ""]
+	run_id = "%s-%s-k%02d%s" % ["handoff" if bool(sp.get("handoff", false)) else sp["clip"], sp["method"], int(sp["k"]), ("-pause%d" % int(sp["pause"])) if int(sp["pause"]) >= 0 else ""]
 	rows.clear()
+	pre_cur = ""
+	pre_late = NAN
 	done = false
 	active = false
 	cur_n = -999
@@ -284,7 +322,7 @@ func do_run(sp: Dictionary) -> bool:
 			ap.callback_mode_process, AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS, Engine.physics_ticks_per_second,
 			1.0 / Engine.physics_ticks_per_second, ap.process_physics_priority, visuals.process_physics_priority,
 			stand.process_physics_priority, hook.process_physics_priority, scoot_len, land_anim.length])
-	print("RUN %s clip=%s method=%s k=%d pause=%d start_phys=%d start_frame=%d" % [run_id, sp["clip"], sp["method"], int(sp["k"]), int(sp["pause"]), Engine.get_physics_frames(), Engine.get_process_frames()])
+	print("RUN %s clip=%s method=%s k=%d pause=%d handoff=%s start_phys=%d start_frame=%d" % [run_id, sp["clip"], sp["method"], int(sp["k"]), int(sp["pause"]), bool(sp.get("handoff", false)), Engine.get_physics_frames(), Engine.get_process_frames()])
 	active = true
 	root.add_child(stand)
 	var guard := 0
@@ -298,6 +336,10 @@ func do_run(sp: Dictionary) -> bool:
 	elif ok:
 		if rows.size() != last_n() + 1:
 			harness_fail("run %s logged %d rows, expected %d" % [run_id, rows.size(), last_n() + 1])
+			ok = false
+		elif is_handoff() and (pre_cur != "land" or absf(pre_late - 7.0 * F) > TOL_T):
+			# Precondition, not a result: the hand-off must start from land playing at 7/60.
+			harness_fail("run %s: before the hand-off (n = -1) cur=\"%s\" late=%.12f, expected \"land\" at 7/60" % [run_id, pre_cur, pre_late])
 			ok = false
 		else:
 			evaluate()
@@ -413,6 +455,17 @@ func evaluate() -> void:
 		print("PAUSE run=%s pause_tick_n=%d last_active_late=%.12f froze=%s paused_lates=[%s] current_animation_while_paused=%s assigned_animation_while_paused=%s is_playing_while_paused=%s" % [run_id, p, ref, froze, ",".join(paused_lates), ",".join(PackedStringArray(curs.keys())), ",".join(PackedStringArray(assigned.keys())), ",".join(PackedStringArray(playing.keys()))])
 		var rvis := ("frame=%d exp_cell=%d mid_frame=%d" % [rr["frame"], rr["exp_cell"], rr["mid_frame"]]) if clip == "scoot" else ("lower=%s upos=%s uscale=%s mid_lower=%s rig_maxdiff=%.9f" % [v2s(rr["lower"]), v2s(rr["upos"]), v2s(rr["uscale"]), v2s(rr["mid_lower"]), rr["rig_diff"]])
 		print("RESUME run=%s method=%s n=%d synced_t=%.12f early=%.12f mid=%.12f late=%.12f late_minus_t_frames=%s %s cur=\"%s\" playing=%s ok_a=%s ok_b=%s" % [run_id, m, p + PAUSE_LEN, rt, rr["early"], rr["mid"], rr["late"], radv, rvis, rr["cur"], rr["playing"], rr["ok_a"], rr["ok_b"]])
+	if is_handoff():
+		var first_n := -1
+		for r in rows:
+			if r["counted"] and (not r["ok_a"] or not r["ok_b"]):
+				first_n = int(r["n"])
+				break
+		if first_n >= 0:
+			if not handoff_fail_k.has(m):
+				handoff_fail_k[m] = []
+			handoff_fail_k[m].append("k=%d first_n=%d" % [int(spec["k"]), first_n])
+		print("HANDOFF run=%s method=%s k=%d pre_cur=\"%s\" pre_late=%.12f entry_late=%.12f entry_frame=%d first_failing_n=%d" % [run_id, m, int(spec["k"]), pre_cur, pre_late, e["late"], e["frame"], first_n])
 	print("RUNRESULT run=%s entry_ok_a=%s entry_ok_b=%s ticks_failing_a=%d ticks_failing_b=%d" % [run_id, e["ok_a"], e["ok_b"], run_fail_a, run_fail_b])
 
 func run() -> void:
@@ -445,7 +498,12 @@ func run() -> void:
 		print("SELECT %s runs=%d entries=%d resumes=%d ticks_checked=%d ticks_failing_a=%d ticks_failing_b=%d meets_rule_at_this_rate=%s" % [m, a["runs"], a["entries"], a["resumes"], a["ticks"], a["fail_a"], a["fail_b"], "yes" if meets else "no"])
 		if a["first_fail"] != "":
 			print("FIRSTFAIL %s %s" % [m, a["first_fail"]])
+	for m in ["H0", "H1", "H2"]:
+		if method_agg.has(m):
+			var fk: Array = handoff_fail_k.get(m, [])
+			print("HANDOFFSUM %s failing_runs=%d of 14 [%s]" % [m, fk.size(), ", ".join(PackedStringArray(fk))])
 	print("NOTE R3 (play alone) was run at t = 0 only and on no resume: it cannot seek to a synced time.")
+	print("NOTE H0/H1/H2 are hand-off runs: land playing at 7/60, then stop()/stop(true)/no stop, play(scoot), seek(k/60, true) in one stand-in tick.")
 	print("A7 PROBE: %d runs, %d ticks logged" % [runs_done, ticks_logged])
 	hook.queue_free()
 	for i in range(10):

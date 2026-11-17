@@ -1,0 +1,50 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1 and Revision 1) is the
+contract. Commit 74fe4b5 wired player.gd; its state test fails in one
+case: on a direct LAND -> SCOOT hand-off in one tick, anim.stop() then
+play(&"scoot") + seek(t, true) leaves SCOOT one tick ahead
+(logs/test_a7_visual_state_60fps.log). Kiran approved this rule:
+
+1. Extend godot/tests/probe_a7_entry_order.gd with hand-off runs: land
+   playing, then in one stand-in tick switch to scoot at every phase
+   k = 0..13, using each variant:
+     H0 stop() then play + seek(t, true)      (control; the current code)
+     H1 stop(true) then play + seek(t, true)
+     H2 play + seek(t, true) with no stop()
+   Apply the same selection rule as before on the hand-off tick and every
+   tick after, at 30, 60 and 144: LATE position within 1e-6 s of the
+   expected time, and the exact expected SCOOT cell, including cell 1 at
+   7/60. Run the probe at 30, 60 and 144.
+2. Choose: H1 if it meets the rule at all three rates; otherwise H2 if
+   it does; otherwise stop here, change nothing else, and report.
+3. Apply the choice to player.gd only, in the clip-to-clip branch
+   (the line that calls anim.stop() when clip != "" and clip != want):
+   H1 -> anim.stop(true); H2 -> remove that stop() call. Change nothing
+   else in player.gd.
+4. Run the state test at 30, 60 and 144: it must report 0 failures with
+   the same checks. Run the structure test at 60; if its player.gd source
+   scan rejects the new call only because of the pattern, fix the pattern
+   without weakening what it checks.
+5. Full re-run: the 14 baseline runs in CLAUDE.md, the pins at 30/60/144
+   with PINDIGEST lines identical to the committed logs at fe9a1f0 (read
+   them before running), both read-backs at 60, the structure test at 60,
+   the state test and the probe at 30/60/144.
+
+If H2 is chosen, include in your final report a draft "Revision 2"
+section for CHANGE-BRIEF.md (dated 2026-11-16) saying that on a direct
+clip-to-clip change, play(new) itself ends the old clip, with the probe
+and state-test evidence. Do not edit CHANGE-BRIEF.md yourself.
+
+Files you may change: the probe, player.gd (that one branch), and the
+two visual tests only for harness or pattern bugs. Never change clips,
+the scene, the brief, CLAUDE.md, the pins or existing tests, and never
+weaken, skip or delete an assertion. Stop and report if a pin count or
+PINDIGEST, a baseline count or a read-back changes. Search every log for
+any "ERROR" line and fix your own formatting errors. You may run tests
+only through ./scripts/run-test.sh.
+
+Final report: the probe hand-off results per variant and rate (first
+failing tick for each failing variant); the choice and why; the
+player.gd diff; a table of every run (test, rate, summary, exit, log);
+PINDIGEST before and after; the Revision 2 draft if H2; anything that
+stopped you. Claim nothing a run output does not show. Do not stage or
+commit.
