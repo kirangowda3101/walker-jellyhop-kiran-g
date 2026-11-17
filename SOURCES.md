@@ -227,13 +227,13 @@ Drafted by the agent (Claude Code, `sessions/a7/session-8.jsonl`) from the commi
 **Claude (chat)**
 - The record shows that it drafted the A7 baseline commands, which Kiran ran (TEST-REPORT.md, "A7 baseline"). Kiran's notes say chat assistants "helped draft commands and organize the evidence", and that his FRICTIONAL notes were "organized with AI assistance". Any other chat contribution is not recorded in the repository.
 
-[Kiran: add or correct what Claude in chat contributed to A7, in your words]
+Claude in chat (claude.ai) drafted the shell commands, guarded patches, Claude Code prompts and the launcher from my decisions, reviewed agent output with me, and organised my FRICTIONAL notes. Its mistakes I caught: a pixel-scan script that reported the smile's edge as the band start (row 601), a log copy without cp -p, an edit count of 18 that was 16, and a zsh array bug that stopped one commit block (caught by the block's own guard).
 
 **From the course handout**
 - `scripts/run-test.sh` (the A7 wrapper, `cb0e5e9`), used as provided.
 - `sessions/a7/prompt-1.txt` is the handout's CLAUDE.md prompt, verbatim (`290bc8d`).
 
-[Kiran: state which other A7 prompts are course prompts, adapted course prompts or yours]
+prompt-1 is the handout's Step 1 prompt verbatim; prompt-5a starts with the handout's Step 5 prompt verbatim plus my planning items; all other prompts were drafted in chat from my decisions, and I approved each before it ran.
 
 **Collaborators**
 - [Kiran: confirm "None. A7 is individual work."]

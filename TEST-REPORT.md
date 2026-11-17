@@ -689,7 +689,7 @@ All 14 runs exited 0 with 0 failures, and every count matches the A6 count (Fres
 
 ## A7
 
-Drafted by the agent (Claude Code, `sessions/a7/session-8.jsonl`, 2026-11-17) from the committed logs, evidence and commit messages, for Kiran to check. The agent had no shell in that session, so it read files and the reflog's commit subjects only. It ran no test, and it could not open older versions of logs that later runs overwrote. Where a result exists only in a commit message or a transcript, that is stated. The four HUMAN CHECK rows are placeholders for Kiran.
+Drafted by the agent (Claude Code, `sessions/a7/session-8.jsonl`, 2026-11-17) from the committed logs, evidence and commit messages, for Kiran to check. The agent had no shell in that session, so it read files and the reflog's commit subjects only. It ran no test, and it could not open older versions of logs that later runs overwrote. Where a result exists only in a commit message or a transcript, that is stated. The four HUMAN CHECK rows hold Kiran's own words from the running game (2026-11-17).
 
 **Common to every row unless stated:** Godot `4.7.2.stable.official.ed1daf0bf`. The project renderer is Compatibility (`godot/project.godot` lines 32–33). The tests run headless through `scripts/run-test.sh`; their logs print `engine=4.7.2-stable (official)` and, for the per-tick suites, `physics_ticks_per_second=60`. The frame strips are windowed Movie Maker runs; their logs print `OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M4`.
 
@@ -819,7 +819,7 @@ The state log prints `CASE f-override-resume: NOT REACHABLE THROUGH REAL INPUT. 
 
 The Step 5 plan (`14b9b5e`, `sessions/a7/session-5a.jsonl`) flagged that `godot/tests/capture_poses.gd` (supplemental, not counted) forces LAND and SCOOT through `override_pose` while the player is disabled (its lines 53–57). After wiring, its LAND and SCOOT screenshots would therefore show the new visuals held paused instead of the old drawings. The A7 sessions did not edit it. The repository records no run of `capture_poses.gd` after wiring, so the actual output change is unobserved.
 
-[Kiran: if you run capture_poses.gd after wiring, record what its LAND and SCOOT images show]
+Not run after wiring. Its LAND and SCOOT images are expected to change (Step 5 plan, session 5a); it is not a counted suite.
 
 ### Claude against Kiran (strip readings)
 
@@ -830,11 +830,11 @@ Kiran wrote each verdict before the Claude reading it is paired with, except the
 | land r0 | "Claude's reading of r0" (session 7b, `9ada865`): every kept frame agrees with the phase table. The hold shows as two identical stills (106, 107), but at normal speed it lasts about 50 ms and "can blend into the rise". Claude could not judge smoothness, odd ticks, a one-pixel seam line or feel, and could not see the player box in the overlay. | r0 verdict (`76a158c`, written first): impact, hold and rise read in order; no obvious seam; feet planted at quarter speed; no pop at IDLE; "the hold was easier to see frame by frame". |
 | land r1, before capture | "Claude's prediction" (`9ada865`): about 1 game px flatter at rig 2 and 4 (deepest about 43 px), no visible change at 0, 6 and IDLE; "the r1 strip will look almost the same as r0"; the hold will not be noticeably easier to see at normal speed. | — |
 | land r1 | "Claude's comparison" (this session): FALL, rig 0, rig 6 and IDLE look the same as r0. At rig 2 and 4, any change is at most about 1 px, inside the ±2 px estimate error, so the prediction is not contradicted but cannot be confirmed from unzoomed stills. Crumbs differ. | r1 verdict (`09ee716`, written first): "I could barely tell r0 and r1 apart" at normal speed; easier to see in Preview at rig 2 and 4, slightly flatter and held; feet planted, no visible seam, same IDLE spot; kept r1. |
-| scoot r0, r1 | No Claude reading of the scoot strips is recorded. | [HUMAN CHECK — Kiran to fill in his own words] |
+| scoot r0, r1 | No Claude reading of the scoot strips is recorded. | No Claude reading of the scoot strips was made; Kiran's in-play checks above cover the scoot loop. |
 
 ### HUMAN CHECK rows
 
-- **Cycle seam over at least five normal-speed SCOOT wraps:** [HUMAN CHECK — Kiran to fill in his own words]
-- **The action in play, with an interrupt in each phase (startup, active, recovery, end):** [HUMAN CHECK — Kiran to fill in his own words]
-- **Registration (feet at the A/B swap and the wrap, both facings; the IDLE hand-off):** [HUMAN CHECK — Kiran to fill in his own words]
-- **Against the darkest and lightest backgrounds:** [HUMAN CHECK — Kiran to fill in his own words]
+- **Cycle seam over at least five normal-speed SCOOT wraps:** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly moved smoothly the whole time. I didn't notice a pause or jerk when the pose repeated."
+- **The action in play, with an interrupt in each phase (startup, active, recovery, end):** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly landed smoothly and rose back up. When I pressed jump in midair, it landed without hopping again. When I pressed jump as it touched down, it hopped again right away. It also hopped when I pressed just after landing." At --time-scale 0.25: "At quarter speed, I could clearly see Jelly flatten on impact, hold the flat shape briefly, and then rise. I tried pressing jump while Jelly was at its flattest and again on a separate landing while it was rising. Jelly hopped again both times."
+- **Registration (feet at the A/B swap and the wrap, both facings; the IDLE hand-off):** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly's bottom edge stayed in contact with the plate while scooting, even as the pose changed."
+- **Against the darkest and lightest backgrounds:** Kiran, in the running game at 1280 x 720, 2026-11-17: "I could clearly see the scoot pose changes and the landing squash in both areas."

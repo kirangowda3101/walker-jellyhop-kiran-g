@@ -1,0 +1,59 @@
+Read CLAUDE.md first. Documents only. Files you may change: TEST-REPORT.md,
+SUBMISSION.md, SOURCES.md. Change nothing else, and never touch the
+"[Kiran: ...]" lines in FRICTIONAL.md.
+
+1. TEST-REPORT.md, A7 section: replace each "[HUMAN CHECK — Kiran to fill
+   in his own words]" line with Kiran's own words below, verbatim, each
+   introduced as "Kiran, in the running game at 1280 x 720, 2026-11-17:".
+   - Cycle seam (five wraps): "Jelly moved smoothly the whole time. I
+     didn't notice a pause or jerk when the pose repeated."
+   - The action in play, with an interrupt in each phase: "Jelly landed
+     smoothly and rose back up. When I pressed jump in midair, it landed
+     without hopping again. When I pressed jump as it touched down, it
+     hopped again right away. It also hopped when I pressed just after
+     landing." Then, introduced as "At --time-scale 0.25:", "At quarter
+     speed, I could clearly see Jelly flatten on impact, hold the flat
+     shape briefly, and then rise. I tried pressing jump while Jelly was
+     at its flattest and again on a separate landing while it was rising.
+     Jelly hopped again both times."
+   - Registration: "Jelly's bottom edge stayed in contact with the plate
+     while scooting, even as the pose changed."
+   - Against the darkest and lightest backgrounds: "I could clearly see
+     the scoot pose changes and the landing squash in both areas."
+   - The scoot-strip cell in the Claude-against-Kiran table: "No Claude
+     reading of the scoot strips was made; Kiran's in-play checks above
+     cover the scoot loop."
+   - The capture_poses.gd placeholder: "Not run after wiring. Its LAND and
+     SCOOT images are expected to change (Step 5 plan, session 5a); it is
+     not a counted suite."
+2. SUBMISSION.md: replace the A7 block's fields with exactly these, in
+   this order, filled from the repository where it shows the answer and
+   "[to fill]" otherwise:
+   Assignment: Assignment 7 - Doing Animation with Claude and Godot
+   Student: / Project name: / GitHub repository URL: / Git tag and
+   submitted commit SHA: / Game-source revision shown in the film: /
+   Godot version, renderer, and operating system: / Sprite clip: route,
+   node, scene, frame rate: / Rig clip: route, rig source, node, scene,
+   frame rate: / Which clip loops and which commits: / The one authority
+   over each animated node: / Sprite sheet source and licence (or model,
+   version, and terms): / Final film URL and filename: / Final film
+   SHA-256: / Summary of my work: / Known limitations: / Changed games
+   since Assignment 2 (yes/no; if yes, FRICTIONAL.md entry):
+   Leave "Summary of my work" as "[to fill by Kiran]". Remove the note
+   asking him to check the field names.
+3. SOURCES.md, A7 section: replace the "what Claude in chat contributed"
+   placeholder with: "Claude in chat (claude.ai) drafted the shell
+   commands, guarded patches, Claude Code prompts and the launcher from my
+   decisions, reviewed agent output with me, and organised my FRICTIONAL
+   notes. Its mistakes I caught: a pixel-scan script that reported the
+   smile's edge as the band start (row 601), a log copy without cp -p, an
+   edit count of 18 that was 16, and a zsh array bug that stopped one
+   commit block (caught by the block's own guard)." Replace the
+   "which prompts" placeholder with: "prompt-1 is the handout's Step 1
+   prompt verbatim; prompt-5a starts with the handout's Step 5 prompt
+   verbatim plus my planning items; all other prompts were drafted in
+   chat from my decisions, and I approved each before it ran." Leave the
+   collaborators line for Kiran.
+
+Final report: each replaced line with its file and section, and every
+placeholder still left. Do not stage or commit.
