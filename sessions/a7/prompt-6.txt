@@ -1,0 +1,85 @@
+Read CLAUDE.md first. CHANGE-BRIEF.md (Version 1, Revisions 1 and 2) is
+the contract. This is Step 6, in one batch: edges, re-pins and the
+mutation script.
+
+Files you may create: godot/tests/test_a7_edges.gd and
+sessions/a7/mutations.sh. Change nothing else. Run tests only through
+./scripts/run-test.sh, one command per call. You cannot run git.
+
+1. godot/tests/test_a7_edges.gd. Use the pins' harness unchanged (real
+   game loop, Input.parse_input_event plus flush, each press sent at the
+   end of the tick before it is read, fresh game per case, never
+   test_control or a direct call). For each of the 12 cases in the
+   brief's "Jump interrupt predictions" table (tick 0 = the baseline
+   touchdown), assert on every tick from touchdown - 1 to the hop + 2:
+   - the pose sequence the table predicts (as the pins do);
+   - on LAND ticks: LandRig is the only visible visual,
+     current_animation is "land", and the clip time is
+     (8 - land_ticks)/60 within 1e-6 s;
+   - from the hop tick on: current_animation is "", LandRig and Scoot
+     are hidden, and the original sprite is visible showing ANTIC;
+   - for "8, after": IDLE with the original sprite and no clip at tick 8,
+     then ANTIC at 9.
+   Print one line per check and "A7 EDGES: <n> checks / <f> failures";
+   exit non-zero on any failure. Run it at 30, 60 and 144.
+
+2. Re-pin: run the pins at 30, 60 and 144. Read the PINDIGEST lines in
+   the current pins logs before running; they must be identical after,
+   with 31 / 0.
+
+3. sessions/a7/mutations.sh. Write it; do not run it (it needs git, which
+   Kiran runs). A bash script, run from the repo root. It refuses to
+   start if ../a7-mutate already exists. For each mutation it:
+   a) adds a detached worktree at ../a7-mutate from HEAD;
+   b) applies one exact text replacement, after checking the old text
+      occurs exactly once; if not, records SETUP FAILED (text not found)
+      and skips the rest of that mutation;
+   c) runs godot --headless --path godot --import and records its exit
+      code; a non-zero exit, or any "Failed loading resource" or
+      "SCRIPT ERROR" line in the import output, is recorded as IMPORT
+      FAILED and the test is not counted;
+   d) runs the named test through ./scripts/run-test.sh at 60, records
+      its exit code and summary line, and copies the test log and the
+      import output to evidence/a7-mutations/ in the main repo;
+   e) always removes the worktree with git worktree remove --force, even
+      after a failure.
+   Read the two read-back tests first and name, for each of M1-M3, the
+   exact check line the mutation must make fail (for example the
+   track_problems resolve check and its "has no property" line for M1,
+   the loop_mode check for M2, the frame-range check for M3). A mutation
+   counts as CONFIRMED only if import succeeded, the test exited 1, and
+   its log contains that intended FAIL line. A test that exits 1 for any
+   other reason is recorded as FAILED FOR ANOTHER REASON, not confirmed.
+     M1 subname: godot/animations/land.tres,
+        "UpperPivot:position" -> "UpperPivot:positon";
+        test test_a7_land_readback.gd; expect exit 1 and the intended
+        FAIL line.
+     M2 loop: godot/animations/scoot.tres, "loop_mode = 1" ->
+        "loop_mode = 0"; test test_a7_scoot_readback.gd; expect exit 1
+        and the intended FAIL line.
+     M3 cell: godot/animations/scoot.tres, "\"values\": [0, 1]" ->
+        "\"values\": [0, 2]"; test test_a7_scoot_readback.gd; expect
+        exit 1 and the intended FAIL line.
+     M4 fresh cache: no text change; the fresh worktree has no
+        godot/.godot, so the import builds it from empty; run both
+        read-backs; expect exit 0. It passes because this is a native
+        rig: the loop modes are saved in the clip resources (land.tres,
+        and scoot.tres for the loop) and survive a fresh-cache import,
+        unlike an imported clip edited in a scene. Write that reason in
+        the summary row.
+   It writes evidence/a7-mutations/summary.txt with one row per
+   mutation: name, file, applied, import exit, test, expected exit,
+   actual exit, intended FAIL line found (yes/no/n.a.), summary line,
+   verdict (CONFIRMED / FAILED FOR ANOTHER REASON / SETUP FAILED /
+   IMPORT FAILED / PASSED AS EXPECTED / NOT AS EXPECTED).
+
+Never change clips, the scene, player.gd, the brief, CLAUDE.md, the pins
+or existing tests, and never weaken an assertion. Stop and report if a
+pin count or PINDIGEST changes. Search logs for any "ERROR" line and fix
+your own formatting errors.
+
+Final report: the edge test's checks per case and its three runs
+(summary, exit, log); a table of the 12 cases, predicted versus observed;
+the re-pin results with PINDIGEST before and after; the mutation script
+in full, with the intended FAIL line named for M1-M3 and what each step
+does. Claim nothing a run output does not show. Do not stage or commit.
