@@ -697,7 +697,7 @@ Drafted by the agent (Claude Code, `sessions/a7/session-8.jsonl`, 2026-11-17) fr
 
 - **Before.** Source revision `cb0e5e9`; evidence `evidence/a7-baseline/` (`baseline-14.txt`, `logs/`, `import.txt`); commit `735b200`. Kiran ran all 14 counted runs from an empty import cache: every run exited 0 with 0 failures (section "A7 baseline (before the change)" above).
 - **After.** The agent ran the full regression in session 5e on the working tree committed as `5c0fb9a`. The commit message records "14 baseline counts match". The current `logs/` files at HEAD show the same 14 counts with 0 failures: `test_game` 25, `test_slice` 61, `test_keyboard` 12, `test_a3_assets` 36, `test_fork_warning` 29 at 30, 60 and 144, `test_materials` 108 at 30, 60 and 144, `test_land_puff_config` 51, `test_land_puff_state` 24, `test_dome_glints_config` 45 and `test_dome_glints_state` 27. This session could not check which commit last wrote each of those log files.
-- **Not re-run after r1.** The r1 key change (`9ada865`) re-ran the A7 suites (below) but not the 14 baseline runs. No baseline run after `9ada865` is recorded.
+- **After r1.** Fresh-clone verification of `41297a2` on 2026-11-18 passed the empty-cache import, all 26 counted runs (including the 14 baseline runs) and all five supplemental runs. The log scan found no `SHADER ERROR`, `SCRIPT ERROR` or `Failed loading resource`.
 
 ### Pins (before and after; PINDIGEST unchanged)
 
@@ -834,9 +834,9 @@ Kiran wrote each verdict before the Claude reading it is paired with, except the
 
 ### HUMAN CHECK rows
 
-- **Cycle seam over at least five normal-speed SCOOT wraps:** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly moved smoothly the whole time. I didn't notice a pause or jerk when the pose repeated."
+- **Cycle seam over at least five normal-speed SCOOT wraps:** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly moved smoothly the whole time. I didn't notice a pause or jerk when the pose repeated." Follow-up, 2026-11-18: "I watched five full SCOOT loops at normal speed, and all five looked smooth."
 - **The action in play, with an interrupt in each phase (startup, active, recovery, end):** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly landed smoothly and rose back up. When I pressed jump in midair, it landed without hopping again. When I pressed jump as it touched down, it hopped again right away. It also hopped when I pressed just after landing." At --time-scale 0.25: "At quarter speed, I could clearly see Jelly flatten on impact, hold the flat shape briefly, and then rise. I tried pressing jump while Jelly was at its flattest and again on a separate landing while it was rising. Jelly hopped again both times."
-- **Registration (feet at the A/B swap and the wrap, both facings; the IDLE hand-off):** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly's bottom edge stayed in contact with the plate while scooting, even as the pose changed."
+- **Registration (feet at the A/B swap and the wrap, both facings; the IDLE hand-off):** Kiran, in the running game at 1280 x 720, 2026-11-17: "Jelly's bottom edge stayed in contact with the plate while scooting, even as the pose changed." Follow-up, 2026-11-18: "In the r1 frame strip, Jelly’s bottom edge stayed aligned with the plate through the pose swap and the loop restart in both directions."
 - **Against the darkest and lightest backgrounds:** Kiran, in the running game at 1280 x 720, 2026-11-17: "I could clearly see the scoot pose changes and the landing squash in both areas."
 
 ### The point where I disagreed with Claude (A7)

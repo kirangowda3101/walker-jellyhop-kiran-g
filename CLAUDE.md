@@ -56,7 +56,7 @@
   scripts/run-test.sh test_a7_edges.gd 30          # A7 EDGES: 397 / 0; also 60 and 144 (logs/test_a7_edges_*fps.log:4612)
   scripts/run-test.sh probe_a7_entry_order.gd 30   # supplemental, not counted; also 60 and 144 (A7 PROBE: 96 runs, line 5532)
   ```
-  The 14 baseline runs were not re-run after r1 (`9ada865`; TEST-REPORT.md line 700). The A7 suites were re-run after r1 in `9ada865` (CHANGE-BRIEF.md Revision 3).
+  Fresh-clone verification of `41297a2` passed all 26 counted runs, including the 14 baseline runs after r1 (TEST-REPORT.md, A7 Baseline).
 - **Headless facts:** `--fixed-fps N` gives N frames per game second with physics at 60 ticks/s (`logs/probe_headless_{30,60,144}fps.log`, 2026-10-27, as recorded in the A6 CLAUDE.md; again `RATE` lines 5485 in `logs/probe_a7_entry_order_{30,60,144}fps.log`: 0.5, 1.0, 2.4 frames per tick). Some suites print `ObjectDB instances were leaked` and `resources still in use` at exit (8 of the 14 A7 baseline logs; `TEST-REPORT.md`, "A7 baseline"); these lines match none of the wrapper's error patterns.
   - Frame strips come from a windowed Movie Maker run, which Kiran starts (confirmed 2026-11-16 with `landing-r0`, a windowed `--write-movie` run at 60 fps).
   - Saved key times are 32-bit floats, so they are compared with a tolerance: `godot/animations/scoot.tres` line 15 and `land.tres` lines 15, 27, 39 store `"times": PackedFloat32Array(...)`; `KEYTIME stored 0.116666667163 exact 7.0/60.0 0.116666666667 diff 0.000000000497` (`logs/test_a7_scoot_readback_60fps.log` line 60).

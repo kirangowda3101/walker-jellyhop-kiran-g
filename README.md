@@ -326,7 +326,7 @@ The 14 earlier counted runs are listed in CLAUDE.md, "Test commands". Their coun
 **Known limitations** (details in TEST-REPORT.md, A7)
 - A pause during LAND followed by SCOOT on the first enabled tick is untested.
 - The LAND resume after an override is kept in code but cannot be reached through real input, so it is not tested as a pass.
-- The 14 earlier runs were not re-run after the r1 key change (`9ada865`); the A7 suites were.
+- Fresh-clone verification of `41297a2` passed all 26 counted runs, including the 14 baseline runs after r1. See `TEST-REPORT.md`.
 - `capture_poses.gd` (supplemental) has not been run since wiring, so its changed LAND and SCOOT output is unobserved.
 - Claude's strip readings are from unzoomed stills; the r1 change of about 1 px could not be confirmed that way. The 30 fps land strips do not capture the odd ticks.
 - The frame strips are fixtures from the preview scenes, not gameplay captures.
