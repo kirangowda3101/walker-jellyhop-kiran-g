@@ -237,3 +237,5 @@ prompt-1 is the handout's Step 1 prompt verbatim; prompt-5a starts with the hand
 
 **Collaborators**
 - None. A7 is individual work. Claude assisted with implementation, testing, and documentation as recorded in `SOURCES.md`.
+
+**A7 film.** Built by Claude Code (session 10; `sessions/a7/session-10-film.jsonl`, labelled excerpt; prompt `sessions/a7/prompt-10-film.txt` with its launch note) using the course-provided Brutalist godot-gamedev workflow with the walker modifier, run from `~/Documents/brutalist.art`. Narration: the local Kokoro text-to-speech voice "Liam" (no paid tools). Scripted captures came from a disposable copy of `c1bbb13`; preview captures are labelled as fixtures. I watched the full export with sound before posting it on YouTube (unlisted, https://youtu.be/psEwyakDqjA; reviewer access checked in a private window on 2026-11-18). Records: `youtube/claude-liam-jelly-hop-a7/`.

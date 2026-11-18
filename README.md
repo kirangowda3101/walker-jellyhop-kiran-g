@@ -332,4 +332,4 @@ The 14 earlier counted runs are listed in CLAUDE.md, "Test commands". Their coun
 - The frame strips are fixtures from the preview scenes, not gameplay captures.
 - No vsync debug key was added in A7.
 
-**Film:** [link to be added]
+**Film:** https://youtu.be/psEwyakDqjA (YouTube, unlisted; reviewer access checked in a private window on 2026-11-18). File `claude-liam-jelly-hop-a7.mp4`, 622.967 s, 3840 × 2160, 30 fps, SHA-256 `deb57025203a194150e436b4ce198af71d85ad0b3b76bd7ded0b98dda71411ac` (the SHA-256 is of the uploaded file, which YouTube re-encodes). Game-source revision shown: `c1bbb13` (game source unchanged in the tagged commit). Film sources and QC: [`youtube/claude-liam-jelly-hop-a7/`](youtube/claude-liam-jelly-hop-a7/), file record in [MEDIA.md](youtube/claude-liam-jelly-hop-a7/MEDIA.md) (MP4, audio and the full session transcript kept out of git).

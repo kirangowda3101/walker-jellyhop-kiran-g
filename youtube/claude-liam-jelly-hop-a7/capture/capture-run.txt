@@ -1,0 +1,5 @@
+rev: c1bbb13f538408f4b6ef608d4d3b4ef5d2b620fa (git archive, run copy)
+build_id: 92e6694a907be2e040e3133157d3de14bcdb9f655b0794d8cefba43539a7456b
+godot: 4.7.2.stable.official.ed1daf0bf
+recorded: 2026-11-17 14:46 EST
+run_copy: /Users/kiran/Documents/jellyhop-a7-film-work/run-copy-c1bbb13

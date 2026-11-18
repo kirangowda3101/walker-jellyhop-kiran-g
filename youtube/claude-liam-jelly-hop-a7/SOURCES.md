@@ -1,0 +1,9 @@
+# SOURCES — this film's own record (A7 film)
+
+- **Game source shown:** Kiran's Jelly Hop at revision `c1bbb13f538408f4b6ef608d4d3b4ef5d2b620fa`, read from the read-only git-archive snapshot `snapshot-c1bbb13/`. Code excerpts are copied by line range from it; `gamedev-evidence.json` holds the SHA-256 of each file.
+- **Native engine capture:** `takes/run-a7.avi` (outside the film folder), SHA-256 `65fcf2358409c26da008e7f50e43c6a76c655443a384230a5667163a0ab0ce9b`; input log `capture/run-a7-inputs.jsonl`, SHA-256 `65c0ad9161642ad1e785f8f97274ee6314d64bcce97e15bf7a1afc4fa4ae6062`; Godot 4.7.2.stable.official.ed1daf0bf, Compatibility renderer, Apple M4; recorded from the disposable copy `run-copy-c1bbb13/` (CAPTURE.md). Runtime-tree probe: not needed; the driver reads `game.player.visuals` and its nodes read-only.
+- **Kiran's committed evidence used in figures:** 41 files, each matched against `git show c1bbb13:<path>` (`images/inputs.sha256`): CHANGE-BRIEF.md, CLAUDE.md, TUNING.md, TEST-REPORT.md, the sheet and its ATTRIBUTION.md, player.gd, player_visuals.tscn, land.tres, the scoot and land fixture strips and logs in `captures/`, `evidence/a7-mutations/`, the A7 logs.
+- **Art in the film:** only Kiran's game art as rendered by the engine or committed (CHAR-SCOOT-SHEET.png: Kiran Gowda's A2 artwork, Stable Diffusion XL Base 1.0 locally, CreativeML Open RAIL++-M, per `godot/assets/art/CHAR-SCOOT-SHEET.ATTRIBUTION.md`). No third-party images; no generated images.
+- **Voice:** Kokoro `am_onyx`, local, via `~/Documents/brutalist.art/runtime/scripts/generate_audio_kokoro.py`.
+- **Toolkit:** `~/Documents/brutalist.art` at commit 6a8380a, unmodified (its pre-existing uncommitted `runtime/remotion/package-lock.json` change left alone): godot-gamedev skill (walker), GodotDevWorkbench, GodotDesignFigure, ClaudeComposerAsk, BrutalistHesitantWriter, ClaudeVerdictArtifact, ClaudeTitleOutro.
+- **Upstream documentation:** none consulted for this film.

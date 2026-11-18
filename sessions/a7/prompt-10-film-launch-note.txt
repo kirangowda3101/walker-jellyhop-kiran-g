@@ -1,0 +1,11 @@
+Launch note, appended to sessions/a7/prompt-10-film.txt; it overrides that
+prompt's locations:
+- Read-only snapshot: /Users/kiran/Documents/jellyhop-a7-film-work/snapshot-c1bbb13/ is a git-archive snapshot of revision c1bbb13.
+  Use it only to read my committed files and evidence and to verify code
+  excerpts. Do not run Godot in it and do not change anything inside it.
+- Disposable run copy: /Users/kiran/Documents/jellyhop-a7-film-work/run-copy-c1bbb13/ is a second git-archive copy of c1bbb13. Run every
+  Godot import, launch and scripted capture from its godot/ folder.
+- Build the whole film in /Users/kiran/Documents/jellyhop-a7-film-work/film/. Keep every WAV, MP3, MP4, rendered frame,
+  capture script and working file under /Users/kiran/Documents/jellyhop-a7-film-work/.
+- Do not create or change any file in my repository at /Users/kiran/Documents/walker-jellyhop-kiran-g/. I will copy the
+  reviewed deliverables into it myself after I watch the export with sound.

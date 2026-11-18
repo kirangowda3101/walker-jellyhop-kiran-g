@@ -1,0 +1,64 @@
+Read CLAUDE.md first (in the read-only snapshot named in the launch note).
+Read the installed course-provided Brutalist godot-gamedev skill instructions
+(~/Documents/brutalist.art/skills/make/godot-gamedev/SKILL.md) with the walker
+modifier and follow them. Use the same pipeline and narration approach as my
+Assignment 6 film (snapshot: youtube/claude-liam-jelly-hop-a6/ and
+sessions/a6/prompt-9-film.txt: run from ~/Documents/brutalist.art, scripted
+captures from a disposable copy, local Kokoro narration as "Liam, in for
+Bear", no paid tools).
+
+Make ONE landscape film at the skill's native 4K, plain and precise, for
+Assignment 7 (animation). Game-source revision shown: the snapshot's revision
+(see the launch note). It must:
+1. Identify Jelly Hop and both clips: "scoot", the looping cycle (Sprite2D
+   frame track on a 2-cell sheet packed from my A2 SCOOT-A/B art, 7 ticks per
+   cell, LOOP_LINEAR), and "land", the committing action (a two-piece cutout
+   rig cut from CHAR-IDLE.png at y 622, keys at frames 0/2/4/8, LOOP_NONE).
+   Name both routes from CHANGE-BRIEF.md.
+2. Answer the four questions, each pointing at a line of my own files with
+   its line number: what a clip is (a line of godot/animations/scoot.tres or
+   land.tres, and the track_problems line in a read-back test; mutation M1 in
+   evidence/a7-mutations/ shows a renamed property failing it); what one
+   authority means (the CLAUDE.md "One authority" table and the player.gd
+   lines that write facing and visibility while the AnimationPlayer alone
+   writes the frame and rig transforms); what the two clocks are
+   (callback_mode_process in player_visuals.tscn; gameplay on physics; the
+   one-tick hand-off error found in 74fe4b5, explained in fd4d855, fixed in
+   5c0fb9a, Revision 2); and designing feel in frames (the phase table and
+   the r1 change, Revision 3).
+3. Show the sheet (godot/assets/art/CHAR-SCOOT-SHEET.png), its slicing
+   (hframes 2, vframes 1) and the frame track that reads it.
+4. Show the phase table beside the key times built from it, and the r0 and
+   r1 frame strips at each phase boundary (captures/land/r0, r1), labelled as
+   fixtures, with my verdicts and Claude's readings from TUNING.md.
+5. Show the state machine playing each clip in real play, including an
+   interrupt in each phase of the landing (startup, active, recovery):
+   record real engine frames in a windowed run of the disposable copy and
+   label them as scripted captures.
+6. Show what the read-backs proved (land 135, scoot 62), the structure,
+   state and edge tests (29; 132 at 30/60/144; 397), the four mutations
+   (evidence/a7-mutations/summary.txt: M1-M3 failed their read-backs, M4
+   passed from an empty cache), and what no headless run can show.
+7. State the agent mistakes I caught (from FRICTIONAL.md A7 and SOURCES.md
+   A7), the strip reading of Claude's I overruled (r1: Claude could not
+   confirm a visible difference at rig frames 2 and 4 within its ±2 px
+   estimate; I saw r1 flatter in Preview and kept it), what remains
+   uncertain (CLAUDE.md Unconfirmed; the untested pause-then-SCOOT entry;
+   the 356/516 frame-count mismatch), one next step: "I'd add a scripted
+   test for pausing during LAND and resuming into SCOOT, the one entry no
+   test covers yet.", the human and AI contributions (SOURCES.md A7), the
+   sheet's source and licence (CHAR-SCOOT-SHEET.ATTRIBUTION.md: my A2 SDXL
+   Base 1.0 art, CreativeML Open RAIL++-M), and the revision shown.
+
+Use the Walker opening/summary and Verdict -> Your Turn -> regular outro.
+Label every preview capture as a fixture, and every scripted capture,
+reconstructed editor view and held frame as such; never present a
+reconstruction as a screenshot. Use only facts from my committed files; do
+not invent results. Write the beat sheet, script and prompts as files in the
+film folder before rendering. Then render, run all of the skill's quality
+checks, and watch for problems in the final export.
+
+Rules: do not edit anything in the snapshot; keep any capture scripts in the
+film folder; never commit; keep MP4, MP3, WAV and any file over 25 MB out of
+git. End with the export's file path, duration, size and SHA-256, the QC
+results, and anything you could not do.

@@ -1,0 +1,30 @@
+[remotion] B00: ok: ClaudeComposerAsk -> media/B00.mp4
+[remotion] B01: ok: BrutalistHesitantWriter -> media/B01.mp4
+[remotion] B02: ok: GodotDesignFigure -> media/B02.mp4
+[remotion] B03: ok: GodotDevWorkbench -> media/B03.mp4
+[remotion] B04: ok: GodotDesignFigure -> media/B04.mp4
+[remotion] B05: ok: GodotDevWorkbench -> media/B05.mp4
+[remotion] B06: ok: GodotDesignFigure -> media/B06.mp4
+[remotion] B07: ok: GodotDevWorkbench -> media/B07.mp4
+[remotion] B08: ok: GodotDesignFigure -> media/B08.mp4
+[remotion] B09: ok: GodotDesignFigure -> media/B09.mp4
+[remotion] B10: ok: GodotDevWorkbench -> media/B10.mp4
+[remotion] B12: ok: GodotDevWorkbench -> media/B12.mp4
+[remotion] B14: ok: GodotDevWorkbench -> media/B14.mp4
+[remotion] B15: ok: GodotDesignFigure -> media/B15.mp4
+[remotion] B16: ok: GodotDevWorkbench -> media/B16.mp4
+[remotion] B18: ok: GodotDesignFigure -> media/B18.mp4
+[remotion] B19: ok: GodotDevWorkbench -> media/B19.mp4
+[remotion] B20: ok: GodotDesignFigure -> media/B20.mp4
+[remotion] B21: ok: GodotDesignFigure -> media/B21.mp4
+[remotion] B22: ok: GodotDesignFigure -> media/B22.mp4
+[remotion] B23: ok: GodotDesignFigure -> media/B23.mp4
+[remotion] B24: ok: GodotDevWorkbench -> media/B24.mp4
+[remotion] B25: ok: GodotDevWorkbench -> media/B25.mp4
+[remotion] B26: ok: GodotDevWorkbench -> media/B26.mp4
+[remotion] BVDT: ok: ClaudeVerdictArtifact -> media/BVDT.mp4
+[remotion] BHTF: ok: ClaudeComposerAsk -> media/BHTF.mp4
+[remotion] BOUT: ok: ClaudeTitleOutro -> media/BOUT.mp4
+[remotion] stamped provenance in beat_sheet.json + updated consumers.json
+[remotion] done — run `bash scripts/run.sh <REEL>` to compile the cut
+exit 0

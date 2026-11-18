@@ -1,0 +1,877 @@
+{
+ "schema_version": 1,
+ "teaching_contract": "code-then-result-v1",
+ "game_revision": "c1bbb13",
+ "files": [
+  {
+   "path": "animations/land.tres",
+   "sha256": "32a3faca0c1998db4451f2220afd13346ff09ce6323c864462226d8e1594b215",
+   "role": "resource",
+   "component_ids": [
+    "a7-land"
+   ]
+  },
+  {
+   "path": "animations/scoot.tres",
+   "sha256": "c7e294711c6062d5688912f379f90526f010a45e7f5d7fdb86c852c5edcf8b03",
+   "role": "resource",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png",
+   "sha256": "2b5ef1aad00cddb51ca6b155bd9a14c343f0b923e0a00c356107c3d56fc08099",
+   "role": "asset",
+   "component_ids": [
+    "a7-land"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png",
+   "sha256": "6aa35cf27aa3ed6202f2d0254f1defe456d0db4a387981cf0104be03af6b916a",
+   "role": "asset",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png",
+   "sha256": "f95dacdb13614d9ed7d4a5798e3bf6df8902d5dcd5186f368631bcce0a4bb271",
+   "role": "asset",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-SHEET.ATTRIBUTION.md",
+   "sha256": "307a7c28d83ac1b6ab92d75fec2e7bac08bf7c86bb4c39e163aa95cb9bfd3563",
+   "role": "source",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-SHEET.png",
+   "sha256": "30b0ab635693477205cb9611160dcafd735a1f3e67ba7ffdb4fc3556eee04736",
+   "role": "asset",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-SHEET.png.import",
+   "sha256": "c88f971790bd94565cf38fe1dfcb58179336a99dbe14b73f0175734143684e0f",
+   "role": "source",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "features/player/player.gd",
+   "sha256": "3ab01fa66776b8d7acfd6b8bfc9c3415e0d8cdd16bd459eaaa57daffb43c158a",
+   "role": "source",
+   "component_ids": [
+    "a7-state-machine"
+   ]
+  },
+  {
+   "path": "features/player/player_visuals.tscn",
+   "sha256": "007c7b1d8db006c4114c334b7aca26254f076fd29671ce1f36ab92b312bdaa66",
+   "role": "scene",
+   "component_ids": [
+    "a7-visuals-scene"
+   ]
+  },
+  {
+   "path": "previews/land_preview.gd",
+   "sha256": "a879f4f3a39766383e5ab5c8ad72de7d7d21b423750dfc1ff2364275210c83f7",
+   "role": "source",
+   "component_ids": [
+    "a7-land"
+   ]
+  },
+  {
+   "path": "previews/land_preview.tscn",
+   "sha256": "f4aa4c3ed400634e4f639d5f686ccf530733297eb568c88f0674903cc240c67e",
+   "role": "scene",
+   "component_ids": [
+    "a7-land"
+   ]
+  },
+  {
+   "path": "previews/scoot_preview.gd",
+   "sha256": "56ca562879c7d698da417ab26ab4befc2b46f1d93e4e548e0b553503648017bd",
+   "role": "source",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "previews/scoot_preview.tscn",
+   "sha256": "372c16f3eab4e0b2dd99a002adca4b002c3d945b4af127ae8981d3caa5e90989",
+   "role": "scene",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  },
+  {
+   "path": "tests/probe_a7_entry_order.gd",
+   "sha256": "d0a6fd6ba2b79e027ad6280151a015ba6182f720f8949f8b957e5ada52c2b8a9",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tests/test_a7_edges.gd",
+   "sha256": "35aa0846ff5b0cca1a2a233c558f4332f18d2e9645799b3bc6a9d76a7f40963d",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tests/test_a7_land_readback.gd",
+   "sha256": "0b664599e78ba8eea3d200f306d7086353cfddf0bcbb13151a9f9d97c4763626",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tests/test_a7_pins.gd",
+   "sha256": "b91b758bf190645cd44136a46890e2742ba50832da9cb748301312fc9acea46d",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tests/test_a7_scoot_readback.gd",
+   "sha256": "f2c22bef7b896748c9958a9717d5b2116211a71f1a582325a02b169a4c4e2d71",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tests/test_a7_visual_state.gd",
+   "sha256": "9a3822a248337d472f87eb1aec131eab702a7a44b98ce2036594cc527a7fff9f",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tests/test_a7_visual_structure.gd",
+   "sha256": "25404a3687a20b23a55181c9ecbd1fc98aac0680a7e08bb3cb128496f84821c2",
+   "role": "source",
+   "component_ids": [
+    "a7-tests"
+   ]
+  },
+  {
+   "path": "tools/make_scoot_sheet.gd",
+   "sha256": "d91c556fdb69fb8c05e1583fef52bd94308adcb10d6a8de1a256787d9cf7f9f8",
+   "role": "source",
+   "component_ids": [
+    "a7-scoot"
+   ]
+  }
+ ],
+ "exclusions": [
+  {
+   "path": ".gitignore",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "MATERIALS.md",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-ANTIC.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-BORED.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-CELEBRATE.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-FALL.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-IDLE.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-LAND.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RESPAWN.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-RISE.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-A.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SCOOT-B.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-SPLAT.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/CHAR-WORRY.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-DOME.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-FORK.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-PLATE.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-ROOM.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-SAUCE.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/art/ENV-TABLE.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/MUS-LOOP.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-HOP.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-LAND.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-FORK.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-SPLAT-SAUCE.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WARN.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/audio/SFX-WIN.ogg.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/dome.glb",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/dome.glb.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/fork.glb",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/fork.glb.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/platform.glb",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/models/platform.glb.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/ATTRIBUTION.md",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_diff_2k.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_diff_2k.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_dx_2k.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_dx_2k.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_gl_2k.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_nor_gl_2k.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_rough_2k.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/dark_wood/dark_wood_rough_2k.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/hint_strip/hint_strip_3x1.png",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "assets/textures/hint_strip/hint_strip_3x1.png.import",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "audio/music_controller.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "audio/sound_events.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "effects/dome_glints.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "effects/effects_driver.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "effects/land_puff.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "features/fork/fork.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "features/player/tuning.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "game/main.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "game/session.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "game/slice_tuning.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/fork_warning.tres",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/hint_with_source_color.tres",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/hint_without_source_color.tres",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/serving_board_polished.tres",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "materials/table_wood_worn.tres",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "previews/dome_glints_preview.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "previews/dome_glints_preview.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "previews/land_puff_preview.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "previews/land_puff_preview.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "project.godot",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "scratch/standard_scratch.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/fork_warning.gdshader",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/hint_experiment.gdshader",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/particles_generated.gdshader",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/standard_generated.gdshader",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "shaders/table_wood.gdshader",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "showcase/a3_assets.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "showcase/a5_materials.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "showcase/hint_experiment.tscn",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/calibrate_normal_check.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/capture_poses.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/capture_slice.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/check_lifecycle_peak.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/cost_effects.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/normal_map_check.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/probe_headless.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/route_driver.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_a3_assets.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_dome_glints_config.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_dome_glints_state.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_fork_warning.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_game.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_keyboard.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_land_puff_config.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_land_puff_state.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_materials.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/test_slice.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tests/trace_audio.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tools/capture_a5.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tools/capture_shared.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "tools/make_hint_strip.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  },
+  {
+   "path": "ui/hud.gd",
+   "reason": "File from Assignments 2–6, not changed by A7 (git diff a6..c1bbb13 -- godot) and outside this A7 film's scope; explained in the earlier films."
+  }
+ ],
+ "components": [
+  {
+   "id": "a7-scoot",
+   "explanation": "The scoot clip: the two-cell sheet packed from Kiran's A2 CHAR-SCOOT-A/B art (with its import settings, attribution and packing tool), scoot.tres (one discrete frame track, LOOP_LINEAR) and the scoot preview fixture.",
+   "beat_ids": [
+    "B02",
+    "B04",
+    "B05",
+    "B06"
+   ],
+   "files": [
+    "animations/scoot.tres",
+    "assets/art/CHAR-SCOOT-A.png",
+    "assets/art/CHAR-SCOOT-B.png",
+    "assets/art/CHAR-SCOOT-SHEET.ATTRIBUTION.md",
+    "assets/art/CHAR-SCOOT-SHEET.png",
+    "assets/art/CHAR-SCOOT-SHEET.png.import",
+    "previews/scoot_preview.gd",
+    "previews/scoot_preview.tscn",
+    "tools/make_scoot_sheet.gd"
+   ]
+  },
+  {
+   "id": "a7-land",
+   "explanation": "The land clip: land.tres (three continuous rig tracks, keys at 0, 2, 4 and 8 frames, LOOP_NONE), the CHAR-IDLE.png drawing the two slices are cut from, and the land preview fixture used for strips r0 and r1.",
+   "beat_ids": [
+    "B02",
+    "B18",
+    "B19",
+    "B20",
+    "B21"
+   ],
+   "files": [
+    "animations/land.tres",
+    "assets/art/CHAR-IDLE.png",
+    "previews/land_preview.gd",
+    "previews/land_preview.tscn"
+   ]
+  },
+  {
+   "id": "a7-visuals-scene",
+   "explanation": "player_visuals.tscn: the scoot sprite slicing the sheet, the two-piece rig, and one AnimationPlayer on the physics callback with one embedded library.",
+   "beat_ids": [
+    "B03",
+    "B14",
+    "B15"
+   ],
+   "files": [
+    "features/player/player_visuals.tscn"
+   ]
+  },
+  {
+   "id": "a7-state-machine",
+   "explanation": "player.gd's appended visual layer (_update_visuals, _clip_time): pose to clip, facing and visibility writes, playback requests, the pause rule and the Revision 2 hand-off seek.",
+   "beat_ids": [
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "B16",
+    "B17"
+   ],
+   "files": [
+    "features/player/player.gd"
+   ]
+  },
+  {
+   "id": "a7-tests",
+   "explanation": "The A7 read-backs, pins, structure, per-tick state and edge tests, and the supplemental entry-order probe.",
+   "beat_ids": [
+    "B07",
+    "B08",
+    "B15",
+    "B22",
+    "B23",
+    "B24"
+   ],
+   "files": [
+    "tests/probe_a7_entry_order.gd",
+    "tests/test_a7_edges.gd",
+    "tests/test_a7_land_readback.gd",
+    "tests/test_a7_pins.gd",
+    "tests/test_a7_scoot_readback.gd",
+    "tests/test_a7_visual_state.gd",
+    "tests/test_a7_visual_structure.gd"
+   ]
+  }
+ ],
+ "excerpts": [
+  {
+   "beat_id": "B03",
+   "path": "features/player/player_visuals.tscn",
+   "start_line": 20,
+   "end_line": 29,
+   "text": "[node name=\"ScootSprite\" type=\"Sprite2D\" parent=\"FacingPivot/Scoot\"]\ntexture_filter = 4\nposition = Vector2(0, 0)\nscale = Vector2(0.106, 0.106)\ntexture = ExtResource(\"1_sheet\")\ncentered = false\noffset = Vector2(-512, -812)\nhframes = 2\nvframes = 1\nframe = 0"
+  },
+  {
+   "beat_id": "B05",
+   "path": "animations/scoot.tres",
+   "start_line": 5,
+   "end_line": 17,
+   "text": "length = 0.23333333\nloop_mode = 1\nstep = 0.016666668\ntracks/0/type = \"value\"\ntracks/0/imported = false\ntracks/0/enabled = true\ntracks/0/path = NodePath(\"FacingPivot/Scoot/ScootSprite:frame\")\ntracks/0/interp = 1\ntracks/0/loop_wrap = true\ntracks/0/keys = {\n\"times\": PackedFloat32Array(0, 0.11666667),\n\"transitions\": PackedFloat32Array(1, 1),\n\"update\": 1,"
+  },
+  {
+   "beat_id": "B07",
+   "path": "tests/test_a7_land_readback.gd",
+   "start_line": 166,
+   "end_line": 172,
+   "text": "\tcheck(\"no RESET animation\", not player.has_animation(&\"RESET\"), str(player.get_animation_list()))\n\tcheck(\"clip scoot exists\", player.has_animation(&\"scoot\"), str(player.get_animation_list()))\n\tcheck(\"clip land exists\", player.has_animation(&\"land\"), str(player.get_animation_list()))\n\tvar problems := track_problems(player)\n\tfor p in problems:\n\t\tprint(\"  track problem: \" + p)\n\tcheck(\"every track of every clip resolves (track_problems)\", problems.is_empty(), \"%d problems over clips %s\" % [problems.size(), player.get_animation_list()])"
+  },
+  {
+   "beat_id": "B10",
+   "path": "features/player/player.gd",
+   "start_line": 200,
+   "end_line": 212,
+   "text": "\t\tanim = visuals.get_node(\"AnimationPlayer\")\n\tfacing_pivot.transform = Transform2D(Vector2(facing, 0), Vector2(0, 1), Vector2.ZERO)\n\tvar want: StringName = POSE_CLIPS.get(pose, &\"\")\n\tscoot_node.visible = want == &\"scoot\"\n\tland_rig.visible = want == &\"land\"\n\tsprite.visible = want == &\"\"\n\tif want == &\"\":\n\t\t# Leaving a clip (hop, walk-off, override, tick-8 hand-off, reset): stop it.\n\t\tif clip != &\"\":\n\t\t\tanim.stop()\n\t\tclip = &\"\"\n\t\tclip_held = false\n\t\treturn"
+  },
+  {
+   "beat_id": "B12",
+   "path": "features/player/player.gd",
+   "start_line": 215,
+   "end_line": 227,
+   "text": "\t\tif clip != want and clip != &\"\":\n\t\t\tanim.stop()\n\t\tclip = want\n\t\tif anim.is_playing():\n\t\t\tanim.pause()\n\t\tclip_held = true\n\t\treturn\n\tvar entry := want != clip or clip_held or (want == &\"land\" and just_landed)\n\tif not entry:\n\t\treturn   # steady tick, including SCOOT-A <-> SCOOT-B: no call\n\tif clip != &\"\" and clip != want:\n\t\tanim.stop()\n\tanim.play(want)"
+  },
+  {
+   "beat_id": "B14",
+   "path": "features/player/player_visuals.tscn",
+   "start_line": 61,
+   "end_line": 67,
+   "text": "[node name=\"AnimationPlayer\" type=\"AnimationPlayer\" parent=\".\"]\nroot_node = NodePath(\"..\")\nlibraries = {\n&\"\": SubResource(\"AnimationLibrary_visuals\")\n}\ncallback_mode_process = 0\nautoplay = &\"\""
+  },
+  {
+   "beat_id": "B16",
+   "path": "features/player/player.gd",
+   "start_line": 227,
+   "end_line": 236,
+   "text": "\tanim.play(want)\n\tif clip == &\"land\" and want == &\"scoot\" and not clip_held:\n\t\t# Direct LAND -> SCOOT switch: the AnimationPlayer was already playing land, and its own update\n\t\t# later this tick adds 1/60 (fd4d855). Seek one tick earlier on the loop so it lands on the synced time\n\t\t# (probe H3, prompt-5e).\n\t\tanim.seek(fposmod(_clip_time(want) - 1.0 / CLIP_FPS, anim.get_animation(&\"scoot\").length), true)\n\telse:\n\t\tanim.seek(_clip_time(want), true)\n\tclip = want\n\tclip_held = false"
+  },
+  {
+   "beat_id": "B19",
+   "path": "animations/land.tres",
+   "start_line": 8,
+   "end_line": 19,
+   "text": "tracks/0/type = \"value\"\ntracks/0/imported = false\ntracks/0/enabled = true\ntracks/0/path = NodePath(\"FacingPivot/LandRig/LowerPivot:scale\")\ntracks/0/interp = 1\ntracks/0/loop_wrap = true\ntracks/0/keys = {\n\"times\": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.13333334),\n\"transitions\": PackedFloat32Array(2, 1, 0.5, 1),\n\"update\": 0,\n\"values\": [Vector2(1.05, 0.85), Vector2(1.15, 0.55), Vector2(1.15, 0.55), Vector2(1, 1)]\n}"
+  }
+ ],
+ "code_result_pairs": [
+  {
+   "code_beat": "B03",
+   "result_beat": "B04",
+   "observation": "Kiran's committed CHAR-SCOOT-SHEET.png, 2048 × 1024, divided at x 1024 (hframes 2, vframes 1): cell 0 is CHAR-SCOOT-A, cell 1 CHAR-SCOOT-B; the packing tool's 0-mismatch result is quoted from ATTRIBUTION.md.",
+   "media": {
+    "path": "images/B04-sheet.png",
+    "sha256": "108988cab803e2210bb1cc4016ba9e22b7191c4874a27413c866f8550e96a6ef"
+   }
+  },
+  {
+   "code_beat": "B05",
+   "result_beat": "B06",
+   "observation": "Scoot fixture strip r1: facing right, frame 259 clip t=0.1 cell 0, frame 260 t=0.116667 cell 1 (the swap), frame 261 cell 1; facing left at wrap 1, frame 322 t=0.216667 cell 1, frame 323 t=0 cell 0 (scoot.log).",
+   "media": {
+    "path": "images/B06-scoot-strip.png",
+    "sha256": "b9efa06457c3e092c47c65c6a7ca01157553b5ee3beff1ef00000e7ea8198684"
+   }
+  },
+  {
+   "code_beat": "B07",
+   "result_beat": "B08",
+   "observation": "M1 diff renames UpperPivot:position to positon; the mutated land read-back prints the track problem and ends 94 checks / 3 failures; the committed log ends 135 checks / 0 failures.",
+   "media": {
+    "path": "images/B08-mutation-m1.png",
+    "sha256": "29412b668fb3e98c1f64541107d6e15b2437833cbff9cd4830e5c5472e033122"
+   }
+  },
+  {
+   "code_beat": "B10",
+   "result_beat": "B11",
+   "observation": "In the scripted capture, the stationary hop lands at tick 293; the rig is the only visible visual with clip land at (8 − land_ticks)/60 on ticks 293–300 and the original sprite from 301; scooting shows the scoot sprite with the cell swapping at tick % 14 = 7 and the facing mirrored when the direction changes.",
+   "media": {
+    "path": "media/B11.mp4",
+    "sha256": "86aa9f4723ccf569850eb83e2c14006004a8e7417083309d9f16a6f133912cf7"
+   }
+  },
+  {
+   "code_beat": "B12",
+   "result_beat": "B13",
+   "observation": "In the scripted capture, jump presses read at touchdown +1, +3 and +6 (touchdowns 652, 786, 922) give ANTIC on ticks 653, 789 and 928, with LAND and the rig on every earlier tick from touchdown; 859 per-tick checks, 0 failures over the take.",
+   "media": {
+    "path": "media/B13.mp4",
+    "sha256": "0de41f10a5081c0c0b34cc94f778eb3bf102a0f424604671c512275bd00d7001"
+   }
+  },
+  {
+   "code_beat": "B14",
+   "result_beat": "B15",
+   "observation": "Lines quoted in TEST-REPORT.md from the 74fe4b5 state-test log show diff_ticks=1.000000 after the LAND → SCOOT switch; lines 4468–4469 of the committed 60 fps log show diff_ticks 0 and cell 0 on both SCOOT-A ticks.",
+   "media": {
+    "path": "images/B15-two-clocks.png",
+    "sha256": "726f4b0dcc69803344baa3b70b11334edd90034abd4b4a61bdcffaa506916fc7"
+   }
+  },
+  {
+   "code_beat": "B16",
+   "result_beat": "B17",
+   "observation": "In the scripted capture the jelly lands moving at tick 521; LAND on 521–528, SCOOT-B from 529 with clip scoot at (tick % 14)/60 = 9/60 s, cell 1; every SCOOT tick matched the synced time within 1e-6 s.",
+   "media": {
+    "path": "media/B17.mp4",
+    "sha256": "e821ea5e8809a344fbf6089cc550e9d7f15df87eaba74e5d8c4e10616e9ec3f8"
+   }
+  },
+  {
+   "code_beat": "B19",
+   "result_beat": "B20",
+   "observation": "Land fixture strips r0 (frames 104–109) and r1 (145–150): FALL, rig 0, rig 2, rig 4, rig 6 and the IDLE hand-off at tick 8; Kiran's r0 verdict quoted from TUNING.md.",
+   "media": {
+    "path": "images/B20-land-strips.png",
+    "sha256": "8b9a597615910f431652f98b612568c79bebe5dcd33bd9c7e9f2b11ddb442410"
+   }
+  }
+ ]
+}
